@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>杭州支持浙江队 | hyper的个人Vlog</title>
+    <!-- 外部资源 -->
+    <link 
+        rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        crossorigin="anonymous"
+    >
+    <style>
+        :root {
+            --primary: #6a5acd;
+            --accent: #ff6b6b;
+            --dark: #2d3436;
+            --light: #f8f9fa;
+            --white: #ffffff;
+            --gray: #495057;
+            --light-gray: #e9ecef;
+            --shadow: 0 2px 15px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--gray);
+            line-height: 1.8;
+        }
+
+        /* 导航栏 */
+        .navbar {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .container {
+            width: min(1200px, 90%);
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo i {
+            color: var(--accent);
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .back-btn:hover {
+            color: var(--accent);
+            transform: translateX(-3px);
+        }
+
+        /* 文章头部 */
+        .article-header {
+            padding: 60px 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: var(--white);
+            text-align: center;
+            margin-bottom: 60px;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .article-title {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            margin-bottom: 15px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            font-size: 0.95rem;
+            opacity: 0.9;
+            margin-top: 20px;
+        }
+
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* 文章内容 */
+        .article-content {
+            max-width: 800px;
+            margin: 0 auto 80px;
+            padding: 0 20px;
+        }
+
+        .content-block {
+            background-color: var(--white);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .content-block:hover {
+            box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+        }
+
+        .content-block h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light-gray);
+            position: relative;
+        }
+
+        .content-block h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 80px;
+            height: 2px;
+            background-color: var(--accent);
+        }
+
+        .content-block p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .content-block ul {
+            margin: 15px 0 15px 25px;
+        }
+
+        .content-block li {
+            margin-bottom: 10px;
+        }
+
+        /* 图片/视频展示 */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .gallery-item {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .gallery-item img,
+        .gallery-item video {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover img,
+        .gallery-item:hover video {
+            transform: scale(1.05);
+        }
+
+        .gallery-caption {
+            padding: 10px 15px;
+            background-color: var(--white);
+            font-size: 0.9rem;
+            color: var(--gray);
+            text-align: center;
+        }
+
+        /* 引用样式 */
+        .quote {
+            background-color: rgba(106, 90, 205, 0.05);
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .quote p {
+            font-style: italic;
+            color: var(--dark);
+            margin-bottom: 0 !important;
+        }
+
+        /* 心得总结 */
+        .summary {
+            background: linear-gradient(135deg, rgba(106, 90, 205, 0.1) 0%, rgba(255, 107, 107, 0.1) 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px 0;
+            border: 1px solid var(--light-gray);
+        }
+
+        .summary h3 {
+            color: var(--accent);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* 响应式适配 */
+        @media (max-width: 768px) {
+            .content-block {
+                padding: 25px;
+            }
+
+            .article-header {
+                padding: 40px 0;
+            }
+
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+
+            .gallery-item img,
+            .gallery-item video {
+                height: 180px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .article-meta {
+                gap: 10px;
+            }
+
+            .content-block {
+                padding: 20px 15px;
+            }
+
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="/home/" class="logo">
+                <i class="fas fa-futbol"></i> hyper的Vlog
+            </a>
+            <a href="/pages/sports/" class="back-btn">
+                <i class="fas fa-arrow-left"></i> 返回体育记录
+            </a>
+        </div>
+    </nav>
+
+    <!-- 文章头部 -->
+    <header class="article-header">
+        <div class="container">
+            <h1 class="article-title">杭州支持浙江队</h1>
+            <p>2025.5.10-2025.5.12 | 浙江队2-2上海上港，一场拼尽全力的精彩对决</p>
+            <div class="article-meta">
+                <span><i class="fas fa-calendar"></i> 记录时间：2025年5月13日</span>
+                <span><i class="fas fa-map-marker-alt"></i> 地点：杭州黄龙体育中心</span>
+                <span><i class="fas fa-tag"></i> 标签：足球、浙江队、上海上港、主场应援</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- 文章主体内容 -->
+    <main class="article-content">
+        <!-- 行程概述 -->
+        <section class="content-block">
+            <h2>应援行程概述</h2>
+            <p>2025年5月10日至12日，浙江队在杭州奥体中心迎来了与上海上港的关键中超对决，作为一名资深球迷，我全程参与了这场充满激情的应援之旅。从赛前全城球迷的盛大游行，到赛中跌宕起伏的2-2平局，再到赛后虽有争议但仍充满敬意的掌声，每一个瞬间都刻满了杭州球迷对浙江队的热爱。</p>
+            <p>行程安排：</p>
+            <ul>
+                <li><strong>5月10日</strong>：参与球迷协会的赛前筹备，制作应援物料，熟悉助威口号和流程</li>
+                <li><strong>5月11日</strong>：参加赛前球迷游行，前往杭州奥体中心观看浙江队VS上海上港的比赛</li>
+                <li><strong>5月12日</strong>：整理观赛素材，记录比赛中的争议瞬间和球迷心声</li>
+            </ul>
+        </section>
+
+        <!-- 赛前准备 -->
+        <section class="content-block">
+            <h2>赛前应援准备</h2>
+            <p>为了给浙江队打造最震撼的主场氛围，面对实力强劲的上海上港，杭州球迷们做了充足的准备：</p>
+            <ul>
+                <li>球迷协会组织了千人赛前游行，从钱江新城徒步至奥体中心，沿途高喊助威口号，吸引市民加入</li>
+                <li>定制了专属的2025赛季应援服和围巾，统一的红色着装形成了杭城的"红色海洋"</li>
+                <li>提前排练助威歌曲和人浪环节，确保比赛过程中助威节奏不中断</li>
+                <li>准备了应急物资和观赛指南，为外地来杭的浙江队球迷提供贴心服务</li>
+            </ul>
+            <div class="quote">
+                <p>“无论输赢，我们都会站在浙江队身后。杭州的主场，就是球队最坚实的后盾。”</p>
+            </div>
+        </section>
+
+        <!-- 比赛现场 -->
+        <section class="content-block">
+            <h2>比赛现场实录</h2>
+            <p>5月11日下午，杭州奥体中心座无虚席，超过4.5万名球迷齐聚现场。赛前的球迷游行点燃了全场氛围，所有人都期待着浙江队能在主场拿下关键分数。</p>
+            <p>比赛过程中的关键瞬间：</p>
+            <ul>
+                <li><strong>上半场</strong>：浙江队率先发难，第23分钟凭借点球破门，1-0领先上海上港，全场瞬间沸腾</li>
+                <li><strong>下半场</strong>：上海上港连入两球反超比分，浙江队没有放弃，第81分钟抓住反击机会扳平比分，最终2-2握手言和</li>
+                <li><strong>争议瞬间</strong>：比赛中出现多次争议判罚，尤其是下半场的一次禁区手球未判，引发了球迷对裁判的不满</li>
+                <li><strong>球迷表现</strong>：即使面对争议判罚，杭州球迷始终保持对球队的支持，终场哨响后仍为拼尽全力的球员送上热烈掌声</li>
+            </ul>
+            <p>这场2-2的平局虽然没能让浙江队全取三分，但球队永不言弃的拼劲赢得了所有球迷的尊重。赛后球员们绕场致谢，不少球迷高喊"你们是最棒的"，场面感人。</p>
+        </section>
+
+        <!-- 城市氛围 -->
+        <section class="content-block">
+            <h2>杭州全城应援氛围</h2>
+            <p>这场浙江队对阵上海上港的比赛，让整个杭州都沉浸在足球的热情之中：</p>
+            <ul>
+                <li>赛前的球迷游行吸引了大量市民围观，不少路人自发加入助威队伍，成为杭城一道独特的风景线</li>
+                <li>奥体中心周边的餐饮、便利店都推出了浙江队主题优惠，用实际行动支持本土球队</li>
+                <li>比赛当天的争议判罚成为球迷热议话题，但大家更多的是表达对球队的支持，而非单纯的不满</li>
+                <li>赛后#浙江队2比2上海上港# #杭州球迷太暖心了# 等话题登上同城热搜，展现了杭城的足球情怀</li>
+            </ul>
+            
+            <!-- 图片/视频展示区 - 按时间顺序重新排列 -->
+            <div class="gallery">
+                <!-- 1. 赛前游行（最先发生） -->
+                <div class="gallery-item">
+                    <video controls poster="赛前游行_cover.jpg">
+                        <source src="赛前游行.mp4" type="video/mp4">
+                        您的浏览器不支持视频播放
+                    </video>
+                    <div class="gallery-caption">千人球迷赛前游行盛况</div>
+                </div>
+                <!-- 2. 最终比分 -->
+                <div class="gallery-item">
+                    <img src="浙江队2-2上海上港.jpg" alt="浙江队2-2上海上港比分牌">
+                    <div class="gallery-caption">浙江队2-2上海上港最终比分</div>
+                </div>
+                <!-- 3. 争议判罚 -->
+                <div class="gallery-item">
+                    <video controls poster="裁判sb_cover.jpg">
+                        <source src="裁判sb.mp4" type="video/mp4">
+                        您的浏览器不支持视频播放
+                    </video>
+                    <div class="gallery-caption">比赛争议判罚现场记录</div>
+                </div>
+                <!-- 4. 赛后鼓掌 -->
+                <div class="gallery-item">
+                    <img src="赛后鼓掌.jpg" alt="球迷赛后鼓掌">
+                    <div class="gallery-caption">球员赛后向球迷致谢</div>
+                </div>
+                <!-- 5. 比赛过程（最后展示） -->
+                <div class="gallery-item">
+                    <img src="赛况.jpg" alt="比赛精彩瞬间">
+                    <div class="gallery-caption">比赛的过程</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 心得感悟 -->
+        <section class="summary">
+            <h3><i class="fas fa-lightbulb"></i> 观赛心得与城市情怀</h3>
+            <p>这场浙江队2-2上海上港的比赛，让我对足球、对杭州这座城市有了更深的感悟：</p>
+            <ul>
+                <li><strong>竞技的魅力</strong>：足球比赛的魅力不仅在于胜利，更在于球队拼尽全力的过程，浙江队在落后时的不放弃，正是体育精神的最好体现</li>
+                <li><strong>球迷的素养</strong>：尽管有争议判罚，但杭州球迷始终保持理性，用掌声代替谩骂，展现了一座城市的文明与包容</li>
+                <li><strong>城市的温度</strong>：从赛前游行到赛后鼓掌，杭州用实际行动证明，这里不仅有美丽的风景，更有温暖的人情和浓厚的足球氛围</li>
+                <li><strong>陪伴的意义</strong>：作为球迷，最大的幸福不是球队永远胜利，而是能陪伴球队走过每一个瞬间，赢一起狂，输一起扛</li>
+            </ul>
+            <p>最后，我想说：2-2的比分或许不是最完美的结果，但这场比赛留给我们的，是浙江队永不言弃的拼劲，是杭州球迷温暖的支持，更是这座城市与球队之间双向奔赴的美好。未来，无论输赢，杭州都会一直站在浙江队身后。</p>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 hyper的个人Vlog | 记录生活，分享成长</p>
+            <p style="margin-top: 10px;">
+                <a href="/home/" style="color: #ff6b6b; text-decoration: none;">返回首页</a> | 
+                <a href="/talk/" style="color: #ff6b6b; text-decoration: none;">留言交流</a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

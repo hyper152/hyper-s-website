@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录 | hyper的个人Vlog</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6a5acd;
+            --accent: #ff6b6b;
+            --light: #f8f9fa;
+            --white: #ffffff;
+            --gray: #495057;
+            --light-gray: #e9ecef;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-header h1 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .login-header p {
+            color: var(--gray);
+        }
+
+        .tab-nav {
+            display: flex;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--light-gray);
+        }
+
+        .tab-item {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+            color: var(--gray);
+            transition: all 0.3s ease;
+        }
+
+        .tab-item.active {
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary);
+            margin-bottom: -2px;
+            font-weight: 500;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(106, 90, 205, 0.1);
+        }
+
+        .code-input {
+            display: flex;
+            gap: 10px;
+        }
+
+        .code-input .form-control {
+            flex: 1;
+        }
+
+        .send-code-btn {
+            width: 110px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s ease;
+        }
+
+        .send-code-btn:hover {
+            background: var(--accent);
+        }
+
+        .send-code-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn-login:hover {
+            background: var(--accent);
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .register-link a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .register-link a:hover {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+
+        .msg {
+            text-align: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .msg.error {
+            display: block;
+            color: #dc3545;
+            background: #f8d7da;
+        }
+
+        .msg.success {
+            display: block;
+            color: #28a745;
+            background: #d4edda;
+        }
+
+        .msg.info {
+            display: block;
+            color: #17a2b8;
+            background: #d1ecf1;
+        }
+
+        .manual-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+            transition: background 0.3s ease;
+        }
+
+        .manual-btn:hover {
+            background: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h1><i class="fas fa-sign-in-alt"></i> 账号登录</h1>
+            <p>欢迎回来，请登录后继续</p>
+        </div>
+
+        <div class="msg" id="msg"></div>
+
+        <div class="tab-nav">
+            <div class="tab-item active" data-tab="password">密码登录</div>
+            <div class="tab-item" data-tab="code">验证码登录</div>
+        </div>
+
+        <!-- 密码登录表单 -->
+        <form id="passwordLoginForm">
+            <div class="form-group">
+                <label for="email">邮箱</label>
+                <input type="email" id="email" class="form-control" placeholder="请输入注册邮箱" required>
+            </div>
+            <div class="form-group">
+                <label for="password">密码</label>
+                <input type="password" id="password" class="form-control" placeholder="请输入密码" required>
+            </div>
+            <button type="submit" class="btn-login">登录</button>
+        </form>
+
+        <!-- 验证码登录表单 -->
+        <form id="codeLoginForm" style="display: none;">
+            <div class="form-group">
+                <label for="codeEmail">邮箱</label>
+                <input type="email" id="codeEmail" class="form-control" placeholder="请输入注册邮箱" required>
+            </div>
+            <div class="form-group">
+                <label for="code">验证码</label>
+                <div class="code-input">
+                    <input type="text" id="code" class="form-control" placeholder="6位验证码" maxlength="6" required>
+                    <button type="button" class="send-code-btn" id="sendCodeBtn">发送验证码</button>
+                </div>
+            </div>
+            <button type="submit" class="btn-login">登录</button>
+        </form>
+
+        <div class="register-link">
+            还没有账号？ <a href="register.html">立即注册</a>
+        </div>
+    </div>
+
+    <script src="/static/js/auth.js"></script>
+    <script>
+        // 获取元素
+        const tabs = document.querySelectorAll('.tab-item');
+        const passwordForm = document.getElementById('passwordLoginForm');
+        const codeForm = document.getElementById('codeLoginForm');
+        const msg = document.getElementById('msg');
+        const sendCodeBtn = document.getElementById('sendCodeBtn');
+        let countdown = 0;
+
+        // 切换登录方式
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                if (tab.dataset.tab === 'password') {
+                    passwordForm.style.display = 'block';
+                    codeForm.style.display = 'none';
+                } else {
+                    passwordForm.style.display = 'none';
+                    codeForm.style.display = 'block';
+                }
+                msg.style.display = 'none';
+            });
+        });
+
+        // 发送验证码
+        sendCodeBtn.addEventListener('click', async () => {
+            const email = document.getElementById('codeEmail').value.trim();
+            
+            if (!email) {
+                showMessage('请输入邮箱', 'error');
+                return;
+            }
+            
+            if (!email.includes('@') || !email.includes('.')) {
+                showMessage('请输入有效的邮箱地址', 'error');
+                return;
+            }
+            
+            if (countdown > 0) return;
+
+            try {
+                sendCodeBtn.disabled = true;
+                sendCodeBtn.textContent = '发送中...';
+                
+                const res = await fetch('/api/login/send-code', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+                
+                const data = await res.json();
+                
+                if (data.code === 200) {
+                    showMessage(data.msg, 'success');
+                    
+                    // 开始倒计时
+                    countdown = 60;
+                    sendCodeBtn.textContent = `重新发送(${countdown}s)`;
+                    
+                    const timer = setInterval(() => {
+                        countdown--;
+                        sendCodeBtn.textContent = `重新发送(${countdown}s)`;
+                        if (countdown <= 0) {
+                            clearInterval(timer);
+                            sendCodeBtn.disabled = false;
+                            sendCodeBtn.textContent = '发送验证码';
+                        }
+                    }, 1000);
+                } else {
+                    showMessage(data.msg, 'error');
+                    sendCodeBtn.disabled = false;
+                    sendCodeBtn.textContent = '发送验证码';
+                }
+            } catch (err) {
+                showMessage('网络错误，请重试', 'error');
+                sendCodeBtn.disabled = false;
+                sendCodeBtn.textContent = '发送验证码';
+                console.error(err);
+            }
+        });
+
+        // 密码登录
+        passwordForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+
+            if (!email || !password) {
+                showMessage('请填写完整信息', 'error');
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/login/password', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                const data = await res.json();
+
+                if (data.code === 200) {
+                    // 保存到localStorage
+                    Auth.saveLoginInfo(data.data.session_id, {
+                        username: data.data.username,
+                        email: data.data.email
+                    });
+                    
+                    showMessage('登录成功！', 'success');
+                    
+                    console.log('登录成功，session_id:', data.data.session_id);
+                    console.log('当前cookies:', document.cookie);
+                    
+                    // 显示手动跳转按钮
+                    const manualBtn = document.createElement('button');
+                    manualBtn.textContent = '点击进入首页';
+                    manualBtn.className = 'manual-btn';
+                    manualBtn.onclick = () => {
+                        const redirect = new URLSearchParams(window.location.search).get('redirect') || '/home/index.html';
+                        window.location.href = redirect;
+                    };
+                    
+                    // 移除之前的按钮（如果有）
+                    const oldBtn = document.querySelector('.manual-btn');
+                    if (oldBtn) oldBtn.remove();
+                    
+                    document.querySelector('.login-container').appendChild(manualBtn);
+                } else {
+                    showMessage(data.msg, 'error');
+                }
+            } catch (err) {
+                showMessage('网络错误，请重试', 'error');
+                console.error(err);
+            }
+        });
+
+        // 验证码登录
+        codeForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('codeEmail').value.trim();
+            const code = document.getElementById('code').value.trim();
+
+            if (!email || !code) {
+                showMessage('请填写完整信息', 'error');
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/login/code', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, code })
+                });
+                
+                const data = await res.json();
+
+                if (data.code === 200) {
+                    Auth.saveLoginInfo(data.data.session_id, {
+                        username: data.data.username,
+                        email: data.data.email
+                    });
+                    
+                    showMessage('登录成功！', 'success');
+                    
+                    console.log('登录成功，session_id:', data.data.session_id);
+                    console.log('当前cookies:', document.cookie);
+                    
+                    // 显示手动跳转按钮
+                    const manualBtn = document.createElement('button');
+                    manualBtn.textContent = '点击进入首页';
+                    manualBtn.className = 'manual-btn';
+                    manualBtn.onclick = () => {
+                        const redirect = new URLSearchParams(window.location.search).get('redirect') || '/home/index.html';
+                        window.location.href = redirect;
+                    };
+                    
+                    // 移除之前的按钮（如果有）
+                    const oldBtn = document.querySelector('.manual-btn');
+                    if (oldBtn) oldBtn.remove();
+                    
+                    document.querySelector('.login-container').appendChild(manualBtn);
+                } else {
+                    showMessage(data.msg, 'error');
+                }
+            } catch (err) {
+                showMessage('网络错误，请重试', 'error');
+                console.error(err);
+            }
+        });
+
+        // 显示消息
+        function showMessage(text, type = 'info') {
+            msg.textContent = text;
+            msg.className = 'msg ' + type;
+            msg.style.display = 'block';
+        }
+
+        // 检查是否有重定向参数
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('redirect')) {
+            showMessage('请先登录后继续操作', 'info');
+        }
+    </script>
+</body>
+</html>

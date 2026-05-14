@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>重庆大学返校宣讲 | hyper的个人Vlog</title>
+    <!-- 外部资源 -->
+    <link 
+        rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        crossorigin="anonymous"
+    >
+    <style>
+        :root {
+            --primary: #6a5acd;
+            --accent: #ff6b6b;
+            --dark: #2d3436;
+            --light: #f8f9fa;
+            --white: #ffffff;
+            --gray: #495057;
+            --light-gray: #e9ecef;
+            --shadow: 0 2px 15px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+            --cqu-red: #990000;
+            --cqu-green: #006633;
+            --timeline-dot: #ff6b6b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--gray);
+            line-height: 1.8;
+        }
+
+        /* 导航栏 */
+        .navbar {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .container {
+            width: min(1200px, 90%);
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo i {
+            color: var(--accent);
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .back-btn:hover {
+            color: var(--accent);
+            transform: translateX(-3px);
+        }
+
+        /* 文章头部 */
+        .article-header {
+            padding: 60px 0;
+            background: linear-gradient(135deg, var(--cqu-red) 0%, var(--cqu-green) 100%);
+            color: var(--white);
+            text-align: center;
+            margin-bottom: 60px;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .article-title {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            margin-bottom: 15px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            font-size: 0.95rem;
+            opacity: 0.9;
+            margin-top: 20px;
+        }
+
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* 文章内容 */
+        .article-content {
+            max-width: 900px;
+            margin: 0 auto 80px;
+            padding: 0 20px;
+        }
+
+        /* 时间线样式 */
+        .timeline-day {
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .day-header {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 20px 30px;
+            border-radius: 50px;
+            display: inline-block;
+            margin-bottom: 40px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            box-shadow: var(--shadow);
+        }
+
+        .day-header i {
+            margin-right: 10px;
+        }
+
+        .timeline-block {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .timeline-block::before {
+            content: '';
+            position: absolute;
+            left: 100px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+            opacity: 0.3;
+        }
+
+        .time-badge {
+            min-width: 100px;
+            text-align: right;
+            padding-right: 30px;
+            position: relative;
+        }
+
+        .time-badge::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 10px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--timeline-dot);
+            border: 2px solid white;
+            box-shadow: 0 0 0 2px var(--accent);
+        }
+
+        .time-badge span {
+            background: var(--white);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            color: var(--accent);
+            box-shadow: var(--shadow);
+            font-size: 0.9rem;
+        }
+
+        .story-content {
+            flex: 1;
+            background: var(--white);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .story-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .story-title {
+            font-size: 1.3rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .story-title i {
+            color: var(--accent);
+        }
+
+        /* 媒体网格 - 保持原始比例 */
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .media-item {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            background: var(--white);
+        }
+
+        .media-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        /* 保持图片原始比例 */
+        .media-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            aspect-ratio: attr(width) / attr(height);
+        }
+
+        /* 视频容器 - 保持原始比例 */
+        .video-container {
+            margin: 20px 0;
+            background: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .video-container video {
+            width: 100%;
+            height: auto;
+            display: block;
+            background: #000;
+        }
+
+        .video-caption {
+            padding: 12px;
+            background: var(--white);
+            font-size: 0.95rem;
+            text-align: center;
+            color: var(--gray);
+            border-top: 1px solid var(--light-gray);
+        }
+
+        .media-caption {
+            padding: 10px;
+            background: var(--light);
+            font-size: 0.9rem;
+            text-align: center;
+            color: var(--gray);
+            border-top: 1px solid var(--light-gray);
+        }
+
+        .story-tag {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-right: 8px;
+        }
+
+        /* 引用样式 */
+        .quote {
+            background-color: rgba(106, 90, 205, 0.05);
+            border-left: 4px solid var(--cqu-red);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .timeline-block {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .timeline-block::before {
+                display: none;
+            }
+
+            .time-badge {
+                text-align: left;
+                padding-right: 0;
+            }
+
+            .time-badge::after {
+                display: none;
+            }
+
+            .day-header {
+                font-size: 1.2rem;
+                padding: 15px 25px;
+            }
+
+            .media-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="/home/" class="logo">
+                <i class="fas fa-camera-retro"></i> hyper的Vlog
+            </a>
+            <a href="/pages/travel/" class="back-btn">
+                <i class="fas fa-arrow-left"></i> 返回记录
+            </a>
+        </div>
+    </nav>
+
+    <!-- 文章头部 -->
+    <header class="article-header">
+        <div class="container">
+            <h1 class="article-title">重庆大学返校宣讲记</h1>
+            <p>2026.2.11-2026.2.13 | 重返YY，三天两夜的青春回溯</p>
+            <div class="article-meta">
+                <span><i class="fas fa-calendar"></i> 2026年2月11日-13日</span>
+                <span><i class="fas fa-map-marker-alt"></i> 温州育英实验学校（YY）</span>
+                <span><i class="fas fa-flag"></i> 重庆大学返校宣讲</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- 文章主体内容 -->
+    <main class="article-content">
+        <!-- ==================== 第一天：2月11日 ==================== -->
+        <div class="timeline-day">
+            <div class="day-header">
+                <i class="fas fa-sun"></i> 第一天 · 2月11日（周三）
+            </div>
+
+            <!-- 上午：出发 -->
+            <div class="timeline-block">
+                <div class="time-badge">
+                    <span>上午 08:00</span>
+                </div>
+                <div class="story-content">
+                    <h3 class="story-title">
+                        <i class="fas fa-car"></i>
+                        出发 · 重返YY
+                    </h3>
+                    <p>早上出发，踏上回温州的路。窗外风景飞驰，心里全是YY的回忆——那些刷过的题、跑过的操场、一起吃过的外卖。这次回去，不仅是为了宣讲重庆大学，更是想看看那些想念的人。</p>
+                    <div class="media-grid">
+                        <div class="media-item">
+                            <img src="出发.jpg" alt="出发">
+                            <div class="media-caption">2.11 早上 · 出发</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 中午：海报、合影、录取榜 -->
+            <div class="timeline-block">
+                <div class="time-badge">
+                    <span>中午 12:00</span>
+                </div>
+                <div class="story-content">
+                    <h3 class="story-title">
+                        <i class="fas fa-school"></i>
+                        回到母校 · 宣讲准备
+                    </h3>
+                    <p>到YY了！熟悉的校门、熟悉的教学楼。中午贴了海报、还特意去看了光荣榜，和我的名字合了影。语文老师来帮我们开了门，一起合了影。</p>
+                    <div class="media-grid">
+                        <div class="media-item">
+                            <img src="海报.jpg" alt="宣讲海报">
+                            <div class="media-caption">2.11 中午 · 宣讲海报</div>
+                        </div>
+                        <div class="media-item">
+                            <img src="合影.jpg" alt="合影">
+                            <div class="media-caption">2.11 中午 · 语文老师帮我们开门，合影</div>
+                        </div>
+                        <div class="media-item">
+                            <img src="录取榜.jpg" alt="录取榜">
+                            <div class="media-caption">2.11 下午 · 光荣榜上还有我们</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 晚上：警察拿外卖、怀旧外卖、贴纸传承 -->
+            <div class="timeline-block">
+                <div class="time-badge">
+                    <span>下午 16:00</span>
+                </div>
+                <div class="story-content">
+                    <h3 class="story-title">
+                        <i class="fas fa-drumstick-bite"></i>
+                        🚔 警察帮忙拿外卖 · 名场面
+                    </h3>
+                    <p>晚上饿了想点炸鸡外卖。警察SCP去拿炸鸡，专业的事专业的人来干。还是丢进来的炸鸡好吃，感觉外面的都比不上。</p>
+                    
+                    <!-- 警察拿外卖视频 -->
+                    <div class="video-container">
+                        <video controls>
+                            <source src="警察拿外卖.mp4" type="video/mp4">
+                            您的浏览器不支持视频播放
+                        </video>
+                    </div>
+                    <div class="video-caption">
+                        <span class="story-tag">名场面</span>
+                        2.11 晚上 · 警察SCP拿炸鸡
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-block">
+                <div class="time-badge">
+                    <span>下午 17:00</span>
+                </div>
+                <div class="story-content">
+                    <h3 class="story-title">
+                        <i class="fas fa-utensils"></i>
+                        怀旧外卖 · 那些年熟悉的味道
+                    </h3>
+                    <p>终于拿到心心念念的炸鸡，还是高中时最爱吃的那家，还是熟悉的味道！一边吃一边聊着高中的趣事，感觉时间都慢了下来。</p>
+                    <div class="media-grid">
+                        <div class="media-item">
+                            <img src="怀旧外卖.jpg" alt="怀旧外卖">
+                            <div class="media-caption">2.11 晚上 · 还是那个味道</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-block">
+                <div class="time-badge">
+                    <span>晚上 19:00</span>
+                </div>
+                <div class="story-content">
+                    <h3 class="story-title">
+                        <i class="fas fa-heart"></i>
+                        贴纸的传承
+                    </h3>
+                    <p>更惊喜的是，学弟说他捡到了我高中时贴在桌上的Danking贴纸，一直保留到现在。这份意外的传承，让这个夜晚格外温暖。</p>
+                    <div class="media-grid">
+                        <div class="media-item">
+                            <img src="danking贴纸的传承.jpg" alt="贴纸传承">
+                            <div class="media-caption">
+                                <span class="story-tag">感动</span>
+                                2.11 晚上 · 高中贴纸被学弟捡到保管
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-block">
+                <div class="time-badge">
+                    <span>晚上 21:00</span>
+                </div>
+                <div class="story-content">
+                    <h3 class="story-title">
+                        <i class="fas fa-moon"></i>
+                        夜晚的YY · 青春回忆
+                    </h3>
+                    <p>吃完饭在校园里闲逛，夜晚的YY格外安静。又去了高中常去的网吧，还是那个位置，还是那群人，好像一切都没变。</p>
+                    <div class="media-grid">
+                        <div class="media-item">
+                            <img src="夜晚的YY.jpg" alt="夜晚的YY">
+                            <div class="media-caption">2.11 晚上 · 夜晚的YY</div>
+                        </div>
+                        <div class="media-item">
+                            <img src="高中去的网吧.jpg" alt="网吧">
+                            <div class="media-caption">2.11 晚上 · 高中常去的网吧</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== 第二天：2月12日 ==================== -->
+        <div class="timeline-day">
+            <div class="day-header">
+                <i class="fas fa-cloud-sun"></i> 第二天 · 2月12日（周四）
+            </div>
+
+            <!-- 下午：足球 -->
+            <div class="timeline-block">
+                <div class="time-badge">
+                    <span>下午 15:00</span>
+                </div>
+                <div class="story-content">
+                    <h3 class="story-title">
+                        <i class="fas fa-futbol"></i>
+                        约球 · 一场球赛
+                    </h3>
+                    <p>下午约了老同学去踢球。还是那个球场，还是那些一起奔跑的人。虽然技术退步了，但快乐一点没少。</p>
+                    <div class="media-grid">
+                        <div class="media-item">
+                            <img src="足球.jpg" alt="足球">
+                            <div class="media-caption">2.12 下午 · 踢球</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 晚上：宣讲 -->
+            <div class="timeline-block">
+                <div class="time-badge">
+                    <span>晚上 18:30</span>
+                </div>
+                <div class="story-content">
+                    <h3 class="story-title">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        重庆大学宣讲
+                    </h3>
+                    <p>晚上是正式的宣讲时间。站在台上，给学弟学妹们介绍重庆大学——虎溪校区的美景、民主湖的传说、那些奋斗的日夜。看到台下憧憬的眼神，仿佛看到当年的自己。</p>
+                    <div class="media-grid">
+                        <div class="media-item">
+                            <img src="宣讲.jpg" alt="宣讲">
+                            <div class="media-caption">2.12 晚上 · 重庆大学宣讲</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 给老师的礼物 -->
+            <div class="timeline-block">
+                <div class="time-badge">
+                    <span>晚上 19:30</span>
+                </div>
+                <div class="story-content">
+                    <h3 class="story-title">
+                        <i class="fas fa-gift"></i>
+                        给语文老师的礼物
+                    </h3>
+                    <p>宣讲结束后，给已经回家的语文老师留了点小礼物。多年的教导之恩我永远不会忘记。</p>
+                    <div class="media-grid">
+                        <div class="media-item">
+                            <img src="给语文老师的礼物.jpg" alt="给老师的礼物">
+                            <div class="media-caption">2.12 晚上 · 给老师的礼物</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KTV -->
+            <div class="timeline-block">
+                <div class="time-badge">
+                    <span>晚上 23:30</span>
+                </div>
+                <div class="story-content">
+                    <h3 class="story-title">
+                        <i class="fas fa-music"></i>
+                        KTV · 唱到凌晨
+                    </h3>
+                    <p>晚上转战KTV，一群人从晚上唱到凌晨。嘶吼、欢笑、还有那些唱不完的歌。这才是青春该有的样子。</p>
+                    
+                    <!-- KTV视频和照片 -->
+                    <div class="video-container">
+                        <video controls>
+                            <source src="ktv.mp4" type="video/mp4">
+                            您的浏览器不支持视频播放
+                        </video>
+                    </div>
+                    <div class="video-caption">
+                        2.12 晚上 · KTV狂欢
+                    </div>
+                    
+                    <div class="media-grid">
+                        <div class="media-item">
+                            <img src="ktv.jpg" alt="KTV">
+                            <div class="media-caption">2.12 晚上 · KTV</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== 第三天：2月13日 ==================== -->
+        <div class="timeline-day">
+            <div class="day-header">
+                <i class="fas fa-cloud"></i> 第三天 · 2月13日（周五）
+            </div>
+
+            <!-- 凌晨：电影 -->
+            <div class="timeline-block">
+                <div class="time-badge">
+                    <span>凌晨 02:00</span>
+                </div>
+                <div class="story-content">
+                    <h3 class="story-title">
+                        <i class="fas fa-film"></i>
+                        凌晨的电影
+                    </h3>
+                    <p>KTV结束后还不过瘾，又跑去看了场凌晨的电影。电影讲了什么其实不重要，重要的是身边的人还是那群人。这种疯狂，可能只有和死党在一起才会有。</p>
+                    <div class="media-grid">
+                        <div class="media-item">
+                            <img src="凌晨的电影.jpg" alt="凌晨电影">
+                            <div class="media-caption">2.13 凌晨 · 电影之夜</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 下午：离别 -->
+            <div class="timeline-block">
+                <div class="time-badge">
+                    <span>下午 15:00</span>
+                </div>
+                <div class="story-content">
+                    <h3 class="story-title">
+                        <i class="fas fa-heart"></i>
+                        再见 · 下次见
+                    </h3>
+                    <p>和zbh告别的时候，没有太多的话，只是一个“拜拜”。三天的相聚太短，但已经装下了这么多值得铭记的瞬间。期待下一次重逢。</p>
+                    <div class="media-grid">
+                        <div class="media-item">
+                            <img src="跟zbh的离别.jpg" alt="与zbh离别">
+                            <div class="media-caption">
+                                <span class="story-tag">不舍</span>
+                                2.13 下午 · 和zbh告别
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 总结 -->
+        <div class="timeline-day">
+            <div class="story-content" style="background: linear-gradient(135deg, rgba(153,0,0,0.05), rgba(0,102,51,0.05));">
+                <h3 class="story-title" style="color: var(--cqu-red);">
+                    <i class="fas fa-heart"></i>
+                    三天两夜 · 返校总结
+                </h3>
+                <p>2026年2月11日到13日，这三天两夜，装下了太多故事：</p>
+                <ul style="margin: 20px 0 20px 30px;">
+                    <li>贴纸的传承——我高中的Danking贴纸被学弟捡到保管</li>
+                    <li>警察拿外卖——警察SCP拿外卖的经典一幕</li>
+                    <li>凌晨的电影和KTV里的嘶吼</li>
+                    <li>球场上的奔跑和宣讲台上的紧张</li>
+                    <li>还有那些熟悉的味道、熟悉的人</li>
+                </ul>
+                <p>感谢YY，感谢每一个出现在这段故事里的人。青春不会散场，我们下次见。</p>
+                
+                <!-- 最后的合影 -->
+                <div class="media-grid" style="margin-top: 30px;">
+                    <div class="media-item">
+                        <img src="合影.jpg" alt="合影">
+                        <div class="media-caption">2026.2.11-2.13 · 永远的记忆</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2026 hyper的个人Vlog | 记录生活，分享故事</p>
+            <p style="margin-top: 10px;">
+                <a href="/home/" style="color: #ff6b6b; text-decoration: none;">返回首页</a> | 
+                <a href="/talk/" style="color: #ff6b6b; text-decoration: none;">留言交流</a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

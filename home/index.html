@@ -1,0 +1,1765 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hyper的个人Vlog | 记录生活，分享故事</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bilibili-pink: #fb7299;
+            --bilibili-blue: #23ade5;
+            --bilibili-dark: #18191c;
+            --bilibili-gray: #f1f2f3;
+            --bilibili-light: #f6f7f8;
+            --bilibili-white: #ffffff;
+            --bilibili-text: #18191c;
+            --bilibili-text-gray: #9499a0;
+            --bilibili-hover: #f8598b;
+            --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 4px 16px rgba(251, 114, 153, 0.16);
+            --transition-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', 'Microsoft YaHei', sans-serif;
+        }
+
+        body {
+            background-color: var(--bilibili-light);
+            color: var(--bilibili-text);
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        /* ===== B站风格顶部导航 ===== */
+        .bili-header {
+            background: var(--bilibili-white);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.96);
+        }
+
+        .bili-nav {
+            display: flex;
+            align-items: center;
+            height: 64px;
+            gap: 24px;
+        }
+
+        .bili-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--bilibili-pink);
+            text-decoration: none;
+        }
+
+        .bili-logo i {
+            background: linear-gradient(135deg, var(--bilibili-pink), var(--bilibili-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2rem;
+        }
+
+        .bili-logo span {
+            background: linear-gradient(135deg, var(--bilibili-pink), var(--bilibili-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .bili-tabs {
+            display: flex;
+            gap: 8px;
+            flex: 1;
+            flex-wrap: wrap;
+        }
+
+        .bili-tab {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--bilibili-text);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .bili-tab:hover {
+            background: var(--bilibili-gray);
+            color: var(--bilibili-pink);
+        }
+
+        .bili-tab.active {
+            background: var(--bilibili-pink);
+            color: white;
+        }
+
+        /* 个人简介专属高亮按钮 */
+        .resume-tab {
+            background: linear-gradient(135deg, #6a5acd, #ff6b6b);
+            color: white !important;
+            box-shadow: 0 2px 8px rgba(106, 90, 205, 0.3);
+        }
+
+        .resume-tab:hover {
+            background: linear-gradient(135deg, #5a4abf, #ff5a5a);
+            transform: translateY(-2px);
+        }
+
+        .bili-user {
+            position: relative;
+        }
+
+        .bili-user-btn {
+            background: var(--bilibili-gray);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            color: var(--bilibili-text);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .bili-user-btn:hover {
+            background: #e5e6e7;
+            color: var(--bilibili-pink);
+        }
+
+        .bili-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            min-width: 140px;
+            display: none;
+            margin-top: 8px;
+            overflow: hidden;
+            z-index: 1000;
+        }
+
+        .bili-dropdown.show {
+            display: block;
+            animation: slideDown 0.2s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .bili-dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 20px;
+            color: var(--bilibili-text);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid #f1f2f3;
+        }
+
+        .bili-dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .bili-dropdown-item:hover {
+            background: #f8f9fa;
+            color: var(--bilibili-pink);
+            padding-left: 24px;
+        }
+
+        /* ===== 访问计数 ===== */
+        .visit-counter {
+            background: rgba(251, 114, 153, 0.1);
+            color: var(--bilibili-pink);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-left: 12px;
+            border: 1px solid rgba(251, 114, 153, 0.2);
+        }
+
+        /* ===== 原横幅样式 ===== */
+        .hero {
+            background: linear-gradient(rgba(106, 90, 205, 0.85), rgba(255, 107, 107, 0.85)), url('img/bg.png');
+            background-size: cover;
+            background-position: center;
+            color: var(--bilibili-white);
+            text-align: center;
+            padding: 120px 0;
+            margin: 24px 0 40px;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: clamp(1.8rem, 5vw, 3.5rem);
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .hero-btn {
+            display: inline-block;
+            background-color: var(--bilibili-white);
+            color: #6a5acd;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-btn:hover {
+            background-color: #4ecdc4;
+            color: var(--bilibili-white);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* ===== B站风格轮播 ===== */
+        .bili-carousel {
+            margin: 0 0 40px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+            position: relative;
+        }
+
+        .carousel-container {
+            position: relative;
+            height: 320px;
+            overflow: hidden;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            height: 100%;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .carousel-slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.1) 100%);
+            z-index: 1;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 8s ease;
+        }
+
+        .carousel-slide:hover img {
+            transform: scale(1.05);
+        }
+
+        .carousel-content {
+            position: absolute;
+            bottom: 60px;
+            left: 60px;
+            color: white;
+            z-index: 2;
+            max-width: 600px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .carousel-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .carousel-content p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            opacity: 0.95;
+        }
+
+        .carousel-tag {
+            display: inline-block;
+            background: var(--bilibili-pink);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+
+        .carousel-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            color: var(--bilibili-pink);
+            padding: 10px 24px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .carousel-btn:hover {
+            background: var(--bilibili-pink);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(251, 114, 153, 0.4);
+        }
+
+        /* 轮播指示器 */
+        .carousel-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 3;
+        }
+
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-dot.active {
+            width: 30px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        /* 轮播箭头 */
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(4px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 3;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .carousel-arrow:hover {
+            background: var(--bilibili-pink);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-arrow.left {
+            left: 20px;
+        }
+
+        .carousel-arrow.right {
+            right: 20px;
+        }
+
+        /* ===== 分类导航 ===== */
+        .bili-section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 40px 0 20px;
+        }
+
+        .bili-section-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .bili-section-title h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--bilibili-text);
+        }
+
+        .bili-section-title i {
+            font-size: 2rem;
+            color: var(--bilibili-pink);
+        }
+
+        .bili-more {
+            color: var(--bilibili-text-gray);
+            text-decoration: none;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .bili-more:hover {
+            color: var(--bilibili-pink);
+        }
+
+        /* 分类网格 - 居中布局 */
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(7, minmax(130px, 1fr));
+            gap: 16px;
+            margin-bottom: 40px;
+            justify-content: center;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px 16px;
+            text-align: center;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s var(--transition-bounce);
+            box-shadow: var(--shadow-card);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+        }
+
+        .category-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--bilibili-pink);
+        }
+
+        .category-card i {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, var(--bilibili-pink), var(--bilibili-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .category-card h3 {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        .category-card p {
+            font-size: 0.85rem;
+            color: var(--bilibili-text-gray);
+        }
+
+        /* ✅ AI 助手卡片 - 独占一行居中 */
+        .ai-card {
+            grid-column: span 7;
+            max-width: 200px;
+            justify-self: center;
+            background: linear-gradient(white, white) padding-box,
+                linear-gradient(135deg, #667eea, #764ba2) border-box;
+            border: 2px solid transparent;
+        }
+
+        /* ===== B站风格视频卡片 ===== */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 24px 16px;
+            margin-bottom: 40px;
+        }
+
+        .video-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s var(--transition-bounce);
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: var(--shadow-card);
+        }
+
+        .video-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .video-cover {
+            position: relative;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            background: #f1f2f3;
+        }
+
+        .video-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .video-card:hover .video-cover img {
+            transform: scale(1.08);
+        }
+
+        .video-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: var(--bilibili-pink);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            z-index: 2;
+            box-shadow: 0 2px 8px rgba(251, 114, 153, 0.3);
+        }
+
+        .video-duration {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            backdrop-filter: blur(4px);
+        }
+
+        .video-info {
+            padding: 14px 12px 16px;
+        }
+
+        .video-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            color: var(--bilibili-text);
+        }
+
+        .video-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.85rem;
+            color: var(--bilibili-text-gray);
+        }
+
+        .video-meta i {
+            font-size: 0.9rem;
+            color: var(--bilibili-pink);
+        }
+
+        .video-stats {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 8px;
+            font-size: 0.8rem;
+            color: var(--bilibili-text-gray);
+        }
+
+        .video-stats span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* ===== 分区标题样式 ===== */
+        .category-section {
+            margin-bottom: 32px;
+        }
+
+        .category-section-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light-gray);
+        }
+
+        .category-section-title i {
+            font-size: 1.5rem;
+            color: var(--bilibili-pink);
+        }
+
+        .category-section-title h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--bilibili-text);
+        }
+
+        .category-section-title .count {
+            margin-left: 8px;
+            font-size: 0.9rem;
+            color: var(--bilibili-text-gray);
+            font-weight: 400;
+        }
+
+        /* ===== 分隔符 ===== */
+        .bili-divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 40px 0 24px;
+        }
+
+        .bili-divider-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--bilibili-pink), transparent);
+        }
+
+        .bili-divider-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--bilibili-pink);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        /* ===== 页脚 ===== */
+        .bili-footer {
+            background: white;
+            padding: 48px 0 24px;
+            margin-top: 60px;
+            border-top: 1px solid #f1f2f3;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h3 {
+            font-size: 1.1rem;
+            margin-bottom: 16px;
+            color: var(--bilibili-text);
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col a {
+            color: var(--bilibili-text-gray);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-col a:hover {
+            color: var(--bilibili-pink);
+            transform: translateX(4px);
+        }
+
+        .footer-copyright {
+            text-align: center;
+            padding-top: 24px;
+            border-top: 1px solid #f1f2f3;
+            color: var(--bilibili-text-gray);
+            font-size: 0.85rem;
+        }
+
+        .footer-copyright a {
+            color: var(--bilibili-pink);
+            text-decoration: none;
+        }
+
+        /* ===== 回到顶部按钮 ===== */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 48px;
+            height: 48px;
+            background: var(--bilibili-pink);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 12px rgba(251, 114, 153, 0.4);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            border: none;
+            z-index: 999;
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: scale(1.1) translateY(-4px);
+            box-shadow: 0 8px 20px rgba(251, 114, 153, 0.6);
+        }
+
+        /* ===== 响应式 ===== */
+        @media (max-width: 1100px) {
+            .category-grid {
+                grid-template-columns: repeat(4, minmax(130px, 1fr));
+            }
+
+            .ai-card {
+                grid-column: span 4;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .bili-nav {
+                flex-wrap: wrap;
+                height: auto;
+                padding: 12px 0;
+            }
+
+            .bili-tabs {
+                order: 3;
+                width: 100%;
+                overflow-x: auto;
+                padding-bottom: 8px;
+            }
+
+            .hero {
+                padding: 80px 0;
+            }
+
+            .carousel-container {
+                height: 240px;
+            }
+
+            .carousel-content {
+                left: 20px;
+                bottom: 40px;
+            }
+
+            .carousel-content h2 {
+                font-size: 1.5rem;
+            }
+
+            .carousel-content p {
+                font-size: 0.9rem;
+            }
+
+            .carousel-arrow {
+                width: 32px;
+                height: 32px;
+            }
+
+            .video-grid {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+                gap: 16px;
+            }
+
+            .bili-section-title h2 {
+                font-size: 1.4rem;
+            }
+
+            .category-grid {
+                grid-template-columns: repeat(3, minmax(130px, 1fr));
+            }
+
+            .ai-card {
+                grid-column: span 3;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .video-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .category-grid {
+                grid-template-columns: repeat(2, minmax(130px, 1fr));
+            }
+
+            .ai-card {
+                grid-column: span 2;
+                max-width: 180px;
+            }
+
+            .carousel-content {
+                left: 16px;
+                bottom: 30px;
+            }
+
+            .carousel-content h2 {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- B站风格头部 -->
+    <header class="bili-header">
+        <div class="container">
+            <nav class="bili-nav">
+                <a href="#" class="bili-logo">
+                    <i class="fas fa-camera-retro"></i>
+                    hyper的<span>Vlog</span>
+                </a>
+
+                <div class="bili-tabs">
+                    <a href="#home" class="bili-tab active">首页</a>
+                    <a href="#categories" class="bili-tab">分类</a>
+                    <a href="#blog" class="bili-tab">博客</a>
+                    <a href="#about" class="bili-tab">关于hyper</a>
+                    <a href="/resume/index.html" class="bili-tab resume-tab">
+                        <i class="fas fa-id-card"></i> 个人简介
+                    </a>
+                    <a href="#contact" class="bili-tab">联系我</a>
+                    <a href="https://github.com/hyper152/personal-blog" target="_blank" class="bili-tab">
+                        <i class="fab fa-github"></i> 开源代码
+                    </a>
+                </div>
+
+                <div class="visit-counter">
+                    <i class="fas fa-eye"></i>
+                    <span id="visitCounterNumber">0</span>
+                </div>
+
+                <!-- 用户状态 -->
+                <div class="bili-user">
+                    <button class="bili-user-btn" id="userBtn">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="usernameDisplay">未登录</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="bili-dropdown" id="dropdownMenu">
+                        <a href="/login/index.html" class="bili-dropdown-item" id="loginItem">
+                            <i class="fas fa-sign-in-alt"></i> 登录
+                        </a>
+                        <a href="/login/register.html" class="bili-dropdown-item" id="registerItem">
+                            <i class="fas fa-user-plus"></i> 注册
+                        </a>
+                        <a href="javascript:void(0)" class="bili-dropdown-item" id="logoutItem" onclick="handleLogout()"
+                            style="display: none;">
+                            <i class="fas fa-sign-out-alt"></i> 退出
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- ===== 原横幅 - 顶部 ===== -->
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <h1>记录生活，分享故事</h1>
+                <p>欢迎来到hyper的个人Vlog空间，这里记录了hyper的日常生活、旅行经历和思考感悟。</p>
+                <a href="#blog" class="hero-btn">
+                    <i class="fas fa-book-open"></i> 浏览更多内容
+                </a>
+            </div>
+        </section>
+
+        <!-- ===== 轮播区域 - 横幅和分类中间 ===== -->
+        <div class="bili-carousel">
+            <div class="carousel-container">
+                <div class="carousel-track" id="carouselTrack">
+                    <!-- 轮播项1 - 我的世界 -->
+                    <div class="carousel-slide">
+                        <img src="/pages/games/mc/2026.2.15.jpg" alt="我的世界重建计划"
+                            onerror="this.src='https://via.placeholder.com/1300x400?text=MC重建计划'">
+                        <div class="carousel-content">
+                            <span class="carousel-tag"><i class="fas fa-gamepad"></i> 游戏栏</span>
+                            <h2>温州育英 · 我的世界重建计划</h2>
+                            <p>在方块中复刻高中记忆！服务器 mc.0o0hyper0o0.cyou 已开放，版本1.21.1-Fabric 0.16.10，欢迎加入共建。</p>
+                            <a href="/pages/games/mc/index.html" class="carousel-btn">
+                                立即加入 <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- 轮播项2 - 返校宣讲 -->
+                    <div class="carousel-slide">
+                        <img src="\pages\YY往事\返校宣讲\录取榜.jpg" alt="返校宣讲"
+                            onerror="this.src='https://via.placeholder.com/1300x400?text=返校宣讲'">
+                        <div class="carousel-content">
+                            <span class="carousel-tag"><i class="fas fa-history"></i> YY往事</span>
+                            <h2>重庆大学返校宣讲记</h2>
+                            <p>2026年2月11日-13日，重返YY，三天两夜的青春回溯。警察拿外卖、贴纸传承、KTV嘶吼、凌晨电影……每一刻都值得铭记。</p>
+                            <a href="/pages/YY往事/返校宣讲/index.html" class="carousel-btn">
+                                重温回忆 <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- 轮播项3 - 贵阳 -->
+                    <div class="carousel-slide">
+                        <img src="\pages\travel\2026.2.2-贵阳\贵阳北站-1.jpg" alt="贵阳"
+                            onerror="this.src='https://via.placeholder.com/1300x400?text=贵阳'">
+                        <div class="carousel-content">
+                            <span class="carousel-tag"><i class="fas fa-map-marked-alt"></i> 旅行</span>
+                            <h2>贵阳半日漫游 · 从北站到双子塔</h2>
+                            <p>2026年2月2日，中午抵筑，下午黔灵山看猴，民生路吃丝娃娃，夜探甲秀楼、白宫、双子塔——半日贵阳，尽收眼底。</p>
+                            <a href="/pages/travel/2026.2.2-贵阳/index.html" class="carousel-btn">
+                                漫游贵阳 <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- 轮播项4 - 雁荡山 -->
+                    <div class="carousel-slide">
+                        <img src="/pages/travel/2025.8.17-雁荡山/山景1.jpg" alt="雁荡山"
+                            onerror="this.src='https://via.placeholder.com/1300x400?text=雁荡山'">
+                        <div class="carousel-content">
+                            <span class="carousel-tag"><i class="fas fa-mountain"></i> 旅行</span>
+                            <h2>雁荡山旅游记 - 奇峰异石间的行走</h2>
+                            <p>雁荡山的奇峰怪石、飞泉瀑布，每一处都充满了诗意，一步一景，流连忘返。</p>
+                            <a href="/pages/travel/2025.8.17-雁荡山/" class="carousel-btn">
+                                探秘雁荡 <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 轮播箭头 -->
+                <button class="carousel-arrow left" id="carouselPrev">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="carousel-arrow right" id="carouselNext">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+
+                <!-- 轮播指示器 -->
+                <div class="carousel-dots" id="carouselDots">
+                    <span class="carousel-dot active"></span>
+                    <span class="carousel-dot"></span>
+                    <span class="carousel-dot"></span>
+                    <span class="carousel-dot"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== 分类导航区 ===== -->
+        <div class="bili-section-header" id="categories">
+            <div class="bili-section-title">
+                <i class="fas fa-th-large"></i>
+                <h2>内容分类</h2>
+            </div>
+            <a href="#" class="bili-more">探索更多 <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="category-grid">
+            <a href="/pages/travel/" class="category-card">
+                <i class="fas fa-map-marked-alt"></i>
+                <h3>旅游记录</h3>
+                <p>走遍山河，记录美好</p>
+            </a>
+            <a href="/pages/diy/" class="category-card">
+                <i class="fas fa-desktop"></i>
+                <h3>装机记录</h3>
+                <p>数码爱好者的装机分享</p>
+            </a>
+            <a href="/pages/YY往事/" class="category-card">
+                <i class="fas fa-history"></i>
+                <h3>YY往事</h3>
+                <p>班级生活与成长感悟</p>
+            </a>
+            <a href="/pages/video/" class="category-card">
+                <i class="fas fa-video"></i>
+                <h3>视频创作</h3>
+                <p>记录生活的视频作品</p>
+            </a>
+            <a href="/pages/devlog/" class="category-card">
+                <i class="fas fa-code"></i>
+                <h3>开发日志</h3>
+                <p>技术探索与网站搭建记录</p>
+            </a>
+            <a href="/pages/games/" class="category-card">
+                <i class="fas fa-gamepad"></i>
+                <h3>游戏栏</h3>
+                <p>游戏时光，快乐分享</p>
+            </a>
+            <a href="../talk/comment.html" class="category-card">
+                <i class="fas fa-comments"></i>
+                <h3>留言板</h3>
+                <p>互动交流，分享想法</p>
+            </a>
+        </div>
+
+        <!-- ✅ AI 助手卡片 - 独占一行居中，放在网格外面 -->
+        <div style="display: flex; justify-content: center; margin-bottom: 40px;">
+            <a href="/talk/ai-chat.html" class="category-card ai-card" style="margin: 0;">
+                <i class="fas fa-robot"></i>
+                <h3>AI 助手</h3>
+                <p>和hyper的Ollama 模型聊天</p>
+            </a>
+        </div>
+
+        <!-- ===== 分隔符 ===== -->
+        <div class="bili-divider">
+            <div class="bili-divider-line"></div>
+            <div class="bili-divider-icon">
+                <i class="fas fa-bolt"></i>
+            </div>
+            <div class="bili-divider-line"></div>
+        </div>
+
+        <!-- ===== 最新动态标题 ===== -->
+        <div class="bili-section-header" id="blog">
+            <div class="bili-section-title">
+                <i class="fas fa-fire"></i>
+                <h2>最新动态</h2>
+            </div>
+            <a href="#" class="bili-more" onclick="window.location.reload()">刷新 <i class="fas fa-sync-alt"></i></a>
+        </div>
+
+        <!-- ===== 按分类整理的动态 ===== -->
+
+        <!-- 1. 游戏栏 - 最新 -->
+        <div class="category-section">
+            <div class="category-section-title">
+                <i class="fas fa-gamepad"></i>
+                <h3>游戏栏 <span class="count">· 1篇</span></h3>
+            </div>
+            <div class="video-grid">
+                <!-- 我的世界重建计划 (2026.2.14-15) -->
+                <a href="/pages/games/mc/index.html" class="video-card">
+                    <div class="video-cover">
+                        <span class="video-badge" style="background: #3b8526;">游戏栏</span>
+                        <img src="/pages/games/mc/2026.2.15.jpg" alt="我的世界重建计划" loading="lazy"
+                            onerror="this.src='https://via.placeholder.com/400x225?text=MC'">
+                        <span class="video-duration">02.14-15</span>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">温州育英 · 我的世界重建计划</h3>
+                        <div class="video-meta">
+                            <span><i class="far fa-calendar"></i> 2026.02.14-15</span>
+                        </div>
+                        <div class="video-stats">
+                            <span><i class="fas fa-server"></i> mc.0o0hyper0o0.cyou</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- 2. YY往事 -->
+        <div class="category-section">
+            <div class="category-section-title">
+                <i class="fas fa-history"></i>
+                <h3>YY往事 <span class="count">· 4篇</span></h3>
+            </div>
+            <div class="video-grid">
+
+                <!-- 觉醒年代 · 百团大战 -->
+                <a href="/pages/YY往事/觉醒年代/" class="video-card">
+                    <div class="video-cover">
+                        <span class="video-badge" style="background: #8b0000;">YY往事</span>
+                        <img src="/pages/YY往事/觉醒年代/media/cover.jpg" alt="觉醒年代" loading="lazy"
+                            onerror="this.style.background='linear-gradient(135deg, #8b0000, #ff4500)'; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 400 225\'%3E%3Crect width=\'400\' height=\'225\' fill=\'%238b0000\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' dominant-anchor=\'middle\' dy=\'.3em\' fill=\'%23ffd700\' font-size=\'24\' font-weight=\'bold\'%3E觉醒年代%3C/text%3E%3C/svg%3E'">
+                        <span class="video-duration">百团大战</span>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">觉醒年代 · WZYY 百团大战</h3>
+                        <div class="video-meta">
+                            <span><i class="far fa-calendar"></i> 学生运动</span>
+                        </div>
+                        <div class="video-stats">
+                            <span><i class="fas fa-fire"></i> 外卖自由</span>
+                            <span><i class="fas fa-users"></i> 集体觉醒</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- EDG夺冠 -->
+                <a href="/pages/YY往事/EDG夺冠/" class="video-card">
+                    <div class="video-cover">
+                        <span class="video-badge" style="background: #e10600;">YY往事</span>
+                        <img src="/pages/YY往事/EDG夺冠/media/kskbl.jpg" alt="EDG夺冠" loading="lazy"
+                            onerror="this.style.background='linear-gradient(135deg, #e10600, #1a1a1a)'; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 400 225\'%3E%3Crect width=\'400\' height=\'225\' fill=\'%231a1a1a\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' dominant-anchor=\'middle\' dy=\'.3em\' fill=\'%23ffd700\' font-size=\'24\' font-weight=\'bold\'%3EEDG 夺冠%3C/text%3E%3C/svg%3E'">
+                        <span class="video-duration">🏆 冠军</span>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">EDG 瓦洛兰特全球冠军赛</h3>
+                        <div class="video-meta">
+                            <span><i class="far fa-calendar"></i> 2024.08.25</span>
+                        </div>
+                        <div class="video-stats">
+                            <span><i class="fas fa-trophy"></i> 中国首冠</span>
+                            <span><i class="fas fa-crown"></i> 仁川登顶</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- 机房往事 -->
+                <a href="/pages/YY往事/机房往事/" class="video-card">
+                    <div class="video-cover">
+                        <span class="video-badge" style="background: #2d6a4f;">YY往事</span>
+                        <img src="/pages/YY往事/机房往事/media/74404.jpg" alt="机房往事" loading="lazy"
+                            onerror="this.style.background='linear-gradient(135deg, #1a1a2e, #16213e)'; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 400 225\'%3E%3Crect width=\'400\' height=\'225\' fill=\'%231a1a2e\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' dominant-anchor=\'middle\' dy=\'.3em\' fill=\'%234ecdc4\' font-size=\'24\' font-weight=\'bold\'%3E机房往事%3C/text%3E%3C/svg%3E'">
+                        <span class="video-duration">🎮 游戏</span>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">机房往事 · 高中的游戏时光</h3>
+                        <div class="video-meta">
+                            <span><i class="far fa-calendar"></i> 2024 青春记忆</span>
+                        </div>
+                        <div class="video-stats">
+                            <span><i class="fas fa-gamepad"></i> LOL/CS/瓦</span>
+                            <span><i class="fas fa-computer"></i> 14个瞬间</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- 返校宣讲 (2026.2.11-13) -->
+                <a href="/pages/YY往事/返校宣讲/index.html" class="video-card">
+                    <div class="video-cover">
+                        <span class="video-badge" style="background: #9b59b6;">YY往事</span>
+                        <img src="/pages/YY往事/返校宣讲/录取榜.jpg" alt="重庆大学返校宣讲" loading="lazy">
+                        <span class="video-duration">02.11-13</span>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">重庆大学返校宣讲记</h3>
+                        <div class="video-meta">
+                            <span><i class="far fa-calendar"></i> 2026.02.11-13</span>
+                        </div>
+                        <div class="video-stats">
+                            <span><i class="fas fa-video"></i> 警察拿外卖</span>
+                            <span><i class="fas fa-heart"></i> 贴纸传承</span>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+
+        <!-- 3. 旅游记录 - 按时间排序 -->
+        <div class="category-section">
+            <div class="category-section-title">
+                <i class="fas fa-map-marked-alt"></i>
+                <h3>旅游记录 <span class="count">· 7篇</span></h3>
+            </div>
+            <div class="video-grid">
+                <!-- 贵阳旅游 (2026.2.2) -->
+                <a href="/pages/travel/2026.2.2-贵阳/index.html" class="video-card">
+                    <div class="video-cover">
+                        <span class="video-badge" style="background: #e67e22;">旅行</span>
+                        <img src="/pages/travel/2026.2.2-贵阳/贵阳北站-1.jpg" alt="贵阳旅游" loading="lazy"
+                            onerror="this.src='https://via.placeholder.com/400x225?text=贵阳'">
+                        <span class="video-duration">02.02</span>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">贵阳半日漫游 · 从北站到双子塔</h3>
+                        <div class="video-meta">
+                            <span><i class="far fa-calendar"></i> 2026.02.02</span>
+                        </div>
+                        <div class="video-stats">
+                            <span><i class="fas fa-tree"></i> 黔灵山</span>
+                            <span><i class="fas fa-building"></i> 双子塔</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- 雁荡山 (2025.8.17) -->
+                <a href="/pages/travel/2025.8.17-雁荡山/" class="video-card">
+                    <div class="video-cover">
+                        <span class="video-badge" style="background: #e67e22;">旅行</span>
+                        <img src="/pages/travel/2025.8.17-雁荡山/山洞里的地瓜.jpg" alt="雁荡山" loading="lazy">
+                        <span class="video-duration">08.17</span>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">雁荡山旅游记 · 奇峰异石间的行走</h3>
+                        <div class="video-meta">
+                            <span><i class="far fa-calendar"></i> 2025.08.17</span>
+                        </div>
+                        <div class="video-stats">
+                            <span><i class="fas fa-mountain"></i> 灵峰</span>
+                            <span><i class="fas fa-user"></i> 山洞同学</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- 百丈漈 (2025.7.24) -->
+                <a href="/pages/travel/2025.7.24-百丈漈/" class="video-card">
+                    <div class="video-cover">
+                        <span class="video-badge" style="background: #e67e22;">旅行</span>
+                        <img src="/pages/travel/2025.7.24-百丈漈/在百丈一漈的合影.jpg" alt="百丈漈" loading="lazy">
+                        <span class="video-duration">07.24</span>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">水帘洞穿越记 · 百丈漈之行</h3>
+                        <div class="video-meta">
+                            <span><i class="far fa-calendar"></i> 2025.07.24</span>
+                        </div>
+                        <div class="video-stats">
+                            <span><i class="fas fa-water"></i> 一漈</span>
+                            <span><i class="fas fa-graduation-cap"></i> 重大录取</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- 上交面试记 (2025.6.16) -->
+                <a href="/pages/travel/2025.6.16-上海交通大学面试记-3days/" class="video-card">
+                    <div class="video-cover">
+                        <span class="video-badge" style="background: #3498db;">学习</span>
+                        <img src="/pages/travel/2025.6.16-上海交通大学面试记-3days/上海交通大学欢迎您.jpg" alt="上交面试" loading="lazy">
+                        <span class="video-duration">06.16</span>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">我的第一次独自旅行 · 上交面试记</h3>
+                        <div class="video-meta">
+                            <span><i class="far fa-calendar"></i> 2025.06.16</span>
+                        </div>
+                        <div class="video-stats">
+                            <span><i class="fas fa-train"></i> 双城</span>
+                            <span><i class="fas fa-pen"></i> 三一面试</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- 南京大学强基 (2025.6.15) -->
+                <a href="/pages/travel/2025.6.15-南京大学强基记-2days/" class="video-card">
+                    <div class="video-cover">
+                        <span class="video-badge" style="background: #3498db;">学习</span>
+                        <img src="/pages/travel/2025.6.15-南京大学强基记-2days/南京大学1.jpg" alt="南京大学" loading="lazy"
+                            onerror="this.src='https://via.placeholder.com/400x225?text=南大'">
+                        <span class="video-duration">06.15</span>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">南京大学强基记 · 赴沪赶考</h3>
+                        <div class="video-meta">
+                            <span><i class="far fa-calendar"></i> 2025.06.15-16</span>
+                        </div>
+                        <div class="video-stats">
+                            <span><i class="fas fa-university"></i> 南大</span>
+                            <span><i class="fas fa-dice"></i> 第六签</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- 杭州支持浙江队 (2025.6.14) -->
+                <a href="/pages/travel/2025.6.14-杭州支持浙江队/" class="video-card">
+                    <div class="video-cover">
+                        <span class="video-badge" style="background: #e67e22;">体育</span>
+                        <img src="/pages/travel/2025.6.14-杭州支持浙江队/浙江队2-2上海上港.jpg" alt="浙江队" loading="lazy"
+                            onerror="this.src='https://via.placeholder.com/400x225?text=浙江队'">
+                        <span class="video-duration">06.14</span>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">杭州支持浙江队 · 2-2上海上港</h3>
+                        <div class="video-meta">
+                            <span><i class="far fa-calendar"></i> 2025.06.14</span>
+                        </div>
+                        <div class="video-stats">
+                            <span><i class="fas fa-futbol"></i> 黄龙体育中心</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- 上海旅游 (2024.7.28) -->
+                <a href="/pages/travel/2024.7.28-上海旅游-3days/" class="video-card">
+                    <div class="video-cover">
+                        <span class="video-badge" style="background: #e67e22;">旅行</span>
+                        <img src="/pages/travel/2024.7.28-上海旅游-3days/外滩.jpg" alt="上海旅游" loading="lazy"
+                            onerror="this.src='https://via.placeholder.com/400x225?text=上海'">
+                        <span class="video-duration">07.28-30</span>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">上海旅游记 · 学考全A捷报</h3>
+                        <div class="video-meta">
+                            <span><i class="far fa-calendar"></i> 2024.07.28-30</span>
+                        </div>
+                        <div class="video-stats">
+                            <span><i class="fas fa-star"></i> 学考全A</span>
+                            <span><i class="fas fa-city"></i> 外滩/交大/LPL</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- 4. 开发日志 -->
+        <div class="category-section">
+            <div class="category-section-title">
+                <i class="fas fa-code"></i>
+                <h3>开发日志 <span class="count">· 6篇</span></h3>
+            </div>
+            <div class="video-grid">
+                <!-- Gsing战队 (2026.3.20 最新) -->
+                <a href="/pages/devlog/Gsing/" class="video-card">
+                    <div class="video-cover">
+                        <span class="video-badge" style="background: #165DFF;">开发</span>
+                        <img src="/pages/devlog/Gsing/2026.3.20雷达定位实物图.jpg" alt="Gsing战队" loading="lazy"
+                            onerror="this.src='https://via.placeholder.com/400x225?text=Gsing'">
+                        <span class="video-duration">03.20</span>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">Gsing战队 · 视觉&SLAM开发记录</h3>
+                        <div class="video-meta">
+                            <span><i class="far fa-calendar"></i> 2025.11-2026.03</span>
+                        </div>
+                        <div class="video-stats">
+                            <span><i class="fas fa-eye"></i> YOLO+FAST-LIO2</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- happy_run (步道乐跑) -->
+                <a href="/pages/devlog/happy_run/" class="video-card">
+                    <div class="video-cover">
+                        <span class="video-badge" style="background: #165DFF;">开发</span>
+                        <img src="/pages/devlog/happy_run/happy_run.jpg" alt="步道乐跑" loading="lazy"
+                            onerror="this.src='https://via.placeholder.com/400x225?text=happy_run'">
+                        <span class="video-duration">教程</span>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">步道乐跑 · Fake Location自动化</h3>
+                        <div class="video-meta">
+                            <span><i class="far fa-calendar"></i> 2026.4</span>
+                        </div>
+                        <div class="video-stats">
+                            <span><i class="fas fa-mobile-alt"></i> 虚拟机+模拟位置</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- CQU-coursehelper (2025.12.29) -->
+                <a href="/pages/devlog/CQU-coursehelper/" class="video-card">
+                    <div class="video-cover">
+                        <span class="video-badge" style="background: #165DFF;">开发</span>
+                        <img src="/pages/devlog/CQU-coursehelper/CQU-coursehelper.png" alt="CQU课程助手" loading="lazy"
+                            onerror="this.src='https://via.placeholder.com/400x225?text=CourseHelper'">
+                        <span class="video-duration">12.29</span>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">CQU-CourseHelper · 油猴脚本</h3>
+                        <div class="video-meta">
+                            <span><i class="far fa-calendar"></i> 2025.12.29</span>
+                        </div>
+                        <div class="video-stats">
+                            <span><i class="fas fa-play"></i> 自动播放/后台</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- 声控开关灯 (2025.12.31) -->
+                <a href="/pages/devlog/声控开关灯/" class="video-card">
+                    <div class="video-cover">
+                        <span class="video-badge" style="background: #165DFF;">硬件</span>
+                        <img src="/pages/devlog/声控开关灯/2025年12月31日-声控开关灯.png" alt="声控开关灯" loading="lazy"
+                            onerror="this.src='https://via.placeholder.com/400x225?text=声控开关灯'">
+                        <span class="video-duration">12.31</span>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">声控电机控制寝室大灯</h3>
+                        <div class="video-meta">
+                            <span><i class="far fa-calendar"></i> 2025.12.31</span>
+                        </div>
+                        <div class="video-stats">
+                            <span><i class="fas fa-microphone"></i> 声音识别</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- CRTC机器人比赛 (2025.11.9) -->
+                <a href="/pages/devlog/CQU-CRTC机器人比赛/" class="video-card">
+                    <div class="video-cover">
+                        <span class="video-badge" style="background: #165DFF;">硬件</span>
+                        <img src="/pages/devlog/CQU-CRTC机器人比赛/2025年10月16日-车3.0-不会用MG995.jpg" alt="CRTC机器人"
+                            loading="lazy" onerror="this.src='https://via.placeholder.com/400x225?text=CRTC'">
+                        <span class="video-duration">11.09</span>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">CRTC机器人比赛 · 捡球机器人</h3>
+                        <div class="video-meta">
+                            <span><i class="far fa-calendar"></i> 2025.10-11</span>
+                        </div>
+                        <div class="video-stats">
+                            <span><i class="fas fa-robot"></i> STM32/舵机/双车协同</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- personal-blog (个人博客) -->
+                <a href="/pages/devlog/personal-blog/" class="video-card">
+                    <div class="video-cover">
+                        <span class="video-badge" style="background: #165DFF;">开发</span>
+                        <img src="/pages/devlog/personal-blog/2025年9月24日第二版网站封面.jpg" alt="个人博客" loading="lazy"
+                            onerror="this.src='https://via.placeholder.com/400x225?text=博客'">
+                        <span class="video-duration">v1.0</span>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">个人博客系统 · 从0到1全记录</h3>
+                        <div class="video-meta">
+                            <span><i class="far fa-calendar"></i> 2023-2026</span>
+                        </div>
+                        <div class="video-stats">
+                            <span><i class="fab fa-python"></i> Flask+SQLite</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- 5. 装机记录 -->
+        <div class="category-section">
+            <div class="category-section-title">
+                <i class="fas fa-desktop"></i>
+                <h3>装机记录 <span class="count">· 1篇</span></h3>
+            </div>
+            <div class="video-grid">
+                <!-- 装机记录 (长期) -->
+                <a href="/pages/diy/" class="video-card">
+                    <div class="video-cover">
+                        <span class="video-badge" style="background: #e74c3c;">数码</span>
+                        <img src="/pages/diy/RTX2060裸机.jpg" alt="装机记录" loading="lazy">
+                        <span class="video-duration">长期</span>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">装机记录 · 我的DIY电脑搭建之旅</h3>
+                        <div class="video-meta">
+                            <span><i class="far fa-calendar"></i> 2020-至今</span>
+                        </div>
+                        <div class="video-stats">
+                            <span><i class="fas fa-microchip"></i> RTX2060</span>
+                            <span><i class="fas fa-fire"></i> GT710自燃</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- ===== 第二行分隔符 ===== -->
+        <div class="bili-divider">
+            <div class="bili-divider-line"></div>
+            <div class="bili-divider-icon">
+                <i class="fas fa-heart"></i>
+            </div>
+            <div class="bili-divider-line"></div>
+        </div>
+    </div>
+
+    <!-- ===== B站风格页脚 ===== -->
+    <footer class="bili-footer" id="contact">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>关于我</h3>
+                    <p style="color: #9499a0; margin-bottom: 16px; line-height: 1.6;">
+                        热爱生活，喜欢旅行和记录，用Vlog的形式分享生活中的美好瞬间和成长感悟。</p>
+                    <div class="social-links" style="display: flex; gap: 16px;">
+                        <a href="https://github.com/hyper152/personal-blog" target="_blank"><i
+                                class="fab fa-github"></i></a>
+                        <a href="https://space.bilibili.com/1689598128" target="_blank"><i
+                                class="fab fa-bilibili"></i></a>
+                        <a href="mailto:2361542526@qq.com"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h3>快速链接</h3>
+                    <ul>
+                        <li><a href="#home"><i class="fas fa-home"></i> 首页</a></li>
+                        <li><a href="#categories"><i class="fas fa-th-list"></i> 内容分类</a></li>
+                        <li><a href="#blog"><i class="fas fa-blog"></i> 最新动态</a></li>
+                        <li><a href="../talk/comment.html"><i class="fas fa-comment-dots"></i> 留言板</a></li>
+                        <li><a href="/resume/index.html"><i class="fas fa-id-card"></i> 个人简介</a></li>
+                        <li><a href="https://github.com/hyper152/personal-blog" target="_blank"><i
+                                    class="fab fa-github"></i> 开源代码</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3>内容分类</h3>
+                    <ul>
+                        <li><a href="/pages/travel/"><i class="fas fa-map"></i> 旅游记录</a></li>
+                        <li><a href="/pages/diy/"><i class="fas fa-laptop"></i> 装机记录</a></li>
+                        <li><a href="/pages/YY往事/"><i class="fas fa-history"></i> YY往事</a></li>
+                        <li><a href="/pages/video/"><i class="fas fa-video"></i> 视频创作</a></li>
+                        <li><a href="/pages/devlog/"><i class="fas fa-code"></i> 开发日志</a></li>
+                        <li><a href="/pages/games/"><i class="fas fa-gamepad"></i> 游戏栏</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3>联系我</h3>
+                    <ul>
+                        <li><a href="tencent://message/?uin=2361542526"><i class="fab fa-qq"></i> QQ：2361542526</a></li>
+                        <li><a href="#" onclick="alert('微信：hyper20070129'); return false;"><i class="fab fa-weixin"></i>
+                                微信：hyper20070129</a></li>
+                        <li><a href="mailto:2361542526@qq.com"><i class="fas fa-envelope"></i> 2361542526@qq.com</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-copyright">
+                <div class="visit-count-footer">总访问量：<span id="footerVisitNumber">0</span> 次</div>
+                <p>&copy; 2025 hyper的个人Vlog | 保留所有权利 | <a href="https://github.com/hyper152/personal-blog"
+                        target="_blank" rel="noopener noreferrer"
+                        style="color: var(--bilibili-pink); text-decoration: none;"><i class="fab fa-github"></i>
+                        开源代码</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 回到顶部按钮 -->
+    <button class="back-to-top" id="backToTopBtn">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="/static/js/auth.js"></script>
+    <script>
+        // ===== 轮播功能 =====
+        const track = document.getElementById('carouselTrack');
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dots = document.querySelectorAll('.carousel-dot');
+        const prevBtn = document.getElementById('carouselPrev');
+        const nextBtn = document.getElementById('carouselNext');
+
+        let currentIndex = 0;
+        const slideCount = slides.length;
+        let autoPlayInterval;
+
+        function updateCarousel(index) {
+            if (index < 0) index = slideCount - 1;
+            if (index >= slideCount) index = 0;
+
+            track.style.transform = `translateX(-${index * 100}%)`;
+
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+
+            currentIndex = index;
+        }
+
+        function nextSlide() {
+            updateCarousel(currentIndex + 1);
+        }
+
+        function prevSlide() {
+            updateCarousel(currentIndex - 1);
+        }
+
+        function startAutoPlay() {
+            autoPlayInterval = setInterval(nextSlide, 6000);
+        }
+
+        function stopAutoPlay() {
+            clearInterval(autoPlayInterval);
+        }
+
+        prevBtn.addEventListener('click', () => {
+            stopAutoPlay();
+            prevSlide();
+            startAutoPlay();
+        });
+
+        nextBtn.addEventListener('click', () => {
+            stopAutoPlay();
+            nextSlide();
+            startAutoPlay();
+        });
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                stopAutoPlay();
+                updateCarousel(index);
+                startAutoPlay();
+            });
+        });
+
+        const carousel = document.querySelector('.carousel-container');
+        carousel.addEventListener('mouseenter', stopAutoPlay);
+        carousel.addEventListener('mouseleave', startAutoPlay);
+
+        startAutoPlay();
+
+        // ===== 用户下拉菜单 =====
+        const userBtn = document.getElementById('userBtn');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+
+        if (userBtn) {
+            userBtn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                dropdownMenu.classList.toggle('show');
+            });
+        }
+
+        document.addEventListener('click', function () {
+            dropdownMenu.classList.remove('show');
+        });
+
+        // ===== 回到顶部 =====
+        const backToTopBtn = document.getElementById('backToTopBtn');
+        window.addEventListener('scroll', () => {
+            backToTopBtn.classList.toggle('show', window.scrollY > 300);
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // ===== 平滑滚动 =====
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // ===== 加载访问计数 =====
+        async function loadVisitCount() {
+            try {
+                const response = await fetch('/visit-count');
+                const data = await response.json();
+
+                let totalVisits = 0;
+                if (data.code === 200 && data.data) totalVisits = data.data.total_visits;
+                else if (data.total_visits) totalVisits = data.total_visits;
+                else if (data.count) totalVisits = data.count;
+
+                document.getElementById('visitCounterNumber').textContent = totalVisits || 0;
+                document.getElementById('footerVisitNumber').textContent = totalVisits || 0;
+            } catch (error) {
+                console.error('获取访问计数出错:', error);
+            }
+        }
+
+        // ===== 初始化用户状态 =====
+        async function initUserStatus() {
+            try {
+                const status = await Auth.checkLoginStatus();
+                const usernameDisplay = document.getElementById('usernameDisplay');
+                const loginItem = document.getElementById('loginItem');
+                const registerItem = document.getElementById('registerItem');
+                const logoutItem = document.getElementById('logoutItem');
+
+                if (status.isLogin) {
+                    usernameDisplay.textContent = status.user.username || '用户';
+                    if (loginItem) loginItem.style.display = 'none';
+                    if (registerItem) registerItem.style.display = 'none';
+                    if (logoutItem) logoutItem.style.display = 'flex';
+                } else {
+                    const localUser = Auth.getLocalUser();
+                    if (localUser) {
+                        usernameDisplay.textContent = localUser.username || '用户';
+                        if (loginItem) loginItem.style.display = 'none';
+                        if (registerItem) registerItem.style.display = 'none';
+                        if (logoutItem) logoutItem.style.display = 'flex';
+                    } else {
+                        usernameDisplay.textContent = '未登录';
+                        if (loginItem) loginItem.style.display = 'flex';
+                        if (registerItem) registerItem.style.display = 'flex';
+                        if (logoutItem) logoutItem.style.display = 'none';
+                    }
+                }
+            } catch (error) {
+                console.error('初始化用户状态失败:', error);
+            }
+        }
+
+        // ===== 处理登出 =====
+        window.handleLogout = async function () {
+            const result = await Auth.logout();
+            if (result.success) {
+                alert('退出登录成功！');
+                window.location.reload();
+            }
+        };
+
+        // ===== 页面加载 =====
+        document.addEventListener('DOMContentLoaded', () => {
+            loadVisitCount();
+            initUserStatus();
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>步道乐跑自动化教程 | hyper的开发日志</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #165DFF;
+            --accent: #FF7D00;
+            --light: #f8f9fa;
+            --dark: #2d3436;
+            --gray: #495057;
+            --light-gray: #e9ecef;
+            --shadow: 0 2px 12px rgba(0,0,0,0.08);
+            --shadow-hover: 0 8px 25px rgba(0,0,0,0.12);
+            --border: 1px solid var(--light-gray);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: min(1200px, 90%);
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* 头部样式 */
+        .header {
+            background-color: white;
+            box-shadow: var(--shadow);
+            padding: 20px 0;
+            margin-bottom: 40px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .home-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--light);
+            color: var(--primary);
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .home-link:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--dark);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .github-link:hover {
+            background: #444;
+            transform: translateY(-2px);
+        }
+
+        .project-info {
+            text-align: right;
+        }
+
+        .project-name {
+            font-size: 1.2rem;
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        .project-dates {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        /* 开发日志主样式 */
+        .dev-log {
+            padding: 20px 0 60px;
+        }
+
+        .dev-title {
+            font-size: 2.2rem;
+            color: var(--dark);
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .dev-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent);
+            border-radius: 2px;
+        }
+
+        .dev-intro {
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .tech-item {
+            background: var(--light);
+            padding: 10px 20px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tech-item i {
+            color: var(--accent);
+        }
+
+        /* 通用卡片样式 */
+        .dev-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+        }
+
+        .dev-card h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .dev-card h3 i {
+            font-size: 1.2rem;
+        }
+
+        /* 步骤样式 */
+        .step-list {
+            padding-left: 20px;
+        }
+
+        .step-item {
+            margin-bottom: 30px;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .step-item::before {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 8px;
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .step-item:nth-child(1)::before { content: '1'; }
+        .step-item:nth-child(2)::before { content: '2'; }
+        .step-item:nth-child(3)::before { content: '3'; }
+        .step-item:nth-child(4)::before { content: '4'; }
+        .step-item:nth-child(5)::before { content: '5'; }
+
+        .step-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .step-title i {
+            color: var(--accent);
+        }
+
+        .step-content {
+            background: var(--light);
+            border-radius: 8px;
+            padding: 20px 25px;
+            margin-left: 10px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .step-content p {
+            margin-bottom: 12px;
+        }
+
+        .step-content ul {
+            padding-left: 25px;
+            margin: 10px 0;
+        }
+
+        .step-content li {
+            margin-bottom: 8px;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px 20px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+
+        .warning-box i {
+            color: #ffc107;
+            margin-right: 8px;
+        }
+
+        .danger-box {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 15px 20px;
+            border-radius: 4px;
+            margin: 15px 0;
+            color: #721c24;
+        }
+
+        .danger-box i {
+            color: #dc3545;
+            margin-right: 8px;
+        }
+
+        .info-box {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 15px 20px;
+            border-radius: 4px;
+            margin: 15px 0;
+            color: #0c5460;
+        }
+
+        .info-box i {
+            color: #17a2b8;
+            margin-right: 8px;
+        }
+
+        .success-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px 20px;
+            border-radius: 4px;
+            margin: 15px 0;
+            color: #155724;
+        }
+
+        .success-box i {
+            color: #28a745;
+            margin-right: 8px;
+        }
+
+        /* 视频容器 */
+        .video-container {
+            margin: 20px 0;
+            background: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .video-container video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .video-caption {
+            padding: 12px;
+            background: white;
+            font-size: 0.95rem;
+            text-align: center;
+            color: var(--gray);
+        }
+
+        /* 表格 */
+        .config-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .config-table th,
+        .config-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: var(--border);
+        }
+
+        .config-table th {
+            background: var(--light);
+            color: var(--dark);
+            font-weight: 700;
+        }
+
+        .config-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* 页脚 */
+        .footer {
+            border-top: 1px solid var(--light-gray);
+            padding: 30px 0;
+            text-align: center;
+            color: #6c757d;
+        }
+
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .header-actions {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .project-info {
+                text-align: center;
+            }
+
+            .dev-title {
+                font-size: 1.8rem;
+            }
+
+            .dev-card {
+                padding: 25px;
+            }
+
+            .step-item::before {
+                left: -25px;
+                width: 25px;
+                height: 25px;
+                font-size: 0.8rem;
+            }
+
+            .step-content {
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .step-item {
+                padding-left: 5px;
+            }
+
+            .step-item::before {
+                display: none;
+            }
+
+            .step-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部 -->
+    <header class="header">
+        <div class="container header-content">
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <a href="#" class="logo">Run<span>Helper</span></a>
+            </div>
+            <div class="header-actions">
+                <div class="project-info">
+                    <div class="project-name">步道乐跑自动化教程</div>
+                    <div class="project-dates">真机 Fake Location + 虚拟机 步道乐跑</div>
+                </div>
+                <a href="/home/" class="home-link">
+                    <i class="fas fa-home"></i>
+                    <span>返回主页</span>
+                </a>
+                <a href="https://github.com/hyper152/happy_run" target="_blank" class="github-link">
+                    <i class="fab fa-github"></i>
+                    <span>GitHub 仓库</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <main class="container dev-log">
+        <h1 class="dev-title">步道乐跑自动化跑步教程</h1>
+
+        <!-- 项目简介 -->
+        <section class="dev-intro">
+            <p>本项目提供一套完整的步道乐跑自动化方案，核心逻辑为：<strong>真机运行 Fake Location（提供模拟位置） + 虚拟机运行步道乐跑（躲避应用检测）</strong>。通过这种双层隔离方案，可以有效避免乐跑检测到模拟软件，实现稳定、安全的自动跑步。</p>
+            
+            <div class="tech-stack">
+                <div class="tech-item"><i class="fas fa-mobile-alt"></i> 真机运行 Fake Location</div>
+                <div class="tech-item"><i class="fas fa-box"></i> 虚拟机运行步道乐跑</div>
+                <div class="tech-item"><i class="fab fa-android"></i> Android 7.1 光速虚拟机</div>
+                <div class="tech-item"><i class="fas fa-map-marked-alt"></i> 路线模拟 + 位置模拟</div>
+                <div class="tech-item"><i class="fas fa-shield-alt"></i> 躲避应用检测</div>
+            </div>
+
+            <div class="danger-box">
+                <i class="fas fa-exclamation-triangle"></i>
+                <strong>核心要求：</strong> 需要一台安卓手机。本教程仅用于学习交流，请合理使用。
+            </div>
+
+            <!-- 视频演示 -->
+            <div class="video-container">
+                <video controls poster="">
+                    <source src="happy_run.mp4" type="video/mp4">
+                    您的浏览器不支持视频播放
+                </video>
+                <div class="video-caption">
+                    <i class="fas fa-play-circle"></i> 完整操作演示视频
+                </div>
+            </div>
+        </section>
+
+        <!-- 准备工作 -->
+        <section class="dev-card">
+            <h3><i class="fas fa-download"></i> 一、准备工作（安装与权限）</h3>
+            
+            <div class="step-item">
+                <div class="step-title">
+                    <i class="fas fa-map-marked-alt"></i>
+                    本机安装 Fake Location（fl.apk）
+                </div>
+                <div class="step-content">
+                    <p>首先在真机上安装 Fake Location 应用。</p>
+                    <div class="warning-box">
+                        <i class="fas fa-lightbulb"></i>
+                        <strong>避坑提示：</strong> 安装时如果手机报风险提示，请<strong>断网安装</strong>（关闭WiFi和移动数据），安装完成后再联网。
+                    </div>
+                    <p><strong>权限设置：</strong> 安装完成后，进入手机「设置」→「应用管理」→ 找到 Fake Location，开启以下权限：</p>
+                    <ul>
+                        <li><strong>后台弹出界面</strong> - 允许应用在后台弹出窗口</li>
+                        <li><strong>显示悬浮窗</strong> - 允许应用显示悬浮窗</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="step-item">
+                <div class="step-title">
+                    <i class="fas fa-box"></i>
+                    本机安装光速虚拟机
+                </div>
+                <div class="step-content">
+                    <p>在真机上安装光速虚拟机应用。</p>
+                    <div class="success-box">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>系统选择建议：</strong> 推荐选择 <strong>Android 7.1 系统</strong>，这个版本稳定且完全免费。
+                    </div>
+                    <p><strong>重要设置（防止虚拟机被杀）：</strong></p>
+                    <ul>
+                        <li>进入虚拟机的「设置」→「关于平板电脑」</li>
+                        <li>连续点击「版本号」7次，开启开发者模式</li>
+                        <li>返回设置，进入「开发者选项」</li>
+                        <li>找到并打开 <strong>「停止限制子进程」</strong></li>
+                    </ul>
+                    <div class="info-box">
+                        <i class="fas fa-info-circle"></i>
+                        开启此选项可以防止虚拟机在后台运行时被真机系统杀掉，确保跑步过程不中断。
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 真机环境配置 -->
+        <section class="dev-card">
+            <h3><i class="fas fa-cog"></i> 二、真机环境配置（宿主机）</h3>
+            
+            <div class="step-item">
+                <div class="step-title">
+                    <i class="fas fa-code"></i>
+                    开启开发者选项
+                </div>
+                <div class="step-content">
+                    <p>进入手机「设置」→「关于手机」→ 连续点击<strong>「版本号」7次</strong>，直到提示「您已处于开发者模式」。</p>
+                    <div class="info-box">
+                        <i class="fas fa-info-circle"></i>
+                        不同品牌手机的开启方式略有不同，如果找不到，请百度搜索「你的手机型号 + 如何打开开发者选项」。
+                    </div>
+                </div>
+            </div>
+
+            <div class="step-item">
+                <div class="step-title">
+                    <i class="fas fa-location-dot"></i>
+                    设置模拟位置应用
+                </div>
+                <div class="step-content">
+                    <p>进入「设置」→「开发者选项」，找到<strong>「选择模拟位置信息应用」</strong>，选中 <strong>Fake Location</strong>。</p>
+                    <p>这一步是让系统允许 Fake Location 提供虚拟位置信息。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 虚拟位移设置 -->
+        <section class="dev-card">
+            <h3><i class="fas fa-route"></i> 三、虚拟位移设置（Fake Location）</h3>
+            
+            <div class="step-item">
+                <div class="step-title">
+                    <i class="fas fa-draw-polygon"></i>
+                    路线模拟（跑公里数）
+                </div>
+                <div class="step-content">
+                    <p>打开 Fake Location，按以下步骤设置跑步路线：</p>
+                    <ul>
+                        <li>点击左上角菜单 → 选择「路线模拟」</li>
+                        <li>点击右下角「+」号创建新路线</li>
+                        <li>在地图上找到操场，沿跑道点几个点连成一个圈</li>
+                        <li>点击「小骑车人」图标调节移动速度</li>
+                    </ul>
+                    <div class="success-box">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <strong>速度建议：</strong> 推荐设置为 <strong>3.5m/s - 4.5m/s</strong>，这个速度区间最接近正常跑步，不容易被检测异常。
+                    </div>
+                </div>
+            </div>
+
+            <div class="step-item">
+                <div class="step-title">
+                    <i class="fas fa-bullseye"></i>
+                    位置模拟（补打卡点）
+                </div>
+                <div class="step-content">
+                    <p>如果路线跑完后还有漏掉的打卡点，可以使用位置模拟功能补充：</p>
+                    <ul>
+                        <li>切换到「位置模拟」模式</li>
+                        <li>使用摇杆移动到打卡点附近，或直接在地图上点击打卡点坐标</li>
+                        <li>把位置瞬间移过去「吃掉」打卡点</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="step-item">
+                <div class="step-title">
+                    <i class="fas fa-play-circle"></i>
+                    启动模拟
+                </div>
+                <div class="step-content">
+                    <p>点击「启动模拟」按钮，确保状态栏显示<strong>「正在模拟位置」</strong>。此时 Fake Location 已开始工作。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 虚拟机实战 -->
+        <section class="dev-card">
+            <h3><i class="fas fa-running"></i> 四、虚拟机实战（乐跑端）</h3>
+            
+            <div class="step-item">
+                <div class="step-title">
+                    <i class="fas fa-upload"></i>
+                    应用导入
+                </div>
+                <div class="step-content">
+                    <p>打开光速虚拟机，将以下应用导入虚拟机内：</p>
+                    <ul>
+                        <li><strong>步道乐跑</strong> - 跑步主应用</li>
+                        <li><strong>微信 / QQ</strong> - 用于登录乐跑</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="step-item">
+                <div class="step-title">
+                    <i class="fas fa-shield-virus"></i>
+                    为什么必须使用虚拟机？
+                </div>
+                <div class="step-content">
+                    <p>这是整个方案的核心原理：</p>
+                    <ul>
+                        <li>乐跑运行在<strong>虚拟机内部</strong></li>
+                        <li>Fake Location 运行在<strong>真机（宿主机）</strong></li>
+                        <li>乐跑无法穿透虚拟机扫描到真机上的模拟软件</li>
+                    </ul>
+                    <div class="success-box">
+                        <i class="fas fa-check-circle"></i>
+                        上报数据时会显示<strong>「环境正常」</strong>，有效避免「跑步行为不规范」的警告。
+                    </div>
+                </div>
+            </div>
+
+            <div class="step-item">
+                <div class="step-title">
+                    <i class="fas fa-hourglass-half"></i>
+                    启动与延迟处理
+                </div>
+                <div class="step-content">
+                    <p>在虚拟机内打开步道乐跑，点击「开始跑步」。</p>
+                    <div class="warning-box">
+                        <i class="fas fa-clock"></i>
+                        <strong>注意：</strong> 位置同步会有 <strong>20秒左右</strong> 的延迟。如果超过时间蓝点还不动：
+                        <ul style="margin-top: 10px;">
+                            <li>将 Fake Location 以小窗/悬浮窗模式挂在乐跑跑步页面上方</li>
+                            <li>或者尝试切换摇杆模式</li>
+                        </ul>
+                    </div>
+                    <p>如果位置不动了，可以暂停一下再启动。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 步频与上传 -->
+        <section class="dev-card">
+            <h3><i class="fas fa-cloud-upload-alt"></i> 五、步频与上传（最终步骤）</h3>
+            
+            <div class="step-item">
+                <div class="step-title">
+                    <i class="fas fa-heartbeat"></i>
+                    计步（步频）问题
+                </div>
+                <div class="step-content">
+                    <p>由于没有物理位移，计步器可能不动。目前乐跑对步频的查验相对较松。</p>
+                    <p><strong>稳妥方案：</strong></p>
+                    <ul>
+                        <li>跑步过程中手动摇晃手机，增加真实感</li>
+                        <li>或者在虚拟机内配合使用「传感器模拟器」插件</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="step-item">
+                <div class="step-title">
+                    <i class="fas fa-check-double"></i>
+                    结束跑步与上传
+                </div>
+                <div class="step-content">
+                    <p>当里程和打卡点都满足要求后：</p>
+                    <ol style="padding-left: 25px; margin: 10px 0;">
+                        <li><strong>先在虚拟机内</strong>点击「结束跑步」并上传成绩</li>
+                        <li>确认显示<strong>「上传成功」</strong>后</li>
+                        <li><strong>再关闭</strong>虚拟机和本机的 Fake Location</li>
+                    </ol>
+                    <div class="danger-box">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <strong>重要：</strong> 一定要先上传成功再关闭模拟！否则跑步记录可能丢失。
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 常见问题 -->
+        <section class="dev-card">
+            <h3><i class="fas fa-question-circle"></i> 常见问题 FAQ</h3>
+            
+            <table class="config-table">
+                <thead>
+                    <tr>
+                        <th>问题</th>
+                        <th>解决方案</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Fake Location 安装报风险</td>
+                        <td>断网安装，安装完成后再联网</td>
+                    </tr>
+                    <tr>
+                        <td>虚拟机后台被杀</td>
+                        <td>开启开发者选项中的「停止限制子进程」</td>
+                    </tr>
+                    <tr>
+                        <td>位置同步延迟超过20秒</td>
+                        <td>将 Fake Location 悬浮窗挂在乐跑页面上方，或切换摇杆模式</td>
+                    </tr>
+                    <tr>
+                        <td>蓝点不动</td>
+                        <td>暂停一下再启动，或检查 Fake Location 是否正常模拟</td>
+                    </tr>
+                    <tr>
+                        <td>步频为0</td>
+                        <td>手动摇晃手机，或使用传感器模拟器</td>
+                    </tr>
+                    <tr>
+                        <td>提示「跑步行为不规范」</td>
+                        <td>确保乐跑在虚拟机内运行，真机 Fake Location 不要被检测到</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-box" style="margin-top: 20px;">
+                <i class="fas fa-github"></i>
+                <strong>项目地址：</strong> 
+                <a href="https://github.com/hyper152/happy_run" target="_blank" style="color: var(--primary);">
+                    https://github.com/hyper152/happy_run
+                </a>
+            </div>
+        </section>
+
+        <!-- 免责声明 -->
+        <section class="dev-card" style="background: #faf8ff;">
+            <h3><i class="fas fa-scale-balanced"></i> 免责声明</h3>
+            <div style="padding: 20px; background: white; border-radius: 8px;">
+                <p>本教程仅供学习交流使用，旨在分享 Android 虚拟化技术和位置模拟的原理。</p>
+                <p style="margin-top: 15px;">请合理使用，遵守学校相关规定。因使用本教程产生的任何后果，由使用者自行承担。</p>
+                <p style="margin-top: 15px; color: var(--accent);">
+                    <i class="fas fa-heart"></i> 技术无罪，使用有度。
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2026 happy_run | 
+                <a href="https://github.com/hyper152/happy_run" target="_blank">
+                    <i class="fab fa-github"></i> hyper152/happy_run
+                </a> | 
+                步道乐跑自动化教程
+            </p>
+            <p style="margin-top: 10px;">
+                <a href="/pages/devlog/"><i class="fas fa-arrow-left"></i> 返回开发日志</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease-out';
+            requestAnimationFrame(() => {
+                setTimeout(() => {
+                    document.body.style.opacity = '1';
+                }, 100);
+            });
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

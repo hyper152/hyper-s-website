@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>机房往事 · 高中的游戏时光 | hyper的Vlog</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', 'Inter', sans-serif;
+        }
+
+        :root {
+            --primary: #6a5acd;
+            --accent: #ff6b6b;
+            --light: #f8f9fa;
+            --dark: #2d3436;
+            --gray: #495057;
+            --light-gray: #e9ecef;
+            --shadow: 0 2px 12px rgba(0,0,0,0.08);
+            --shadow-hover: 0 8px 25px rgba(0,0,0,0.12);
+            --border: 1px solid var(--light-gray);
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: min(1200px, 90%);
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .navbar {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .navbar-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--gray);
+            font-weight: 500;
+            transition: all 0.2s ease;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        .nav-links a.active {
+            color: var(--accent);
+            font-weight: 700;
+        }
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        /* 头部横幅 */
+        .page-hero {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            padding: 60px 0;
+            margin-bottom: 40px;
+            border-radius: 0 0 20px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-hero::before {
+            content: "🎮";
+            font-size: 15rem;
+            position: absolute;
+            bottom: -40px;
+            right: -30px;
+            opacity: 0.1;
+            transform: rotate(15deg);
+        }
+
+        .page-hero::after {
+            content: "🖥️";
+            font-size: 12rem;
+            position: absolute;
+            top: -30px;
+            left: -20px;
+            opacity: 0.08;
+            transform: rotate(-15deg);
+        }
+
+        .page-hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .page-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat .number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .hero-stat .label {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* 简介卡片 */
+        .intro-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+            text-align: center;
+            border-left: 5px solid var(--accent);
+        }
+
+        .intro-card i {
+            color: var(--accent);
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .intro-card p {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* 时间轴标题 */
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 40px 0 25px;
+        }
+
+        .section-title i {
+            font-size: 2rem;
+            color: var(--accent);
+        }
+
+        .section-title h2 {
+            font-size: 1.8rem;
+            color: var(--dark);
+        }
+
+        .section-title .count {
+            margin-left: 10px;
+            font-size: 1rem;
+            color: var(--gray);
+            font-weight: 400;
+        }
+
+        /* 图片网格 */
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .memory-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .memory-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .memory-img {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            background: #1a1a2e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .memory-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .memory-card:hover .memory-img img {
+            transform: scale(1.05);
+        }
+
+        .memory-info {
+            padding: 20px;
+            flex: 1;
+        }
+
+        .memory-date {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .memory-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .memory-title i {
+            color: var(--accent);
+        }
+
+        .memory-desc {
+            font-size: 0.9rem;
+            color: var(--gray);
+            line-height: 1.5;
+        }
+
+        .game-tag {
+            display: inline-block;
+            background: var(--light);
+            padding: 2px 10px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            margin-right: 6px;
+            margin-top: 10px;
+            color: var(--gray);
+        }
+
+        /* 分类标签 */
+        .filter-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .filter-btn {
+            background: white;
+            border: 1px solid var(--light-gray);
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--gray);
+        }
+
+        .filter-btn:hover {
+            background: var(--light);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .filter-btn.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        /* 总结卡片 */
+        .summary-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 16px;
+            padding: 40px;
+            margin: 40px 0;
+            color: white;
+            text-align: center;
+        }
+
+        .summary-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .summary-card h3 i {
+            color: var(--accent);
+            margin: 0 8px;
+        }
+
+        .summary-card p {
+            max-width: 700px;
+            margin: 0 auto 20px;
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .game-stats {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .game-stat {
+            text-align: center;
+        }
+
+        .game-stat .game-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .game-stat .play-time {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* 页脚 */
+        footer {
+            padding: 30px 0;
+            border-top: 1px solid var(--light-gray);
+            text-align: center;
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-top: 60px;
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: var(--accent);
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .navbar-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+            .page-hero {
+                padding: 40px 0;
+            }
+            .hero-stats {
+                gap: 20px;
+            }
+            .hero-stat .number {
+                font-size: 2rem;
+            }
+            .memory-grid {
+                grid-template-columns: 1fr;
+            }
+            .game-stats {
+                gap: 30px;
+            }
+        }
+
+        /* 模态框 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .modal img {
+            max-width: 90vw;
+            max-height: 85vh;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 2.5rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close-modal:hover {
+            color: var(--accent);
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="container navbar-content">
+        <a href="/home/" class="logo">hyper的<span>Vlog</span></a>
+        <ul class="nav-links">
+            <li><a href="/home/">首页</a></li>
+            <li><a href="/home/#categories">分类</a></li>
+            <li><a href="/home/#blog">博客</a></li>
+            <li><a href="/resume/">关于hyper</a></li>
+            <li><a href="/pages/YY往事/" class="active">YY往事</a></li>
+            <li><a href="/pages/travel/">旅游记录</a></li>
+            <li><a href="/pages/diy/">装机记录</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- 头部横幅 -->
+<section class="page-hero">
+    <div class="container">
+        <h1><i class="fas fa-computer"></i> 机房往事 <i class="fas fa-gamepad"></i></h1>
+        <p>高中机房 · 那些偷偷打游戏的日子</p>
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <div class="number">14</div>
+                <div class="label">珍贵瞬间</div>
+            </div>
+            <div class="hero-stat">
+                <div class="number">8</div>
+                <div class="label">款游戏</div>
+            </div>
+            <div class="hero-stat">
+                <div class="number">2023-2025</div>
+                <div class="label">青春年份</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+    <!-- 简介 -->
+    <div class="intro-card">
+        <i class="fas fa-memory"></i>
+        <p>高中的机房，是我们偷偷打游戏的秘密基地。从 CS1.6 到英雄联盟，从瓦洛兰特到黑神话，
+        每一张截图都是一段青春。这里记录了 2023-2025 年在机房度过的那些快乐时光。</p>
+        <p>（单击图片放大）</p>
+    </div>
+
+    <!-- 分类筛选 -->
+    <div class="filter-section">
+        <button class="filter-btn active" data-filter="all"><i class="fas fa-grid"></i> 全部</button>
+        <button class="filter-btn" data-filter="LOL"><i class="fas fa-gamepad"></i> 英雄联盟</button>
+        <button class="filter-btn" data-filter="瓦洛兰特"><i class="fas fa-crosshairs"></i> 瓦洛兰特</button>
+        <button class="filter-btn" data-filter="CS"><i class="fas fa-gun"></i> CS</button>
+        <button class="filter-btn" data-filter="黑神话"><i class="fas fa-dragon"></i> 黑神话</button>
+        <button class="filter-btn" data-filter="MC"><i class="fas fa-cube"></i> 我的世界</button>
+        <button class="filter-btn" data-filter="赛事"><i class="fas fa-trophy"></i> 电竞赛事</button>
+        <button class="filter-btn" data-filter="日常"><i class="fas fa-calendar"></i> 日常</button>
+    </div>
+
+    <!-- 记忆网格 -->
+    <div class="section-title">
+        <i class="fas fa-clock-rotate-left"></i>
+        <h2>时光相册 <span class="count">· 按时间倒叙</span></h2>
+    </div>
+
+    <div class="memory-grid" id="memoryGrid">
+        
+        <!-- 2024.12.4 - 留言网站 -->
+        <div class="memory-card" data-category="日常">
+            <div class="memory-img">
+                <img src="media/2024.12.4-hyper在机房的留言网站.png" alt="机房留言网站" loading="lazy">
+            </div>
+            <div class="memory-info">
+                <span class="memory-date">2024.12.04</span>
+                <div class="memory-title">
+                    <i class="fas fa-code"></i>
+                    机房的留言网站
+                </div>
+                <p class="memory-desc">在机房偷偷搭了个留言板网站，让同学们可以匿名留言。结果被老师发现了...</p>
+                <span class="game-tag"><i class="fas fa-tag"></i> 编程</span>
+            </div>
+        </div>
+
+        <!-- 2024.11.13 - CS Major -->
+        <div class="memory-card" data-category="CS,赛事">
+            <div class="memory-img">
+                <img src="media/2024.11.13-csmajor.png" alt="CS Major" loading="lazy">
+            </div>
+            <div class="memory-info">
+                <span class="memory-date">2024.11.13</span>
+                <div class="memory-title">
+                    <i class="fas fa-trophy"></i>
+                    CS Major 观赛
+                </div>
+                <p class="memory-desc">机房看 CS Major，为中国队加油。爽！</p>
+                <span class="game-tag">CS2</span>
+                <span class="game-tag">Major</span>
+            </div>
+        </div>
+
+        <!-- 2024.11.3 - BLG 惜败 T1 -->
+        <div class="memory-card" data-category="LOL,赛事">
+            <div class="memory-img">
+                <img src="media/2024.11.3-BLG决赛惜败T1.png" alt="BLG vs T1" loading="lazy">
+            </div>
+            <div class="memory-info">
+                <span class="memory-date">2024.11.03</span>
+                <div class="memory-title">
+                    <i class="fas fa-skull"></i>
+                    BLG 决赛惜败 T1
+                </div>
+                <p class="memory-desc">S14 总决赛，BLG 2:3 惜败 T1。全华班就差那么一点点...</p>
+                <span class="game-tag">LOL</span>
+                <span class="game-tag">S14</span>
+            </div>
+        </div>
+
+        <!-- 2024.11.1 - BLG加油 -->
+        <div class="memory-card" data-category="LOL,赛事">
+            <div class="memory-img">
+                <img src="media/2024.11.1-BLG加油.png" alt="BLG加油" loading="lazy">
+            </div>
+            <div class="memory-info">
+                <span class="memory-date">2024.11.01</span>
+                <div class="memory-title">
+                    <i class="fas fa-flag"></i>
+                    BLG 加油！
+                </div>
+                <p class="memory-desc">决赛前夜，全华班的希望，我们都相信！</p>
+                <span class="game-tag">LOL</span>
+                <span class="game-tag">应援</span>
+            </div>
+        </div>
+
+        <!-- 2024.10.1 - 五排瓦 -->
+        <div class="memory-card" data-category="瓦洛兰特">
+            <div class="memory-img">
+                <img src="media/2024.10.1国庆留校机房五排瓦.jpg" alt="五排瓦" loading="lazy">
+            </div>
+            <div class="memory-info">
+                <span class="memory-date">2024.10.01</span>
+                <div class="memory-title">
+                    <i class="fas fa-users"></i>
+                    国庆机房五排瓦
+                </div>
+                <p class="memory-desc">国庆留校，机房五排瓦洛兰特。从下午打到晚上，快乐到飞起！</p>
+                <span class="game-tag">瓦洛兰特</span>
+                <span class="game-tag">五排</span>
+            </div>
+        </div>
+
+        <!-- 2024.10.1 - LOL双排 -->
+        <div class="memory-card" data-category="LOL">
+            <div class="memory-img">
+                <img src="media/2024.10.1-LOL双排.png" alt="LOL双排" loading="lazy">
+            </div>
+            <div class="memory-info">
+                <span class="memory-date">2024.10.01</span>
+                <div class="memory-title">
+                    <i class="fas fa-user-friends"></i>
+                    英雄联盟双排
+                </div>
+                <p class="memory-desc">和好兄弟双排上分，虽然最后没上多少分，但开心最重要！</p>
+                <span class="game-tag">LOL</span>
+                <span class="game-tag">双排</span>
+            </div>
+        </div>
+
+        <!-- 2024.9.2 - 黑神话悟空 -->
+        <div class="memory-card" data-category="黑神话">
+            <div class="memory-img">
+                <img src="media/2024.9.2-购买黑神话悟空.png" alt="黑神话悟空" loading="lazy">
+            </div>
+            <div class="memory-info">
+                <span class="memory-date">2024.09.02</span>
+                <div class="memory-title">
+                    <i class="fas fa-dragon"></i>
+                    购买黑神话悟空
+                </div>
+                <p class="memory-desc">国产3A大作！在机房下载了一整天，终于玩上了。天命人，启动！</p>
+                <span class="game-tag">黑神话悟空</span>
+                <span class="game-tag">3A</span>
+            </div>
+        </div>
+
+        <!-- 2024.7.5 - 机房CS1.6 -->
+        <div class="memory-card" data-category="CS">
+            <div class="memory-img">
+                <img src="media/2024.7.5-机房CS1.6.png" alt="CS1.6" loading="lazy">
+            </div>
+            <div class="memory-info">
+                <span class="memory-date">2024.07.05</span>
+                <div class="memory-title">
+                    <i class="fas fa-gun"></i>
+                    机房 CS1.6 大战
+                </div>
+                <p class="memory-desc">经典永不过时！机房局域网 CS1.6，手刃cxp。</p>
+                <span class="game-tag">CS1.6</span>
+                <span class="game-tag">局域网</span>
+            </div>
+        </div>
+
+        <!-- 2024.8.26 - EDG牛逼 -->
+        <div class="memory-card" data-category="瓦洛兰特,赛事">
+            <div class="memory-img">
+                <img src="media/2024.8.26-EDG牛逼.png" alt="EDG牛逼" loading="lazy">
+            </div>
+            <div class="memory-info">
+                <span class="memory-date">2024.08.26</span>
+                <div class="memory-title">
+                    <i class="fas fa-crown"></i>
+                    EDG 牛逼！
+                </div>
+                <p class="memory-desc">EDG 瓦洛兰特夺冠！中国 FPS 的荣耀时刻。</p>
+                <span class="game-tag">瓦洛兰特</span>
+                <span class="game-tag">冠军</span>
+            </div>
+        </div>
+
+        <!-- 2024.6.24 - MC -->
+        <div class="memory-card" data-category="MC">
+            <div class="memory-img">
+                <img src="media/mc-2024.6.24.png" alt="我的世界" loading="lazy">
+            </div>
+            <div class="memory-info">
+                <span class="memory-date">2024.06.24</span>
+                <div class="memory-title">
+                    <i class="fas fa-cube"></i>
+                    机房 MC 生存
+                </div>
+                <p class="memory-desc">和同学在机房玩我的世界MITE</p>
+                <span class="game-tag">我的世界</span>
+            </div>
+        </div>
+
+        <!-- 2024.6.23 - ALGS -->
+        <div class="memory-card" data-category="赛事">
+            <div class="memory-img">
+                <img src="media/2024.6.23-ALGS.png" alt="ALGS" loading="lazy">
+            </div>
+            <div class="memory-info">
+                <span class="memory-date">2024.06.23</span>
+                <div class="memory-title">
+                    <i class="fas fa-apex"></i>
+                    ALGS 观赛
+                </div>
+                <p class="memory-desc">Apex 全球系列赛，DF 战队出征！虽然没夺冠，但打出了风采。</p>
+                <span class="game-tag">Apex</span>
+                <span class="game-tag">ALGS</span>
+            </div>
+        </div>
+
+        <!-- 英雄联盟定级铂金 -->
+        <div class="memory-card" data-category="LOL">
+            <div class="memory-img">
+                <img src="media/英雄联盟定级铂金.png" alt="定级铂金" loading="lazy">
+            </div>
+            <div class="memory-info">
+                <span class="memory-date">2024年</span>
+                <div class="memory-title">
+                    <i class="fas fa-medal"></i>
+                    英雄联盟定级铂金
+                </div>
+                <p class="memory-desc">新赛季定级赛打完，直接铂金！机房战绩可查。</p>
+                <span class="game-tag">LOL</span>
+                <span class="game-tag">排位</span>
+            </div>
+        </div>
+
+        <!-- 最后一个假期 -->
+        <div class="memory-card" data-category="日常">
+            <div class="memory-img">
+                <img src="media/最后一个假期-距离高考还有6天.jpg" alt="最后一个假期" loading="lazy">
+            </div>
+            <div class="memory-info">
+                <span class="memory-date">2025.06.01</span>
+                <div class="memory-title">
+                    <i class="fas fa-hourglass-end"></i>
+                    最后一个假期
+                </div>
+                <p class="memory-desc">距离高考还有6天，机房最后一次开机。再见了，我的青春。</p>
+                <span class="game-tag">高考</span>
+                <span class="game-tag">告别</span>
+            </div>
+        </div>
+
+        <!-- 74404 -->
+        <div class="memory-card" data-category="日常">
+            <div class="memory-img">
+                <img src="media/机房双排.jpg" alt="机房日常" loading="lazy">
+            </div>
+            <div class="memory-info">
+                <span class="memory-date">2024年</span>
+                <div class="memory-title">
+                    <i class="fas fa-image"></i>
+                    机房双排
+                </div>
+                <p class="memory-desc">机房和🐇双排LOL</p>
+                <span class="game-tag">日常</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 总结 -->
+    <div class="summary-card">
+        <h3><i class="fas fa-heart"></i> 致那些年 <i class="fas fa-heart"></i></h3>
+        <p>机房的门已经关上，但那些一起开黑、一起观赛、一起呐喊的日子，永远留在记忆里。感谢每一个陪我打过游戏的同学，感谢机房老师的"睁一只眼闭一只眼"。青春不散场，我们游戏里再见！</p>
+        <div class="game-stats">
+            <div class="game-stat">
+                <div class="game-name">LOL</div>
+                <div class="play-time">最爱的游戏</div>
+            </div>
+            <div class="game-stat">
+                <div class="game-name">CS1.6</div>
+                <div class="play-time">最初的回忆</div>
+            </div>
+            <div class="game-stat">
+                <div class="game-name">瓦洛兰特</div>
+                <div class="play-time">五排的快乐</div>
+            </div>
+            <div class="game-stat">
+                <div class="game-name">黑神话</div>
+                <div class="play-time">国产之光</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <p>© 2026 hyper的个人Vlog · 机房往事 · 青春不散场</p>
+        <p style="margin-top: 10px;">
+            <a href="/home/"><i class="fas fa-home"></i> 返回首页</a> · 
+            <a href="/pages/YY往事/"><i class="fas fa-history"></i> YY往事</a> · 
+            <a href="/talk/"><i class="fas fa-comment"></i> 留言板</a>
+        </p>
+    </div>
+</footer>
+
+<!-- 图片模态框 -->
+<div class="modal" id="imageModal">
+    <span class="close-modal">&times;</span>
+    <img id="modalImage" src="" alt="预览">
+</div>
+
+<script>
+    // 图片预览
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImage');
+    const closeBtn = document.querySelector('.close-modal');
+
+    document.querySelectorAll('.memory-card').forEach(card => {
+        card.addEventListener('click', function(e) {
+            const img = this.querySelector('img');
+            if (img) {
+                modalImg.src = img.src;
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+        });
+    });
+
+    closeBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+    });
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.style.display === 'flex') {
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+    });
+
+    // 分类筛选
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.memory-card');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            const filter = btn.dataset.filter;
+            
+            cards.forEach(card => {
+                if (filter === 'all') {
+                    card.style.display = 'flex';
+                } else {
+                    const categories = card.dataset.category.split(',');
+                    if (categories.includes(filter)) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                }
+            });
+        });
+    });
+
+    // 页面加载动画
+    document.addEventListener('DOMContentLoaded', () => {
+        document.body.style.opacity = '0';
+        document.body.style.transition = 'opacity 0.5s ease-out';
+        requestAnimationFrame(() => {
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    });
+</script>
+
+</body>
+</html>

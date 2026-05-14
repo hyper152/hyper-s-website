@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faze的hyper本人 | AI 助手</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .chat-container {
+            width: 100%;
+            max-width: 950px;
+            height: 92vh;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .chat-header i {
+            font-size: 1.8rem;
+        }
+
+        .chat-header h2 {
+            font-size: 1.3rem;
+            flex: 1;
+            font-weight: 600;
+        }
+
+        .chat-header .model-badge {
+            padding: 6px 14px;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-weight: 500;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(4px);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-btn {
+            color: white;
+            text-decoration: none;
+            padding: 8px 14px;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.12);
+            transition: all 0.25s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(4px);
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .home-btn {
+            background: rgba(255, 255, 255, 0.22);
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+            background: #fafbfc;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .message {
+            display: flex;
+            gap: 12px;
+            animation: fadeIn 0.3s;
+        }
+
+        .message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1.1rem;
+        }
+
+        .message.user .message-avatar {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .message.assistant .message-avatar {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+        }
+
+        .message.system .message-avatar {
+            background: #8e9aaf;
+            color: white;
+        }
+
+        .message-content {
+            background: white;
+            padding: 14px 18px;
+            border-radius: 20px;
+            max-width: 72%;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            line-height: 1.65;
+            word-break: break-word;
+            font-size: 0.95rem;
+        }
+
+        .message.user .message-content {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .message.assistant .message-content {
+            background: white;
+            color: #2d3436;
+            border: 1px solid #edf2f7;
+        }
+
+        .message.system .message-content {
+            background: #edf2f7;
+            color: #4a5568;
+            font-size: 0.9rem;
+            max-width: 100%;
+            text-align: center;
+        }
+
+        /* Markdown 样式 */
+        .message-content a {
+            color: #667eea;
+            text-decoration: none;
+            word-break: break-all;
+            font-weight: 500;
+        }
+
+        .message-content a:hover {
+            text-decoration: underline;
+        }
+
+        .message.user .message-content a {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        .message-content code {
+            background: rgba(0, 0, 0, 0.04);
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-family: 'SF Mono', 'Consolas', monospace;
+            font-size: 0.9em;
+        }
+
+        .message-content pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 14px;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin: 12px 0;
+        }
+
+        .message-content pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 6px;
+            padding: 8px 0;
+        }
+
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
+            background: #a0aec0;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+
+            0%,
+            60%,
+            100% {
+                transform: translateY(0);
+            }
+
+            30% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chat-input-area {
+            padding: 18px 24px;
+            background: white;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            gap: 12px;
+            align-items: flex-end;
+        }
+
+        .chat-input-area textarea {
+            flex: 1;
+            padding: 14px 18px;
+            border: 2px solid #e2e8f0;
+            border-radius: 28px;
+            resize: none;
+            font-size: 0.95rem;
+            max-height: 120px;
+            transition: border-color 0.2s;
+            font-family: inherit;
+            background: #fafbfc;
+        }
+
+        .chat-input-area textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+        }
+
+        .send-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.25s;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .send-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .send-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* 快捷问题区 - 分类展示 */
+        .quick-section {
+            padding: 12px 24px 8px 24px;
+            background: white;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .quick-title {
+            font-size: 0.8rem;
+            color: #718096;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .quick-title i {
+            color: #667eea;
+        }
+
+        .quick-questions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
+
+        .quick-btn {
+            padding: 6px 14px;
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 24px;
+            font-size: 0.8rem;
+            color: #4a5568;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .quick-btn i {
+            color: #667eea;
+            font-size: 0.75rem;
+        }
+
+        .quick-btn:hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .quick-btn:hover i {
+            color: white;
+        }
+
+        /* 底部链接栏 */
+        .footer-links {
+            padding: 10px 24px 16px 24px;
+            background: white;
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .footer-link {
+            color: #718096;
+            text-decoration: none;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: color 0.2s;
+        }
+
+        .footer-link:hover {
+            color: #667eea;
+        }
+
+        /* 响应式 */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .chat-container {
+                height: 95vh;
+                border-radius: 18px;
+            }
+
+            .chat-header {
+                padding: 14px 16px;
+            }
+
+            .chat-header h2 {
+                font-size: 1rem;
+            }
+
+            .nav-buttons {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .nav-btn {
+                flex: 1;
+                justify-content: center;
+                padding: 6px 8px;
+                font-size: 0.8rem;
+            }
+
+            .model-badge {
+                width: 100%;
+                justify-content: center;
+                font-size: 0.75rem;
+            }
+
+            .message-content {
+                max-width: 85%;
+            }
+
+            .chat-messages {
+                padding: 16px;
+            }
+
+            .quick-section {
+                padding: 10px 16px;
+            }
+
+            .quick-btn {
+                padding: 5px 10px;
+                font-size: 0.75rem;
+            }
+
+            .chat-input-area {
+                padding: 14px 16px;
+            }
+
+            .footer-links {
+                padding: 8px 16px 12px;
+                gap: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <i class="fas fa-cloud-upload-alt"></i>
+            <h2>Faze的hyper本人</h2>
+            <div class="nav-buttons">
+                <a href="http://0o0hyper0o0.cyou/home/" class="nav-btn home-btn" target="_blank">
+                    <i class="fas fa-blog"></i>
+                    <span>博客</span>
+                </a>
+                <a href="http://0o0hyper0o0.cyou/resume/" class="nav-btn" target="_blank">
+                    <i class="fas fa-user"></i>
+                    <span>简介</span>
+                </a>
+                <a href="/" class="nav-btn">
+                    <i class="fas fa-home"></i>
+                    <span>主页</span>
+                </a>
+            </div>
+            <div class="model-badge">
+                <i class="fas fa-microchip"></i>
+                <span>qwen2.5-3b-hyper</span>
+            </div>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            <div class="message assistant">
+                <div class="message-avatar"><i class="fas fa-robot"></i></div>
+                <div class="message-content">
+                    👋 你好！我是 <strong>Faze的hyper本人</strong>，hyper 的专属云端 AI 助手。<br>
+                    我运行在他的公网服务器上，是他对外展示的智能窗口。（回复需要10s左右）<br><br>
+                    💡 你可以问我关于 hyper 的一切：<br>
+                    • 他是谁？教育背景<br>
+                    • 技术栈和项目经历<br>
+                    • 机器人比赛 & Gsing战队<br>
+                    • MC服务器 & 装机DIY<br>
+                    • 旅行故事 & 联系方式<br><br>
+                    🚀 直接问我吧，或者点击下方快捷按钮～
+                </div>
+            </div>
+        </div>
+
+        <!-- 快捷问题分类 -->
+        <div class="quick-section">
+            <div class="quick-title">
+                <i class="fas fa-bolt"></i>
+                <span>常用问题</span>
+            </div>
+            <div class="quick-questions">
+                <span class="quick-btn" data-question="hyper 是谁？"><i class="fas fa-user"></i> hyper是谁</span>
+                <span class="quick-btn" data-question="hyper的技术栈"><i class="fas fa-code"></i> 技术栈</span>
+                <span class="quick-btn" data-question="hyper的项目"><i class="fas fa-rocket"></i> 项目经历</span>
+                <span class="quick-btn" data-question="hyper的联系方式"><i class="fas fa-address-card"></i> 联系方式</span>
+            </div>
+        </div>
+
+        <div class="quick-section" style="padding-top: 0;">
+            <div class="quick-title">
+                <i class="fas fa-compass"></i>
+                <span>了解更多</span>
+            </div>
+            <div class="quick-questions">
+                <span class="quick-btn" data-question="hyper的机器人比赛"><i class="fas fa-robot"></i> 机器人比赛</span>
+                <span class="quick-btn" data-question="hyper的MC服务器"><i class="fas fa-cube"></i> MC服务器</span>
+                <span class="quick-btn" data-question="hyper的装机经历"><i class="fas fa-microchip"></i> 装机DIY</span>
+                <span class="quick-btn" data-question="hyper的高考成绩"><i class="fas fa-graduation-cap"></i> 高考成绩</span>
+                <span class="quick-btn" data-question="hyper的旅行故事"><i class="fas fa-map-marked-alt"></i> 旅行故事</span>
+                <span class="quick-btn" data-question="hyper的GitHub"><i class="fab fa-github"></i> GitHub</span>
+            </div>
+        </div>
+
+        <div class="chat-input-area">
+            <textarea id="messageInput" placeholder="输入消息... (Enter 发送，Shift+Enter 换行)" rows="1"></textarea>
+            <button class="send-btn" id="sendBtn"><i class="fas fa-paper-plane"></i></button>
+        </div>
+
+        <!-- 底部快捷链接 -->
+        <div class="footer-links">
+            <a href="http://0o0hyper0o0.cyou/pages/devlog/" class="footer-link" target="_blank">
+                <i class="fas fa-code-branch"></i> 开发日志
+            </a>
+            <a href="http://0o0hyper0o0.cyou/pages/games/mc/" class="footer-link" target="_blank">
+                <i class="fas fa-cube"></i> MC育英重建
+            </a>
+            <a href="http://0o0hyper0o0.cyou/pages/diy/" class="footer-link" target="_blank">
+                <i class="fas fa-desktop"></i> 装机记录
+            </a>
+            <a href="http://0o0hyper0o0.cyou/talk/" class="footer-link" target="_blank">
+                <i class="fas fa-comments"></i> 留言板
+            </a>
+            <a href="https://github.com/hyper152" class="footer-link" target="_blank">
+                <i class="fab fa-github"></i> GitHub
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // ==================== 配置 ====================
+        const MODEL_NAME = 'qwen2.5-3b-hyper';
+
+        let isGenerating = false;
+        let conversationHistory = [];
+
+        // ==================== 获取用户名（从登录系统） ====================
+        let userName = '游客';
+
+        try {
+            // 方法1：从 Auth 模块获取（如果已加载）
+            if (typeof Auth !== 'undefined' && Auth.getLocalUser) {
+                const localUser = Auth.getLocalUser();
+                if (localUser && localUser.username) {
+                    userName = localUser.username;
+                    console.log('✅ 从 Auth 获取用户名:', userName);
+                }
+            }
+
+            // 方法2：如果 Auth 未加载，直接从 localStorage 读取
+            if (userName === '游客') {
+                const userInfo = localStorage.getItem('user_info');
+                if (userInfo) {
+                    try {
+                        const user = JSON.parse(userInfo);
+                        if (user && user.username) {
+                            userName = user.username;
+                            console.log('✅ 从 localStorage 获取用户名:', userName);
+                        }
+                    } catch (e) { }
+                }
+            }
+        } catch (e) {
+            console.warn('获取用户名失败，使用默认值:', e);
+        }
+
+        console.log('👤 当前用户:', userName);
+
+        // ==================== AI提问保存函数 ====================
+        function saveAIQuestion(question, userName) {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const time = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+            
+            const data = {
+                time: time,
+                question: question,
+                user: userName || '游客'
+            };
+            
+            fetch('/api/ollama/save-ai-question', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            }).then(res => res.json()).then(res => {
+                if (res && res.status === 'ok') {
+                    console.log('✅ AI问题已保存:', question.substring(0, 30) + '...');
+                }
+            }).catch(e => {
+                console.warn('⚠️ AI问题保存失败:', e);
+            });
+        }
+
+        // ==================== 工具函数 ====================
+        function renderMarkdown(text) {
+            if (!text) return '';
+
+            let html = text
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+
+            html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+            html = html.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
+            html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+            html = html.replace(/```(\w*)\n([\s\S]*?)```/g, '<pre><code class="language-$1">$2</code></pre>');
+            html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+            html = html.replace(/\n/g, '<br>');
+
+            return html;
+        }
+
+        function addSystemMessage(content, duration = 3000) {
+            const messagesDiv = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message system';
+            messageDiv.innerHTML = `
+                <div class="message-avatar"><i class="fas fa-info-circle"></i></div>
+                <div class="message-content">${content}</div>
+            `;
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+            if (duration > 0) {
+                setTimeout(() => {
+                    if (messageDiv.parentNode) {
+                        messageDiv.remove();
+                    }
+                }, duration);
+            }
+
+            return messageDiv;
+        }
+
+        async function checkModelAvailability() {
+            try {
+                const res = await fetch('/api/ollama/models');
+                const data = await res.json();
+
+                if (data.models && data.models.length > 0) {
+                    const hasModel = data.models.some(m =>
+                        m.name === MODEL_NAME || m.name.includes(MODEL_NAME) || m.name.includes('hyper')
+                    );
+
+                    if (hasModel) {
+                        console.log(`✅ 模型可用`);
+                        return true;
+                    } else {
+                        console.warn(`⚠️ 模型未找到，可用:`, data.models.map(m => m.name));
+                        addSystemMessage(`⚠️ 模型 qwen2.5-3b-hyper 未找到，将尝试使用默认模型`, 0);
+                        return true; // 继续尝试，让后端决定
+                    }
+                }
+                return true;
+            } catch (err) {
+                console.error('连接 Ollama 失败:', err);
+                addSystemMessage('❌ 无法连接到 Ollama 服务', 0);
+                return false;
+            }
+        }
+
+        function addMessage(role, content) {
+            const messagesDiv = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${role}`;
+
+            const avatarIcon = role === 'user' ? 'fa-user' : 'fa-robot';
+            messageDiv.innerHTML = `
+                <div class="message-avatar"><i class="fas ${avatarIcon}"></i></div>
+                <div class="message-content">${renderMarkdown(content)}</div>
+            `;
+
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            return messageDiv;
+        }
+
+        async function sendMessage(messageText = null) {
+            const input = document.getElementById('messageInput');
+            const sendBtn = document.getElementById('sendBtn');
+            const message = messageText || input.value.trim();
+
+            if (!message || isGenerating) return;
+
+            if (!messageText) {
+                input.value = '';
+                input.style.height = 'auto';
+            }
+
+            isGenerating = true;
+            sendBtn.disabled = true;
+
+            conversationHistory.push({ role: 'user', content: message });
+            addMessage('user', message);
+
+            // ========== 保存AI提问记录（包括游客） ==========
+            saveAIQuestion(message, userName);
+
+            const assistantMsgDiv = addMessage('assistant', '');
+            const contentDiv = assistantMsgDiv.querySelector('.message-content');
+
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'typing-indicator';
+            typingDiv.innerHTML = '<span></span><span></span><span></span>';
+            contentDiv.appendChild(typingDiv);
+
+            try {
+                const res = await fetch('/api/ollama/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        model: MODEL_NAME,
+                        messages: conversationHistory,
+                        stream: true
+                    })
+                });
+
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
+
+                contentDiv.innerHTML = '';
+                let fullContent = '';
+
+                const reader = res.body.getReader();
+                const decoder = new TextDecoder();
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+
+                    const chunk = decoder.decode(value, { stream: true });
+                    const lines = chunk.split('\n').filter(line => line.trim());
+
+                    for (const line of lines) {
+                        try {
+                            const data = JSON.parse(line);
+                            if (data.message?.content) {
+                                fullContent += data.message.content;
+                                contentDiv.innerHTML = renderMarkdown(fullContent);
+                                document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+                            }
+                        } catch (e) { }
+                    }
+                }
+
+                if (!fullContent) {
+                    contentDiv.innerHTML = '（模型没有返回内容）';
+                } else {
+                    conversationHistory.push({ role: 'assistant', content: fullContent });
+                }
+            } catch (err) {
+                console.error('发送失败:', err);
+                contentDiv.innerHTML = `❌ 错误: ${err.message}`;
+                addSystemMessage(`❌ 请求失败，请稍后重试`, 4000);
+            } finally {
+                isGenerating = false;
+                sendBtn.disabled = false;
+                input.focus();
+            }
+        }
+
+        // ==================== 事件绑定 ====================
+        document.getElementById('sendBtn').addEventListener('click', () => sendMessage());
+
+        document.getElementById('messageInput').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        document.getElementById('messageInput').addEventListener('input', function () {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+        });
+
+        document.querySelectorAll('.quick-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const question = btn.dataset.question;
+                document.getElementById('messageInput').value = question;
+                sendMessage(question);
+            });
+        });
+
+        (async function init() {
+            await checkModelAvailability();
+            console.log('✅ AI 助手已就绪');
+        })();
+    </script>
+</body>
+
+</html>

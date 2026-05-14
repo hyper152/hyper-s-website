@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>上海·学考全A | hyper的魔都漫游</title>
+    <!-- 外部资源 Font Awesome 6 -->
+    <link 
+        rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        crossorigin="anonymous"
+    >
+    <style>
+        /* 沿用原有设计系统 */
+        :root {
+            --primary: #6a5acd;
+            --accent: #ff6b6b;
+            --dark: #2d3436;
+            --light: #f8f9fa;
+            --white: #ffffff;
+            --gray: #495057;
+            --light-gray: #e9ecef;
+            --shadow: 0 2px 15px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--gray);
+            line-height: 1.8;
+        }
+
+        .navbar {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .container {
+            width: min(1200px, 90%);
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo i {
+            color: var(--accent);
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .back-btn:hover {
+            color: var(--accent);
+            transform: translateX(-3px);
+        }
+
+        .article-header {
+            padding: 60px 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: var(--white);
+            text-align: center;
+            margin-bottom: 40px;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .article-title {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            margin-bottom: 15px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            font-size: 0.95rem;
+            opacity: 0.9;
+            margin-top: 20px;
+        }
+
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .article-content {
+            max-width: 800px;
+            margin: 0 auto 80px;
+            padding: 0 20px;
+        }
+
+        .content-block {
+            background-color: var(--white);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .content-block:hover {
+            box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+        }
+
+        .content-block h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light-gray);
+            position: relative;
+        }
+
+        .content-block h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 80px;
+            height: 2px;
+            background-color: var(--accent);
+        }
+
+        .content-block p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .content-block ul {
+            margin: 15px 0 15px 25px;
+        }
+
+        .content-block li {
+            margin-bottom: 10px;
+        }
+
+        /* 景点卡片 */
+        .spot-list {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin: 25px 0 10px;
+        }
+
+        .spot-item {
+            background: var(--light);
+            border-radius: 16px;
+            padding: 25px;
+            border-left: 5px solid var(--primary);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            transition: var(--transition);
+        }
+
+        .spot-item:hover {
+            transform: translateX(6px);
+            border-left-color: var(--accent);
+            background-color: white;
+        }
+
+        .spot-item h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--dark);
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+
+        .spot-item h3 i {
+            color: var(--accent);
+            font-size: 1.4rem;
+            width: 32px;
+            text-align: center;
+        }
+
+        .spot-desc {
+            margin-bottom: 20px;
+        }
+
+        .spot-desc .highlight {
+            background: rgba(255,107,107,0.1);
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-weight: 500;
+            color: var(--accent);
+            display: inline-block;
+        }
+
+        /* 图片展示 */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .inline-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .gallery-item {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            background: var(--white);
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            transition: var(--transition);
+            background: linear-gradient(145deg, #b1a2d0, #c0b5db);
+            color: transparent;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-caption {
+            padding: 10px 15px;
+            background-color: var(--white);
+            font-size: 0.9rem;
+            color: var(--gray);
+            text-align: center;
+            border-top: 1px solid var(--light-gray);
+        }
+
+        .quote {
+            background-color: rgba(106, 90, 205, 0.05);
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .quote p {
+            font-style: italic;
+            color: var(--dark);
+            margin-bottom: 0 !important;
+        }
+
+        .summary {
+            background: linear-gradient(135deg, rgba(106, 90, 205, 0.1) 0%, rgba(255, 107, 107, 0.1) 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px 0;
+            border: 1px solid var(--light-gray);
+        }
+
+        .summary h3 {
+            color: var(--accent);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer {
+            background-color: var(--white);
+            padding: 30px 0;
+            text-align: center;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.02);
+            margin-top: 60px;
+        }
+
+        .footer a {
+            transition: var(--transition);
+        }
+        .footer a:hover {
+            text-decoration: underline;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .content-block {
+                padding: 25px;
+            }
+            .article-header {
+                padding: 40px 0;
+            }
+            .inline-gallery {
+                grid-template-columns: 1fr;
+            }
+            .spot-item h3 {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .content-block {
+                padding: 20px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="/home/" class="logo">
+                <i class="fas fa-camera-retro"></i> hyper的Vlog
+            </a>
+            <a href="/pages/travel/" class="back-btn">
+                <i class="fas fa-arrow-left"></i> 返回旅游记录
+            </a>
+        </div>
+    </nav>
+
+    <!-- 文章头部 -->
+    <header class="article-header">
+        <div class="container">
+            <h1 class="article-title">上海旅游记 · 学考捷报</h1>
+            <p>2024.7.28 - 2024.7.30 | 动车上查到学考全A，然后逐一解锁魔都</p>
+            <div class="article-meta">
+                <span><i class="fas fa-calendar"></i> 记录：2024年7月31日</span>
+                <span><i class="fas fa-map-marker-alt"></i> 上海市</span>
+                <span><i class="fas fa-tag"></i> 学考全A · 外滩 · 交大 · 一大会址 · 东方明珠 · LPL</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="article-content">
+        <!-- 1. 学考惊喜：使用原来的两张图学考1.jpg、学考2.jpg -->
+        <section class="content-block">
+            <h2><i class="fas fa-star" style="color: #ffb347; margin-right: 8px;"></i> 序章 · 动车上查到学考全A</h2>
+            <p>2024年7月28日，G123次列车飞驰在沪杭线上。手机突然震动，同学群里沸腾了——学考成绩可以查询！我深吸一口气点开链接，页面刷新后，<strong class="highlight" style="background:#ffecd9; padding:2px 8px;">全A！全部科目都是A！</strong> 那一刻，窗外的风景仿佛都染上了金色。这份惊喜，成为这次上海之旅最闪亮的开场。</p>
+            <div class="quote">
+                <p>“旅行中最美好的惊喜，往往是计划之外的收获，就像在动车上查到学考成绩的那一刻，整个旅途都被点亮了。”</p>
+            </div>
+            
+            <!-- 学考原图两张并排 -->
+            <div style="margin-top: 25px;">
+                <h3 style="color: var(--primary); margin-bottom: 15px;">📸 学考捷报 · 原图记录</h3>
+                <div class="inline-gallery">
+                    <div class="gallery-item">
+                        <img src="学考1.jpg" alt="浙江学考成绩截图1">
+                        <div class="gallery-caption">学考成绩查询瞬间 · 图1</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="学考2.jpg" alt="浙江学考成绩截图2">
+                        <div class="gallery-caption">全A喜悦时刻 · 图2</div>
+                    </div>
+                </div>
+                <p style="text-align:center; margin-top:10px;">✨ 就是这两张截图，定格了动车上的惊喜瞬间 ✨</p>
+            </div>
+        </section>
+
+        <!-- 2. 景点逐一呈现，每个景点配对应图片（沿用原图文件名） -->
+        <section class="content-block">
+            <h2>📸 学考之后 · 逐帧漫游魔都</h2>
+            <p>带着全A的好心情，我按顺序走访了这些地方——每一处风景都和学考截图一起，成为青春纪念册的连续页。</p>
+            
+            <div class="spot-list">
+                <!-- 景点1：外滩 & 钟塔 -->
+                <div class="spot-item">
+                    <h3><i class="fas fa-clock"></i> 第一站 · 外滩钟塔之夜</h3>
+                    <div class="spot-desc">
+                        <p><span class="highlight">学考后第一站</span> 7月28日晚，办好入住便直奔外滩。江风拂面，对岸陆家嘴灯火璀璨，身后的海关钟塔奏响《东方红》。我站在钟塔下静静听着，心里默念：“全A的好运，要像这钟声一样传遍接下来的旅程。”</p>
+                    </div>
+                    <!-- 外滩、钟塔两张图并排 -->
+                    <div class="inline-gallery">
+                        <div class="gallery-item">
+                            <img src="外滩.jpg" alt="上海外滩">
+                            <div class="gallery-caption">外滩经典视角</div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="钟塔.jpg" alt="外滩钟塔">
+                            <div class="gallery-caption">外滩复古钟塔</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 景点2：上海交通大学 -->
+                <div class="spot-item">
+                    <h3><i class="fas fa-university"></i> 第二站 · 上海交大</h3>
+                    <div class="spot-desc">
+                        <p><span class="highlight">全A给我勇气向往</span> 7月29日清晨，走进交大徐汇校区。古朴的建筑、浓厚的学术氛围，让我暗自定下未来的升学目标。在老图书馆前，我请路人帮忙拍了张照，笑容特别真实。</p>
+                    </div>
+                    <!-- 上交大一张图 -->
+                    <div style="margin-top:15px;">
+                        <div class="gallery-item">
+                            <img src="上交.jpg" alt="上海交通大学校园">
+                            <div class="gallery-caption">上海交通大学校园风光</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 景点3：中共一大会址 -->
+                <div class="spot-item">
+                    <h3><i class="fas fa-flag"></i> 第三站 · 一大会址</h3>
+                    <div class="spot-desc">
+                        <p><span class="highlight">红色起点，初心洗礼</span> 7月29日中午，参观中共一大会址纪念馆。重温历史，感受革命先辈的初心与担当，内心充满敬意。作为刚在学考历史中拿到A的学生，站在这里更感使命。</p>
+                    </div>
+                    <!-- 一大会所一张图 -->
+                    <div style="margin-top:15px;">
+                        <div class="gallery-item">
+                            <img src="一大会所.jpg" alt="中共一大会址">
+                            <div class="gallery-caption">中共一大会址纪念馆</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 景点4：东方明珠 -->
+                <div class="spot-item">
+                    <h3><i class="fas fa-skyscraper"></i> 第四站 · 东方明珠</h3>
+                    <div class="spot-desc">
+                        <p><span class="highlight">全A的高度</span> 7月29日下午，登上东方明珠俯瞰魔都全景。在259米全透明观光廊，我对着脚下的城市比了个“A”的手势——感谢这份好运让我站得更高，看得更远。</p>
+                    </div>
+                    <!-- 东方明珠一张图 -->
+                    <div style="margin-top:15px;">
+                        <div class="gallery-item">
+                            <img src="东方明珠.jpg" alt="东方明珠">
+                            <div class="gallery-caption">东方明珠高空俯瞰</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 景点5：LPL电竞场馆 -->
+                <div class="spot-item">
+                    <h3><i class="fas fa-gamepad"></i> 第五站 · LPL电竞场馆</h3>
+                    <div class="spot-desc">
+                        <p><span class="highlight">青春热爱，圆满打卡</span> 7月30日上午，打卡LPL电竞场馆。作为电竞爱好者，近距离感受职业电竞的氛围，圆了自己的一个小梦想。学考的压力曾靠比赛直播缓解，如今拿着全A成绩来“还愿”。</p>
+                    </div>
+                    <!-- LPL两张图并排 -->
+                    <div class="inline-gallery">
+                        <div class="gallery-item">
+                            <img src="LPL1.jpg" alt="LPL场馆1">
+                            <div class="gallery-caption">LPL电竞场馆打卡</div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="LPL2.jpg" alt="LPL场馆2">
+                            <div class="gallery-caption">LPL场馆内景</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. 城市印象与心得感悟 -->
+        <section class="summary">
+            <h3><i class="fas fa-lightbulb"></i> 旅行心得与感悟</h3>
+            <p>这次上海之行，因为学考全A的惊喜而变得格外难忘：</p>
+            <ul>
+                <li><strong>努力的回报</strong>：学考全A是对前段时间努力的肯定，也让我明白，所有的付出终会有收获，哪怕是在旅途中迎来惊喜。</li>
+                <li><strong>目标的明确</strong>：走进上海交通大学，让我对未来的升学有了更清晰的目标，也有了为之努力的动力。</li>
+                <li><strong>青春的多彩</strong>：既有红色文化的熏陶，也有电竞热爱的奔赴，这场旅行让我感受到青春的多元与美好。</li>
+                <li><strong>成长的印记</strong>：学考的捷报、魔都的风景、高校的向往，都将成为青春里珍贵的印记。</li>
+            </ul>
+            <p style="margin-top:15px;">带着这份喜悦和动力，我会继续前行，奔赴下一场山海。</p>
+        </section>
+
+        <!-- 4. 完整行程回顾 -->
+        <section class="content-block" style="background: #faf8ff;">
+            <h2>🗓️ 学考全A · 行程记录</h2>
+            <ul>
+                <li><strong>7月28日 (学考揭晓日)</strong> 动车途中查到学考全A → 抵沪入住 → 夜游外滩、钟塔</li>
+                <li><strong>7月29日 (学府·红色·云端)</strong> 上海交通大学 → 中共一大会址 → 东方明珠</li>
+                <li><strong>7月30日 (热爱·返程)</strong> LPL电竞场馆打卡 → 午后返程，满载而归</li>
+            </ul>
+            <p style="margin-top:20px; text-align:center; color: var(--primary);">
+                <i class="fas fa-camera"></i> 所有图片均按游览顺序排列，学考原图、外滩、钟塔、交大、一大会址、东方明珠、LPL
+            </p>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2024 hyper的个人Vlog | 记录生活，分享成长</p>
+            <p style="margin-top: 10px;">
+                <a href="/home/" style="color: #ff6b6b; text-decoration: none;">返回首页</a> | 
+                <a href="/talk/" style="color: #ff6b6b; text-decoration: none;">留言交流</a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

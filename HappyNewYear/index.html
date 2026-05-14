@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎆 新年快乐 · 流畅烟花秀</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #0b0e1a;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
+        }
+        canvas {
+            display: block;
+            width: 100%;
+            max-width: 1300px;
+            height: auto;
+            aspect-ratio: 16 / 9;
+            border-radius: 2.5rem 2.5rem 1.8rem 1.8rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 0 3px #f5e56b, 0 0 20px #ffbb2e;
+            background: radial-gradient(circle at 30% 40%, #101b2b, #020413);
+            cursor: pointer;
+            transition: box-shadow 0.2s;
+        }
+        canvas:hover {
+            box-shadow: 0 25px 50px rgba(0,0,0,0.9), 0 0 0 4px #ffd966, 0 0 35px #ffaa33;
+        }
+        .theme-panel {
+            margin-top: 25px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            background: rgba(20, 30, 50, 0.7);
+            backdrop-filter: blur(12px);
+            padding: 16px 30px;
+            border-radius: 70px;
+            border: 1px solid #f5c542;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+        }
+        .greeting {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            background: linear-gradient(135deg, #ffe77a, #ffb347, #ff6f61);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 15px #ffb347;
+        }
+        .launch-btn {
+            background: #ffd966;
+            border: none;
+            font-size: 1.3rem;
+            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 50px;
+            color: #1e2639;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 7px 0 #b08213, 0 12px 25px rgba(255, 220, 100, 0.6);
+            transition: 0.08s linear;
+            cursor: pointer;
+        }
+        .launch-btn:active {
+            transform: translateY(7px);
+            box-shadow: 0 3px 0 #b08213, 0 12px 25px #ffdb7c;
+        }
+        .launch-btn i {
+            font-size: 1.7rem;
+        }
+        .home-btn {
+            background: linear-gradient(135deg, #6a5acd, #8a7adc);
+            border: none;
+            font-size: 1.3rem;
+            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 50px;
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 7px 0 #4a3a9a, 0 12px 25px rgba(106, 90, 205, 0.6);
+            transition: 0.08s linear;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .home-btn:active {
+            transform: translateY(7px);
+            box-shadow: 0 3px 0 #4a3a9a, 0 12px 25px rgba(106, 90, 205, 0.6);
+        }
+        .home-btn i {
+            font-size: 1.5rem;
+        }
+        .hint {
+            color: #c7d3ff;
+            font-size: 1rem;
+            font-style: italic;
+        }
+        footer {
+            margin-top: 20px;
+            color: #7f8db0;
+            font-size: 0.9rem;
+        }
+        /* 性能提示 */
+        .perf-note {
+            color: #aab8e0;
+            font-size: 0.8rem;
+            margin-top: 5px;
+            opacity: 0.8;
+        }
+        /* 按钮组 */
+        .button-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="newyearCanvas" width="1440" height="810"></canvas>
+    
+    <div class="theme-panel">
+        <span class="greeting">✨ HAPPY NEW YEAR ✨</span>
+        <div class="button-group">
+            <button class="launch-btn" id="newyearBtn"><i>🎇</i> 新春万花</button>
+            <a href="/home" class="home-btn"><i class="fas fa-home"></i> 返回首页</a>
+        </div>
+        <span class="hint">点击画布 · 手动绽放祝福</span>
+    </div>
+    <footer>❤️ 愿新年烟花照亮每一个心愿 · 2026</footer>
+    <div class="perf-note">✨ 性能优化版 · 流畅体验</div>
+
+    <!-- Font Awesome 图标库 (用于首页图标) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        (function() {
+            const canvas = document.getElementById('newyearCanvas');
+            const ctx = canvas.getContext('2d');
+
+            // 适配显示
+            function resizeCanvas() {
+                const containerWidth = Math.min(window.innerWidth * 0.95, 1300);
+                const containerHeight = containerWidth * 9 / 16;
+                canvas.style.width = `${containerWidth}px`;
+                canvas.style.height = `${containerHeight}px`;
+            }
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            // ---------- 物理参数 (优化版) ----------
+            const GRAVITY = 0.04;           // 稍小一点，粒子飘落更慢更美
+            const GROUND_Y = 740;       
+            const MIN_LAUNCH_X = 250;
+            const MAX_LAUNCH_X = 1190;
+            
+            // 最大粒子数限制 (防止卡顿)
+            const MAX_PARTICLES = 800;       // 超过此数量时，会优先移除旧粒子
+
+            // 存储烟花实体
+            let fireworks = [];      
+            let particles = [];       
+
+            // 新年主题颜色 (精简但鲜艳)
+            const NEWYEAR_COLORS = [
+                '#FF3131', // 亮红
+                '#FFB347', // 橘金
+                '#FFD700', // 金色
+                '#FF69B4', // 粉红
+                '#BF94E4', // 浅紫
+                '#FF8C42', // 橙
+                '#DC143C', // 深红
+                '#FDFF95'  // 淡黄
+            ];
+
+            const rand = (min, max) => Math.random() * (max - min) + min;
+            const randInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+            // ----- 创建升空烟花 -----
+            function createFirework(x = null, customColor = null) {
+                const posX = x !== null ? x : rand(MIN_LAUNCH_X, MAX_LAUNCH_X);
+                const explodeY = rand(280, 620);  
+                const speed = 5.2 + (explodeY - 400) * 0.005;  // 速度更平稳
+                const color = customColor || NEWYEAR_COLORS[Math.floor(Math.random() * NEWYEAR_COLORS.length)];
+                
+                return {
+                    x: posX,
+                    y: GROUND_Y,
+                    targetY: explodeY,
+                    speed: Math.min(6.8, Math.max(4.0, speed)),
+                    color: color,
+                    trail: [],
+                    size: rand(4.5, 6.5)
+                };
+            }
+
+            // ----- 爆炸：生成粒子 (数量减少但保持绚烂) -----
+            function explodeFirework(fw) {
+                const baseColor = fw.color;
+                const centerX = fw.x;
+                const centerY = fw.y;
+                
+                // 核心粒子 45-70个 (比原来少30%)
+                const particleCount = randInt(45, 70);
+                
+                for (let i = 0; i < particleCount; i++) {
+                    const angle = rand(0, Math.PI * 2);
+                    const speed = rand(2.5, 5.8);
+                    const vx = Math.cos(angle) * speed * rand(0.7, 1.3);
+                    const vy = Math.sin(angle) * speed * rand(0.6, 1.3) - 0.5; 
+                    
+                    // 颜色简化：主要使用基础色和金色
+                    let color = (Math.random() < 0.4) ? '#FFF9C4' : baseColor;
+                    
+                    const size = rand(2.5, 5.0) * (0.9 + Math.random() * 0.5);
+                    
+                    particles.push({
+                        x: centerX, y: centerY,
+                        vx: vx, vy: vy,
+                        color: color,
+                        size: size,
+                        life: 1.0,
+                        decay: rand(0.012, 0.022),  // 寿命稍短，更快消失避免堆积
+                        gravity: GRAVITY,
+                        alpha: 1.0
+                    });
+                }
+                
+                // 闪光星屑减少到8-10个
+                for (let i = 0; i < randInt(8, 12); i++) {
+                    particles.push({
+                        x: centerX, y: centerY,
+                        vx: rand(-3.5, 3.5), vy: rand(-4, 2),
+                        color: '#FFFAE6',
+                        size: rand(3, 6),
+                        life: 0.9,
+                        decay: rand(0.018, 0.028),
+                        gravity: GRAVITY * 0.5,
+                        alpha: 1.0
+                    });
+                }
+                
+                // 粒子数控制：如果超过MAX_PARTICLES，移除最早的一部分
+                if (particles.length > MAX_PARTICLES) {
+                    const excess = particles.length - MAX_PARTICLES;
+                    particles.splice(0, excess);  // 移除数组前面的（较早的粒子）
+                }
+            }
+
+            function launchFireworkAt(mouseX) {
+                let launchX = Math.min(MAX_LAUNCH_X, Math.max(MIN_LAUNCH_X, mouseX));
+                fireworks.push(createFirework(launchX));
+            }
+
+            // ----- 更新物理 (带性能优化) -----
+            function update() {
+                // 更新升空烟花
+                for (let i = fireworks.length - 1; i >= 0; i--) {
+                    const f = fireworks[i];
+                    
+                    // 尾迹 (减少记录点)
+                    f.trail.push({ x: f.x, y: f.y, size: f.size * 0.7 });
+                    if (f.trail.length > 4) f.trail.shift();  // 从5减到4
+                    
+                    f.y -= f.speed;
+                    f.x += rand(-0.25, 0.25); // 飘移幅度减小
+                    
+                    if (f.x < 60) f.x = 60;
+                    if (f.x > canvas.width - 60) f.x = canvas.width - 60;
+                    
+                    if (f.y <= f.targetY || f.y < 100) {
+                        explodeFirework(f);
+                        fireworks.splice(i, 1);
+                    }
+                }
+                
+                // 更新爆炸粒子 (使用for循环，但加一个early break如果太多？不需要，已经控制了总数)
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    const p = particles[i];
+                    
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.vy += p.gravity;
+                    
+                    p.vx *= 0.985;  // 阻力稍大，让粒子更快静止消失
+                    p.vy *= 0.985;
+                    
+                    p.life -= p.decay;
+                    
+                    if (p.life <= 0.03 || p.y > canvas.height + 80 || p.x < -80 || p.x > canvas.width + 80) {
+                        particles.splice(i, 1);
+                    }
+                }
+            }
+
+            // ----- 绘制 (简化阴影效果，减少性能消耗) -----
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // 夜空渐变
+                const grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+                grad.addColorStop(0, '#0c1320');
+                grad.addColorStop(0.7, '#1b1f35');
+                ctx.fillStyle = grad;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // 星星 (数量减少到30颗)
+                for (let i = 0; i < 30; i++) {
+                    const sx = (i * 37) % canvas.width;
+                    const sy = (i * 29) % canvas.height;
+                    ctx.beginPath();
+                    ctx.arc(sx, sy, 1.2, 0, 2 * Math.PI);
+                    ctx.fillStyle = `rgba(255, 240, 180, 0.6)`;
+                    ctx.fill();
+                }
+                
+                // 地面剪影
+                ctx.fillStyle = '#2b344f';
+                ctx.fillRect(0, GROUND_Y-15, canvas.width, 80);
+                
+                // 灯笼 (简化阴影)
+                ctx.shadowColor = '#ff7b24';
+                ctx.shadowBlur = 18;
+                ctx.beginPath();
+                ctx.arc(220, GROUND_Y-30, 26, 0, 2*Math.PI);
+                ctx.fillStyle = '#e63946';
+                ctx.fill();
+                ctx.beginPath();
+                ctx.arc(1220, GROUND_Y-40, 30, 0, 2*Math.PI);
+                ctx.fillStyle = '#f4a261';
+                ctx.fill();
+                
+                // 绘制升空烟花 (尾迹和弹头 - 降低阴影模糊)
+                for (const f of fireworks) {
+                    // 尾迹
+                    for (let j = 0; j < f.trail.length; j++) {
+                        const t = f.trail[j];
+                        const alpha = (j+1) * 0.15;
+                        ctx.beginPath();
+                        ctx.arc(t.x, t.y, t.size * 0.5, 0, 2*Math.PI);
+                        ctx.fillStyle = `rgba(255, 200, 100, ${alpha})`;
+                        ctx.fill();
+                    }
+                    // 弹头 (降低阴影模糊)
+                    ctx.shadowColor = f.color;
+                    ctx.shadowBlur = 15;  // 从22降到15
+                    ctx.beginPath();
+                    ctx.arc(f.x, f.y, f.size * 1.2, 0, 2*Math.PI);
+                    ctx.fillStyle = f.color;
+                    ctx.fill();
+                    ctx.shadowBlur = 8;
+                    ctx.beginPath();
+                    ctx.arc(f.x-2, f.y-2, f.size*0.5, 0, 2*Math.PI);
+                    ctx.fillStyle = '#fffde7';
+                    ctx.fill();
+                }
+                
+                // 绘制爆炸粒子 (降低阴影频率)
+                for (const p of particles) {
+                    ctx.globalAlpha = p.life * 0.8;
+                    ctx.shadowColor = p.color;
+                    ctx.shadowBlur = 10;  // 从18降到10
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size * (0.7 + p.life * 0.2), 0, 2*Math.PI);
+                    ctx.fillStyle = p.color;
+                    ctx.fill();
+                    
+                    // 内高光减少绘制次数 (随机绘制，进一步提升性能)
+                    if (p.size > 3.5 && Math.random() < 0.3) {  // 只对较大粒子随机画高光
+                        ctx.shadowBlur = 6;
+                        ctx.beginPath();
+                        ctx.arc(p.x-1, p.y-1, p.size * 0.2, 0, 2*Math.PI);
+                        ctx.fillStyle = '#fffff0';
+                        ctx.fill();
+                    }
+                }
+                
+                ctx.shadowBlur = 0;
+                ctx.globalAlpha = 1.0;
+                
+                // ------- 绘制新年文字 (阴影适当降低) -------
+                ctx.font = 'bold 64px "Segoe UI", "Poppins", "Microsoft YaHei", sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                
+                // 只保留两层阴影，减少一层
+                ctx.shadowColor = '#ffb703';
+                ctx.shadowBlur = 30;
+                ctx.fillStyle = 'rgba(255, 225, 120, 0.25)';
+                ctx.fillText('HAPPY NEW YEAR', canvas.width/2, 240);
+                
+                ctx.shadowBlur = 25;
+                ctx.lineWidth = 3;
+                ctx.strokeStyle = '#ffd966';
+                ctx.strokeText('HAPPY NEW YEAR', canvas.width/2, 240);
+                
+                ctx.font = 'bold 42px "Segoe UI", "Poppins", sans-serif';
+                ctx.fillStyle = '#fff6d9';
+                ctx.shadowBlur = 20;
+                ctx.fillText('2026', canvas.width/2, 360);
+                
+                // 减少围绕星星数量
+                ctx.shadowBlur = 8;
+                for (let s=0; s<6; s++) {  // 从12降到6
+                    let angle = s * 1.05 + Date.now() * 0.0015;
+                    let rx = canvas.width/2 + Math.cos(angle)*130;
+                    let ry = 230 + Math.sin(angle)*25;
+                    ctx.beginPath();
+                    ctx.arc(rx, ry, 3, 0, 2*Math.PI);
+                    ctx.fillStyle = '#fffaad';
+                    ctx.fill();
+                }
+                
+                ctx.shadowBlur = 0;
+                ctx.shadowColor = 'transparent';
+            }
+
+            // ----- 动画循环 (使用requestAnimationFrame) -----
+            function animate() {
+                update();
+                draw();
+                requestAnimationFrame(animate);
+            }
+            animate();
+
+            // ----- 交互 -----
+            canvas.addEventListener('click', (e) => {
+                const rect = canvas.getBoundingClientRect();
+                const scaleX = canvas.width / rect.width;
+                const mouseX = (e.clientX - rect.left) * scaleX;
+                launchFireworkAt(mouseX);
+            });
+
+            canvas.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                const rect = canvas.getBoundingClientRect();
+                const touch = e.touches[0];
+                const scaleX = canvas.width / rect.width;
+                const touchX = (touch.clientX - rect.left) * scaleX;
+                launchFireworkAt(touchX);
+            }, { passive: false });
+
+            // 按钮: 新春万花 (减少同时发射数量)
+            document.getElementById('newyearBtn').addEventListener('click', () => {
+                // 改为8连发，间隔拉长
+                for (let i = 0; i < 8; i++) {
+                    setTimeout(() => {
+                        const randX = rand(320, 1120);
+                        launchFireworkAt(randX);
+                    }, i * 150);  // 间隔加长到150ms
+                }
+                // 补一个金色烟花
+                setTimeout(() => {
+                    fireworks.push(createFirework(rand(600, 850), '#FFD700'));
+                }, 200);
+            });
+
+            // 页面载入时放3发预热 (减少到3发)
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    for (let i = 0; i < 3; i++) {
+                        setTimeout(() => {
+                            launchFireworkAt(rand(400, 1000));
+                        }, i * 250);
+                    }
+                }, 300);
+            });
+
+        })();
+    </script>
+</body>
+</html>

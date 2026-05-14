@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>觉醒年代 · 百团大战 | hyper的Vlog</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', 'Inter', sans-serif;
+        }
+
+        :root {
+            --primary: #8b0000;
+            --accent: #ff4500;
+            --gold: #ffd700;
+            --dark: #1a1a1a;
+            --light: #f5f5f5;
+            --gray: #888;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: min(1000px, 90%);
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* 导航栏 */
+        .navbar {
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .navbar-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo i {
+            color: var(--accent);
+        }
+
+        .logo span {
+            color: var(--gold);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #ccc;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        .nav-links a.active {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        /* 英雄区域 */
+        .hero {
+            background: linear-gradient(135deg, #2a0000 0%, #0a0000 100%);
+            padding: 60px 0 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .hero::before {
+            content: "✊";
+            font-size: 20rem;
+            position: absolute;
+            bottom: -50px;
+            right: -30px;
+            opacity: 0.05;
+            transform: rotate(15deg);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 8px 25px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            border: 1px solid var(--accent);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-weight: 900;
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 0 var(--primary);
+            letter-spacing: 3px;
+        }
+
+        .hero h1 span {
+            color: var(--gold);
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .hero-quote {
+            max-width: 700px;
+            margin: 20px auto 0;
+            padding: 20px;
+            background: rgba(139, 0, 0, 0.2);
+            border-radius: 10px;
+            border-left: 4px solid var(--gold);
+            font-style: italic;
+        }
+
+        /* 背景介绍 */
+        .background-section {
+            padding: 60px 0 30px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            display: inline-block;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        .section-title h2 i {
+            color: var(--gold);
+            margin: 0 10px;
+        }
+
+        .cause-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .cause-card {
+            background: linear-gradient(145deg, #222, #111);
+            border-radius: 16px;
+            padding: 30px 20px;
+            text-align: center;
+            border: 1px solid #333;
+            transition: transform 0.3s;
+        }
+
+        .cause-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .cause-card i {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .cause-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--gold);
+        }
+
+        .cause-card p {
+            color: #aaa;
+            font-size: 0.95rem;
+        }
+
+        /* 视频区域 */
+        .video-section {
+            padding: 40px 0;
+        }
+
+        .video-card {
+            background: linear-gradient(145deg, #222, #111);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid #333;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .video-wrapper {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #000;
+        }
+
+        .video-wrapper video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .video-info {
+            padding: 25px 30px;
+            text-align: center;
+        }
+
+        .video-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: white;
+        }
+
+        .video-info h3 i {
+            color: var(--gold);
+            margin-right: 10px;
+        }
+
+        .video-info p {
+            color: #aaa;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .video-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 5px 20px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+
+        /* 事件时间线 */
+        .timeline-section {
+            padding: 50px 0;
+        }
+
+        .timeline {
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: var(--primary);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+            padding-bottom: 10px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -36px;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 3px solid var(--primary);
+        }
+
+        .timeline-content {
+            background: linear-gradient(145deg, #222, #111);
+            border-radius: 12px;
+            padding: 20px 25px;
+            border: 1px solid #333;
+        }
+
+        .timeline-content h4 {
+            font-size: 1.3rem;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .timeline-content p {
+            color: #ccc;
+        }
+
+        .timeline-date {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-top: 10px;
+        }
+
+        /* 结果与影响 */
+        .result-section {
+            padding: 40px 0 60px;
+        }
+
+        .result-card {
+            background: linear-gradient(145deg, #222, #111);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            border: 1px solid var(--gold);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .result-card i {
+            font-size: 4rem;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .result-card h3 {
+            font-size: 2rem;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .result-card p {
+            font-size: 1.2rem;
+            color: #ccc;
+            margin-bottom: 30px;
+        }
+
+        .result-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .result-tag {
+            background: rgba(255, 69, 0, 0.2);
+            padding: 8px 20px;
+            border-radius: 30px;
+            border: 1px solid var(--accent);
+            color: var(--light);
+        }
+
+        .result-tag i {
+            font-size: 1rem;
+            margin-right: 8px;
+            margin-bottom: 0;
+        }
+
+        /* 页脚 */
+        footer {
+            background: #0a0a0a;
+            padding: 40px 0;
+            text-align: center;
+            border-top: 2px solid var(--primary);
+            margin-top: 20px;
+        }
+
+        footer p {
+            color: #666;
+        }
+
+        footer a {
+            color: var(--gold);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: var(--accent);
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .navbar-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+            .cause-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .result-card {
+                padding: 25px;
+            }
+            .result-card h3 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- 导航栏 -->
+<nav class="navbar">
+    <div class="container navbar-content">
+        <a href="/home/" class="logo">
+            <i class="fas fa-fire"></i>
+            hyper的<span>Vlog</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="/home/">首页</a></li>
+            <li><a href="/home/#categories">分类</a></li>
+            <li><a href="/pages/YY往事/" class="active">YY往事</a></li>
+            <li><a href="/pages/travel/">旅游记录</a></li>
+            <li><a href="/pages/diy/">装机记录</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- 英雄区域 -->
+<section class="hero">
+    <div class="container hero-content">
+        <div class="hero-badge">
+            <i class="fas fa-fire"></i> 史诗级事件 <i class="fas fa-fire"></i>
+        </div>
+        <h1>觉醒<span>年代</span></h1>
+        <div class="hero-subtitle">WZYY 学生运动 · 史称"百团大战"</div>
+        <div class="hero-quote">
+            <i class="fas fa-quote-left" style="opacity: 0.5; margin-right: 8px;"></i>
+            食堂难吃、价格昂贵、毫无健康可言，还不让点外卖——忍无可忍，无需再忍！
+            <i class="fas fa-quote-right" style="opacity: 0.5; margin-left: 8px;"></i>
+        </div>
+    </div>
+</section>
+
+<!-- 背景介绍 -->
+<section class="background-section">
+    <div class="container">
+        <div class="section-title">
+            <h2><i class="fas fa-exclamation-triangle"></i> 压迫的根源 <i class="fas fa-exclamation-triangle"></i></h2>
+        </div>
+        <div class="cause-grid">
+            <div class="cause-card">
+                <i class="fas fa-utensils"></i>
+                <h3>难吃到崩溃</h3>
+                <p>食堂菜品千篇一律，味道令人绝望，学生们苦不堪言</p>
+            </div>
+            <div class="cause-card">
+                <i class="fas fa-coins"></i>
+                <h3>价格昂贵</h3>
+                <p>一顿饭动辄15-20元，性价比极低，学生钱包被掏空</p>
+            </div>
+            <div class="cause-card">
+                <i class="fas fa-ban"></i>
+                <h3>禁止外卖</h3>
+                <p>学校严禁点外卖，切断了学生获取正常食物的最后渠道</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 视频区域 -->
+<section class="video-section">
+    <div class="container">
+        <div class="video-card">
+            <div class="video-wrapper">
+                <video controls poster="">
+                    <source src="media/lhn版觉醒年代.mp4" type="video/mp4">
+                    您的浏览器不支持视频播放
+                </video>
+            </div>
+            <div class="video-info">
+                <h3><i class="fas fa-video"></i> 觉醒年代 · 纪录片</h3>
+                <p>WZYY 学生们为争取外卖自由而发起的斗争——百团大战全记录</p>
+                <span class="video-badge"><i class="fas fa-users"></i> LHN 剪辑版</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- 结果与影响 -->
+<section class="result-section">
+    <div class="container">
+        <div class="result-card">
+            <i class="fas fa-flag-checkered"></i>
+            <h3>斗争的结果</h3>
+            <p>学生们用团结和勇气，换来了属于自己的权利。<br>这是一次属于 WZYY 学生的伟大胜利！</p>
+            <div class="result-tags">
+                <span class="result-tag"><i class="fas fa-check-circle"></i> 外卖解禁</span>
+                <span class="result-tag"><i class="fas fa-check-circle"></i> 食堂整改</span>
+                <span class="result-tag"><i class="fas fa-check-circle"></i> 学生觉醒</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 页脚 -->
+<footer>
+    <div class="container">
+        <p>© 2026 hyper的个人Vlog · 觉醒年代 · 百团大战</p>
+        <p style="margin-top: 15px;">
+            <a href="/home/"><i class="fas fa-home"></i> 返回首页</a> · 
+            <a href="/pages/YY往事/"><i class="fas fa-history"></i> YY往事</a> · 
+            <a href="/talk/"><i class="fas fa-comment"></i> 留言板</a>
+        </p>
+        <p style="margin-top: 20px; font-size: 0.9rem;">
+            <i class="fas fa-fire" style="color: var(--accent);"></i> 
+            哪里有压迫，哪里就有反抗 —— WZYY 学生宣言
+            <i class="fas fa-fire" style="color: var(--accent);"></i>
+        </p>
+    </div>
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.body.style.opacity = '0';
+        document.body.style.transition = 'opacity 0.5s ease-out';
+        requestAnimationFrame(() => {
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    });
+</script>
+
+</body>
+</html>
