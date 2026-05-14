@@ -71,6 +71,7 @@ python src/analyze_visitor.py 2026.4.27            # 按日期查询访问记录
 ├── home/                    # 首页
 ├── login/                   # 登录/注册
 ├── resume/                  # 个人简历
+├── media/                   # 媒体资源文件（已 gitignore）
 ├── pages/                   # 内容页面
 │   ├── devlog/              # 开发日志
 │   ├── diy/                 # 装机记录
