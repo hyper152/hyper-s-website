@@ -93,4 +93,4 @@ python src/analyze_visitor.py 2026.4.27            # 按日期查询访问记录
 
 ## 许可
 
-MIT © 2026 hyper（黄益鹏）
+MIT © 2026 CQU.hyper
