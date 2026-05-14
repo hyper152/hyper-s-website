@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>雁荡山一日行 | hyper的Vlog</title>
+    <!-- 外部资源 -->
+    <link 
+        rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        crossorigin="anonymous"
+    >
+    <style>
+        :root {
+            --primary: #6a5acd;
+            --accent: #ff6b6b;
+            --dark: #2d3436;
+            --light: #f8f9fa;
+            --white: #ffffff;
+            --gray: #495057;
+            --light-gray: #e9ecef;
+            --shadow: 0 2px 15px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--gray);
+            line-height: 1.8;
+        }
+
+        /* 导航栏 */
+        .navbar {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .container {
+            width: min(1200px, 90%);
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo i {
+            color: var(--accent);
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .back-btn:hover {
+            color: var(--accent);
+            transform: translateX(-3px);
+        }
+
+        /* 文章头部 */
+        .article-header {
+            padding: 60px 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: var(--white);
+            text-align: center;
+            margin-bottom: 60px;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .article-title {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            margin-bottom: 15px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            font-size: 0.95rem;
+            opacity: 0.9;
+            margin-top: 20px;
+        }
+
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* 文章内容 */
+        .article-content {
+            max-width: 800px;
+            margin: 0 auto 80px;
+            padding: 0 20px;
+        }
+
+        .content-block {
+            background-color: var(--white);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .content-block:hover {
+            box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+        }
+
+        .content-block h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light-gray);
+            position: relative;
+        }
+
+        .content-block h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 80px;
+            height: 2px;
+            background-color: var(--accent);
+        }
+
+        .content-block p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .content-block ul {
+            margin: 15px 0 15px 25px;
+        }
+
+        .content-block li {
+            margin-bottom: 10px;
+        }
+
+        /* 图片展示 - 每张图独立且宽松 */
+        .image-showcase {
+            margin: 40px 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .image-item {
+            display: flex;
+            flex-direction: column;
+            background-color: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+
+        .image-item:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .image-item .img-wrapper {
+            width: 100%;
+            background-color: #f7f5fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+        }
+
+        .image-item img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .image-mini-caption {
+            padding: 12px 20px 16px;
+            font-size: 0.95rem;
+            color: var(--gray);
+            border-top: 1px solid var(--light-gray);
+            background-color: var(--white);
+            letter-spacing: 0.3px;
+        }
+
+        .image-mini-caption i {
+            color: var(--accent);
+            margin-right: 6px;
+            font-size: 0.9rem;
+        }
+
+        /* 引用样式 */
+        .quote {
+            background-color: rgba(106, 90, 205, 0.05);
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .quote p {
+            font-style: italic;
+            color: var(--dark);
+            margin-bottom: 0 !important;
+        }
+
+        /* 心得总结 */
+        .summary {
+            background: linear-gradient(135deg, rgba(106, 90, 205, 0.1) 0%, rgba(255, 107, 107, 0.1) 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px 0;
+            border: 1px solid var(--light-gray);
+        }
+
+        .summary h3 {
+            color: var(--accent);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* 页脚 */
+        .footer {
+            background-color: var(--white);
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid var(--light-gray);
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        .footer a {
+            transition: var(--transition);
+        }
+        .footer a:hover {
+            text-decoration: underline;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 600px) {
+            .content-block {
+                padding: 25px 20px;
+            }
+            .image-item .img-wrapper {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="/home/" class="logo">
+                <i class="fas fa-mountain-water"></i> hyper的Vlog
+            </a>
+            <a href="/pages/travel/" class="back-btn">
+                <i class="fas fa-arrow-left"></i> 返回旅行记录
+            </a>
+        </div>
+    </nav>
+
+    <!-- 文章头部 -->
+    <header class="article-header">
+        <div class="container">
+            <h1 class="article-title">雁荡山旅行记 · 一日版</h1>
+            <p>2025.8.17 | 用一天时间，收藏雁荡山的奇峰</p>
+            <div class="article-meta">
+                <span><i class="fas fa-calendar"></i> 记录时间：2025年8月17日</span>
+                <span><i class="fas fa-map-marker-alt"></i> 地点：温州乐清雁荡山景区</span>
+                <span><i class="fas fa-tag"></i> 标签：一日徒步 · 奇山 · 同学</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- 文章主体内容 -->
+    <main class="article-content">
+        <!-- 行程概述 -->
+        <section class="content-block">
+            <h2>一日行程</h2>
+            <p>2025年8月17日，清晨6:30从温州南站出发，乘坐最早一班动车前往乐清，开启雁荡山一日徒步。动车上的小惊喜、对照地图的从容规划、以及和同学在山洞里碰头的趣事——浓缩的旅行，也有完整的体验。</p>
+            <p>当日流水：</p>
+            <ul>
+                <li><strong>7:30 抵达乐清</strong>：打车至雁荡山游客中心</li>
+                <li><strong>8:30 进入景区</strong>：对照地图，走灵峰—灵岩短线</li>
+                <li><strong>9:00-12:00 徒步</strong>：沿途拍照，山洞里和同学汇合</li>
+                <li><strong>12:30 山洞休息</strong>：和同学一起午餐</li>
+                <li><strong>14:00-16:00 补拍返程</strong>：补拍照片，乘动车回温州</li>
+            </ul>
+        </section>
+
+        <!-- 行前准备 -->
+        <section class="content-block">
+            <h2>行前准备</h2>
+            <ul>
+                <li>雁荡山地图</li>
+                <li>轻装徒步装备：防滑鞋、速干衣、背包、充电宝</li>
+                <li>查好动车班次（06:42出发 / 18:30返回）</li>
+                <li>和同学约在山洞碰头</li>
+            </ul>
+            <div class="quote">
+                <p>“一日之旅，也要有十分的准备。”</p>
+            </div>
+        </section>
+
+        <!-- 徒步实录 + 图片按顺序展示 -->
+        <section class="content-block">
+            <h2>徒步实录</h2>
+            <p>8月17日早上8:30，灵峰景区。晨雾未散，游客零星，走灵峰—灵岩短线。</p>
+            <ul>
+                <li>地图避开施工路段，三小时打卡多个观景点</li>
+                <li>山洞里和同学碰头</li>
+                <li>下午两点后光线柔和，补拍照片</li>
+            </ul>
+            <p>傍晚16:30下山，动车返程。</p>
+
+            <!-- 图片区域：逐一展示，极简说明（无红薯、无老人、无山名） -->
+            <div class="image-showcase">
+                <!-- 1. 动车 -->
+                <div class="image-item">
+                    <div class="img-wrapper">
+                        <img src="动车上的天下足球.jpg" alt="动车上的天下足球">
+                    </div>
+                    <div class="image-mini-caption">
+                        <i class="fas fa-train"></i> 动车上
+                    </div>
+                </div>
+
+                <!-- 2. 地图 -->
+                <div class="image-item">
+                    <div class="img-wrapper">
+                        <img src="雁荡山地图.jpg" alt="雁荡山地图">
+                    </div>
+                    <div class="image-mini-caption">
+                        <i class="fas fa-map"></i> 离线地图
+                    </div>
+                </div>
+
+                <!-- 3-7. 五张山景，无命名 -->
+                <div class="image-item">
+                    <div class="img-wrapper">
+                        <img src="山景1.jpg" alt="雁荡山景">
+                    </div>
+                    <div class="image-mini-caption">
+                        <i class="fas fa-mountain"></i> 山景
+                    </div>
+                </div>
+                <div class="image-item">
+                    <div class="img-wrapper">
+                        <img src="山景2.jpg" alt="雁荡山景">
+                    </div>
+                    <div class="image-mini-caption">
+                        <i class="fas fa-mountain"></i> 山景
+                    </div>
+                </div>
+                <div class="image-item">
+                    <div class="img-wrapper">
+                        <img src="山景3.jpg" alt="雁荡山景">
+                    </div>
+                    <div class="image-mini-caption">
+                        <i class="fas fa-mountain"></i> 山景
+                    </div>
+                </div>
+                <div class="image-item">
+                    <div class="img-wrapper">
+                        <img src="山景4.jpg" alt="雁荡山景">
+                    </div>
+                    <div class="image-mini-caption">
+                        <i class="fas fa-mountain"></i> 山景
+                    </div>
+                </div>
+                <div class="image-item">
+                    <div class="img-wrapper">
+                        <img src="山景5.jpg" alt="雁荡山景">
+                    </div>
+                    <div class="image-mini-caption">
+                        <i class="fas fa-mountain"></i> 山景
+                    </div>
+                </div>
+
+                <!-- 8. 山洞里的同学（原图文件名不变） -->
+                <div class="image-item">
+                    <div class="img-wrapper">
+                        <img src="山洞里的地瓜.jpg" alt="山洞里的同学">
+                    </div>
+                    <div class="image-mini-caption">
+                        <i class="fas fa-user"></i> 山洞 · 同学
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 心得感悟（精简，无红薯无老人） -->
+        <section class="summary">
+            <h3><i class="fas fa-lightbulb"></i> 一日之悟</h3>
+            <ul>
+                <li>时间有限，反而更专注地观察山景</li>
+                <li>动车上的节目、和同学的山洞碰头，成了最鲜活的记忆</li>
+                <li>一条短线，慢慢走才能看见细节</li>
+                <li>有老友相伴，雁荡山之行更加难忘</li>
+            </ul>
+            <p style="margin-top: 20px;">峰林、动车上的画面，还有同学，会一直留在2025年8月17日的记忆里。</p>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 hyper的个人Vlog · 记录生活，分享成长</p>
+            <p style="margin-top: 10px;">
+                <a href="/home/" style="color: #ff6b6b; text-decoration: none;">返回首页</a> | 
+                <a href="/talk/" style="color: #ff6b6b; text-decoration: none;">留言交流</a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

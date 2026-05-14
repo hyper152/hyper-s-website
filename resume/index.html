@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>黄益鹏 · 个人简介 | 弘深计算机拔尖计划</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #f1f5f9 0%, #e9eef5 100%);
+            font-family: 'Inter', 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: #1e293b;
+            line-height: 1.5;
+            padding: 2rem 1.5rem;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        /* 顶部导航 */
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(8px);
+            padding: 0.9rem 2rem;
+            border-radius: 60px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.03), 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            background: linear-gradient(135deg, #6a5acd, #ff6b6b);
+            width: 42px;
+            height: 42px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 6px 12px rgba(106,90,205,0.2);
+        }
+
+        .logo-text {
+            font-weight: 700;
+            font-size: 1.35rem;
+            background: linear-gradient(135deg, #6a5acd, #ff6b6b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #334155;
+            font-weight: 500;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 40px;
+            background: rgba(255,255,255,0.6);
+        }
+
+        .nav-links a:hover {
+            background: white;
+            color: #6a5acd;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        /* 简历核心区 */
+        .resume-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            margin: 2rem 0 2.5rem;
+        }
+
+        /* 左侧个人卡片 */
+        .profile-card {
+            background: white;
+            border-radius: 2rem;
+            overflow: hidden;
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.1);
+            border: 1px solid rgba(106,90,205,0.2);
+        }
+
+        .avatar-section {
+            background: linear-gradient(135deg, #6a5acd20, #ff6b6b20);
+            padding: 2rem 1.5rem 1.5rem;
+            text-align: center;
+        }
+
+        .avatar-img {
+            width: 160px;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+            background: #eef2ff;
+        }
+
+        .avatar-name {
+            margin-top: 1.2rem;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #6a5acd, #ff6b6b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .avatar-badge {
+            background: #f1f5f9;
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #475569;
+            margin-top: 8px;
+        }
+
+        .info-detail {
+            padding: 1.8rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1.1rem;
+            font-size: 0.95rem;
+            color: #1e293b;
+            flex-wrap: wrap;
+        }
+
+        .info-item i {
+            width: 32px;
+            height: 32px;
+            background: #f1f5f9;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            color: #6a5acd;
+            font-size: 1rem;
+        }
+
+        .info-item a {
+            color: #6a5acd;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .info-item a:hover {
+            color: #ff6b6b;
+            text-decoration: underline;
+        }
+
+        /* 右侧内容区 */
+        .right-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1.8rem;
+        }
+
+        .card-modern {
+            background: white;
+            border-radius: 1.8rem;
+            padding: 1.6rem 2rem;
+            box-shadow: 0 12px 28px -8px rgba(0,0,0,0.08);
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.4rem;
+            border-left: 5px solid #ff6b6b;
+            padding-left: 1rem;
+            color: #0f172a;
+        }
+
+        .section-title i {
+            color: #6a5acd;
+            font-size: 1.4rem;
+        }
+
+        /* 图文结合样式 - 每个条目独立展示 */
+        .story-item {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #eef2ff;
+            padding-bottom: 1.5rem;
+        }
+
+        .story-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .story-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 12px;
+        }
+
+        .story-title i {
+            color: #ff6b6b;
+            font-size: 1.2rem;
+        }
+
+        .story-desc {
+            color: #475569;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .story-img {
+            margin: 12px 0 8px;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+            cursor: pointer;
+            transition: transform 0.2s;
+            background: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .story-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+            background: #f1f5f9;
+            object-fit: contain;
+        }
+
+        .story-img:hover {
+            transform: scale(1.01);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+        }
+
+        .img-caption {
+            font-size: 0.75rem;
+            color: #6c7a91;
+            margin-top: 6px;
+            text-align: center;
+            padding: 0 0 6px 0;
+        }
+
+        .score-badge {
+            display: inline-block;
+            background: linear-gradient(115deg, #f8fafc, #ffffff);
+            border-radius: 2rem;
+            padding: 0.4rem 1.2rem;
+            border: 1px solid #e2e8f0;
+            font-weight: 600;
+            margin-right: 12px;
+            margin-bottom: 8px;
+        }
+
+        .score-badge span:first-child {
+            color: #475569;
+            font-weight: 500;
+        }
+
+        .score-badge span:last-child {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #6a5acd;
+            margin-left: 8px;
+        }
+
+        .project-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .project-btn {
+            background: #f1f5f9;
+            border-radius: 40px;
+            padding: 0.65rem 1.4rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #1e293b;
+            font-weight: 500;
+            transition: 0.2s;
+            border: 1px solid #e2e8f0;
+        }
+
+        .project-btn i {
+            color: #6a5acd;
+        }
+
+        .project-btn:hover {
+            background: #6a5acd;
+            color: white;
+            border-color: #6a5acd;
+            transform: translateY(-3px);
+        }
+
+        .project-btn:hover i {
+            color: white;
+        }
+
+        /* 突出竞赛与科研板块 */
+        .highlight-card {
+            background: linear-gradient(115deg, #ffffff 0%, #fef7e8 100%);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        .highlight-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ff6b6b, #6a5acd, #ff6b6b);
+        }
+        .honor-list-highlight {
+            list-style: none;
+        }
+        .honor-list-highlight li {
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            background: rgba(255,255,240,0.6);
+            padding: 0.9rem 1rem;
+            border-radius: 1.2rem;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255,107,107,0.15);
+        }
+        .honor-list-highlight li:hover {
+            background: white;
+            border-color: #ffb6a6;
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .honor-list-highlight li i {
+            color: #ff6b6b;
+            font-size: 1.35rem;
+            width: 32px;
+            text-align: center;
+            margin-top: 2px;
+        }
+        .honor-list-highlight li strong {
+            color: #6a5acd;
+            font-size: 1.05rem;
+        }
+        .honor-desc {
+            color: #334155;
+            line-height: 1.5;
+        }
+        .tag-robot {
+            background: #ffe4e0;
+            border-radius: 20px;
+            padding: 2px 10px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-left: 8px;
+            color: #ff6b6b;
+        }
+
+        /* 竞赛经历列表 */
+        .honor-list {
+            list-style: none;
+        }
+
+        .honor-list li {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+        }
+
+        .honor-list li i {
+            color: #ff6b6b;
+            width: 24px;
+        }
+
+        /* 底部社交 */
+        .footer-links {
+            margin-top: 2.5rem;
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(8px);
+            border-radius: 2rem;
+        }
+
+        .footer-links a {
+            margin: 0 1rem;
+            color: #475569;
+            font-size: 1.4rem;
+            transition: 0.2s;
+            display: inline-block;
+        }
+
+        .footer-links a:hover {
+            color: #ff6b6b;
+            transform: scale(1.1);
+        }
+
+        /* 响应式 */
+        @media (max-width: 880px) {
+            .resume-grid {
+                grid-template-columns: 1fr;
+                gap: 1.8rem;
+            }
+            .avatar-img {
+                width: 130px;
+                height: 130px;
+            }
+            .top-nav {
+                flex-direction: column;
+                align-items: stretch;
+                border-radius: 2rem;
+                padding: 1rem 1.5rem;
+            }
+            .nav-links {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 500px) {
+            body {
+                padding: 1rem;
+            }
+            .card-modern {
+                padding: 1.2rem;
+            }
+            .section-title {
+                font-size: 1.3rem;
+            }
+            .honor-list-highlight li {
+                flex-direction: column;
+                gap: 6px;
+            }
+        }
+
+        /* 模态框 */
+        .modal-preview {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+            cursor: pointer;
+        }
+        .modal-preview img {
+            max-width: 90vw;
+            max-height: 85vh;
+            object-fit: contain;
+            border-radius: 24px;
+            box-shadow: 0 30px 40px rgba(0,0,0,0.5);
+        }
+        .close-modal-icon {
+            position: absolute;
+            top: 24px;
+            right: 32px;
+            color: white;
+            font-size: 2.5rem;
+            cursor: pointer;
+        }
+        .close-modal-icon:hover {
+            color: #ff6b6b;
+        }
+
+        /* 自我介绍卡片高亮样式 */
+        .self-intro-card {
+            background: linear-gradient(125deg, #ffffff 0%, #fef9f0 100%);
+            border-left: 6px solid #ff6b6b;
+        }
+        .intro-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .intro-text {
+            flex: 3;
+            min-width: 200px;
+        }
+        .intro-icons {
+            flex: 1;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .intro-icon-bubble {
+            background: #f1f5f9;
+            border-radius: 60px;
+            padding: 0.6rem 1.2rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: 0.2s;
+            border: 1px solid #ffe2d6;
+        }
+        .intro-icon-bubble i {
+            font-size: 1.2rem;
+            color: #ff6b6b;
+        }
+        .intro-icon-bubble:hover {
+            background: #ff6b6b10;
+            transform: translateY(-2px);
+        }
+        .diy-link {
+            color: #6a5acd;
+            font-weight: 700;
+            text-decoration: none;
+            border-bottom: 2px dashed #ffb6a6;
+        }
+        .diy-link:hover {
+            color: #ff6b6b;
+            border-bottom: 2px solid #ff6b6b;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- 顶部导航栏 -->
+    <div class="top-nav">
+        <div class="logo-area">
+            <div class="logo-icon">
+                <i class="fas fa-camera-retro"></i>
+            </div>
+            <span class="logo-text">hyper 的 Vlog</span>
+        </div>
+        <div class="nav-links">
+            <a href="http://0o0hyper0o0.cyou/home"><i class="fas fa-home"></i> 主页</a>
+            <a href="http://0o0hyper0o0.cyou/pages/devlog"><i class="fas fa-code"></i> 开发日志</a>
+            <a href="http://0o0hyper0o0.cyou/pages/devlog/Gsing"><i class="fas fa-robot"></i> Gsing战队</a>
+            <a href="http://0o0hyper0o0.cyou/talk"><i class="fas fa-comment"></i> 留言板</a>
+        </div>
+    </div>
+
+    <!-- 简历核心区 -->
+    <div class="resume-grid">
+        <!-- 左侧个人信息卡片 -->
+        <div class="profile-card">
+            <div class="avatar-section">
+                <img class="avatar-img" src="照片.jpg" alt="黄益鹏头像" onerror="this.src='https://placehold.co/400x400?text=Photo'">
+                <div class="avatar-name">黄益鹏</div>
+                <div class="avatar-badge"><i class="fas fa-graduation-cap"></i> 弘深学院 · 计算机拔尖计划</div>
+            </div>
+            <div class="info-detail">
+                <div class="info-item">
+                    <i class="fas fa-school"></i>
+                    <span>高中毕业于 <strong>温州育英实验学校</strong></span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-university"></i>
+                    <span>重庆大学 · 弘深学院 (计算机拔尖计划)</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-trophy"></i>
+                    <span>CRTC机器人比赛 · 二等奖</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-globe"></i>
+                    <a href="http://0o0hyper0o0.cyou/home/" target="_blank">个人Vlog主页 →</a>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>hyper@stu.cqu.edu.cn</span>
+                </div>
+                <div class="info-item">
+                    <i class="fab fa-github"></i>
+                    <a href="https://github.com/hyper152" target="_blank">github.com/hyper152</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 右侧内容区 -->
+        <div class="right-content">
+            <!-- 自我介绍专区 -->
+            <div class="card-modern self-intro-card">
+                <div class="section-title">
+                    <i class="fas fa-user-astronaut"></i>
+                    <span>✨ 关于我 · 黄益鹏 ✨</span>
+                </div>
+                <div class="intro-grid">
+                    <div class="intro-text">
+                        <p style="font-size: 1.05rem; line-height: 1.6; margin-bottom: 12px;">
+                            我是<strong class="avatar-name" style="font-size:1.2rem; background:none; color:#6a5acd; display:inline-block;">黄益鹏</strong>，
+                            一名<strong>热爱开发</strong>的计算机拔尖计划学生，从底层嵌入式到全栈网站，始终享受用代码构建创意。 
+                            🔧 同时是个<strong>DIY装机发烧友</strong>，享受从硬件选配到点亮系统的每一刻成就感。
+                        </p>
+                        <p style="color: #475569; margin: 8px 0;">
+                            🧩 从小痴迷<strong>手工制作</strong>，热爱将想法变为实物；📷 也喜欢<strong>记录生活</strong>，
+                            用Vlog和文字留存每一份灵感。⚡ 凭借扎实的<strong>理科功底</strong>（数学/物理/化学/技术总分亮眼），
+                            在竞赛与科研中不断突破自我。
+                        </p>
+                        <div style="margin-top: 14px;">
+                            <a href="http://0o0hyper0o0.cyou/pages/diy" target="_blank" class="diy-link" style="background: #f1f5f9; padding: 6px 18px; border-radius: 40px; display: inline-flex; align-items: center; gap: 8px;">
+                                <i class="fas fa-microchip"></i> 我的DIY装机记录 →
+                            </a>
+                        </div>
+                    </div>
+                    <div class="intro-icons">
+                        <span class="intro-icon-bubble"><i class="fas fa-code"></i> 全栈开发</span>
+                        <span class="intro-icon-bubble"><i class="fas fa-computer"></i> DIY装机</span>
+                        <span class="intro-icon-bubble"><i class="fas fa-hands"></i> 手工热爱</span>
+                        <span class="intro-icon-bubble"><i class="fas fa-camera"></i> 生活记录</span>
+                        <span class="intro-icon-bubble"><i class="fas fa-flask"></i> 理科强者</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1. 新高考一卷成绩 + 高考分数.jpg -->
+            <div class="card-modern">
+                <div class="section-title">
+                    <i class="fas fa-chart-line"></i>
+                    <span>2025 新高考一卷 · 硬核成绩</span>
+                </div>
+                <div class="story-item">
+                    <div class="story-title">
+                        <i class="fas fa-calculator"></i>
+                        <span>浙江省新高考一卷 · 理科高光时刻</span>
+                    </div>
+                    <div class="story-desc">
+                        在2025年新高考一卷中，取得优异成绩：<strong>数学137分</strong>、<strong>物理97分</strong>、<strong>化学98分</strong>、<strong>技术98分</strong>。凭借扎实的理科功底，为科研竞赛奠定坚实基础。
+                    </div>
+                    <div class="score-badge"><span>数学</span><span>137</span></div>
+                    <div class="score-badge"><span>物理</span><span>97</span></div>
+                    <div class="score-badge"><span>化学</span><span>98</span></div>
+                    <div class="score-badge"><span>技术</span><span>98</span></div>
+                    <div class="story-img" data-img-src="高考分数.jpg">
+                        <img src="高考分数.jpg" alt="高考分数查询截图" onerror="this.src='https://placehold.co/800x600?text=高考分数截图'">
+                        <div class="img-caption"><i class="fas fa-chart-simple"></i> 高考分数见证 · 新高考一卷成绩单</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 🌟 突出显示的竞赛 · 科研 · 战队板块（已强化视觉，删除交大/育英榜后更聚焦） -->
+            <div class="card-modern highlight-card">
+                <div class="section-title">
+                    <i class="fas fa-microchip"></i>
+                    <span>🏆 竞赛 · 科研 · 战队 ｜ 硬核实战记录</span>
+                </div>
+                <ul class="honor-list-highlight">
+                    <li>
+                        <i class="fas fa-robot"></i>
+                        <div>
+                            <strong>CRTC机器人比赛 · 二等奖</strong> <span class="tag-robot">STM32全栈</span>
+                            <div class="honor-desc">主导捡球机器人主控系统与机械臂调试，完成嵌入式底层开发、传感器融合与运动控制算法，实现全流程自主抓取。从硬件选型到代码落地的完整工程实践。</div>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-eye"></i>
+                        <div>
+                            <strong>重庆大学Gsing战队 · 视觉组核心成员</strong> <span class="tag-robot">YOLO+AI</span>
+                            <div class="honor-desc">基于YOLO框架实现目标识别与算题识别系统，完成从电控到视觉的技术转型。针对比赛场景优化检测精度，参与多传感器数据融合，为战队提供关键视觉决策支持。</div>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-gamepad"></i>
+                        <div>
+                            <strong>温州育英·我的世界重建计划</strong> <span class="tag-robot">自研模组 + 服务器架构</span>
+                            <div class="honor-desc">独立设计并搭建Minecraft服务器，开发Words Mod自研模组，实现自定义玩法与公网部署。涉及分布式架构、数据库交互及高并发优化，累计服务数百位玩家。</div>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-laptop-code"></i>
+                        <div>
+                            <strong>个人全栈博客系统 · 开发者</strong> <span class="tag-robot">Flask + SQLite + 樱花映射</span>
+                            <div class="honor-desc">从0到1构建完整博客生态：用户认证、留言板、访问统计及动态路由。通过樱花映射实现内网穿透，项目已长期稳定运行，并作为个人技术分享平台。</div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="project-links" style="margin-top: 1.5rem;">
+                    <a href="http://0o0hyper0o0.cyou/pages/devlog/CQU-CRTC%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%AF%94%E8%B5%9B/" target="_blank" class="project-btn"><i class="fas fa-trophy"></i> CRTC比赛记录</a>
+                    <a href="http://0o0hyper0o0.cyou/pages/devlog/Gsing/" target="_blank" class="project-btn"><i class="fas fa-cogs"></i> Gsing战队开发日志</a>
+                    <a href="http://0o0hyper0o0.cyou/pages/devlog/personal-blog/" target="_blank" class="project-btn"><i class="fas fa-blog"></i> 博客开发历程</a>
+                </div>
+            </div>
+
+            <!-- 更多站点入口 -->
+            <div class="card-modern">
+                <div class="section-title">
+                    <i class="fas fa-link"></i>
+                    <span>更多站点 · 个人生态</span>
+                </div>
+                <div class="project-links" style="justify-content: flex-start;">
+                    <a href="http://0o0hyper0o0.cyou/pages/devlog" target="_blank" class="project-btn"><i class="fas fa-code-branch"></i> 开发日志总览</a>
+                    <a href="http://0o0hyper0o0.cyou/pages/games/mc" target="_blank" class="project-btn"><i class="fas fa-cube"></i> MC育英重建</a>
+                    <a href="http://0o0hyper0o0.cyou/talk" target="_blank" class="project-btn"><i class="fas fa-comments"></i> 留言交流</a>
+                    <a href="http://0o0hyper0o0.cyou/pages/diy" target="_blank" class="project-btn"><i class="fas fa-desktop"></i> DIY装机全记录</a>
+                </div>
+                <div style="margin-top: 1.2rem; background: #f1f4fe; border-radius: 1rem; padding: 0.8rem 1.2rem;">
+                    <i class="fas fa-quote-left" style="color:#6a5acd; opacity:0.6;"></i> 
+                    从温州育英到重庆大学弘深学院，从嵌入式机器人到全栈网站开发，永远保持好奇与热爱。
+                    <div style="margin-top: 6px; font-size:0.85rem;">—— hyper, 2026 · 热爱DIY与记录生活的理科生</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部社交区 -->
+    <div class="footer-links">
+        <a href="https://github.com/hyper152" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="mailto:hyper@stu.cqu.edu.cn"><i class="fas fa-envelope"></i></a>
+        <a href="http://0o0hyper0o0.cyou/home/" target="_blank"><i class="fas fa-globe"></i></a>
+        <a href="https://space.bilibili.com/1689598128" target="_blank"><i class="fab fa-bilibili"></i></a>
+        <p style="font-size: 0.75rem; margin-top: 12px;">© 2026 黄益鹏 · 弘深拔尖计划 | 热爱开发·DIY装机·手工·记录生活·理科强者</p>
+    </div>
+</div>
+
+<!-- 图片预览模态框 -->
+<div id="imgModal" class="modal-preview">
+    <span class="close-modal-icon"><i class="fas fa-times-circle"></i></span>
+    <img id="modalFullImg" src="" alt="预览大图">
+</div>
+
+<script>
+    const modal = document.getElementById('imgModal');
+    const modalImg = document.getElementById('modalFullImg');
+    const closeModalSpan = document.querySelector('.close-modal-icon');
+
+    function openModal(imgSrc) {
+        if (!imgSrc) return;
+        modalImg.src = imgSrc;
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+        modalImg.src = '';
+    }
+
+    document.querySelectorAll('.story-img').forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const imgElement = item.querySelector('img');
+            if (imgElement && imgElement.src) {
+                openModal(imgElement.src);
+            }
+        });
+    });
+
+    if (closeModalSpan) {
+        closeModalSpan.addEventListener('click', closeModal);
+    }
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.style.display === 'flex') closeModal();
+    });
+
+    const allImgs = document.querySelectorAll('img');
+    allImgs.forEach(img => {
+        img.onerror = function() {
+            if (this.src.includes('placehold')) return;
+            this.src = 'https://placehold.co/800x600?text=Image+Missing';
+        };
+    });
+</script>
+</body>
+</html>

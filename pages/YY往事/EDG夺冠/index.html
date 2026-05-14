@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDG夺冠 · 冠军时刻 | hyper的Vlog</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', 'Inter', sans-serif;
+        }
+
+        :root {
+            --edg-black: #1a1a1a;
+            --edg-red: #e10600;
+            --edg-gold: #ffd700;
+            --light: #f8f9fa;
+            --dark: #2d3436;
+            --gray: #495057;
+            --light-gray: #e9ecef;
+            --shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+
+        body {
+            background-color: var(--edg-black);
+            color: white;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: min(1200px, 90%);
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* 导航栏 */
+        .navbar {
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+            border-bottom: 2px solid var(--edg-red);
+        }
+
+        .navbar-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo i {
+            color: var(--edg-red);
+        }
+
+        .logo span {
+            color: var(--edg-gold);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #ccc;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            padding: 5px 0;
+        }
+
+        .nav-links a:hover {
+            color: var(--edg-gold);
+        }
+
+        .nav-links a.active {
+            color: var(--edg-red);
+            font-weight: 700;
+        }
+
+        /* 英雄区域 */
+        .hero {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            padding: 80px 0 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 3px solid var(--edg-red);
+        }
+
+        .hero::before {
+            content: "🏆";
+            font-size: 20rem;
+            position: absolute;
+            bottom: -60px;
+            right: -40px;
+            opacity: 0.05;
+            transform: rotate(15deg);
+        }
+
+        .hero::after {
+            content: "EDG";
+            font-size: 15rem;
+            position: absolute;
+            top: -30px;
+            left: -20px;
+            opacity: 0.03;
+            font-weight: 900;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .champion-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--edg-gold), #ffaa00);
+            color: var(--edg-black);
+            padding: 8px 30px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 900;
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 0 var(--edg-red);
+            letter-spacing: 5px;
+        }
+
+        .hero h1 span {
+            color: var(--edg-gold);
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .hero-date {
+            display: inline-block;
+            background: rgba(225, 6, 0, 0.2);
+            padding: 10px 25px;
+            border-radius: 30px;
+            border: 1px solid var(--edg-red);
+            font-size: 1.1rem;
+        }
+
+        .hero-date i {
+            color: var(--edg-gold);
+            margin-right: 8px;
+        }
+
+        /* 战绩卡片 */
+        .record-section {
+            padding: 40px 0;
+        }
+
+        .record-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-top: -30px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .record-card {
+            background: linear-gradient(145deg, #222, #111);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid #333;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .record-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--edg-red);
+        }
+
+        .record-card .round {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--edg-gold);
+            margin-bottom: 15px;
+        }
+
+        .record-card .score {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .record-card .score small {
+            font-size: 1.5rem;
+            color: #666;
+        }
+
+        .record-card .opponent {
+            font-size: 1.2rem;
+            color: #aaa;
+        }
+
+        .record-card .result {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+        }
+
+        .result.win {
+            background: rgba(40, 167, 69, 0.2);
+            color: #28a745;
+            border: 1px solid #28a745;
+        }
+
+        /* 视频区域 */
+        .video-section {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            display: inline-block;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--edg-red);
+        }
+
+        .section-title h2 i {
+            color: var(--edg-gold);
+            margin: 0 10px;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .video-card {
+            background: linear-gradient(145deg, #222, #111);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+        }
+
+        .video-card:hover {
+            border-color: var(--edg-red);
+            box-shadow: 0 0 30px rgba(225, 6, 0, 0.3);
+        }
+
+        .video-wrapper {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #000;
+        }
+
+        .video-wrapper video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .video-info {
+            padding: 20px 25px;
+        }
+
+        .video-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .video-info h3 i {
+            color: var(--edg-gold);
+            margin-right: 10px;
+        }
+
+        .video-info p {
+            color: #aaa;
+            font-size: 0.95rem;
+        }
+
+        .video-badge {
+            display: inline-block;
+            background: var(--edg-red);
+            color: white;
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 12px;
+        }
+
+        /* 夺冠瞬间图片 */
+        .champion-moment {
+            padding: 40px 0 60px;
+        }
+
+        .moment-card {
+            background: linear-gradient(145deg, #222, #111);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid #333;
+        }
+
+        .moment-img {
+            width: 100%;
+            max-height: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #0a0a0a;
+        }
+
+        .moment-img img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .moment-caption {
+            padding: 30px;
+            text-align: center;
+            background: linear-gradient(90deg, transparent, rgba(225,6,0,0.1), transparent);
+        }
+
+        .moment-caption h3 {
+            font-size: 2rem;
+            color: var(--edg-gold);
+            margin-bottom: 10px;
+        }
+
+        .moment-caption p {
+            font-size: 1.2rem;
+            color: #ccc;
+        }
+
+        /* 荣耀时刻 */
+        .glory-section {
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .glory-quote {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px;
+            background: linear-gradient(145deg, #222, #111);
+            border-radius: 20px;
+            border: 1px solid var(--edg-gold);
+            position: relative;
+        }
+
+        .glory-quote i {
+            font-size: 3rem;
+            color: var(--edg-gold);
+            opacity: 0.3;
+            position: absolute;
+        }
+
+        .glory-quote i.fa-quote-left {
+            top: 20px;
+            left: 20px;
+        }
+
+        .glory-quote i.fa-quote-right {
+            bottom: 20px;
+            right: 20px;
+        }
+
+        .glory-quote p {
+            font-size: 1.8rem;
+            font-weight: 600;
+            line-height: 1.5;
+            color: white;
+        }
+
+        .glory-quote .author {
+            margin-top: 20px;
+            color: var(--edg-gold);
+            font-size: 1.2rem;
+        }
+
+        /* 页脚 */
+        footer {
+            background: #0a0a0a;
+            padding: 40px 0;
+            text-align: center;
+            border-top: 2px solid var(--edg-red);
+            margin-top: 40px;
+        }
+
+        footer p {
+            color: #666;
+        }
+
+        footer a {
+            color: var(--edg-gold);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: var(--edg-red);
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .navbar-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+            .record-grid {
+                grid-template-columns: 1fr;
+            }
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .glory-quote p {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- 导航栏 -->
+<nav class="navbar">
+    <div class="container navbar-content">
+        <a href="/home/" class="logo">
+            <i class="fas fa-trophy"></i>
+            hyper的<span>Vlog</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="/home/">首页</a></li>
+            <li><a href="/home/#categories">分类</a></li>
+            <li><a href="/pages/YY往事/" class="active">YY往事</a></li>
+            <li><a href="/pages/travel/">旅游记录</a></li>
+            <li><a href="/pages/diy/">装机记录</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- 英雄区域 -->
+<section class="hero">
+    <div class="container hero-content">
+        <div class="champion-badge">
+            <i class="fas fa-crown"></i> 世界冠军 <i class="fas fa-crown"></i>
+        </div>
+        <h1>EDG <span>夺冠</span></h1>
+        <div class="hero-subtitle">瓦洛兰特全球冠军赛 · 中国首冠</div>
+        <div class="hero-date">
+            <i class="fas fa-calendar"></i> 2024年8月25日 · 韩国仁川
+        </div>
+    </div>
+</section>
+
+<!-- 战绩卡片 -->
+<section class="record-section">
+    <div class="container">
+        <div class="record-grid">
+            <div class="record-card">
+                <div class="round">小组赛</div>
+                <div class="score">2<span>:</span>0</div>
+                <div class="opponent">vs FUT</div>
+                <span class="result win">胜利</span>
+            </div>
+            <div class="record-card">
+                <div class="round">半决赛</div>
+                <div class="score">2<span>:</span>1</div>
+                <div class="opponent">vs LEV</div>
+                <span class="result win">让一追二</span>
+            </div>
+            <div class="record-card">
+                <div class="round">总决赛</div>
+                <div class="score">3<span>:</span>2</div>
+                <div class="opponent">vs TH</div>
+                <span class="result win">BO5 夺冠</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 视频区域 -->
+<section class="video-section">
+    <div class="container">
+        <div class="section-title">
+            <h2><i class="fas fa-play-circle"></i> 经典战役 <i class="fas fa-play-circle"></i></h2>
+        </div>
+        <div class="video-grid">
+            <!-- 半决赛视频 -->
+            <div class="video-card">
+                <div class="video-wrapper">
+                    <video controls poster="">
+                        <source src="media/赢下半决.mov" type="video/mp4">
+                        您的浏览器不支持视频播放
+                    </video>
+                </div>
+                <div class="video-info">
+                    <h3><i class="fas fa-medal"></i> 半决赛 · 让一追二</h3>
+                    <p>EDG vs LEV · 在先失一局的情况下连扳两局，挺进决赛！</p>
+                    <span class="video-badge"><i class="fas fa-fire"></i> 经典战役</span>
+                </div>
+            </div>
+            
+            <!-- 决赛视频 -->
+            <div class="video-card">
+                <div class="video-wrapper">
+                    <video controls poster="">
+                        <source src="media/赢下决赛图二.mov" type="video/mp4">
+                        您的浏览器不支持视频播放
+                    </video>
+                </div>
+                <div class="video-info">
+                    <h3><i class="fas fa-trophy"></i> 总决赛 · 图二胜利</h3>
+                    <p>EDG vs TH · 拿下关键图二，为最终夺冠奠定基础！</p>
+                    <span class="video-badge"><i class="fas fa-crown"></i> 冠军之路</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 夺冠瞬间图片 -->
+<section class="champion-moment">
+    <div class="container">
+        <div class="moment-card">
+            <div class="moment-img">
+                <img src="media/kskbl.jpg" alt="EDG夺冠时刻">
+            </div>
+            <div class="moment-caption">
+                <h3><i class="fas fa-trophy"></i> 我们是冠军！ <i class="fas fa-trophy"></i></h3>
+                <p>EDG 举起了那座属于中国 FPS 的第一座世界冠军奖杯</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 荣耀时刻 -->
+<section class="glory-section">
+    <div class="container">
+        <div class="glory-quote">
+            <i class="fas fa-quote-left"></i>
+            <p>从伊斯坦布尔到洛杉矶，从东京到首尔，<br>EDG 用实力告诉世界：<br>CN FPS 也能站在世界之巅！</p>
+            <div class="author">—— 2024.08.25 韩国仁川</div>
+            <i class="fas fa-quote-right"></i>
+        </div>
+    </div>
+</section>
+
+<!-- 页脚 -->
+<footer>
+    <div class="container">
+        <p>© 2026 hyper的个人Vlog · EDG夺冠纪录 · 铭记这一刻</p>
+        <p style="margin-top: 15px;">
+            <a href="/home/"><i class="fas fa-home"></i> 返回首页</a> · 
+            <a href="/pages/YY往事/"><i class="fas fa-history"></i> YY往事</a> · 
+            <a href="/talk/"><i class="fas fa-comment"></i> 留言板</a>
+        </p>
+        <p style="margin-top: 20px; font-size: 0.85rem;">
+            <i class="fas fa-heart" style="color: var(--edg-red);"></i> 
+            EDG牛逼！CN FPS 牛逼！
+            <i class="fas fa-heart" style="color: var(--edg-red);"></i>
+        </p>
+    </div>
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.body.style.opacity = '0';
+        document.body.style.transition = 'opacity 0.5s ease-out';
+        requestAnimationFrame(() => {
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    });
+</script>
+
+</body>
+</html>

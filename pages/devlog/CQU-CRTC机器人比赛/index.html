@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRTC机器人比赛 开发记录</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+
+        :root {
+            --primary: #2c3e50;
+            --accent: #e74c3c;
+            --light: #f8f9fa;
+            --dark: #2d3436;
+            --gray: #495057;
+            --light-gray: #e9ecef;
+            --shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+
+        body {
+            background: var(--light);
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: min(1200px, 90%);
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            box-shadow: var(--shadow);
+            padding: 20px 0;
+            margin-bottom: 40px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .project-info {
+            text-align: right;
+        }
+
+        .project-name {
+            font-size: 1.2rem;
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        .project-dates {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .dev-log {
+            padding: 20px 0 60px;
+        }
+
+        .dev-title {
+            font-size: 2.2rem;
+            color: var(--dark);
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .dev-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .dev-intro {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .tech-item {
+            background: var(--light);
+            padding: 10px 20px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tech-item i {
+            color: var(--accent);
+        }
+
+        .dev-card {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+        }
+
+        .dev-card h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: var(--primary);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 50px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -36px;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 3px solid var(--primary);
+        }
+
+        .timeline-date {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--dark);
+            background: var(--light);
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .timeline-tag {
+            font-size: 0.9rem;
+            color: white;
+            background: var(--primary);
+            padding: 3px 10px;
+            border-radius: 10px;
+            margin-left: 10px;
+        }
+
+        .timeline-content {
+            background: var(--light);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .timeline-content h4 {
+            margin-bottom: 10px;
+        }
+
+        .timeline-content ul {
+            padding-left: 20px;
+        }
+
+        .media-preview {
+            margin: 12px 0;
+        }
+
+        .media-preview video,
+        .media-preview img {
+            max-width: 100%;
+            max-height: 360px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            object-fit: contain;
+            background: #000;
+        }
+
+        .version-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .version-card {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .version-name {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .version-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .challenge-list,
+        .summary-list {
+            padding-left: 20px;
+        }
+
+        .challenge-item,
+        .summary-item {
+            margin-bottom: 20px;
+            position: relative;
+            padding-left: 10px;
+        }
+
+        .challenge-item::before,
+        .summary-item::before {
+            content: '✦';
+            position: absolute;
+            left: -15px;
+            color: var(--accent);
+        }
+
+        .challenge-title {
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .challenge-solution {
+            border-left: 3px solid var(--primary);
+            padding-left: 10px;
+            margin-top: 5px;
+        }
+
+        .note-box {
+            background: #e8f4f8;
+            border-left: 4px solid #4299e1;
+            padding: 15px;
+            border-radius: 4px;
+        }
+
+        .footer {
+            border-top: 1px solid var(--light-gray);
+            padding: 30px 0;
+            text-align: center;
+            color: #6c757d;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .project-info {
+                text-align: center;
+            }
+            .dev-card {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="header">
+    <div class="container header-content">
+        <a href="#" class="logo">Robot<span>Log</span></a>
+        <div class="project-info">
+            <div class="project-name">CRTC 捡球机器人比赛</div>
+            <div class="project-dates">2025.10.08 – 2025.11.09</div>
+        </div>
+    </div>
+</header>
+
+<main class="container dev-log">
+    <h1 class="dev-title">CRTC机器人比赛 开发记录</h1>
+
+    <section class="dev-intro">
+        <p>本项目为 CRTC 捡球机器人比赛，比赛规则为在规定时间内捡球数量最多者获胜。主控芯片使用 STM32F103C8T6，基于 STM32CubeIDE 开发。从电机控制起步，逐步完成移动、机械臂、捡球、双车协同等功能。</p>
+        <div class="tech-stack">
+            <div class="tech-item"><i class="fas fa-microchip"></i> STM32F103C8T6</div>
+            <div class="tech-item"><i class="fas fa-code"></i> CubeIDE</div>
+            <div class="tech-item"><i class="fas fa-robot"></i> 电机驱动</div>
+            <div class="tech-item"><i class="fas fa-hand-paper"></i> MG995 舵机</div>
+            <div class="tech-item"><i class="fas fa-gamepad"></i> 遥控</div>
+            <div class="tech-item"><i class="fas fa-users"></i> 双车协同</div>
+        </div>
+    </section>
+
+    <section class="dev-card">
+        <h3><i class="fas fa-code-branch"></i> 开发迭代记录</h3>
+        <div class="timeline">
+
+            <!-- 10.08 -->
+            <div class="timeline-item">
+                <div class="timeline-date">2025.10.08 <span class="timeline-tag">第一次电机转动</span></div>
+                <div class="timeline-content">
+                    <h4>完成基础电机遥控调试</h4>
+                    <ul>
+                        <li>搭建 CubeIDE 环境</li>
+                        <li>编写 PWM 电机驱动</li>
+                        <li>实现第一次遥控电机转动</li>
+                    </ul>
+                </div>
+                <div class="media-preview">
+                    <video controls src="2025年10月8日-第一次遥控电机转动.mp4"></video>
+                </div>
+            </div>
+
+            <!-- 10.09 -->
+            <div class="timeline-item">
+                <div class="timeline-date">2025.10.09 <span class="timeline-tag">车1.0 / 车2.0</span></div>
+                <div class="timeline-content">
+                    <h4>移动功能迭代</h4>
+                    <ul>
+                        <li>车1.0：只能前后动</li>
+                        <li>车2.0：可前后左右全向移动</li>
+                    </ul>
+                </div>
+                <div class="media-preview">
+                    <video controls src="2025年10月9日-车1.0-只能前后动.mp4" style="margin-bottom:8px"></video>
+                    <video controls src="2025年10月9日-车2.0-可以前后左右.mp4"></video>
+                </div>
+            </div>
+
+            <!-- 10.16 -->
+            <div class="timeline-item">
+                <div class="timeline-date">2025.10.16 <span class="timeline-tag">车3.0 舵机调试</span></div>
+                <div class="timeline-content">
+                    <h4>MG995 舵机尝试</h4>
+                    <ul>
+                        <li>接入舵机，尝试机械臂控制</li>
+                        <li>角度控制不熟练，暂无法稳定捡球</li>
+                    </ul>
+                </div>
+                <div class="media-preview">
+                    <img src="2025年10月16日-车3.0-不会用MG995.jpg">
+                </div>
+            </div>
+
+            <!-- 10.25 -->
+            <div class="timeline-item">
+                <div class="timeline-date">2025.10.25 <span class="timeline-tag">车4.0 可捡球</span></div>
+                <div class="timeline-content">
+                    <h4>完成单机器人捡球功能</h4>
+                    <ul>
+                        <li>优化 MG995 角度控制</li>
+                        <li>机械臂结构调整</li>
+                        <li>成功实现自动捡球</li>
+                    </ul>
+                </div>
+                <div class="media-preview">
+                    <video controls src="2025年10月25日-车4.0-可以捡球.mp4"></video>
+                </div>
+            </div>
+
+            <!-- 10.27 -->
+            <div class="timeline-item">
+                <div class="timeline-date">2025.10.27 <span class="timeline-tag">车5.0 双车配合</span></div>
+                <div class="timeline-content">
+                    <h4>双车协同捡球</h4>
+                    <ul>
+                        <li>双车通信调试</li>
+                        <li>分工：一台捡球、一台配合</li>
+                        <li>完成双车协同捡球</li>
+                    </ul>
+                </div>
+                <div class="media-preview">
+                    <video controls src="2025年10月27日-车5.0-完成双车配合捡球.mp4"></video>
+                </div>
+            </div>
+
+            <!-- 11.09 -->
+            <div class="timeline-item">
+                <div class="timeline-date">2025.11.09 <span class="timeline-tag">比赛实录</span></div>
+                <div class="timeline-content">
+                    <h4>正式比赛</h4>
+                    <ul>
+                        <li>最终调试稳定性</li>
+                        <li>参加 CRTC 捡球比赛</li>
+                        <li>记录比赛全过程</li>
+                    </ul>
+                </div>
+                <div class="media-preview">
+                    <video controls src="2025年11月9日-比赛实录.mp4"></video>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="dev-card">
+        <h3><i class="fas fa-bug"></i> 核心技术难点</h3>
+        <ul class="challenge-list">
+            <li class="challenge-item">
+                <span class="challenge-title">MG995 舵机控制精度不足</span>
+                <div class="challenge-solution">重新校准舵机角度，优化 PWM 输出，增加机械限位，提高捡球成功率。</div>
+            </li>
+            <li class="challenge-item">
+                <span class="challenge-title">机器人移动不稳、跑偏</span>
+                <div class="challenge-solution">调整左右轮 PWM 占空比，优化重心与结构，增加遥控信号滤波。</div>
+            </li>
+            <li class="challenge-item">
+                <span class="challenge-title">双车通信延迟、不同步</span>
+                <div class="challenge-solution">简化通信协议，使用短帧传输，增加时间戳同步，提高协同效率。</div>
+            </li>
+        </ul>
+    </section>
+
+    <section class="dev-card">
+        <h3><i class="fas fa-tachometer-alt"></i> 版本迭代对比</h3>
+        <div class="version-grid">
+            <div class="version-card">
+                <div class="version-name">车1.0</div>
+                <i class="fas fa-forward"></i>
+                <div class="version-value">前后</div>
+                <div>移动方式</div>
+            </div>
+            <div class="version-card">
+                <div class="version-name">车2.0</div>
+                <i class="fas fa-arrows-alt"></i>
+                <div class="version-value">全向</div>
+                <div>移动方式</div>
+            </div>
+            <div class="version-card">
+                <div class="version-name">车4.0</div>
+                <i class="fas fa-baseball-ball"></i>
+                <div class="version-value">可捡球</div>
+                <div>功能</div>
+            </div>
+            <div class="version-card">
+                <div class="version-name">车5.0</div>
+                <i class="fas fa-users"></i>
+                <div class="version-value">双车协同</div>
+                <div>功能</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="dev-card">
+        <h3><i class="fas fa-book-open"></i> 开发总结</h3>
+        <ul class="summary-list">
+            <li>熟练掌握 STM32F103C8T6 与 CubeIDE 开发流程。</li>
+            <li>掌握电机、舵机、遥控、通信等嵌入式实战技能。</li>
+            <li>理解机器人从 0 到 1 的迭代开发思路。</li>
+            <li>提升硬件调试、问题定位与现场比赛能力。</li>
+        </ul>
+        <div class="note-box" style="margin-top:20px">
+            <strong>小结：</strong> 硬件决定下限，软件决定上限；比赛拼的是稳定，不是花哨。
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <p>&copy; 2025 CRTC 机器人比赛 | STM32F103C8T6 + CubeIDE</p>
+</footer>
+
+</body>
+</html>

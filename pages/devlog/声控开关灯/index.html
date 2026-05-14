@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>声控电机控制寝室大灯 开发记录</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+
+        :root {
+            --primary: #165DFF;
+            --accent: #FF7D00;
+            --light: #f8f9fa;
+            --dark: #2d3436;
+            --gray: #495057;
+            --light-gray: #e9ecef;
+            --shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+
+        body {
+            background: var(--light);
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: min(1200px, 90%);
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            box-shadow: var(--shadow);
+            padding: 20px 0;
+            margin-bottom: 40px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .project-info {
+            text-align: right;
+        }
+
+        .project-name {
+            font-size: 1.2rem;
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        .project-dates {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .dev-log {
+            padding: 20px 0 60px;
+        }
+
+        .dev-title {
+            font-size: 2.2rem;
+            color: var(--dark);
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .dev-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .dev-intro {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .tech-item {
+            background: var(--light);
+            padding: 10px 20px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tech-item i {
+            color: var(--accent);
+        }
+
+        .dev-card {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+        }
+
+        .dev-card h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: var(--primary);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -36px;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 3px solid var(--primary);
+        }
+
+        .timeline-date {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--dark);
+            background: var(--light);
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .timeline-content {
+            background: var(--light);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .timeline-content h4 {
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .timeline-content ul {
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+
+        .media-preview {
+            margin: 12px 0;
+        }
+
+        .media-preview video {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            object-fit: contain;
+            background: #000;
+        }
+
+        .footer {
+            border-top: 1px solid var(--light-gray);
+            padding: 30px 0;
+            text-align: center;
+            color: #6c757d;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            .project-info {
+                text-align: center;
+            }
+            .dev-card {
+                padding: 25px;
+            }
+            .media-preview video {
+                max-height: 300px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="header">
+    <div class="container header-content">
+        <a href="#" class="logo">Smart<span>Light</span></a>
+        <div class="project-info">
+            <div class="project-name">声控电机控制寝室大灯</div>
+            <div class="project-dates">开发日期：2025年12月31日</div>
+        </div>
+    </div>
+</header>
+
+<main class="container dev-log">
+    <h1 class="dev-title">声控电机控制寝室大灯 开发记录</h1>
+
+    <section class="dev-intro">
+        <p>本项目实现通过声音指令控制电机动作，进而驱动寝室大灯的物理开关，完成"声音识别→电机控制→灯光开关"的全链路功能。无需手动接触开关，通过语音/声音触发即可实现寝室大灯的开启与关闭，提升使用便捷性。</p>
+        <div class="tech-stack">
+            <div class="tech-item"><i class="fas fa-microphone"></i> 声音传感器</div>
+            <div class="tech-item"><i class="fas fa-cogs"></i> 电机驱动</div>
+            <div class="tech-item"><i class="fas fa-lightbulb"></i> 灯光控制</div>
+            <div class="tech-item"><i class="fas fa-home"></i> 寝室场景适配</div>
+        </div>
+    </section>
+
+    <section class="dev-card">
+        <h3><i class="fas fa-play-circle"></i> 功能实现演示</h3>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">2025年12月31日 <span style="color:var(--accent);font-size:0.9rem;margin-left:10px;">功能完成</span></div>
+                <div class="timeline-content">
+                    <h4>声控电机控制寝室大灯开关</h4>
+                    <ul>
+                        <li>声音传感器采集环境声音信号，设置触发阈值适配寝室环境</li>
+                        <li>编写电机驱动程序，控制电机正反转实现开关的推/拉动作</li>
+                        <li>机械结构适配：电机连杆与大灯开关的物理连接调试</li>
+                        <li>功能验证：不同声音强度、距离下的开关响应准确率测试</li>
+                        <li>优化：增加防误触逻辑，避免环境杂音误触发</li>
+                    </ul>
+                </div>
+                <div class="media-preview">
+                    <video controls src="2025年12月31日-声控开关灯.mp4" title="声控电机控制寝室大灯开关演示"></video>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <p>&copy; 2025 声控电机控制寝室大灯项目 | 智能寝室硬件开发</p>
+</footer>
+
+</body>
+</html>

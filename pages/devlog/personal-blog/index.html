@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>开发日志 - hyper的个人Vlog</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+
+        :root {
+            --primary: #165DFF;
+            --accent: #FF7D00;
+            --light: #f8f9fa;
+            --dark: #2d3436;
+            --gray: #495057;
+            --light-gray: #e9ecef;
+            --shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+
+        body {
+            background: var(--light);
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: min(1200px, 90%);
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            box-shadow: var(--shadow);
+            padding: 20px 0;
+            margin-bottom: 40px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .github-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--dark);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .github-link:hover {
+            background: #444;
+            transform: translateY(-2px);
+        }
+
+        .project-info {
+            text-align: right;
+        }
+
+        .project-name {
+            font-size: 1.2rem;
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        .project-dates {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .dev-log {
+            padding: 20px 0 60px;
+        }
+
+        .dev-title {
+            font-size: 2.2rem;
+            color: var(--dark);
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .dev-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .dev-intro {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .tech-item {
+            background: var(--light);
+            padding: 10px 20px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tech-item i {
+            color: var(--accent);
+        }
+
+        .dev-card {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+        }
+
+        .dev-card h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: var(--primary);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 50px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -36px;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 3px solid var(--primary);
+        }
+
+        .timeline-date {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--dark);
+            background: var(--light);
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .timeline-tag {
+            font-size: 0.9rem;
+            color: white;
+            background: var(--primary);
+            padding: 3px 10px;
+            border-radius: 10px;
+            margin-left: 10px;
+        }
+
+        .timeline-content {
+            background: var(--light);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .timeline-content h4 {
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .timeline-content ul {
+            padding-left: 20px;
+        }
+
+        .feature-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .feature-table th,
+        .feature-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .feature-table th {
+            background: var(--light);
+            color: var(--dark);
+            font-weight: 700;
+        }
+
+        .dev-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 14px;
+            margin: 20px 0;
+        }
+
+        .gallery-item {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .gallery-caption {
+            padding: 10px;
+            background: var(--light);
+            font-size: 0.9rem;
+            text-align: center;
+            color: var(--gray);
+        }
+
+        .special-note {
+            background: #e8f4f8;
+            border-left: 4px solid #4299e1;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+
+        .version-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .version-card {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .version-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .version-name {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .version-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .version-label {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .challenge-list,
+        .summary-list {
+            padding-left: 20px;
+        }
+
+        .challenge-item,
+        .summary-item {
+            margin-bottom: 20px;
+            position: relative;
+            padding-left: 10px;
+        }
+
+        .challenge-item::before,
+        .summary-item::before {
+            content: '✦';
+            position: absolute;
+            left: -15px;
+            color: var(--accent);
+        }
+
+        .challenge-title {
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .challenge-solution {
+            border-left: 3px solid var(--primary);
+            padding-left: 10px;
+            margin-top: 5px;
+        }
+
+        .note-box {
+            background: #e8f4f8;
+            border-left: 4px solid #4299e1;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+
+        .footer {
+            border-top: 1px solid var(--light-gray);
+            padding: 30px 0;
+            text-align: center;
+            color: #6c757d;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .header-actions {
+                margin-top: 10px;
+            }
+            .project-info {
+                text-align: center;
+            }
+            .dev-card {
+                padding: 25px;
+            }
+            .dev-gallery {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .dev-gallery {
+                grid-template-columns: 1fr;
+            }
+            .version-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<header class="header">
+    <div class="container header-content">
+        <a href="../../../../home/index.html" class="logo">hyper的<span>Vlog</span></a>
+        <div class="header-actions">
+            <div class="project-info">
+                <div class="project-name">个人博客系统 开发记录</div>
+                <div class="project-dates">2023.10 – 2026.01</div>
+            </div>
+            <a href="https://github.com/hyper152/personal-blog" target="_blank" class="github-link">
+                <i class="fab fa-github"></i>
+                <span>查看源码</span>
+            </a>
+        </div>
+    </div>
+</header>
+
+<main class="container dev-log">
+    <h1 class="dev-title">个人博客系统开发日志</h1>
+
+    <section class="dev-intro">
+        <p>从0到1开发个人博客系统的全过程记录，全程基于Python Flask框架开发，使用SQLite作为数据库，通过樱花映射端口转发实现公网访问。作为编程学习路上的第一个完整项目，踩过不少坑，也积累了很多实战经验，用日志的形式记录下来，既是总结也是成长～</p>
+        <div class="tech-stack">
+            <div class="tech-item"><i class="fab fa-python"></i> Python Flask</div>
+            <div class="tech-item"><i class="fas fa-database"></i> SQLite</div>
+            <div class="tech-item"><i class="fab fa-html5"></i> HTML+CSS</div>
+            <div class="tech-item"><i class="fab fa-js"></i> JavaScript</div>
+            <div class="tech-item"><i class="fas fa-network-wired"></i> 端口转发</div>
+            <div class="tech-item"><i class="fas fa-server"></i> 樱花映射</div>
+        </div>
+    </section>
+
+    <section class="dev-card">
+        <h3><i class="fas fa-code-branch"></i> 开发迭代记录</h3>
+        <div class="timeline">
+            <!-- 2023.10 -->
+            <div class="timeline-item">
+                <div class="timeline-date">2023.10 <span class="timeline-tag">第一版网站开发</span></div>
+                <div class="timeline-content">
+                    <h4>完成第一版网站基础框架开发</h4>
+                    <table class="feature-table">
+                        <thead>
+                            <tr>
+                                <th>阶段</th>
+                                <th>内容</th>
+                                <th>备注</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>初始开发</td>
+                                <td>完成第一版网站基础框架，实现简单的页面展示和导航功能</td>
+                                <td>纯前端静态页面，无后端交互功能</td>
+                            </tr>
+                            <tr>
+                                <td>样式设计</td>
+                                <td>完成基础样式布局，适配PC端显示</td>
+                                <td>未做响应式适配，移动端显示错乱</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="dev-gallery">
+                    <div class="gallery-item">
+                        <img src="2023-10-02第一版网站.jpg" alt="2023-10-02第一版网站">
+                        <div class="gallery-caption">2023-10-02第一版网站</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="2023-10-02第一版网站样式.jpg" alt="2023-10-02第一版网站样式">
+                        <div class="gallery-caption">2023-10-02第一版网站样式</div>
+                    </div>
+                </div>
+                <p style="font-size: 1rem; color: var(--gray);">耗时：1周 | 产出：第一版静态网站，完成基础页面展示</p>
+            </div>
+
+            <!-- 2024.09 -->
+            <div class="timeline-item">
+                <div class="timeline-date">2024.09 <span class="timeline-tag">需求分析&技术选型</span></div>
+                <div class="timeline-content">
+                    <h4>完成需求分析与技术栈选型</h4>
+                    <table class="feature-table">
+                        <thead>
+                            <tr>
+                                <th>阶段</th>
+                                <th>内容</th>
+                                <th>备注</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>需求分析</td>
+                                <td>确定核心功能：文章发布/编辑、分类标签、评论、用户登录、后台管理</td>
+                                <td>优先实现核心功能，后续迭代补充扩展功能</td>
+                            </tr>
+                            <tr>
+                                <td>技术栈选择</td>
+                                <td>前端：HTML+CSS+JavaScript + Bootstrap<br>后端：Python + Flask<br>数据库：SQLite（全程使用）</td>
+                                <td>选择轻量级技术栈，降低学习和开发成本</td>
+                            </tr>
+                            <tr>
+                                <td>项目规划</td>
+                                <td>拆分开发任务，制定时间计划，搭建基础项目结构</td>
+                                <td>使用Git进行版本控制，建立分支管理规范</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p style="font-size: 1rem; color: var(--gray);">耗时：2周 | 产出：需求文档、技术选型报告、项目基础框架</p>
+            </div>
+
+            <!-- 2024.12 -->
+            <div class="timeline-item">
+                <div class="timeline-date">2024.12 <span class="timeline-tag">简易留言板开发</span></div>
+                <div class="timeline-content">
+                    <h4>完成简易留言板功能模块开发</h4>
+                    <table class="feature-table">
+                        <thead>
+                            <tr>
+                                <th>开发模块</th>
+                                <th>实现功能</th>
+                                <th>技术要点</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>前端展示</td>
+                                <td>留言列表、发布留言、留言回复</td>
+                                <td>AJAX异步提交、无刷新刷新页面</td>
+                            </tr>
+                            <tr>
+                                <td>后台管理</td>
+                                <td>留言审核、删除、回复管理</td>
+                                <td>管理员权限控制、数据分页展示</td>
+                            </tr>
+                            <tr>
+                                <td>数据存储</td>
+                                <td>留言内容、用户信息、回复记录</td>
+                                <td>SQLite数据库操作、数据校验</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="dev-gallery">
+                    <div class="gallery-item">
+                        <img src="2024年12月20日的简易留言板.jpg" alt="2024年12月20日的简易留言板">
+                        <div class="gallery-caption">2024年12月20日的简易留言板</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="2024年12月20日的简易留言板1.jpg" alt="2024年12月20日的简易留言板1">
+                        <div class="gallery-caption">2024年12月20日的简易留言板1</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="2024年12月20日的简易留言板2.jpg" alt="2024年12月20日的简易留言板2">
+                        <div class="gallery-caption">2024年12月20日的简易留言板2</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="2024年12月20日的简易留言板后台.jpg" alt="2024年12月20日的简易留言板后台">
+                        <div class="gallery-caption">2024年12月20日的简易留言板后台</div>
+                    </div>
+                </div>
+                <p style="font-size: 1rem; color: var(--gray);">耗时：1周 | 产出：简易留言板功能模块，集成到博客系统中</p>
+            </div>
+
+            <!-- 2025.09 -->
+            <div class="timeline-item">
+                <div class="timeline-date">2025.09 <span class="timeline-tag">第二版网站开发</span></div>
+                <div class="timeline-content">
+                    <h4>完成第二版网站重构与优化</h4>
+                    <table class="feature-table">
+                        <thead>
+                            <tr>
+                                <th>优化模块</th>
+                                <th>更新内容</th>
+                                <th>核心改进</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>界面重构</td>
+                                <td>全新视觉设计、响应式布局、交互优化</td>
+                                <td>适配移动端/平板/PC多端显示</td>
+                            </tr>
+                            <tr>
+                                <td>功能整合</td>
+                                <td>集成留言板、优化文章管理、新增封面设计</td>
+                                <td>基于Flask的前后端交互体验提升</td>
+                            </tr>
+                            <tr>
+                                <td>性能优化</td>
+                                <td>图片懒加载、代码压缩、资源缓存</td>
+                                <td>页面加载速度提升50%，SQLite查询优化</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="dev-gallery">
+                    <div class="gallery-item">
+                        <img src="2025年9月24日第二版网站封面.jpg" alt="2025年9月24日第二版网站封面">
+                        <div class="gallery-caption">2025年9月24日第二版网站封面</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="2025年9月24日第二版网站.jpg" alt="2025年9月24日第二版网站">
+                        <div class="gallery-caption">2025年9月24日第二版网站</div>
+                    </div>
+                </div>
+                <p style="font-size: 1rem; color: var(--gray);">耗时：3周 | 产出：第二版网站（v0.8），体验和功能全面提升</p>
+            </div>
+
+            <!-- 最新版本 -->
+            <div class="timeline-item">
+                <div class="timeline-date">最新版本 <span class="timeline-tag">樱花映射部署上线</span></div>
+                <div class="timeline-content">
+                    <h4>完成端口转发配置与正式上线</h4>
+                    <table class="feature-table">
+                        <thead>
+                            <tr>
+                                <th>部署环节</th>
+                                <th>具体措施</th>
+                                <th>技术细节</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>端口转发配置</td>
+                                <td>1. 樱花映射客户端安装与配置<br>2. 映射Flask默认端口(5000)到公网<br>3. 配置自定义域名解析<br>4. 测试端口连通性</td>
+                                <td rowspan="3">核心技术：Python Flask + SQLite<br>部署方式：樱花映射端口转发（无需云服务器）<br>访问方式：自定义域名 + 映射端口<br>数据存储：本地SQLite数据库文件</td>
+                            </tr>
+                            <tr>
+                                <td>性能优化</td>
+                                <td>1. SQLite查询优化（添加索引）<br>2. 静态资源本地缓存<br>3. Flask应用性能调优<br>4. 图片压缩与懒加载</td>
+                            </tr>
+                            <tr>
+                                <td>安全加固</td>
+                                <td>1. 接口参数校验<br>2. SQL注入防护<br>3. 访问权限控制<br>4. 敏感信息脱敏</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="special-note">
+                    <strong>樱花映射部署说明：</strong> 由于没有购买云服务器，采用樱花映射进行端口转发实现公网访问。Flask应用运行在本地5000端口，通过樱花映射将该端口暴露到公网，配合自定义域名实现外网访问，全程使用SQLite数据库无需额外配置。
+                </div>
+                <p style="font-size: 1rem; color: var(--gray);">耗时：2周 | 产出：正式上线版本（v1.0），通过樱花映射实现公网访问，页面加载速度提升60%</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="dev-card">
+        <h3><i class="fas fa-bug"></i> 核心技术难点</h3>
+        <ul class="challenge-list">
+            <li class="challenge-item">
+                <span class="challenge-title">1. Markdown文章解析与渲染问题</span>
+                <div class="challenge-solution">解决方案：放弃手写解析逻辑，集成Python-Markdown库 + Pygments代码高亮库，自定义扩展插件处理表格和公式渲染，统一前端渲染样式。</div>
+            </li>
+            <li class="challenge-item">
+                <span class="challenge-title">2. SQLite数据库性能优化</span>
+                <div class="challenge-solution">解决方案：1. 为常用查询字段（创建时间、分类ID）添加索引；2. 优化查询语句，减少全表扫描；3. 实现数据分页查询，限制单次查询数量；4. 对高频访问数据进行内存缓存。优化后响应时间降至300ms以内。</div>
+            </li>
+            <li class="challenge-item">
+                <span class="challenge-title">3. 樱花映射端口转发配置</span>
+                <div class="challenge-solution">解决方案：1. 配置Flask允许跨域访问；2. 优化樱花映射客户端参数，设置心跳保活；3. 配置本地防火墙放行5000端口；4. 使用樱花映射提供的免费域名解析服务。</div>
+            </li>
+            <li class="challenge-item">
+                <span class="challenge-title">4. 图片上传与存储优化</span>
+                <div class="challenge-solution">解决方案：1. 前端实现图片压缩后再上传；2. 本地按尺寸分类存储图片；3. 图片上传后自动生成多尺寸缩略图；4. 前端根据设备尺寸加载对应尺寸图片。</div>
+            </li>
+        </ul>
+    </section>
+
+    <section class="dev-card">
+        <h3><i class="fas fa-tachometer-alt"></i> 各版本性能对比</h3>
+        <div class="version-grid">
+            <div class="version-card">
+                <div class="version-name">2023第一版</div>
+                <i class="fas fa-clock"></i>
+                <div class="version-value">4.5s</div>
+                <div class="version-label">首页加载时间</div>
+            </div>
+            <div class="version-card">
+                <div class="version-name">2024留言板版</div>
+                <i class="fas fa-clock"></i>
+                <div class="version-value">3.2s</div>
+                <div class="version-label">首页加载时间</div>
+            </div>
+            <div class="version-card">
+                <div class="version-name">2025第二版</div>
+                <i class="fas fa-clock"></i>
+                <div class="version-value">2.1s</div>
+                <div class="version-label">首页加载时间</div>
+            </div>
+            <div class="version-card">
+                <div class="version-name">v1.0 正式版</div>
+                <i class="fas fa-clock"></i>
+                <div class="version-value">0.8s</div>
+                <div class="version-label">首页加载时间</div>
+            </div>
+            <div class="version-card">
+                <div class="version-name">v1.0 正式版</div>
+                <i class="fas fa-database"></i>
+                <div class="version-value">98%</div>
+                <div class="version-label">SQLite查询命中率</div>
+            </div>
+            <div class="version-card">
+                <div class="version-name">2023第一版</div>
+                <i class="fas fa-file-code"></i>
+                <div class="version-value">500+</div>
+                <div class="version-label">代码行数</div>
+            </div>
+            <div class="version-card">
+                <div class="version-name">2025第二版</div>
+                <i class="fas fa-file-code"></i>
+                <div class="version-value">8500+</div>
+                <div class="version-label">代码行数</div>
+            </div>
+            <div class="version-card">
+                <div class="version-name">v1.0 正式版</div>
+                <i class="fas fa-shield-alt"></i>
+                <div class="version-value">0</div>
+                <div class="version-label">已知安全漏洞</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="dev-card">
+        <h3><i class="fas fa-book-open"></i> 开发总结</h3>
+        <ul class="summary-list">
+            <li>全程使用Python Flask + SQLite技术栈开发，轻量级组合非常适合个人博客这类小型项目，无需复杂的环境配置。</li>
+            <li>樱花映射端口转发是个人开发者的优质选择，无需购买云服务器即可实现公网访问，降低了部署成本和技术门槛。</li>
+            <li>SQLite虽然轻量，但数据量增大后仍需做性能优化，合理的索引设计能大幅提升查询效率。</li>
+            <li>遇到技术问题时，先自己思考和调试，再查官方文档，最后求助社区，这个过程比直接抄答案收获更多。</li>
+            <li>性能优化要先定位瓶颈，再针对性优化，不要盲目做优化，这次通过性能分析工具精准定位了数据库查询和图片加载两个核心瓶颈。</li>
+            <li>安全意识要贯穿开发全程，从接口校验、数据加密到权限控制，每一个环节都不能忽视，上线前做了安全扫描，修复了多个潜在漏洞。</li>
+            <li>部署上线不是开发的终点，要做好数据备份和日志监控，后续计划迭代v1.1版本，新增搜索功能和夜间模式。</li>
+            <li>完整的项目开发让我从只会写零散代码，到理解整个项目的架构设计、前后端交互、部署运维，编程思维有了质的提升。</li>
+        </ul>
+        <div class="note-box">
+            <strong>核心收获：</strong> 个人项目开发的核心是循序渐进，从简单功能入手，逐步迭代优化，技术选型要贴合自身能力和项目需求，解决实际问题比追求技术炫技更重要。
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <p>&copy; 2025 hyper的个人Vlog | 个人博客系统开发记录</p>
+    <p style="margin-top: 10px;">
+        <a href="https://github.com/hyper152/personal-blog" target="_blank" style="color: var(--primary); text-decoration: none;">
+            <i class="fab fa-github"></i> hyper152/personal-blog
+        </a>
+    </p>
+</footer>
+
+</body>
+</html>

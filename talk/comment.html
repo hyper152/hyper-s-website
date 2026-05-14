@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>留言板 | hyper的个人Vlog</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6a5acd;
+            --primary-light: #8a7adc;
+            --primary-dark: #4a3a9a;
+            --accent: #ff6b6b;
+            --accent-light: #ff8a8a;
+            --accent-dark: #e04a4a;
+            --light: #f8f9fa;
+            --dark: #2d3436;
+            --gray: #495057;
+            --light-gray: #e9ecef;
+            --white: #ffffff;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.05);
+            --shadow-md: 0 5px 15px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.12);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', 'Inter', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+            color: var(--gray);
+            line-height: 1.6;
+            padding: 30px 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* 头部导航 */
+        .header-bar {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            padding: 15px 25px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            transform: rotate(10deg);
+            transition: var(--transition);
+        }
+
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* 用户状态 */
+        .user-status {
+            position: relative;
+        }
+
+        .user-btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .user-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            min-width: 150px;
+            display: none;
+            z-index: 1000;
+            margin-top: 10px;
+            overflow: hidden;
+            border: 1px solid var(--light-gray);
+        }
+
+        .dropdown-menu.show {
+            display: block;
+            animation: slideDown 0.2s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 20px;
+            color: var(--gray);
+            text-decoration: none;
+            transition: var(--transition);
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .dropdown-item:last-child { border-bottom: none; }
+
+        .dropdown-item:hover {
+            background: var(--light);
+            color: var(--primary);
+            padding-left: 25px;
+        }
+
+        /* 面包屑 */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 10px;
+            background: white;
+            border-radius: 20px;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .breadcrumb a:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* 页面标题 */
+        .page-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .page-title h1 {
+            font-size: 2.2rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .title-decoration {
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+        /* 操作按钮 */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+        }
+
+        .action-btn.secondary {
+            background: white;
+            color: var(--primary);
+            border: 1px solid var(--light-gray);
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* 留言板 */
+        .message-board {
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+
+        /* 留言输入 */
+        .message-input {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px dashed var(--light-gray);
+        }
+
+        .input-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .input-header i {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .input-header h3 {
+            font-size: 1.3rem;
+            color: var(--dark);
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+            font-size: 0.95rem;
+        }
+
+        .input-group label i {
+            color: var(--accent);
+            margin-right: 5px;
+        }
+
+        .input-group input,
+        .input-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--light-gray);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            transition: var(--transition);
+            background: var(--light);
+        }
+
+        .input-group input:focus,
+        .input-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(106, 90, 205, 0.1);
+        }
+
+        .input-group input:read-only {
+            background: #e8f5e9;
+            border-color: #4caf50;
+            color: #2e7d32;
+        }
+
+        .input-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 40px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .submit-btn:disabled {
+            background: linear-gradient(135deg, #b0b0b0, #909090);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .login-tip {
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+        }
+
+        .login-tip a {
+            font-weight: 600;
+            text-decoration: none;
+            margin-left: 3px;
+        }
+
+        /* 留言列表 */
+        .message-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message-item {
+            background: var(--light);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            transition: var(--transition);
+            border-left: 4px solid var(--primary);
+        }
+
+        .message-item:hover {
+            transform: translateX(5px);
+            box-shadow: var(--shadow-md);
+            background: white;
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .message-author {
+            font-weight: 600;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .author-avatar {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .message-time {
+            font-size: 0.85rem;
+            color: #888;
+            background: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .message-content {
+            padding: 10px 0 5px 46px;
+            line-height: 1.8;
+            color: var(--gray);
+            word-break: break-word;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: #888;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 30px 0;
+            color: #888;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 768px) {
+            .message-board { padding: 20px; }
+            .message-content { padding-left: 0; }
+            .page-title h1 { font-size: 1.6rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-bar">
+            <div class="logo-area">
+                <div class="logo-icon"><i class="fas fa-comment-dots"></i></div>
+                <span class="logo-text">留言板</span>
+            </div>
+            <div class="user-status">
+                <button class="user-btn" id="userBtn">
+                    <i class="fas fa-user-circle"></i>
+                    <span id="usernameDisplay">加载中...</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="/login/index.html" class="dropdown-item" id="loginItem">
+                        <i class="fas fa-sign-in-alt"></i> 登录
+                    </a>
+                    <a href="/login/register.html" class="dropdown-item" id="registerItem">
+                        <i class="fas fa-user-plus"></i> 注册
+                    </a>
+                    <a href="javascript:void(0)" class="dropdown-item" id="logoutItem" style="display:none;">
+                        <i class="fas fa-sign-out-alt"></i> 退出
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="breadcrumb">
+            <a href="/home/index.html"><i class="fas fa-home"></i> 首页</a>
+            <span>/</span>
+            <span>留言板</span>
+        </div>
+
+        <div class="page-title">
+            <h1><i class="fas fa-comments"></i> 留言板</h1>
+            <div class="title-decoration"></div>
+        </div>
+
+        <div class="action-buttons">
+            <a href="/home/index.html" class="action-btn secondary">
+                <i class="fas fa-arrow-left"></i> 返回首页
+            </a>
+        </div>
+
+        <div class="message-board">
+            <div class="message-input">
+                <div class="input-header">
+                    <i class="fas fa-pen-fancy"></i>
+                    <h3>写下你的留言</h3>
+                </div>
+                <form id="messageForm">
+                    <div class="input-group">
+                        <label><i class="fas fa-user"></i> 昵称</label>
+                        <input type="text" id="username" placeholder="输入你的昵称（2-10个字）" required>
+                    </div>
+                    <div class="input-group">
+                        <label><i class="fas fa-comment"></i> 留言内容</label>
+                        <textarea id="messageContent" placeholder="分享你的想法..." required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        <span>提交留言</span>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                    <div class="login-tip" id="loginTip" style="background:linear-gradient(135deg,#fff3cd,#ffe69b);color:#856404;border-left:4px solid #ff6b6b;">
+                        <i class="fas fa-info-circle"></i>
+                        <span>当前为游客模式，可以自定义昵称留言，建议<a href="/login/index.html" style="color:var(--primary-dark);">登录</a>后使用</span>
+                    </div>
+                </form>
+            </div>
+
+            <div class="message-list" id="messageList">
+                <div class="empty-state">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>加载中...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>hyper的个人Vlog | 记录生活，分享故事</p>
+        </div>
+    </div>
+
+    <script src="/static/js/auth.js"></script>
+    <script>
+        // 全局状态
+        let isLogin = false;
+        let currentUser = null;
+        let sessionId = null;
+
+        // 获取 session_id 的多种方式
+        function getSessionId() {
+            // 1. 从 localStorage 获取
+            const localSession = localStorage.getItem('session_id');
+            if (localSession) return localSession;
+            
+            // 2. 从 cookie 获取
+            const cookies = document.cookie.split(';');
+            for (let cookie of cookies) {
+                const [name, value] = cookie.trim().split('=');
+                if (name === 'session_id' && value) {
+                    return value;
+                }
+            }
+            
+            return null;
+        }
+
+        // 检查登录状态（优先本地存储，然后服务器验证）
+        async function checkLoginStatus() {
+            try {
+                // 先从 localStorage 恢复 session
+                const localSession = localStorage.getItem('session_id');
+                const localUserStr = localStorage.getItem('user_info');
+                
+                if (localSession && localUserStr) {
+                    try {
+                        const localUser = JSON.parse(localUserStr);
+                        if (localUser && localUser.username) {
+                            isLogin = true;
+                            currentUser = localUser;
+                            sessionId = localSession;
+                            console.log('✅ 从 localStorage 恢复登录状态:', currentUser.username);
+                            updateUI();
+                        }
+                    } catch (e) {}
+                }
+                
+                // 然后向服务器验证（携带 session_id）
+                const requestSession = getSessionId();
+                const res = await fetch('/api/check-login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...(requestSession ? { 'Authorization': `Session ${requestSession}` } : {})
+                    },
+                    credentials: 'include'
+                });
+                
+                const data = await res.json();
+                
+                if (data.isLogin && data.user && data.user.username) {
+                    isLogin = true;
+                    currentUser = data.user;
+                    
+                    // 同步到 localStorage
+                    if (requestSession) {
+                        localStorage.setItem('session_id', requestSession);
+                        sessionId = requestSession;
+                    }
+                    localStorage.setItem('user_info', JSON.stringify(data.user));
+                    console.log('✅ 服务器验证登录成功:', data.user.username);
+                } else if (!isLogin) {
+                    // 服务器未登录且本地也没有
+                    isLogin = false;
+                    currentUser = null;
+                    sessionId = null;
+                    localStorage.removeItem('session_id');
+                    localStorage.removeItem('user_info');
+                    console.log('⚠️ 未登录状态');
+                }
+                
+                updateUI();
+            } catch (error) {
+                console.error('检查登录状态失败:', error);
+                // 网络错误时，如果本地有记录则保持，否则为未登录
+                if (!localStorage.getItem('session_id')) {
+                    isLogin = false;
+                    currentUser = null;
+                }
+                updateUI();
+            }
+        }
+
+        // 更新 UI
+        function updateUI() {
+            const usernameInput = document.getElementById('username');
+            const submitBtn = document.getElementById('submitBtn');
+            const loginTip = document.getElementById('loginTip');
+            const userBtnText = document.getElementById('usernameDisplay');
+            const loginItem = document.getElementById('loginItem');
+            const registerItem = document.getElementById('registerItem');
+            const logoutItem = document.getElementById('logoutItem');
+
+            if (isLogin && currentUser) {
+                // 登录状态
+                if (usernameInput) {
+                    usernameInput.value = currentUser.username;
+                    usernameInput.readOnly = true;
+                    usernameInput.style.background = '#e8f5e9';
+                    usernameInput.style.borderColor = '#4caf50';
+                    usernameInput.style.color = '#2e7d32';
+                }
+                if (submitBtn) submitBtn.disabled = false;
+                if (loginTip) {
+                    loginTip.style.background = '#d4edda';
+                    loginTip.style.color = '#155724';
+                    loginTip.style.borderLeft = '4px solid #28a745';
+                    loginTip.innerHTML = '<i class="fas fa-check-circle" style="color:#28a745;"></i><span>已登录为 <strong>' + currentUser.username + '</strong>，将使用账号昵称留言</span>';
+                }
+                if (userBtnText) userBtnText.textContent = currentUser.username;
+                if (loginItem) loginItem.style.display = 'none';
+                if (registerItem) registerItem.style.display = 'none';
+                if (logoutItem) logoutItem.style.display = 'flex';
+            } else {
+                // 游客模式
+                if (usernameInput) {
+                    usernameInput.value = '';
+                    usernameInput.readOnly = false;
+                    usernameInput.placeholder = '输入你的昵称（2-10个字）';
+                    usernameInput.style.background = '';
+                    usernameInput.style.borderColor = '';
+                    usernameInput.style.color = '';
+                }
+                if (submitBtn) submitBtn.disabled = false;
+                if (loginTip) {
+                    loginTip.style.background = 'linear-gradient(135deg,#fff3cd,#ffe69b)';
+                    loginTip.style.color = '#856404';
+                    loginTip.style.borderLeft = '4px solid #ff6b6b';
+                    loginTip.innerHTML = '<i class="fas fa-info-circle"></i><span>当前为游客模式，可以自定义昵称留言，建议<a href="/login/index.html" style="color:var(--primary-dark);">登录</a>后使用</span>';
+                }
+                if (userBtnText) userBtnText.textContent = '未登录';
+                if (loginItem) loginItem.style.display = 'flex';
+                if (registerItem) registerItem.style.display = 'flex';
+                if (logoutItem) logoutItem.style.display = 'none';
+            }
+        }
+
+        // 退出登录
+        window.handleLogout = async function() {
+            try {
+                const currentSession = getSessionId();
+                await fetch('/api/logout', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...(currentSession ? { 'Authorization': `Session ${currentSession}` } : {})
+                    },
+                    credentials: 'include'
+                });
+            } catch (e) {
+                console.error('退出请求失败:', e);
+            }
+            
+            // 清除本地存储
+            localStorage.removeItem('session_id');
+            localStorage.removeItem('user_info');
+            
+            // 清除状态
+            isLogin = false;
+            currentUser = null;
+            sessionId = null;
+            
+            updateUI();
+            alert('已退出登录');
+            
+            // 可选：刷新页面重置状态
+            // window.location.reload();
+        };
+
+        // 加载留言列表
+        async function loadMessages() {
+            try {
+                const res = await fetch('/api/talk/list');
+                const data = await res.json();
+                
+                const messageList = document.getElementById('messageList');
+                
+                if (data.code === 200 && data.data && data.data.length > 0) {
+                    messageList.innerHTML = data.data.map(msg => `
+                        <div class="message-item">
+                            <div class="message-header">
+                                <div class="message-author">
+                                    <div class="author-avatar"><i class="fas fa-user"></i></div>
+                                    ${escapeHtml(msg.username) || '匿名用户'}
+                                    ${msg.is_guest ? ' <small style="color:#888;">(游客)</small>' : ''}
+                                </div>
+                                <div class="message-time">${msg.create_time_str || ''}</div>
+                            </div>
+                            <div class="message-content">${escapeHtml(msg.content).replace(/\n/g, '<br>')}</div>
+                        </div>
+                    `).join('');
+                } else {
+                    messageList.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-comment-dots" style="color:#6a5acd;"></i>
+                            <p>暂无留言，快来成为第一个留言的人吧！</p>
+                        </div>
+                    `;
+                }
+            } catch (e) {
+                console.error('加载留言失败:', e);
+                document.getElementById('messageList').innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-circle" style="color:#dc3545;"></i>
+                        <p>加载失败，请刷新重试</p>
+                    </div>
+                `;
+            }
+        }
+        
+        // XSS 防护
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // 提交留言
+        document.getElementById('messageForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const nickname = document.getElementById('username').value.trim();
+            const content = document.getElementById('messageContent').value.trim();
+            
+            if (!content) {
+                alert('请输入留言内容');
+                return;
+            }
+            
+            if (!isLogin) {
+                if (!nickname) {
+                    alert('请输入昵称');
+                    return;
+                }
+                if (nickname.length < 2 || nickname.length > 10) {
+                    alert('昵称需要2-10个字');
+                    return;
+                }
+            }
+            
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<span>提交中...</span> <i class="fas fa-spinner fa-spin"></i>';
+            
+            try {
+                const requestBody = { content: content };
+                if (!isLogin) {
+                    requestBody.nickname = nickname;
+                }
+                
+                const currentSession = getSessionId();
+                const res = await fetch('/api/talk/add', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...(currentSession ? { 'Authorization': `Session ${currentSession}` } : {})
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify(requestBody)
+                });
+                
+                const data = await res.json();
+                
+                if (data.code === 200) {
+                    alert('留言成功！');
+                    document.getElementById('messageContent').value = '';
+                    if (!isLogin) {
+                        document.getElementById('username').value = '';
+                    }
+                    loadMessages();
+                } else {
+                    alert(data.msg || '留言失败');
+                }
+            } catch (e) {
+                console.error('提交留言失败:', e);
+                alert('网络错误，请重试');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<span>提交留言</span> <i class="fas fa-paper-plane"></i>';
+            }
+        });
+
+        // 下拉菜单
+        const userBtn = document.getElementById('userBtn');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+        
+        if (userBtn) {
+            userBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                dropdownMenu.classList.toggle('show');
+            });
+        }
+        
+        document.addEventListener('click', function() {
+            dropdownMenu.classList.remove('show');
+        });
+
+        // 初始化
+        async function init() {
+            await checkLoginStatus();
+            await loadMessages();
+        }
+        
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

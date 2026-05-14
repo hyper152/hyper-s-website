@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多次装机升级记录 - hyper的个人Vlog</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', 'Inter', sans-serif;
+        }
+
+        :root {
+            --primary: #6a5acd;
+            --accent: #ff6b6b;
+            --light: #f8f9fa;
+            --dark: #2d3436;
+            --gray: #495057;
+            --light-gray: #e9ecef;
+            --shadow: 0 2px 12px rgba(0,0,0,0.08);
+            --border: 1px solid var(--light-gray);
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: min(1200px, 90%);
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .navbar {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .navbar-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--gray);
+            font-weight: 500;
+            transition: all 0.2s ease;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        .nav-links a.active {
+            color: var(--accent);
+            font-weight: 700;
+        }
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .build-main {
+            padding: 60px 0;
+        }
+
+        .build-title {
+            font-size: 2.2rem;
+            color: var(--dark);
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .build-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent);
+            border-radius: 2px;
+        }
+
+        .build-desc {
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .timeline-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+        }
+
+        .timeline-card h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .timeline-list {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline-list::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background-color: var(--primary);
+            border-radius: 1px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+            padding-bottom: 10px;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -36px;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: var(--accent);
+            border: 3px solid var(--primary);
+        }
+
+        .timeline-time {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 15px;
+            display: inline-block;
+            background-color: var(--light);
+            padding: 5px 15px;
+            border-radius: 20px;
+        }
+
+        .timeline-tag {
+            font-size: 0.9rem;
+            color: white;
+            background-color: var(--primary);
+            padding: 3px 10px;
+            border-radius: 10px;
+            margin-left: 10px;
+        }
+
+        .config-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .config-table th,
+        .config-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: var(--border);
+        }
+
+        .config-table th {
+            background-color: var(--light);
+            color: var(--dark);
+            font-weight: 700;
+        }
+
+        .config-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .config-table td:first-child {
+            width: 22%;
+            color: var(--dark);
+            font-weight: 500;
+        }
+
+        .hardware-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 14px;
+            margin: 20px 0;
+        }
+
+        .gallery-item {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.02);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .gallery-caption {
+            padding: 10px;
+            background-color: var(--light);
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .special-note {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+
+        .danger-note {
+            background-color: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            color: #721c24;
+        }
+
+        .success-note {
+            background-color: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            color: #155724;
+        }
+
+        .experience-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+        }
+
+        .experience-card h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .experience-list {
+            padding-left: 20px;
+        }
+
+        .experience-list li {
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+            position: relative;
+            padding-left: 10px;
+            line-height: 1.8;
+        }
+
+        .experience-list li::before {
+            content: '✦';
+            position: absolute;
+            left: -15px;
+            color: var(--accent);
+        }
+
+        .compare-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .compare-card h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .compare-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .metric-card {
+            background-color: var(--light);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            border: var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .metric-card:hover {
+            box-shadow: var(--shadow);
+            transform: translateY(-5px);
+        }
+
+        .metric-card .version {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: var(--border);
+        }
+
+        .metric-card i {
+            font-size: 1.8rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+
+        .metric-card .value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 5px;
+        }
+
+        .metric-card .label {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        footer {
+            padding: 30px 0;
+            border-top: 1px solid var(--light-gray);
+            text-align: center;
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-top: 60px;
+        }
+
+        @media (max-width: 768px) {
+            .navbar-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+            .build-title {
+                font-size: 1.8rem;
+            }
+            .timeline-card,
+            .experience-card,
+            .compare-card {
+                padding: 25px;
+            }
+            .compare-metrics {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .compare-metrics {
+                grid-template-columns: 1fr;
+            }
+            .hardware-gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="container navbar-content">
+        <a href="/home/" class="logo">hyper的<span>Vlog</span></a>
+        <ul class="nav-links">
+            <li><a href="/home/">首页</a></li>
+            <li><a href="/home/#videos">视频</a></li>
+            <li><a href="/home/#blog">博客</a></li>
+            <li><a href="/home/#about">关于hyper</a></li>
+            <li><a href="/pages/YY往事/">人物志</a></li>
+            <li><a href="/pages/travel/">旅游记录</a></li>
+            <li><a href="/pages/diy/" class="active">装机记录</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="build-main">
+        <h1 class="build-title">装机&硬件升级记录</h1>
+
+        <div class="build-desc">
+            从学校手提箱主机 G840 核显开始，一路走到 RTX2060、E5 洋垃圾服务器、再到高考后的天选6 Pro，
+            五年多一步步升级，踩过坑、留过回忆，这是属于我的硬件成长史。
+        </div>
+
+        <div class="timeline-card">
+            <h3><i class="fas fa-clock-rotate-left"></i> 装机升级时间轴（倒叙）</h3>
+            <div class="timeline-list">
+
+                <!-- ==================== 2026.04.21：E5 2660 v2 + P104（最新） ==================== -->
+                <div class="timeline-item">
+                    <div class="timeline-time">2026.04.21</div>
+                    <div class="timeline-tag">大学AI服务器</div>
+                    <table class="config-table">
+                        <thead>
+                            <tr>
+                                <th>硬件</th>
+                                <th>型号</th>
+                                <th>用途</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>CPU</td>
+                                <td>Intel Xeon E5 2660 v2</td>
+                                <td>10核20线程，洋垃圾神U</td>
+                            </tr>
+                            <tr>
+                                <td>显卡</td>
+                                <td>NVIDIA P104-100</td>
+                                <td>魔改驱动，跑AI推理</td>
+                            </tr>
+                            <tr>
+                                <td>副卡</td>
+                                <td>AMD R5 340</td>
+                                <td>亮机卡，负责显示输出</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="hardware-gallery">
+                        <div class="gallery-item">
+                            <img src="media/E52660v2-P104-CPUZ.png" alt="E5 2660 v2 CPU-Z">
+                            <div class="gallery-caption">E5 2660 v2 CPU-Z 参数</div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="media/E52660v2-P104-GPUZ-P104.png" alt="P104 GPU-Z">
+                            <div class="gallery-caption">P104-100 GPU-Z 参数</div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="media/E52660v2-P104-GPUZ-R5340.png" alt="R5 340 GPU-Z">
+                            <div class="gallery-caption">R5 340 亮机卡参数</div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="media/E52660v2-P104-图吧工具箱.png" alt="图吧工具箱">
+                            <div class="gallery-caption">图吧工具箱 整机概览</div>
+                        </div>
+                    </div>
+                    
+                    <div class="hardware-gallery">
+                        <div class="gallery-item">
+                            <img src="media/E52660v2-P104-寝室效果图.jpg" alt="寝室效果图">
+                            <div class="gallery-caption">寝室实拍 · 跑AI服务器</div>
+                        </div>
+                    </div>
+                    
+                    <div class="success-note">
+                        <strong>大学第一台自组服务器：</strong> 上了大学后，需要一台机器跑 AI 模型和搭建个人服务。
+                        E5 2660 v2 洋垃圾性价比极高，10核20线程跑多任务绰绰有余；P104 是 GTX 1080 的无显示输出版本，
+                        通过魔改驱动可以跑 CUDA 和 AI 推理，再配一张 R5 340 亮机卡负责显示，完美组合。
+                    </div>
+                    
+                    <div class="special-note">
+                        <strong>配置亮点：</strong> 整机花费不到 1000 元，却能流畅运行 Ollama + deepseek 等本地模型，
+                        还能同时跑 Minecraft 服务器、个人博客后端，是大学寝室的神器。
+                    </div>
+                    
+                    <p style="font-size: 1rem;">定位：AI推理 + 个人服务器 · 洋垃圾的终极浪漫</p>
+                </div>
+
+                <!-- ==================== 2025：天选6 Pro ==================== -->
+                <div class="timeline-item">
+                    <div class="timeline-time">2025年</div>
+                    <div class="timeline-tag">高考大结局</div>
+                    <table class="config-table">
+                        <thead>
+                            <tr>
+                                <th>设备</th>
+                                <th>型号</th>
+                                <th>结局</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>笔记本</td>
+                                <td>华硕 天选6 Pro</td>
+                                <td>高性能便携本</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="hardware-gallery">
+                        <div class="gallery-item">
+                            <img src="media/2026.2.4改造房间.jpg" alt="改造房间">
+                            <div class="gallery-caption">2026.2.4 改造房间</div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="media/2026.2.4改造完成.jpg" alt="改造完成">
+                            <div class="gallery-caption">2026.2.4 改造完成</div>
+                        </div>
+                    </div>
+                    <p>从手提箱主机到天选，移动端的圆满收官。</p>
+                </div>
+
+                <!-- ==================== 2023：RTX2060 + i3 12100F ==================== -->
+                <div class="timeline-item">
+                    <div class="timeline-time">2023年中</div>
+                    <div class="timeline-tag">梦想升级</div>
+                    <table class="config-table">
+                        <thead>
+                            <tr>
+                                <th>硬件</th>
+                                <th>型号</th>
+                                <th>意义</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>CPU</td>
+                                <td>i3-12100F</td>
+                                <td>新一代游戏神U</td>
+                            </tr>
+                            <tr>
+                                <td>显卡</td>
+                                <td>RTX 2060</td>
+                                <td>第一次真正玩3A</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="hardware-gallery">
+                        <div class="gallery-item">
+                            <img src="media/RTX2060裸机.jpg" alt="RTX2060裸机">
+                            <div class="gallery-caption">RTX2060裸机</div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="media/RTX2060主机.jpg" alt="RTX2060主机">
+                            <div class="gallery-caption">RTX2060主机</div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="media/RTX2060主机2.jpg" alt="RTX2060主机2">
+                            <div class="gallery-caption">RTX2060主机成品</div>
+                        </div>
+                    </div>
+                    <div class="special-note">
+                        跟爸妈求了一两年才换上，真正意义上的游戏主机。
+                    </div>
+                </div>
+
+                <!-- ==================== 2022：E3 1270 v2 + RX560 ==================== -->
+                <div class="timeline-item">
+                    <div class="timeline-time">2022年</div>
+                    <div class="timeline-tag">性能飞跃</div>
+                    <table class="config-table">
+                        <thead>
+                            <tr>
+                                <th>硬件</th>
+                                <th>型号</th>
+                                <th>说明</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>CPU</td>
+                                <td>E3 1270 v2</td>
+                                <td>当年神U，多核心很强</td>
+                            </tr>
+                            <tr>
+                                <td>显卡</td>
+                                <td>RX560 4G（实为RX460改）</td>
+                                <td>网游通吃</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="hardware-gallery">
+                        <div class="gallery-item">
+                            <img src="media/E31270v2CPU参数.jpg" alt="E31270v2">
+                            <div class="gallery-caption">E3 1270 v2 参数</div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="media/RX460的GPUZ参数.jpg" alt="RX460 GPUZ">
+                            <div class="gallery-caption">实为RX460移动端改</div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="media/RX460风扇面.jpg" alt="RX460风扇">
+                            <div class="gallery-caption">RX460 风扇面</div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="media/RX460接口面.jpg" alt="RX460接口">
+                            <div class="gallery-caption">RX460 接口面</div>
+                        </div>
+                    </div>
+                    <div class="special-note">
+                        <strong>踩坑：</strong> 买的 RX560 实际是 RX460 移动端改的桌面卡，
+                        但依然是我用得最久的一张卡。
+                    </div>
+                    <div class="hardware-gallery">
+                        <div class="gallery-item">
+                            <img src="media/2023.1.8购入E31270v2.png" alt="2023.1.8购入E3">
+                            <div class="gallery-caption">2023.1.8 购入E3</div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="media/2023.1.4购入(RX560).png" alt="2023.1.4购入RX560">
+                            <div class="gallery-caption">2023.1.4 购入RX560</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==================== 2021：GT710 ==================== -->
+                <div class="timeline-item">
+                    <div class="timeline-time">2021.08.08</div>
+                    <div class="timeline-tag">第一次买卡</div>
+                    <table class="config-table">
+                        <thead>
+                            <tr>
+                                <th>升级硬件</th>
+                                <th>旧→新</th>
+                                <th>原因</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>显卡</td>
+                                <td>R5 340 → GT710 4G</td>
+                                <td>想提升画质与流畅度</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="special-note">
+                        <strong>巨大失望：</strong> 显卡到货后才发现，驱动版本过低，连《战地5》都无法运行。
+                    </div>
+
+                    <div class="danger-note">
+                        <strong>终极结局：自燃</strong><br>
+                        这张 GT710 被我弃用一年后，再次通电开机时直接冒烟自燃，
+                        直接报废，成为我人生中第一张"烧掉"的显卡。
+                    </div>
+
+                    <div class="hardware-gallery">
+                        <div class="gallery-item">
+                            <img src="media/2021.8.8购入GT710-4G.png" alt="2021.8.8购入GT710-4G">
+                            <div class="gallery-caption">2021.8.8购入GT710-4G</div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="media/GT610裸机.jpg" alt="GT610裸机">
+                            <div class="gallery-caption">GT610参考图</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==================== 2020：G2030 + R5340 ==================== -->
+                <div class="timeline-item">
+                    <div class="timeline-time">2020年</div>
+                    <div class="timeline-tag">正式入门</div>
+                    <table class="config-table">
+                        <thead>
+                            <tr>
+                                <th>硬件</th>
+                                <th>型号</th>
+                                <th>来源</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>CPU</td>
+                                <td>Intel G2030</td>
+                                <td>家用入门双核</td>
+                            </tr>
+                            <tr>
+                                <td>显卡</td>
+                                <td>AMD R5 340</td>
+                                <td>叔叔赠送</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="hardware-gallery">
+                        <div class="gallery-item">
+                            <img src="media/R5340纸盒内部.png" alt="R5340纸盒内部">
+                            <div class="gallery-caption">R5340纸盒内部</div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="media/R5340纸盒外部.jpg" alt="R5340纸盒外部">
+                            <div class="gallery-caption">R5340纸盒外部</div>
+                        </div>
+                    </div>
+                    <p>从核显时代正式进入独显时代。</p>
+                </div>
+
+                <!-- ==================== 最早：G840 手提箱主机 ==================== -->
+                <div class="timeline-item">
+                    <div class="timeline-time">最早时期</div>
+                    <div class="timeline-tag">手提箱主机</div>
+                    <table class="config-table">
+                        <thead>
+                            <tr>
+                                <th>硬件</th>
+                                <th>型号</th>
+                                <th>回忆</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>CPU</td>
+                                <td>Intel G840</td>
+                                <td>学校装机，纯粹核显</td>
+                            </tr>
+                            <tr>
+                                <td>显卡</td>
+                                <td>核显</td>
+                                <td>只能低画质玩英雄联盟</td>
+                            </tr>
+                            <tr>
+                                <td>机箱</td>
+                                <td>手提箱改造</td>
+                                <td>没留下照片，最经典的回忆</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="special-note">
+                        <strong>最早的主机：</strong> 在学校用手提箱改的主机，只有 G840 核显，
+                        却陪我打完了无数把 LOL，是我装机梦的起点。
+                    </div>
+                    <p style="font-size: 1rem;">定位：能玩LOL的核显手提箱主机</p>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="experience-card">
+            <h3><i class="fas fa-lightbulb"></i> 升级心得 & 踩坑总结</h3>
+            <ul class="experience-list">
+                <li>最早用 G840 核显+手提箱主机，是我装机梦的开始。</li>
+                <li>GT710 是我最失败的一张卡：驱动太低玩不了战地5，最后还自燃了。</li>
+                <li>E3 1270 v2 是老平台神U，但游戏还是不如新i3。</li>
+                <li>踩过最大坑：RX560 实际是 RX460 移动端改卡。</li>
+                <li>RTX2060 是我第一台真正能玩3A的主机。</li>
+                <li>高考后换天选6 Pro，移动端圆满收官。</li>
+                <li>大学组了 E5 + P104，千元内搞定 AI 推理和服务器，洋垃圾真香。</li>
+                <li>保留照片和订单，回头看会特别有成就感。</li>
+            </ul>
+        </div>
+
+        <div class="compare-card">
+            <h3><i class="fas fa-chart-bar"></i> 历代性能对比</h3>
+            <div class="compare-metrics">
+                <div class="metric-card">
+                    <div class="version">E5 + P104</div>
+                    <i class="fas fa-server"></i>
+                    <div class="value">10C20T</div>
+                    <div class="label">AI推理/服务器</div>
+                </div>
+                <div class="metric-card">
+                    <div class="version">i3 + RTX2060</div>
+                    <i class="fas fa-gamepad"></i>
+                    <div class="value">100FPS+</div>
+                    <div class="label">3A游戏 1080P</div>
+                </div>
+                <div class="metric-card">
+                    <div class="version">E3 + RX560</div>
+                    <i class="fas fa-gamepad"></i>
+                    <div class="value">80–120FPS</div>
+                    <div class="label">LOL 高画质</div>
+                </div>
+                <div class="metric-card">
+                    <div class="version">GT710</div>
+                    <i class="fas fa-fire-alt"></i>
+                    <div class="value">直接自燃</div>
+                    <div class="label">战地5都玩不了</div>
+                </div>
+                <div class="metric-card">
+                    <div class="version">G840 核显</div>
+                    <i class="fas fa-gamepad"></i>
+                    <div class="value">20–30FPS</div>
+                    <div class="label">LOL 低画质</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<footer class="container">
+    <p>&copy; 2026 hyper的个人Vlog. 保留所有权利.</p>
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.body.style.opacity = '0';
+        document.body.style.transition = 'opacity 0.5s ease-out';
+        requestAnimationFrame(() => {
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    });
+</script>
+
+</body>
+</html>

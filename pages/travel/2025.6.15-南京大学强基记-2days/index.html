@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>南京大学强基记 | hyper的个人Vlog</title>
+    <!-- 外部资源 -->
+    <link 
+        rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        crossorigin="anonymous"
+    >
+    <style>
+        :root {
+            --primary: #6a5acd;
+            --accent: #ff6b6b;
+            --dark: #2d3436;
+            --light: #f8f9fa;
+            --white: #ffffff;
+            --gray: #495057;
+            --light-gray: #e9ecef;
+            --shadow: 0 2px 15px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--gray);
+            line-height: 1.8;
+        }
+
+        .navbar {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .container {
+            width: min(1200px, 90%);
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo i {
+            color: var(--accent);
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .back-btn:hover {
+            color: var(--accent);
+            transform: translateX(-3px);
+        }
+
+        .article-header {
+            padding: 60px 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: var(--white);
+            text-align: center;
+            margin-bottom: 60px;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .article-title {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            margin-bottom: 15px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            font-size: 0.95rem;
+            opacity: 0.9;
+            margin-top: 20px;
+        }
+
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .article-content {
+            max-width: 800px;
+            margin: 0 auto 80px;
+            padding: 0 20px;
+        }
+
+        .content-block {
+            background-color: var(--white);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .content-block:hover {
+            box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+        }
+
+        .content-block h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light-gray);
+            position: relative;
+        }
+
+        .content-block h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 80px;
+            height: 2px;
+            background-color: var(--accent);
+        }
+
+        .content-block p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .content-block ul {
+            margin: 15px 0 15px 25px;
+        }
+
+        .content-block li {
+            margin-bottom: 10px;
+        }
+
+        /* 图文混排样式 */
+        .media-row {
+            display: flex;
+            gap: 25px;
+            margin: 25px 0;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .media-row.reverse {
+            flex-direction: row-reverse;
+        }
+        .media-img {
+            flex: 1;
+            min-width: 200px;
+        }
+        .media-img img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            object-fit: contain;
+            background-color: #f8f9fa;
+        }
+        .media-text {
+            flex: 1.2;
+        }
+        .inline-img {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .inline-img img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            object-fit: contain;
+        }
+        .img-caption {
+            font-size: 0.85rem;
+            color: #6c757d;
+            text-align: center;
+            margin-top: 8px;
+            font-style: normal;
+        }
+        .img-caption i {
+            color: var(--accent);
+            margin-right: 4px;
+        }
+
+        /* 双列小图（用于需要并排展示的场景） */
+        .two-column {
+            display: flex;
+            gap: 20px;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+        .two-column .col {
+            flex: 1;
+            min-width: 150px;
+        }
+        .two-column .col img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            object-fit: contain;
+        }
+
+        .quote {
+            background-color: rgba(106, 90, 205, 0.05);
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .quote p {
+            font-style: italic;
+            color: var(--dark);
+            margin-bottom: 0 !important;
+        }
+
+        .summary {
+            background: linear-gradient(135deg, rgba(106, 90, 205, 0.1) 0%, rgba(255, 107, 107, 0.1) 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px 0;
+            border: 1px solid var(--light-gray);
+        }
+
+        .summary h3 {
+            color: var(--accent);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer {
+            background-color: var(--dark);
+            color: var(--white);
+            padding: 40px 0 20px;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .footer p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .content-block {
+                padding: 25px;
+            }
+            .article-header {
+                padding: 40px 0;
+            }
+            .media-row {
+                flex-direction: column !important;
+            }
+            .media-img, .media-text {
+                flex: auto;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .article-meta {
+                gap: 10px;
+            }
+            .content-block {
+                padding: 20px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="/home/" class="logo">
+                <i class="fas fa-graduation-cap"></i> hyper的Vlog
+            </a>
+            <a href="/pages/travel/" class="back-btn">
+                <i class="fas fa-arrow-left"></i> 返回旅行记录
+            </a>
+        </div>
+    </nav>
+
+    <header class="article-header">
+        <div class="container">
+            <h1 class="article-title">南京大学强基记 | 赴沪赶考上交三一</h1>
+            <p>2025.6.15-2025.6.16 | 金陵逐梦，沪上续章</p>
+            <div class="article-meta">
+                <span><i class="fas fa-calendar"></i> 记录时间：2025年6月17日</span>
+                <span><i class="fas fa-map-marker-alt"></i> 地点：南京/上海</span>
+                <span><i class="fas fa-tag"></i> 标签：升学、强基计划、三一计划、名校参访</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="article-content">
+        <!-- 行程概述 + 南大校门图 -->
+        <section class="content-block">
+            <h2>行程概述</h2>
+            <p>为参加南京大学2025年强基计划校测，我在2025年6月15日从温州出发，开启了为期2天的南京之行。未曾想，这场金陵之行不仅是南大强基的逐梦之旅，更是上海交通大学三一计划的意外序章——在南京逛街途中接到上交三一面试通知，让这场升学之旅多了一份惊喜与匆忙。</p>
+            <div class="media-row">
+                <div class="media-img">
+                    <img src="南京大学1.jpg" alt="南京大学北大楼">
+                    <div class="img-caption"><i class="fas fa-university"></i> 南京大学鼓楼校区北大楼，百年学府的标志</div>
+                </div>
+                <div class="media-text">
+                    <p><strong>行程安排：</strong></p>
+                    <ul>
+                        <li><strong>6月15日</strong>：乘坐高铁抵达南京，办理酒店入住（选择鼓楼校区附近），熟悉考场环境，梳理备考知识点</li>
+                        <li><strong>6月16日</strong>：上午参加强基计划笔试（数学+物理），傍晚参观南京科举博物馆，逛街途中接到上海交通大学三一计划面试通知</li>
+                        <li><strong>6月17日</strong>：与地瓜告别后，从南京前往上海，准备上交三一计划面试</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="inline-img">
+                <img src="南京大学2.jpg" alt="南大校园">
+                <div class="img-caption"><i class="fas fa-tree"></i> 梧桐大道下的南大校园，古朴而宁静</div>
+            </div>
+        </section>
+
+        <!-- 考前准备 + 强基准考证 -->
+        <section class="content-block">
+            <h2>考前准备</h2>
+            <div class="media-row reverse">
+                <div class="media-img">
+                    <img src="强基计划准考证.jpg" alt="南大强基准考证">
+                    <div class="img-caption"><i class="fas fa-id-card"></i> 南京大学强基计划准考证，梦想的入场券</div>
+                </div>
+                <div class="media-text">
+                    <p>南京大学强基计划竞争激烈，为了充分备考，我提前两个月就开始了针对性准备：</p>
+                    <ul>
+                        <li>梳理学科知识：重点复习高中数学、物理的竞赛拓展内容，研究南大近年强基校测真题，总结命题规律</li>
+                        <li>行程规划：提前预订高铁票和考场附近的酒店，规划从酒店到考场的路线和时间</li>
+                        <li>材料准备：打印准考证、身份证复印件、获奖证书等证明材料</li>
+                        <li>心态调整：制定合理的复习计划，保持规律作息，以最佳状态迎接测试</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="quote">
+                <p>“备考的意义不仅在于取得理想的成绩，更在于这个过程中培养的自律、专注和解决问题的能力。”</p>
+            </div>
+        </section>
+
+        <!-- 南大校测与金陵拾遗 + 科举博物馆系列图 -->
+        <section class="content-block">
+            <h2>南大校测与金陵拾遗</h2>
+            <p>6月16日清晨，我提前1小时抵达南京大学鼓楼校区，古朴的校园建筑与浓厚的学术氛围扑面而来，让我对这所百年名校心生敬畏。</p>
+            <p><strong>南大校测核心体验：</strong></p>
+            <ul>
+                <li><strong>笔试环节</strong>：笔试时长3小时，涵盖数学和物理两个科目，题目难度高于高考，侧重考察逻辑思维和知识迁移能力</li>
+                <li><strong>校园参观</strong>：鼓楼校区的北大楼、校史馆、图书馆等标志性建筑，处处彰显着南大"诚朴雄伟，励学敦行"的校训精神</li>
+            </ul>
+            <p>校测结束后，我特意前往南京科举博物馆参观，穿梭在明清科举的历史长廊中，看着展柜里的考卷、号舍，仿佛能感受到古代学子的寒窗苦读与金榜题名的喜悦。</p>
+            
+            <!-- 科举博物馆主图 -->
+            <div class="inline-img">
+                <img src="南京科举博物馆.jpg" alt="南京科举博物馆">
+                <div class="img-caption"><i class="fas fa-landmark"></i> 南京科举博物馆，地下式建筑，千年科举史的沉淀</div>
+            </div>
+            
+            <!-- 第六签和举人照并排展示 -->
+            <div class="two-column">
+                <div class="col">
+                    <img src="第六签1.jpg" alt="科举博物馆第六签">
+                    <div class="img-caption"><i class="fas fa-scroll"></i> 在博物馆抽得第六签</div>
+                </div>
+                <div class="col">
+                    <img src="第六签2.jpg" alt="第六签细节">
+                    <div class="img-caption"><i class="fas fa-quote-right"></i> 第六签签文细节</div>
+                </div>
+            </div>
+            
+            <div class="inline-img">
+                <img src="举人.jpg" alt="举人纪念照">
+                <div class="img-caption"><i class="fas fa-crown"></i> 科举博物馆举人纪念照，体验一把金榜题名</div>
+            </div>
+            
+            <p>令人意外的是，就在逛夫子庙的途中，手机突然弹出了上海交通大学三一计划的面试通知，惊喜之余也立刻开始规划从南京前往上海的行程，这场升学之旅，就这样从金陵延伸到了沪上。</p>
+        </section>
+
+        <!-- 金陵印记与沪上启程 + 告别与车票 -->
+        <section class="content-block">
+            <h2>金陵印记与沪上启程</h2>
+            <p>短暂的南京之行，既有名校校测的紧张，也有历史人文的浸润，更有意外的惊喜：</p>
+            <ul>
+                <li>科举博物馆：沉浸式体验古代科举文化，抽得第六签，拍下举人纪念照，感受千年文脉的传承</li>
+                <li>意外通知：逛街途中接到上海交通大学三一计划面试通知，匆忙规划行程</li>
+                <li>匆匆告别：与好友地瓜在南京车站告别，带着未平复的心情，踏上前往上海的高铁</li>
+                <li>南大记忆：鼓楼校区的梧桐大道、北大楼的爬山虎，都成为了这场旅程的珍贵记忆</li>
+            </ul>
+            
+            <!-- 与地瓜告别图 -->
+            <div class="media-row">
+                <div class="media-img">
+                    <img src="跟在地瓜分别.jpg" alt="与地瓜告别">
+                    <div class="img-caption"><i class="fas fa-handshake"></i> 与地瓜在南京车站告别，短暂的相遇后各自奔赴前程</div>
+                </div>
+                <div class="media-text">
+                    <p>在南京车站与好友地瓜匆匆告别，心中既有不舍，也有对下一程的期待。来不及细细回味南大的校测经历，便已踏上前往上海的高铁，奔赴下一场升学征程。</p>
+                </div>
+            </div>
+            
+            <!-- 上交面试通知 + 车票并排展示 -->
+            <div class="two-column">
+                <div class="col">
+                    <img src="上交面试通知.jpg" alt="上交三一通知">
+                    <div class="img-caption"><i class="fas fa-bell"></i> 逛街途中收到的上交三一面试通知</div>
+                </div>
+                <div class="col">
+                    <img src="南京去上海的票.jpg" alt="南京去上海车票">
+                    <div class="img-caption"><i class="fas fa-ticket-alt"></i> 南京前往上海的高铁票，匆忙的续章</div>
+                </div>
+            </div>
+            
+            <div class="inline-img">
+                <img src="南京去上海的车.jpg" alt="南京去上海高铁">
+                <div class="img-caption"><i class="fas fa-train"></i> 驶向上海的高铁，窗外的风景向后飞驰，梦想向前延伸</div>
+            </div>
+        </section>
+
+        <!-- 心得感悟 -->
+        <section class="summary">
+            <h3><i class="fas fa-lightbulb"></i> 双城逐梦，步履不停</h3>
+            <p>这场从南京到上海的升学之旅，充满了意外与惊喜，也让我对"逐梦"有了更真切的理解：</p>
+            <ul>
+                <li><strong>机遇与准备</strong>：无论是南大强基的充分备考，还是上交三一的意外通知，都让我明白，机会永远留给有准备的人</li>
+                <li><strong>历史与当下</strong>：在科举博物馆感受古代学子的求学之路，再走进现代顶尖学府参加校测，千百年的求学初心从未改变</li>
+                <li><strong>步履不停</strong>：人生的旅程从不会止步于某一个节点，告别南京，奔赴上海，每一段行程都是成长</li>
+                <li><strong>心态的成长</strong>：从备考的紧张，到接到通知的惊喜，再到奔赴下一场面试的从容，这场旅程让我学会了以更平和的心态面对未知</li>
+            </ul>
+            <p>南大的"诚朴雄伟，励学敦行"，上交的"饮水思源，爱国荣校"，两所顶尖学府的精神，都成为了这场逐梦之旅的注脚。无论最终结果如何，这段双城赶考的经历，都将成为我青春里最珍贵的记忆，也让我更加坚定：只要步履不停，前路自有风景。</p>
+            <div class="quote" style="margin-top: 20px;">
+                <p>“从金陵到沪上，从古都到魔都，变的是城市的风貌，不变的是逐梦的初心。”</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 hyper的个人Vlog | 记录生活，分享成长</p>
+            <p style="margin-top: 10px;">
+                <a href="/home/" style="color: #ff6b6b; text-decoration: none;">返回首页</a> | 
+                <a href="/talk/" style="color: #ff6b6b; text-decoration: none;">留言交流</a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

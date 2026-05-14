@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>百丈漈之行 | hyper的个人Vlog</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6a5acd;
+            --accent: #ff6b6b;
+            --dark: #2d3436;
+            --light: #f8f9fa;
+            --white: #ffffff;
+            --gray: #495057;
+            --light-gray: #e9ecef;
+            --shadow: 0 2px 15px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--gray);
+            line-height: 1.8;
+        }
+
+        .navbar {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .container {
+            width: min(1200px, 90%);
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo i {
+            color: var(--accent);
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .back-btn:hover {
+            color: var(--accent);
+            transform: translateX(-3px);
+        }
+
+        .article-header {
+            padding: 50px 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: var(--white);
+            text-align: center;
+            margin-bottom: 50px;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .article-title {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            margin-bottom: 15px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            font-size: 0.95rem;
+            margin-top: 15px;
+        }
+
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .article-content {
+            max-width: 800px;
+            margin: 0 auto 60px;
+            padding: 0 20px;
+        }
+
+        .content-block {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+        }
+
+        .content-block h2 {
+            color: var(--primary);
+            margin-bottom: 18px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--light-gray);
+            position: relative;
+        }
+
+        .content-block h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 70px;
+            height: 2px;
+            background: var(--accent);
+        }
+
+        .content-block h3 {
+            color: var(--primary);
+            margin: 20px 0 15px;
+        }
+
+        .content-block p {
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+
+        .content-block ul {
+            margin-left: 22px;
+            margin-bottom: 15px;
+        }
+
+        .content-block li {
+            margin-bottom: 8px;
+        }
+
+        /* 单张景点图片样式 */
+        .spot-image {
+            margin: 20px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .spot-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .spot-image:hover img {
+            transform: scale(1.02);
+        }
+
+        /* 视频播放容器样式 */
+        .spot-video {
+            margin: 20px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            background: #000;
+        }
+
+        .spot-video video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .spot-caption {
+            padding: 10px;
+            background: #fff;
+            font-size: 0.95rem;
+            text-align: center;
+            border-top: 1px solid var(--light-gray);
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 18px;
+            margin: 25px 0;
+        }
+
+        .gallery-item {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            aspect-ratio: 4/3;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            flex: 1;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-caption {
+            padding: 8px 12px;
+            background: #fff;
+            font-size: 0.9rem;
+            text-align: center;
+            flex-shrink: 0;
+            border-top: 1px solid var(--light-gray);
+        }
+
+        .quote {
+            background: rgba(106,90,205,0.05);
+            border-left: 4px solid var(--primary);
+            padding: 18px;
+            margin: 20px 0;
+            border-radius: 0 6px 6px 0;
+            font-style: italic;
+        }
+
+        .summary {
+            background: linear-gradient(135deg, rgba(106,90,205,0.1), rgba(255,107,107,0.1));
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .summary h3 {
+            color: var(--accent);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* 图片预览模态框 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .modal-content img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            color: var(--accent);
+        }
+
+        @media (max-width: 768px) {
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            }
+            .content-block {
+                padding: 22px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+            .gallery-item {
+                aspect-ratio: 16/9;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="container nav-content">
+        <a href="/home/" class="logo">
+            <i class="fas fa-mountain-water"></i> hyper的Vlog
+        </a>
+        <a href="/pages/travel/" class="back-btn">
+            <i class="fas fa-arrow-left"></i> 返回旅行记录
+        </a>
+    </div>
+</nav>
+
+<header class="article-header">
+    <div class="container">
+        <h1 class="article-title">百丈漈之行 | 带同学游家乡，喜提重庆大学录取</h1>
+        <p>2025.7.24 | 文成本地出发，半日游百丈漈</p>
+        <div class="article-meta">
+            <span><i class="fas fa-calendar"></i> 2025-07-24</span>
+            <span><i class="fas fa-map-marker-alt"></i> 文成·百丈漈</span>
+            <span><i class="fas fa-tag"></i> 家乡游、重庆大学、录取惊喜</span>
+        </div>
+    </div>
+</header>
+
+<main class="article-content">
+
+<section class="content-block">
+    <h2>行程概况</h2>
+    <p>百丈漈我以前就去过，这次主要是陪从温州过来的同学一起游玩。作为文成人，带朋友逛家乡最有名的景区，再合适不过。</p>
+    <p>当天安排非常轻松，走的是北门入园、全程下坡的省力路线：</p>
+    <ul>
+        <li><strong>中午</strong> 从家里出发，带温州同学前往百丈漈北门</li>
+        <li><strong>下午</strong> 按<strong>一漈 → 二漈 → 三漈</strong>路线游玩，全程轻松徒步，无需费力爬坡</li>
+        <li><strong>傍晚前</strong> 游览结束至南门，再乘车返程回家</li>
+    </ul>
+    <div class="spot-image" data-img="百丈漈车站牌.jpg">
+        <img src="百丈漈车站牌.jpg" alt="百丈漈景区">
+        <div class="spot-caption">百丈漈景区入口</div>
+    </div>
+</section>
+
+<section class="content-block">
+    <h2>游览过程</h2>
+    
+    <h3>第一站：百丈一漈（中华第一高瀑）</h3>
+    <p>我们先乘洞式电梯直达一漈观景台，省去了漫长的上坡路。207米的垂直落差扑面而来，瀑布如银河垂落，水雾弥漫，晴天还能看到横跨峡谷的彩虹。就在这里欣赏壮阔瀑布时，<strong>我收到了重庆大学录取通知书到达的通知</strong>，山水为证，这份喜悦格外难忘。</p>
+    <div class="spot-image" data-img="百丈一漈1.jpg">
+        <img src="百丈一漈1.jpg" alt="百丈一漈1">
+        <div class="spot-caption">百丈一漈的震撼景观</div>
+    </div>
+    <div class="spot-image" data-img="百丈一漈2.jpg">
+        <img src="百丈一漈2.jpg" alt="百丈一漈2">
+        <div class="spot-caption">百丈一漈全景</div>
+    </div>
+    <div class="spot-image" data-img="在百丈一漈的合影.jpg">
+        <img src="在百丈一漈的合影.jpg" alt="合影">
+        <div class="spot-caption">在百丈一漈前和同学的合影</div>
+    </div>
+
+    <h3>第二站：百丈二漈（水帘洞天）</h3>
+    <p>沿下坡步道走约15分钟，便到了二漈。这里最精彩的就是藏在瀑布后的水帘洞，我们穿上雨衣，穿越湿滑的岩道，近距离感受水流从头顶倾泻的清凉，仿佛闯入武侠剧的场景。</p>
+    <div class="spot-image" data-img="百丈二漈.jpg">
+        <img src="百丈二漈.jpg" alt="百丈二漈">
+        <div class="spot-caption">百丈二漈与水帘洞</div>
+    </div>
+    <!-- 新增视频播放模块 -->
+    <div class="spot-video">
+        <video controls poster="百丈二漈.jpg" preload="metadata">
+            <source src="穿越水帘洞.mp4" type="video/mp4">
+            您的浏览器不支持HTML5视频播放，请升级浏览器后重试。
+        </video>
+        <div class="spot-caption">穿越百丈二漈水帘洞实拍</div>
+    </div>
+
+    <h3>第三站：百丈三漈（宽瀑碧潭）</h3>
+    <p>继续往下走，就到了最平缓开阔的三漈。这里瀑面宽达80米，水流舒展平缓，汇入清澈的碧潭，岸边绿树成荫，特别适合坐下来休息、拍照、闲聊，给这趟旅程画上一个宁静惬意的句号。</p>
+    <div class="spot-image" data-img="百丈三漈.jpg">
+        <img src="百丈三漈.jpg" alt="百丈三漈">
+        <div class="spot-caption">百丈三漈的清幽景色</div>
+    </div>
+</section>
+
+<div class="quote">
+    <p>在中华第一高瀑下收到重庆大学的录取喜讯，再带同学穿过水帘洞、漫步宽瀑碧潭，这一天值得永远记住。</p>
+</div>
+
+<section class="content-block">
+    <h2>惊喜时刻</h2>
+    <p>游览途中收到的录取通知，让这趟家乡之行更添圆满。能在自己从小引以为傲的山水间，迎来人生重要的转折点，这份记忆格外珍贵。</p>
+    <div class="spot-image" data-img="录取通知书.jpg">
+        <img src="录取通知书.jpg" alt="重庆大学录取通知书">
+        <div class="spot-caption">重庆大学录取通知书</div>
+    </div>
+</section>
+
+<section class="content-block">
+    <h2>沿途风光</h2>
+    <p>除了三大漈的美景，沿途的湖面风光也让人印象深刻，平静的湖面倒映着青山，构成了一幅绝美的山水画卷。</p>
+    <div class="spot-image" data-img="湖面.jpg">
+        <img src="湖面.jpg" alt="湖面">
+        <div class="spot-caption">百丈漈沿途的湖面风光</div>
+    </div>
+</section>
+
+<section class="summary">
+    <h3><i class="fas fa-lightbulb"></i> 小结与感悟</h3>
+    <p>这趟半日游简单又圆满：</p>
+    <ul>
+        <li>走最省力的<strong>一漈→二漈→三漈</strong>下坡路线，带温州同学轻松领略了家乡的山水精华</li>
+        <li>在一漈瀑布下收到<strong>重庆大学</strong>录取通知，是这天最大、最难忘的惊喜</li>
+        <li>水帘洞的清凉、三漈的清幽，都成了青春里闪光的回忆</li>
+    </ul>
+    <p>山水作证，新程开启。未来在重庆大学，继续奔赴下一段精彩。</p>
+</section>
+
+</main>
+
+<!-- 图片预览模态框 -->
+<div class="modal" id="imageModal">
+    <span class="close-modal">&times;</span>
+    <div class="modal-content">
+        <img id="modalImage" src="" alt="预览图片">
+    </div>
+</div>
+
+<footer style="text-align:center; padding:30px 0; background:#fff; margin-top:20px;">
+    <p>© 2025 hyper的个人Vlog｜记录生活，分享成长</p>
+</footer>
+
+<script>
+    // 获取模态框元素
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImage');
+    const closeBtn = document.querySelector('.close-modal');
+    const imageItems = document.querySelectorAll('.gallery-item, .spot-image');
+
+    // 为每个图片项添加点击事件
+    imageItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const imgSrc = this.getAttribute('data-img');
+            modalImg.src = imgSrc;
+            const caption = this.querySelector('.gallery-caption, .spot-caption')?.textContent || '预览图片';
+            modalImg.alt = caption;
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    // 关闭模态框
+    closeBtn.addEventListener('click', function() {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    });
+
+    // 点击模态框背景关闭
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    });
+
+    // ESC键关闭模态框
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.style.display === 'flex') {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    });
+</script>
+
+</body>
+</html>
