@@ -1005,7 +1005,7 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
                     <div class="item-name">{safe_name}</div>
                 </a>''')
 
-        html = self.get_template().format(
+        page_html = self.get_template().format(
             title=f"目录列表 - {cur}",
             path=cur,
             breadcrumb=''.join(bread),
@@ -1015,7 +1015,7 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
         self.send_response(200)
         self.send_header("Content-type", "text/html; charset=utf-8")
         self.end_headers()
-        self.wfile.write(html.encode('utf-8'))
+        self.wfile.write(page_html.encode('utf-8'))
         return None
 
 # ===================== 服务器 =====================

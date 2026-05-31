@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>电赛校赛 · 从希望到绝望 | hyper的Vlog</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        :root {
+            --primary: #e74c3c;
+            --dark: #2d3436;
+            --gray: #495057;
+            --light: #f8f9fa;
+            --white: #ffffff;
+            --light-gray: #e9ecef;
+            --shadow: 0 2px 15px rgba(0,0,0,0.08);
+        }
+        body {
+            background: var(--light);
+            color: var(--gray);
+            font-family: 'Microsoft YaHei', 'Inter', sans-serif;
+            line-height: 1.8;
+        }
+        .container { width: min(1200px, 90%); margin: 0 auto; padding: 0 15px; }
+
+        .navbar {
+            background: var(--white); box-shadow: var(--shadow); padding: 15px 0;
+            position: sticky; top: 0; z-index: 100;
+        }
+        .nav-content { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size:1.5rem; font-weight:700; color:var(--primary); text-decoration:none; display:flex; align-items:center; gap:8px; }
+        .back-btn { display:inline-flex; align-items:center; gap:8px; color:var(--primary); text-decoration:none; font-weight:500; transition:all 0.3s; }
+        .back-btn:hover { transform:translateX(-3px); opacity:0.8; }
+
+        .article-header {
+            padding: 60px 0;
+            background: linear-gradient(135deg, #2c3e50 0%, #e74c3c 100%);
+            color: white; text-align: center; margin-bottom: 40px;
+            border-radius: 0 0 20px 20px;
+        }
+        .article-title { font-size: clamp(1.8rem,4vw,2.8rem); margin-bottom:15px; text-shadow:0 2px 10px rgba(0,0,0,0.2); }
+        .article-meta { display:flex; justify-content:center; flex-wrap:wrap; gap:20px; font-size:0.95rem; opacity:0.9; margin-top:20px; }
+        .article-meta span { display:flex; align-items:center; gap:6px; }
+
+        .article-content { max-width: 800px; margin: 0 auto 80px; padding: 0 20px; }
+
+        .content-block {
+            background: var(--white); border-radius: 15px; padding: 40px;
+            margin-bottom: 30px; box-shadow: var(--shadow);
+        }
+
+        .story-text {
+            font-size: 1.1rem; line-height: 2.2;
+        }
+        .story-text p { margin-bottom: 20px; text-align: justify; }
+        .story-text .emoji-line { font-size: 1.3rem; }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(231,76,60,0.05), rgba(44,62,80,0.05));
+            border-left: 4px solid var(--primary);
+            border-radius: 0 12px 12px 0;
+            padding: 25px 30px;
+            margin: 30px 0;
+        }
+        .highlight-box h3 { color: var(--primary); margin-bottom: 15px; display:flex; align-items:center; gap:8px; }
+        .highlight-box li { margin-bottom: 12px; padding-left: 8px; }
+
+        .image-container {
+            margin: 20px 0; width: 100%; background: #f0f0f0;
+            border-radius: 12px; overflow: hidden; box-shadow: var(--shadow);
+        }
+        .image-container img, .image-container video {
+            width: 100%; height: auto; display: block; object-fit: contain; background: #f0f0f0;
+        }
+        .image-caption {
+            padding: 10px 15px; background: var(--white);
+            font-size: 0.9rem; color: var(--gray); text-align: center; border-top: 1px solid var(--light-gray);
+        }
+
+        .dual-image { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0; }
+        .dual-image .image-container { margin: 0; }
+
+        .summary {
+            background: linear-gradient(135deg, rgba(44,62,80,0.08), rgba(231,76,60,0.08));
+            border-radius: 15px; padding: 30px; margin: 40px 0;
+            border: 1px solid var(--light-gray);
+        }
+        .summary h3 { color: var(--primary); margin-bottom: 15px; display:flex; align-items:center; gap:8px; }
+
+        .footer {
+            background: var(--white); padding: 30px 0; text-align: center;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.02); margin-top: 60px;
+        }
+        .footer a { transition: all 0.3s; }
+        .footer a:hover { text-decoration: underline; opacity: 0.8; }
+
+        @media (max-width: 768px) {
+            .content-block { padding: 25px; }
+            .article-header { padding: 40px 0; }
+            .dual-image { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="/home/" class="logo"><i class="fas fa-microchip"></i> hyper的Vlog</a>
+            <a href="/pages/devlog/" class="back-btn"><i class="fas fa-arrow-left"></i> 返回开发日志</a>
+        </div>
+    </nav>
+
+    <header class="article-header">
+        <div class="container">
+            <h1 class="article-title">电赛校赛 · 从希望到绝望</h1>
+            <p>2026.4.28-4.30 | 两个不眠夜，一台循迹车</p>
+            <div class="article-meta">
+                <span><i class="fas fa-calendar"></i> 记录：2026年4月30日</span>
+                <span><i class="fas fa-map-marker-alt"></i> 重庆大学 · 电赛校赛</span>
+                <span><i class="fas fa-tag"></i> 循迹算法 · STM32 · 灰度检测</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="article-content">
+        <div class="content-block">
+            <div class="story-text">
+
+                <p class="emoji-line">经历了两个晚上的不眠夜，最终还是空悲切 🤕</p>
+
+                <p>昨天龟速爬行通过后以为循迹算法没有问题，但是跑快了就会偏移。把问题想的太简单了，一晚上也没推翻之前的代码，比赛结束后才发觉不对。</p>
+
+                <p>只有左转右转，没有对转完弯之后的判断，应该要有一定的反馈，把黑线跟住，而不是一味的调参让他自己走过去。</p>
+
+                <p>带着队友熬了一晚上，从希望走向绝望，最终还是没做到 😭</p>
+            </div>
+        </div>
+
+        <!-- 调试现场照片 -->
+        <div class="content-block">
+            <h2 style="color:var(--primary); margin-bottom:20px; display:flex; align-items:center; gap:10px;">
+                <i class="fas fa-tools"></i> 两个不眠夜 · 调试实录
+            </h2>
+
+            <p style="margin-bottom:20px;">4月28日到30日，三天两夜的校赛，从满怀希望到绝望收场。这些照片记录了每一个崩溃的瞬间。</p>
+
+            <!-- 第一晚 -->
+            <div style="margin-bottom:10px; display:flex; align-items:center; gap:10px; color:var(--gray);">
+                <i class="fas fa-moon" style="color:#2c3e50;"></i>
+                <strong>第一晚 · 4月29日凌晨</strong>
+            </div>
+
+            <div class="dual-image">
+                <div class="image-container">
+                    <img src="/media/pages/devlog/电赛校赛/IMG_20260429_015756-调试现场.jpg" alt="调试现场凌晨">
+                    <div class="image-caption">凌晨1:57 · 还在调代码</div>
+                </div>
+                <div class="image-container">
+                    <img src="/media/pages/devlog/电赛校赛/IMG_20260429_031434-调试现场.jpg" alt="调试现场凌晨3点">
+                    <div class="image-caption">凌晨3:14 · 越调越懵</div>
+                </div>
+            </div>
+
+            <!-- 第二晚 -->
+            <div style="margin:20px 0 10px; display:flex; align-items:center; gap:10px; color:var(--gray);">
+                <i class="fas fa-cloud-moon" style="color:#2c3e50;"></i>
+                <strong>第二晚 · 4月30日凌晨</strong>
+            </div>
+
+            <div class="dual-image">
+                <div class="image-container">
+                    <img src="/media/pages/devlog/电赛校赛/IMG_20260430_021914-调试现场.jpg" alt="调试现场凌晨2点">
+                    <div class="image-caption">凌晨2:19 · 第二晚继续肝</div>
+                </div>
+                <div class="image-container">
+                    <img src="/media/pages/devlog/电赛校赛/IMG_20260430_072049-调试现场.jpg" alt="调试现场清晨">
+                    <div class="image-caption">早上7:20 · 天亮了，还没调好</div>
+                </div>
+            </div>
+
+            <!-- 早餐 -->
+            <div class="image-container">
+                <img src="/media/pages/devlog/电赛校赛/IMG_20260430_081854-早餐.jpg" alt="早餐">
+                <div class="image-caption">早上8:18 · 通宵后的早餐</div>
+            </div>
+
+            <!-- 灰度检测视频 -->
+            <div style="margin-top:20px;">
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px; color:var(--gray);">
+                    <i class="fas fa-video" style="color:var(--primary);"></i>
+                    <strong>灰度检测测试视频</strong>
+                </div>
+                <div class="image-container">
+                    <video controls preload="metadata" src="/media/pages/devlog/电赛校赛/2026-04-03-灰度检测.mp4"></video>
+                    <div class="image-caption">灰度检测 · 龟速能走，跑快就偏</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 反省 -->
+        <div class="content-block">
+            <div class="highlight-box">
+                <h3><i class="fas fa-lightbulb"></i> 赛后反省</h3>
+                <ol style="padding-left:20px; display:flex; flex-direction:column; gap:12px;">
+                    <li><strong>要存好每一版的代码</strong>，随时能够复原</li>
+                    <li><strong>不要熬太晚</strong>，真的有点神志不清了</li>
+                    <li><strong>不能把代码写的太死</strong>，按照流程一步步来，应该要有判断和变化</li>
+                </ol>
+            </div>
+
+            <p style="text-align:center; font-size:0.95rem; color:#999; margin-top:10px;">
+                只有左转右转，没有对转完弯之后的判断<br>
+                应该要有反馈，把黑线跟住，而不是一味调参让它自己走过去
+            </p>
+        </div>
+
+        <!-- 总结 -->
+        <div class="summary">
+            <h3><i class="fas fa-flag-checkered"></i> 事已至此</h3>
+            <p>校赛的失败是一记重锤，但也敲醒了我们。循迹算法的核心不是开环走流程，而是闭环反馈。省赛还有机会，带着这三个教训重新出发。</p>
+            <p style="margin-top:15px; text-align:right; font-size:1.2rem; font-weight:600; color:var(--primary);">
+                省赛加油 🫡
+            </p>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>© 2026 hyper的个人Vlog | 记录生活，分享成长</p>
+            <p style="margin-top:10px;">
+                <a href="/home/" style="color:#e74c3c; text-decoration:none;">返回首页</a> |
+                <a href="/talk/" style="color:#e74c3c; text-decoration:none;">留言交流</a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
