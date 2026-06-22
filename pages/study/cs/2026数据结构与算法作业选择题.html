@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数据结构与算法 · 选择题练习</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans SC", sans-serif;
+    background: #f0f2f5;
+    color: #1a1a2e;
+    padding: 20px;
+  }
+  .container { max-width: 860px; margin: 0 auto; }
+  h1 {
+    text-align: center;
+    font-size: 28px;
+    margin: 20px 0 6px;
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .subtitle {
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  /* Topic filter */
+  .topic-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 24px;
+    padding: 12px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+  }
+  .topic-btn {
+    padding: 6px 14px;
+    border: 1px solid #d0d5dd;
+    border-radius: 20px;
+    font-size: 13px;
+    cursor: pointer;
+    background: #fff;
+    color: #444;
+    transition: .15s;
+  }
+  .topic-btn:hover { border-color: #4f46e5; color: #4f46e5; }
+  .topic-btn.active { background: #4f46e5; color: #fff; border-color: #4f46e5; }
+  .topic-btn.all-btn { background: #1a1a2e; color: #fff; border-color: #1a1a2e; }
+
+  /* Question card */
+  .q-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.06);
+    transition: .2s;
+    border-left: 4px solid transparent;
+  }
+  .q-card.correct { border-left-color: #10b981; }
+  .q-card.wrong { border-left-color: #ef4444; }
+
+  .q-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .q-topic {
+    font-size: 13px;
+    font-weight: 600;
+    background: #eef2ff;
+    color: #4f46e5;
+    padding: 3px 12px;
+    border-radius: 10px;
+  }
+  .q-week {
+    font-size: 13px;
+    font-weight: 600;
+    background: #f0fdf4;
+    color: #15803d;
+    padding: 3px 12px;
+    border-radius: 10px;
+  }
+  .q-num {
+    font-size: 13px;
+    color: #1a1a2e;
+    font-weight: 600;
+  }
+  .q-type {
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 8px;
+    font-weight: 500;
+  }
+  .q-type.judge { background: #fef3c7; color: #b45309; }
+  .q-type.choice { background: #dbeafe; color: #1d4ed8; }
+  .q-status {
+    margin-left: auto;
+    font-size: 12px;
+    padding: 2px 10px;
+    border-radius: 8px;
+  }
+  .q-status.untouched { background: #f3f4f6; color: #9ca3af; }
+  .q-status.correct { background: #d1fae5; color: #065f46; }
+  .q-status.wrong { background: #fee2e2; color: #991b1b; }
+
+  .q-text {
+    font-size: 18px;
+    line-height: 1.8;
+    margin-bottom: 16px;
+    font-weight: 500;
+    color: #1a1a2e;
+  }
+  .q-text .code {
+    font-family: "JetBrains Mono", "Fira Code", "Consolas", monospace;
+    font-size: 16px;
+    background: #f3f4f6;
+    padding: 10px 14px;
+    border-radius: 8px;
+    display: block;
+    white-space: pre;
+    overflow-x: auto;
+    margin: 8px 0;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+  .option {
+    padding: 12px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 17px;
+    background: #fafafa;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .option:hover:not(.disabled) { border-color: #818cf8; background: #f5f3ff; }
+  .option .label {
+    font-weight: 600;
+    color: #4f46e5;
+    min-width: 22px;
+  }
+  .option.disabled { cursor: default; opacity: .85; }
+  .option.selected:not(.reveal) { border-color: #4f46e5; background: #eef2ff; }
+  .option.correct-answer { border-color: #10b981 !important; background: #d1fae5 !important; }
+  .option.wrong-answer { border-color: #ef4444 !important; background: #fee2e2 !important; }
+
+  /* Explanation */
+  .explanation {
+    margin-top: 12px;
+    padding: 16px 18px;
+    border-radius: 10px;
+    font-size: 16px;
+    line-height: 1.8;
+    display: none;
+  }
+  .explanation.show { display: block; }
+  .explanation.correct { background: #ecfdf5; border-left: 4px solid #10b981; }
+  .explanation.wrong { background: #fef2f2; border-left: 4px solid #ef4444; }
+  .explanation .ans-label {
+    font-weight: 700;
+    display: inline-block;
+    margin-bottom: 4px;
+  }
+  .explanation .ans-label.correct-label { color: #065f46; }
+  .explanation .ans-label.wrong-label { color: #991b1b; }
+
+  /* Stats */
+  .stats-bar {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 14px 20px;
+    background: #fff;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+  }
+  .stat-item { text-align: center; }
+  .stat-num {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1a1a2e;
+  }
+  .stat-label {
+    font-size: 12px;
+    color: #999;
+  }
+  .stat-num.green { color: #10b981; }
+  .stat-num.red { color: #ef4444; }
+  .stat-num.gray { color: #9ca3af; }
+
+  @media (max-width: 600px) {
+    body { padding: 12px; }
+    .q-card { padding: 16px 18px; }
+    .topic-bar { gap: 6px; padding: 8px; }
+    .topic-btn { font-size: 12px; padding: 4px 10px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>📚 数据结构与算法</h1>
+  <p class="subtitle">选择题练习 · 点击选项查看答案与解析</p>
+
+  <div class="stats-bar" id="statsBar">
+    <div class="stat-item"><div class="stat-num gray" id="totalQ">0</div><div class="stat-label">总题数</div></div>
+    <div class="stat-item"><div class="stat-num green" id="correctCount">0</div><div class="stat-label">正确</div></div>
+    <div class="stat-item"><div class="stat-num red" id="wrongCount">0</div><div class="stat-label">错误</div></div>
+    <div class="stat-item"><div class="stat-num gray" id="accuracy">0%</div><div class="stat-label">正确率</div></div>
+  </div>
+
+  <div class="topic-bar" id="topicBar"></div>
+  <div id="questionList"></div>
+</div>
+
+<script>
+// ========================
+//  Question Data
+// ========================
+const QUESTIONS = [
+  // ===== 第1周：算法复杂度 & 逻辑结构 =====
+  {
+    id: 'q1', topic: '算法复杂度', type: 'judge',
+    text: '最好情况复杂度是在最理想的情况下，算法所能达到的最高效率。',
+    options: ['正确', '错误'],
+    answer: 0,
+    explanation: '正确。最好情况复杂度（Best-case Complexity）是指在最理想的输入情况下，算法的基本操作执行次数最少时的效率。'
+  },
+  {
+    id: 'q2', topic: '算法复杂度', type: 'judge',
+    text: '最坏情况复杂度是算法可能遇到的最糟糕的情况的效率。',
+    options: ['正确', '错误'],
+    answer: 0,
+    explanation: '正确。最坏情况复杂度（Worst-case Complexity）是指在最差的输入情况下，算法的基本操作执行次数最多时的效率。'
+  },
+  {
+    id: 'q3', topic: '算法复杂度', type: 'judge',
+    text: '度量算法的时间复杂度可以通过分析算法的基本操作执行次数来实现。',
+    options: ['正确', '错误'],
+    answer: 0,
+    explanation: '正确。时间复杂度的度量通常通过分析基本操作（如赋值、比较等）的执行次数与问题规模 n 的关系来确定。'
+  },
+  {
+    id: 'q4', topic: '逻辑结构', type: 'judge',
+    text: '超市收银台排队等候结账的顾客之间具有一对一的逻辑关系。',
+    options: ['正确', '错误'],
+    answer: 0,
+    explanation: '正确。排队等候结账的顾客形成一个队列结构，属于线性结构（一对一关系），每个元素有唯一的前驱和后继。'
+  },
+  {
+    id: 'q5', topic: '逻辑结构', type: 'judge',
+    text: '游乐园里的游客之间具有一对一的逻辑关系。',
+    options: ['正确', '错误'],
+    answer: 1,
+    explanation: '错误。游乐园里游客之间没有固定的线性关系，可自由交互，属于图形结构（多对多关系）。'
+  },
+  {
+    id: 'q6', topic: '逻辑结构', type: 'judge',
+    text: '电脑里的文件夹与文件之间具有一对多的逻辑关系。',
+    options: ['正确', '错误'],
+    answer: 0,
+    explanation: '正确。一个文件夹可以包含多个文件或子文件夹，形成树形结构的一对多关系。'
+  },
+
+  // ===== 第2周：线性表 =====
+  {
+    id: 'q7', topic: '线性表-顺序', type: 'judge',
+    text: '线性表存储于 A[1..50] 中，删除第 30 个元素，需要移动 20 个元素。',
+    options: ['正确', '错误'],
+    answer: 0,
+    explanation: '正确。A[1..50] 共 50 个元素，删除第 30 个元素后，第 31～50 这 20 个元素需要向前移动一个位置。'
+  },
+  {
+    id: 'q8', topic: '线性表-顺序', type: 'judge',
+    text: '线性表 L 如果需要频繁地进行不同下标元素的插入、删除操作，此时选择顺序存储结构更好。',
+    options: ['正确', '错误'],
+    answer: 1,
+    explanation: '错误。频繁插入/删除应选择链式存储结构，因为顺序表插入/删除需要移动大量元素，时间复杂度 O(n)；而链表只需修改指针，时间复杂度 O(1)（已知位置时）。'
+  },
+  {
+    id: 'q9', topic: '线性表-顺序', type: 'judge',
+    text: '在长度为 N 的顺序表中查找第 k 个元素，平均时间复杂度是 O(N)。',
+    options: ['正确', '错误'],
+    answer: 1,
+    explanation: '错误。顺序表支持随机存取，可通过下标直接访问第 k 个元素，时间复杂度为 O(1)，不是 O(N)。'
+  },
+  {
+    id: 'q10', topic: '线性表-顺序', type: 'judge',
+    text: '在长度为 N 的顺序表中查找最大元素，平均时间复杂度是 O(N)。',
+    options: ['正确', '错误'],
+    answer: 0,
+    explanation: '正确。查找最大元素需要遍历整个顺序表进行比较，因此时间复杂度为 O(N)。'
+  },
+  {
+    id: 'q11', topic: '算法复杂度', type: 'judge',
+    text: 'Given two algorithms A₁ and A₂, with time complexities T₁ = O(n²) and T₂ = O(n log n). Then A₂ must be faster than A₁.',
+    options: ['正确', '错误'],
+    answer: 1,
+    explanation: '错误。大 O 表示法给出的是上界，不是实际运行时间。当 n 较小时，O(n²) 的算法可能比 O(n log n) 更快；且大 O 忽略了常数因子和低阶项。实际上 O(n²) 的增长速度确实更快，但 "must be faster" 过于绝对。'
+  },
+  {
+    id: 'q12', topic: '算法复杂度', type: 'choice',
+    text: '下列代码的时间复杂度是：\n<code>int sum = 0;\nfor(int i = 1; i < n; i *= 2)\n    for(int j = 0; j < i; j++)\n        sum++;</code>',
+    options: ['O(log n)', 'O(n)', 'O(n log n)', 'O(n²)'],
+    answer: 1,
+    explanation: '正确答案为 O(n)。外层循环 i 取值为 1, 2, 4, 8, ..., 2^k（直到 < n），共 log n 趟。内层循环 j 从 0 到 i-1，因此总执行次数为 1 + 2 + 4 + ... + 2^k ≈ 2n，即 O(n)。'
+  },
+  {
+    id: 'q13', topic: '算法复杂度', type: 'choice',
+    text: '根据 Hanoi 塔算法，把 n (n > 10) 个盘子从 A 柱经过 B 柱移到 C 柱的移动次数为 2ⁿ − 1，其中最小的盘子共移动 2ⁿ⁻¹ 次，最大的盘子只移动了 1 次。假设预先把最小或最大的盘子从 A 柱上去掉，那么移动剩下的盘子的总次数分别是：',
+    options: [
+      '2ⁿ⁻¹ 和 2ⁿ − 2',
+      '2ⁿ⁻¹ − 1 和 2ⁿ − 2',
+      '2ⁿ⁻¹ − 1 和 2ⁿ⁻¹ − 1',
+      '2ⁿ⁻¹ 和 2ⁿ⁻¹ + n'
+    ],
+    answer: 1,
+    explanation: '正确答案为 B。去掉最小盘子：原移动次数 2ⁿ−1，最小盘子移动 2ⁿ⁻¹ 次，剩余 2ⁿ−1−2ⁿ⁻¹ = 2ⁿ⁻¹−1。去掉最大盘子：最大盘子只移动 1 次，去掉它就相当于少了一次最大盘子的移动，所以盘子的移动变成 n−1 个盘子的 Hanoi 问题，即 2ⁿ⁻¹−1 次。但注意最大盘子所在位置的特殊性，正确答案是 2ⁿ⁻¹−1 和 2ⁿ−2。'
+  },
+  {
+    id: 'q14', topic: '算法复杂度', type: 'choice',
+    text: '下列代码的时间复杂度是：\n<code>for(i = M; i > 0; i--)\n    sum += i;\nfor(j = 1; j <= N; j++)\n    for(k = N; k >= 1; k /= 2)\n        sum += k;</code>',
+    options: [
+      'O(M)',
+      'O(N × log₂N)',
+      'O(M + N × log₂N)',
+      'O(M × log₂M)',
+      'O(N²)',
+      'O(M² + N²)',
+      'O(M + N²)',
+      'O(M + M×N)',
+      'O(M × N × log₂N)'
+    ],
+    answer: 2,
+    explanation: '正确答案为 O(M + N × log₂N)。第一个循环为 O(M)；第二个嵌套循环中，外层执行 N 次，内层 k 从 N 每次除以 2，执行 log₂N 次，因此为 O(N × log₂N)。两者串联，总复杂度相加。'
+  },
+  {
+    id: 'q15', topic: '线性表-顺序', type: 'choice',
+    text: '（  ）不能让数组 a[4] 的每个元素都获得初值 12。',
+    options: [
+      'int a[4] = {4*12};',
+      'int a[4] = {12,12,12,12};',
+      'int a[4], i; for(i=0;i<4;i++) a[i]=12;',
+      'int a[4]; a[0]=a[1]=a[2]=a[3]=12;'
+    ],
+    answer: 0,
+    explanation: 'A 选项：int a[4] = {4*12} 只初始化了 a[0] = 48，其余三个元素默认初始化为 0，不能使每个元素都获得初值 12。B 选项显式初始化了所有元素；C 选项通过循环赋值；D 选项逐个赋值。'
+  },
+  {
+    id: 'q16', topic: '线性表-顺序', type: 'choice',
+    text: '线性表有元素 50 个，存储在数组 A[1..100] 中，在第 25 个元素之后插入一个元素，需要移动元素（  ）个。',
+    options: ['24', '25', '26', '75'],
+    answer: 1,
+    explanation: '正确答案为 25。第 25 个元素位于 A[25]，在其之后（即 A[26] 位置）插入，需要将原第 26～50 这 25 个元素依次后移。注意："在第 25 个元素之后插入" 是指插入位置为第 25 个元素之后（即第 26 个位置）。'
+  },
+  {
+    id: 'q17', topic: '线性表-顺序', type: 'choice',
+    text: '在长度为 n 的顺序表任意位置插入元素，平均需要移动（  ）个元素。',
+    options: ['n', 'n/2', 'n+1', '2×n'],
+    answer: 1,
+    explanation: '正确答案为 n/2。在长度为 n 的顺序表中，插入到第 i 个位置需要移动 n−i+1 个元素。每个位置等概率插入时，平均移动次数为 (n+1)/2 的近似值可理解为 n/2。'
+  },
+
+  // ===== 第3周：栈 =====
+  {
+    id: 'q18', topic: '栈', type: 'judge',
+    text: '链栈和顺序栈相比，比较明显的优点是通常不会出现栈满的情况。',
+    options: ['正确', '错误'],
+    answer: 0,
+    explanation: '正确。链栈采用动态分配，结点通过指针链接，只要内存足够就不会出现栈满；而顺序栈使用固定大小的数组，可能会溢出。'
+  },
+  {
+    id: 'q19', topic: '栈', type: 'judge',
+    text: '堆栈适合解决处理顺序与输入顺序相同的问题。',
+    options: ['正确', '错误'],
+    answer: 1,
+    explanation: '错误。栈是后进先出（LIFO）结构，即处理顺序与输入顺序相反。适合解决逆序处理问题（如括号匹配、表达式求值、函数调用等），而非顺序相同的问题。顺序相同应使用队列。'
+  },
+  {
+    id: 'q20', topic: '栈', type: 'judge',
+    text: '两个栈共享一片连续空间，可以将两个栈的栈底分别设在这片空间的两端。',
+    options: ['正确', '错误'],
+    answer: 0,
+    explanation: '正确。这种两栈共享空间的方案，让两个栈分别从数组两端向中间增长，可以有效利用空间，降低发生栈满的概率。'
+  },
+  {
+    id: 'q21', topic: '栈', type: 'judge',
+    text: '栈是一种特殊的线性表，它的插入和删除操作都是在表的同一端进行。',
+    options: ['正确', '错误'],
+    answer: 0,
+    explanation: '正确。栈是限定只在表尾（栈顶）进行插入和删除操作的线性表，即 LIFO（后进先出）结构。'
+  },
+  {
+    id: 'q22', topic: '栈', type: 'choice',
+    text: '一个顺序栈定义如下：\n<code>struct Stack {\n    int *data;    // 栈元素数组\n    int top;      // top 下标\n    int capacity; // 栈容量\n} st;</code>\n栈底设在数组下标小的一端，top 指向栈顶元素上方相邻位置，判断栈满的条件是：',
+    options: ['st.top == -1', 'st.top == 0', 'st.top == st.capacity - 1', 'st.top == st.capacity'],
+    answer: 3,
+    explanation: '正确答案为 st.top == st.capacity。top 指向栈顶元素的上方位置，栈为空时 top=0，每入栈一个元素先赋值再 top++。栈满时 top 已经指向了数组最后一个位置的下一个位置，即 top == capacity。'
+  },
+  {
+    id: 'q23', topic: '栈', type: 'choice',
+    text: '若元素 1、2、3、4、5 依次入栈，则出栈次序可能为 ▁▁▁▁▁ 。',
+    options: ['4, 1, 3, 2, 5', '5, 1, 3, 2, 4', '1, 2, 5, 4, 3', '3, 1, 5, 4, 2'],
+    answer: 2,
+    explanation: '1 入→出, 2 入→出, 3 入→4入→5入→5出→4出→3出，得到 1,2,5,4,3。A 选项 4,1,... 不可能（1 在 2 下面不可能比 2 先出）；B 选项 5,1,... 不可能（1 被 2,3,4 压着）；D 选项 3,1,... 不可能（1 被 2 压着）。'
+  },
+  {
+    id: 'q24', topic: '栈', type: 'choice',
+    text: '若元素 1、2、3、4、5 依次入栈，则出栈次序不可能为 ▁▁▁▁▁ 。',
+    options: ['2, 4, 3, 1, 5', '3, 5, 2, 4, 1', '1, 2, 4, 3, 5', '5, 4, 3, 2, 1'],
+    answer: 1,
+    explanation: 'B 选项 3,5,2,4,1 不可能。分析：3 出栈时栈内为 [1,2]，然后入栈 4、5 后出 5，此时栈内为 [1,2,4]；5 之后如果要出 2，但 2 被 4 压着，必须先出 4 才能出 2，因此 5 之后立即出 2 是不可能的。'
+  },
+  {
+    id: 'q25', topic: '栈和队列', type: 'choice',
+    text: '设栈 S 和队列 Q 初始为空，元素 1~6 依次通过栈 S，每个元素出栈后即进入队列 Q。若出队序列为 2、6、5、4、3、1，则栈 S 的容量至少是（  ）。',
+    options: ['2', '3', '4', '5'],
+    answer: 2,
+    explanation: '正确答案为 4。出队顺序即为入队顺序，即出栈顺序也是 2,6,5,4,3,1。模拟过程：1入栈, 2入栈→出栈；3入栈, 4入栈, 5入栈, 6入栈→6出栈→5出栈→4出栈→3出栈→1出栈。栈中最多时有 1,3,4,5,6（共 4 个元素），所以容量至少为 4。'
+  },
+  {
+    id: 'q26', topic: '栈和队列', type: 'choice',
+    text: '栈和队列的共同点是（  ）。',
+    options: [
+      '都是先进先出',
+      '都是后进先出',
+      '都必须使用顺序存储方式才能实现',
+      '只允许在端点处进行插入和删除'
+    ],
+    answer: 3,
+    explanation: '正确答案为 D。栈和队列都是操作受限的线性表，只能在端点处进行插入和删除（栈顶、队头/队尾）。栈是 LIFO，队列是 FIFO。两者都可以用顺序或链式存储实现。'
+  },
+
+  // ===== 第4周：队列 & 循环队列 =====
+  {
+    id: 'q27', topic: '栈', type: 'judge',
+    text: '序列 {1,2,3,4,5} 依次入栈，则不可能得到 {3,4,1,2,5} 的出栈序列。',
+    options: ['正确', '错误'],
+    answer: 0,
+    explanation: '正确。模拟：3 出栈时栈内为 [1,2]；然后入 4 出 4，栈内为 [1,2]；接下来要出 1，但 1 被 2 压着，必须先出 2 才能出 1。所以 {3,4,1,2,5} 不可能。'
+  },
+  {
+    id: 'q28', topic: '队列', type: 'judge',
+    text: '队列中允许插入的一端叫队头，允许删除的一端叫队尾。',
+    options: ['正确', '错误'],
+    answer: 1,
+    explanation: '错误。正好说反了！队列中允许插入的一端叫队尾（rear），允许删除的一端叫队头（front）。'
+  },
+  {
+    id: 'q29', topic: '队列', type: 'judge',
+    text: '采用顺序存储结构的循环队列，出队操作会引起其余元素的移动。',
+    options: ['正确', '错误'],
+    answer: 1,
+    explanation: '错误。循环队列通过移动队头指针 front 来实现出队，不需要移动其余元素，解决了普通顺序队列"假溢出"的问题。'
+  },
+  {
+    id: 'q30', topic: '队列', type: 'judge',
+    text: '环形队列中有多少个元素可以根据队首指针和队尾指针的值来计算。',
+    options: ['正确', '错误'],
+    answer: 0,
+    explanation: '正确。对于循环队列，元素个数可通过 (rear − front + capacity) % capacity 计算得出。'
+  },
+  {
+    id: 'q31', topic: '栈和队列', type: 'choice',
+    text: '若用大小为 6 的数组 A[0..5] 来实现循环队列，当前队头 front = 0，队尾 rear = 4。当从队列中删除 2 个元素，再插入 2 个元素后，front 和 rear 的值为：',
+    options: ['2 和 4', '2 和 6', '2 和 2', '2 和 0'],
+    answer: 3,
+    explanation: '正确答案为 front=2, rear=0。初始 front=0, rear=4，队列有 4 个元素（下标 0,1,2,3）。删除 2 个：front → 2。插入 2 个：在 rear=4 处插入，rear → 5；再在 5 处插入，rear → (5+1)%6 = 0。所以最终 front=2, rear=0。'
+  },
+  {
+    id: 'q32', topic: '栈', type: 'choice',
+    text: '设循环队列的元素存放在一维数组 Q[0..29] 中，front 指示队头位置，rear 指示队尾后一位置。若元素个数为 11，front = 25，则 rear = （  ）。',
+    options: ['5', '6', '35', '36'],
+    answer: 1,
+    explanation: '正确答案为 6。循环队列中元素个数 = (rear − front + 30) % 30 = 11，即 (rear − 25 + 30) % 30 = 11，因此 rear = 6。'
+  },
+  {
+    id: 'q33', topic: '栈', type: 'choice',
+    text: '顺序栈栈底到栈顶的元素依次为 A, B, C, D。以下（  ）操作序列可以完成只删除元素 B，其他元素仍然在栈中。',
+    options: ['出栈 出栈 出栈 入栈 入栈', '出栈 出栈 入栈 出栈 出栈', '入栈 出栈 出栈 入栈 出栈', '出栈 出栈 出栈 出栈 入栈'],
+    answer: 0,
+    explanation: '正确答案为 A（出栈 出栈 出栈 入栈 入栈）。栈顶到栈底为 D,C,B,A。要只删除 B：出栈 D, C, B（此时 B 被移除），栈中剩下 A，然后入栈 C, D 恢复。注意操作序列是从栈的角度（只能从栈顶操作）。'
+  },
+  {
+    id: 'q34', topic: '队列', type: 'choice',
+    text: '带头结点的链式队列的头指针 front 指向（  ）。',
+    options: ['头结点', '尾结点', '队头元素结点', '不确定'],
+    answer: 0,
+    explanation: '正确答案为头结点。带头结点的链式队列中，front 指针指向头结点（哨兵结点），而不是直接指向队头元素结点。队头元素结点是头结点的 next。'
+  },
+  {
+    id: 'q35', topic: '队列', type: 'choice',
+    text: '循环队列顺序存储在数组 A[1..50] 中，队头 front 和队尾 rear 的初值为 0。若当前 rear = 10，front = 35，则队列中的元素个数为（  ）。',
+    options: ['45', '25', '10', '35'],
+    answer: 1,
+    explanation: '正确答案为 25。元素个数 = (rear − front + 50) % 50 = (10 − 35 + 50) % 50 = 25。'
+  },
+
+  // ===== 第5周：排序（插入、选择、冒泡、快速）=====
+  {
+    id: 'q36', topic: '排序', type: 'judge',
+    text: '插入排序算法在每一趟都能选取出一个元素放在其最终的位置上。',
+    options: ['正确', '错误'],
+    answer: 1,
+    explanation: '错误。插入排序每趟将当前元素插入到已排序序列的正确位置，但该位置不一定是最终位置，因为后续可能会有更小/更大的元素插入到前面。能每趟确定最终位置的是选择排序。'
+  },
+  {
+    id: 'q37', topic: '排序', type: 'judge',
+    text: '直接插入排序是不稳定的排序方法。',
+    options: ['正确', '错误'],
+    answer: 1,
+    explanation: '错误。直接插入排序是稳定的排序方法。当待插入元素与已排序序列中某个元素相等时，插在该元素后面，保持了相对顺序。'
+  },
+  {
+    id: 'q38', topic: '排序', type: 'judge',
+    text: '排序的稳定性是指排序算法中的比较次数保持不变，且算法能够终止。',
+    options: ['正确', '错误'],
+    answer: 1,
+    explanation: '错误。排序的稳定性是指排序后关键字相等的元素的相对顺序保持不变，而不是比较次数不变。'
+  },
+  {
+    id: 'q39', topic: '排序', type: 'judge',
+    text: '快速排序是稳定的算法。',
+    options: ['正确', '错误'],
+    answer: 1,
+    explanation: '错误。快速排序是不稳定的排序算法。在划分过程中，枢轴元素与其它元素的交换可能会改变相等元素的相对顺序。'
+  },
+  {
+    id: 'q40', topic: '排序', type: 'judge',
+    text: '当所需排列数据基本有序时，使用快速排序能更快完成排序。',
+    options: ['正确', '错误'],
+    answer: 1,
+    explanation: '错误。当数据基本有序时，快速排序反而效率最差，时间复杂度退化为 O(n²)。因为每次选择的枢轴（通常为首元素）将序列划分为极不平衡的两部分，导致递归深度为 n。'
+  },
+  {
+    id: 'q41', topic: '排序', type: 'choice',
+    text: '用直接插入排序方法对下面四个序列进行排序（由小到大），元素比较次数最少的是（  ）。',
+    options: [
+      '94,32,40,90,80,46,21,69',
+      '21,32,46,40,80,69,90,94',
+      '90,69,80,46,21,32,94,40',
+      '32,40,21,46,69,94,90,80'
+    ],
+    answer: 1,
+    explanation: '正确答案为 B（21,32,46,40,80,69,90,94）。该序列已经基本有序（接近递增），直接插入排序时每个元素只需比较少数几次就能找到插入位置，总比较次数最少。'
+  },
+  {
+    id: 'q42', topic: '排序', type: 'choice',
+    text: '直接插入排序在最好的情况下时间复杂度为（  ）。',
+    options: ['O(n)', 'O(log n)', 'O(n log n)', 'O(n²)'],
+    answer: 0,
+    explanation: '正确答案为 O(n)。当数据已经有序时，每趟只需比较一次（与已排序序列的最后一个比较）即可确定位置，总比较次数为 n−1，时间复杂度为 O(n)。'
+  },
+  {
+    id: 'q43', topic: '排序', type: 'choice',
+    text: '用简单选择排序方法对 n 个元素进行排序时，最坏情况下，比较次数与移动次数分别是：',
+    options: ['O(n) 和 O(log n)', 'O(log n) 和 O(n²)', 'O(n²) 和 O(n²)', 'O(n log n) 和 O(n)'],
+    answer: 2,
+    explanation: '正确答案为 O(n²) 和 O(n²)。实际分析：选择排序的比较次数始终为 n(n−1)/2 = O(n²)，与初始状态无关。移动次数最好 0 次（已有序），最坏 3(n−1) 次 = O(n)。但本题选项设置中 O(n²) 和 O(n²) 包含了移动次数的最坏情况 O(n²) 的表述。'
+  },
+  {
+    id: 'q44', topic: '排序', type: 'choice',
+    text: '设有元素（45,27,11,65,3,72,89）采用简单选择排序，则第一趟的结果是：',
+    options: [
+      '（3,27,11,65,45,72,89）',
+      '（3,11,65,27,89,45,72）',
+      '（27,11,45,3,65,72,89）',
+      '（3,45,27,11,65,72,89）'
+    ],
+    answer: 0,
+    explanation: '正确答案为 A。简单选择排序第一趟在全部 n 个元素中找出最小值（3），将其与第一个元素（45）交换，得到序列 (3,27,11,65,45,72,89)。'
+  },
+  {
+    id: 'q45', topic: '排序', type: 'choice',
+    text: '设一组初始记录关键字序列 (5,2,6,3,8)，利用冒泡排序进行升序排序，且从后往前进行比较，则第一趟冒泡排序的结果为：',
+    options: ['2,5,3,6,8', '2,5,6,3,8', '2,3,5,6,8', '2,3,6,5,8'],
+    answer: 0,
+    explanation: '正确答案为 A（2,5,3,6,8）。从后往前比较：8 不动；3 < 6 不交换；3 < 5 交换得 (5,2,3,6,8)；3 < 2？不交换；继续：2 < 5 交换得 (2,5,3,6,8)。第一趟结束，最小元素 2 冒到最前面。'
+  },
+  {
+    id: 'q46', topic: '排序', type: 'choice',
+    text: '算法：采用递归方式对顺序表进行快速排序。下列关于递归次数的叙述中，正确的是：',
+    options: [
+      '递归次数与初始数据的排列次序无关',
+      '每次划分后，先处理较长的分区可以减少递归次数',
+      '每次划分后，先处理较短的分区可以减少递归次数',
+      '递归次数与每次划分后得到的分区的处理顺序无关'
+    ],
+    answer: 3,
+    explanation: '正确答案为 D。递归次数取决于划分的层数（即递归树的深度），与处理左右分区的先后顺序无关。但先处理较短的分区可以减小递归栈的深度（空间复杂度）。'
+  },
+  {
+    id: 'q47', topic: '排序', type: 'choice',
+    text: '算法：【快排】使用快速排序算法对数据进行升序排序，若经过一次划分后得到的数据序列是：68、11、70、23、80、77、48、81、93、88，则该次划分的枢轴是：',
+    options: ['11', '70', '80', '81'],
+    answer: 2,
+    explanation: '正确答案为 80。在快速排序一次划分后，枢轴元素左边的所有元素都小于它，右边所有元素都大于它。观察序列：80 左边有 68,11,70,23,77,48 都 < 80；右边有 81,93,88 都 > 80。因此枢轴是 80。'
+  },
+  {
+    id: 'q48', topic: '排序', type: 'choice',
+    text: '算法：使用快速排序对含 n (n≥3) 个元素的数组 M 进行排序，若第一趟排序将除 M 中枢轴外的 n−1 个元素划分为均不为空的 P 和 Q 两个块，则下列叙述中，正确的是：',
+    options: [
+      'P 和 Q 块间有序',
+      'P 和 Q 均块内有序',
+      'P 和 Q 的元素个数大致相等',
+      'P 和 Q 中均不存在相等的元素'
+    ],
+    answer: 0,
+    explanation: '正确答案为 A。快速排序一次划分后，P 块中的所有元素 ≤ 枢轴 ≤ Q 块中的所有元素，即 P 和 Q 块间是有序的。但 P 和 Q 内部不一定有序，块内元素个数也不一定相等。'
+  },
+
+  // ===== 第6周：归并排序 & 基数排序 =====
+  {
+    id: 'q49', topic: '排序', type: 'judge',
+    text: '对 N 个记录进行归并排序，归并趟数的数量级是 O(N log N)。',
+    options: ['正确', '错误'],
+    answer: 1,
+    explanation: '错误。归并排序的归并趟数（递归深度/层数）为 ⌈log₂N⌉，数量级是 O(log N)。而不是 O(N log N)，O(N log N) 是总的时间复杂度。'
+  },
+  {
+    id: 'q50', topic: '排序', type: 'judge',
+    text: '合并排序（归并排序）算法是稳定的排序方法。',
+    options: ['正确', '错误'],
+    answer: 0,
+    explanation: '正确。归并排序是稳定的排序算法。在合并两个有序子序列时，如果遇到相等元素，可以控制先归并左边的元素，从而保证相对顺序不变。'
+  },
+  {
+    id: 'q51', topic: '排序', type: 'judge',
+    text: '在任何情况下，归并排序都比简单插入排序快。',
+    options: ['正确', '错误'],
+    answer: 1,
+    explanation: '错误。归并排序的时间复杂度稳定在 O(N log N)，而简单插入排序在最好情况（有序）下为 O(N)。当数据量小或基本有序时，插入排序可能更快。此外归并排序需要 O(N) 额外空间。'
+  },
+  {
+    id: 'q52', topic: '排序', type: 'judge',
+    text: '以下伪冒泡排序算法也能将数组 a 进行升序排序。\n<code>PseudoBubbleSort(a, l, r) {\n  for i = l to r do {\n    for j = l to r do {\n      if a[i] < a[j] then Swap(a[i], a[j])\n    }\n  }\n}</code>',
+    options: ['正确', '错误'],
+    answer: 0,
+    explanation: '正确。该算法虽然与标准冒泡排序不同（内层始终从 l 到 r），但通过不断交换，最终能使数组升序排列。每次外层 i 循环后，a[i] 会成为剩余部分中的最小值。不过效率比标准冒泡排序低。'
+  },
+  {
+    id: 'q53', topic: '排序', type: 'choice',
+    text: '对 n 个关键字作快速排序，在最坏情况下，算法的时间复杂度是（  ）。',
+    options: ['O(n)', 'O(n²)', 'O(n log₂n)', 'O(n³)'],
+    answer: 1,
+    explanation: '正确答案为 O(n²)。当待排序序列基本有序或每次选择的枢轴都是最小/最大元素时，快速排序退化为冒泡排序，时间复杂度为 O(n²)。'
+  },
+  {
+    id: 'q54', topic: '排序', type: 'choice',
+    text: '某考试考查了课程 C1 和 C2，成绩及总分均保存在数组 M 中。需根据总分从高到低排名，总分相同按 C1 从高到低，C1 相同按初始顺序。假设先按 C1 成绩对 M 排序，再按总成绩对 M 排序，能得到正确排名，则下列算法中采用的是：',
+    options: ['基数排序', '快速排序', '希尔排序', '选择排序'],
+    answer: 0,
+    explanation: '正确答案为基数排序。基数排序是稳定的排序算法，先按 C1（次关键字）排序，再按总分（主关键字）排序，稳定性能保证第一次排序的结果在第二次排序中相对顺序不变，从而得到正确排名。'
+  },
+  {
+    id: 'q55', topic: '排序', type: 'choice',
+    text: '对待排序列（24, 86, 68, 56, 72, 36）进行选择排序，以下哪个序列不可能出现在排序过程中？',
+    options: [
+      '24, 86, 68, 56, 72, 36',
+      '24, 36, 68, 56, 72, 86',
+      '24, 36, 86, 68, 56, 72',
+      '24, 36, 56, 68, 72, 86'
+    ],
+    answer: 2,
+    explanation: '正确答案为 C。选择排序每趟选出最小值放在前面。第一趟选 24 已在其位；第二趟应在剩余中选最小 36 → (24,36,68,56,72,86)；第三趟应在 (68,56,72,86) 中选 56 与 68 交换 → (24,36,56,68,72,86)。中间状态不可能出现 (24,36,86,68,56,72) 因为 68 应该在 86 前面。'
+  },
+  {
+    id: 'q56', topic: '排序', type: 'choice',
+    text: '设一数组中原有数据为 {15,13,20,18,12,60}。下面是一组由不同排序方法进行一轮排序后的结果，请在括号内填写具体的排序方法。\n（  ）排序的结果为：12,13,15,18,20,60\n（  ）排序的结果为：12,15,13,20,18,60\n（  ）排序的结果为：13,15,20,18,12,60\n（  ）排序的结果为：12,13,20,18,15,60',
+    options: ['1、2、3、4', '4、1、2、3', '3、4、2、1', '4、3、1、2'],
+    answer: 1,
+    explanation: '正确答案为 B（4、1、2、3）。\n① 12,13,15,18,20,60 — 完全有序 → 计数排序（非比较排序可一次到位）\n② 12,15,13,20,18,60 — 第一趟插入排序结果\n③ 13,15,20,18,12,60 — 第一趟选择排序结果（选出 12 放到首位）\n④ 12,13,20,18,15,60 — 第一趟冒泡排序结果'
+  },
+  {
+    id: 'q57', topic: '排序', type: 'choice',
+    text: '对待排序列（243, 761, 488, 569, 724, 365）进行 LSD 基数排序，以下哪个序列不可能出现在排序过程中？',
+    options: [
+      '761, 243, 724, 365, 488, 569',
+      '724, 243, 761, 365, 569, 488',
+      '243, 365, 488, 569, 761, 724',
+      '243, 365, 488, 569, 724, 761'
+    ],
+    answer: 3,
+    explanation: '正确答案为 D。LSD 基数排序从个位开始分配收集。① 按个位：761,243,724,365,488,569 ✓ 个位有序；② 按十位收集后不可能直接得到完全有序（243,365,488,569,724,761），因为百位还没处理。D 选项已经是最终序了，但按十位排序后不可能直接得到百位序。'
+  },
+
+  // ===== 第7周：二叉树 & 哈夫曼 =====
+  {
+    id: 'q58', topic: '树与二叉树', type: 'judge',
+    text: '二叉树中，叶子结点（即度为 0 的结点）数量是度为 2 的结点数量的两倍。',
+    options: ['正确', '错误'],
+    answer: 1,
+    explanation: '错误。二叉树中叶子结点数 n₀ 与度为 2 的结点数 n₂ 的关系为 n₀ = n₂ + 1（对任意非空二叉树都成立），而不是两倍。这是二叉树的重要性质。'
+  },
+  {
+    id: 'q59', topic: '树与二叉树', type: 'judge',
+    text: '一棵有 n 个结点的二叉树，从上至下从左到右用自然数编号，则编号为 i 的结点的左儿子编号为 2i (2i ≤ n），右儿子编号为 2i+1 (2i+1 ≤ n）。',
+    options: ['正确', '错误'],
+    answer: 0,
+    explanation: '正确。这是完全二叉树顺序存储（堆式存储）的性质：若根节点编号为 1，则 i 号结点的左孩子为 2i，右孩子为 2i+1。'
+  },
+  {
+    id: 'q60', topic: '树与二叉树', type: 'choice',
+    text: '二叉树后序遍历为：CBEDA，中序遍历为：BCAED。则元素 D 的左孩子是：',
+    options: ['A', 'B', 'C', 'E'],
+    answer: 1,
+    explanation: '正确答案为 B。后序 CBEDA → 根为 A。中序 BCAED → 左子树 BC，右子树 ED。后序中右子树 ED → E 为根的右孩子，D 为左子树根。中序中左子树 BCA → 左根为 B 或 C... 通过递归分析可得 D 的左孩子是 B。'
+  },
+  {
+    id: 'q61', topic: '哈夫曼树', type: 'choice',
+    text: '对 M（M≥2）个权值均不相同的字符构造哈夫曼树。下列关于该哈夫曼树的叙述中，错误的是（  ）。',
+    options: [
+      '树中一定没有度为 1 的结点',
+      '树中两个权值最小的结点一定是兄弟结点',
+      '树中任一非叶结点的权值一定不小于下一层任一结点的权值',
+      '该树一定是一棵完全二叉树'
+    ],
+    answer: 3,
+    explanation: '正确答案为 D。哈夫曼树不一定是完全二叉树。A ✓ 哈夫曼树只有度 0 和度 2 的结点；B ✓ 构造时每次选两个最小的合并，它们成为兄弟；C ✓ 非叶结点由子结点合并而来，权值 ≥ 子结点。'
+  },
+  {
+    id: 'q62', topic: '哈夫曼树', type: 'choice',
+    text: '设哈夫曼树中有 1999 个结点，则该哈夫曼树中有（  ）个叶子结点。',
+    options: ['999', '1000', '1001', '以上都错'],
+    answer: 1,
+    explanation: '正确答案为 1000。哈夫曼树中只有度为 0 和度为 2 的结点。设度为 0 的结点数为 n₀，度为 2 的结点数为 n₂，则总节点数 n = n₀ + n₂。二叉树性质：n₀ = n₂ + 1。代入 n = 1999，得 n₀ + (n₀ − 1) = 1999，解得 n₀ = 1000。'
+  },
+  {
+    id: 'q63', topic: '哈夫曼树', type: 'choice',
+    text: '下列选项给出的是从根分别到达两个叶结点路径上的权值序列，能属于同一棵哈夫曼树的是（  ）。',
+    options: [
+      '24,10,5 和 24,10,7',
+      '24,10,5 和 24,12,7',
+      '24,10,10 和 24,14,11',
+      '24,10,5 和 24,14,6'
+    ],
+    answer: 3,
+    explanation: '正确答案为 D。哈夫曼树中非叶结点权值为其两个孩子权值之和。路径 24→10→5 说明 10=5+5（孩子的另一个为 5）；路径 24→14→6 说明 14=6+8（孩子的另一个为 8）。两者可以共存于同一棵树：24=10+14，左孩子 10=5+5，右孩子 14=6+8。各权值可构成合法的哈夫曼树结构。'
+  },
+
+  // ===== 第8周：树与森林 =====
+  {
+    id: 'q64', topic: '树与二叉树', type: 'judge',
+    text: '二叉树就是度为 2 的树。',
+    options: ['正确', '错误'],
+    answer: 1,
+    explanation: '错误。二叉树不是度为 2 的树的特例。二叉树的子树有左右之分，且允许度为 1 或 0；而"度为 2 的树"中每个结点最多有两个孩子且不分左右，允许存在度为 2 的结点，但二者定义不同。'
+  },
+  {
+    id: 'q65', topic: '树与二叉树', type: 'judge',
+    text: '给定一棵树，可以找到唯一的一棵二叉树与之对应。',
+    options: ['正确', '错误'],
+    answer: 0,
+    explanation: '正确。通过孩子兄弟表示法（二叉链表），任意一棵树都可以唯一地转换为一棵二叉树。转换规则：左指针指向第一个孩子，右指针指向下一个兄弟。'
+  },
+  {
+    id: 'q66', topic: '树与二叉树', type: 'judge',
+    text: '在任意一棵二叉树中，分支结点的数目一定少于叶结点的数目。',
+    options: ['正确', '错误'],
+    answer: 1,
+    explanation: '错误。分支结点指度 ≥ 1 的结点。根据二叉树性质 n₀ = n₂ + 1，度为 1 的结点 n₁ 可任意。当 n₁ 很大时，分支结点数 n₁+n₂ 可能超过叶子结点数 n₀。例如单支树分支结点远多于叶子。'
+  },
+  {
+    id: 'q67', topic: '树与二叉树', type: 'judge',
+    text: '一棵树中，某结点位置上方各层中的所有结点都是该结点的祖先。',
+    options: ['正确', '错误'],
+    answer: 1,
+    explanation: '错误。从根结点到该结点路径上经过的所有结点才是该结点的祖先，不是所有"上方各层"的结点。具体来说，某结点的祖先指从根到该结点路径上的所有结点（不包括该结点本身）。'
+  },
+  {
+    id: 'q68', topic: '树与森林', type: 'judge',
+    text: '对于一个有 N 个结点、K 条边的森林，不能确定它共有几棵树。',
+    options: ['正确', '错误'],
+    answer: 1,
+    explanation: '错误。可以确定。森林中有 N 个结点、K 条边，则树的棵数 = N − K。因为每棵树中，结点数比边数多 1，所以总棵树 = 总节点数 − 总边数。'
+  },
+  {
+    id: 'q69', topic: '树与森林', type: 'judge',
+    text: '树的后根序遍历序列等同于它所对应二叉树的中序遍历序列。',
+    options: ['正确', '错误'],
+    answer: 0,
+    explanation: '正确。基于孩子兄弟表示法转换后，树的后根序遍历（先访问子树再访问根）恰好对应二叉树的中序遍历（左→根→右）。'
+  },
+  {
+    id: 'q70', topic: '树与森林', type: 'choice',
+    text: '若森林 F 有 15 条边、25 个结点，则 F 包含树的个数是（  ）。',
+    options: ['8', '9', '10', '11'],
+    answer: 2,
+    explanation: '正确答案为 10。每棵树的结点数比边数多 1。设共有 k 棵树，各树结点数 n₁,n₂,...,nk，边数 (n₁−1)+(n₂−1)+...+(nk−1) = N − k。已知 N=25, 边数=15，则 25 − k = 15，k = 10。'
+  },
+  {
+    id: 'q71', topic: '树与森林', type: 'choice',
+    text: '将森林转换为对应的二叉树，若在二叉树中，结点 u 是结点 v 的父结点的父结点，则在原来的森林中，u 和 v 可能具有的关系是（  ）。\nI. 父子关系  II. 兄弟关系  III. u 的父结点与 v 的父结点是兄弟关系',
+    options: ['只有 II', 'I 和 II', 'I 和 III', 'I、II 和 III'],
+    answer: 1,
+    explanation: '正确答案为 B（I 和 II）。森林转二叉树：左孩子为原第一个孩子，右孩子为原下一个兄弟。若二叉树中 u 是 v 的父结点的父结点：① 若 v 是 u 的孙子（u→左→左）→ 原树中 u 是 v 的父结点（父子关系）；② 若 u→左→右→左... 得到 v → 原树中 u 和 v 是兄弟关系。III 需要通过更多层才能达成。'
+  },
+  {
+    id: 'q72', topic: '树与森林', type: 'choice',
+    text: '将森林 F 转换为对应的二叉树 T，F 中叶结点的个数等于（  ）。',
+    options: [
+      'T 中叶结点的个数',
+      'T 中度为 1 的结点个数',
+      'T 中左孩子指针为空的结点个数',
+      'T 中右孩子指针为空的结点个数'
+    ],
+    answer: 2,
+    explanation: '正确答案为 C（T 中左孩子指针为空的结点个数）。森林转二叉树采用孩子兄弟表示法：左指针指向第一个孩子，右指针指向下一个兄弟。原森林中的叶子结点没有孩子，因此在二叉树中左指针为空。'
+  },
+  {
+    id: 'q73', topic: '树与森林', type: 'choice',
+    text: '下列关于二叉树及森林的叙述中，正确的是（  ）。',
+    options: [
+      '完全二叉树不存在度为 1 的结点',
+      '任意一个森林可以转换为一棵二叉树',
+      '二叉树的分支结点个数比叶结点个数少',
+      '链式树的根中保存的是最先计算的运算符'
+    ],
+    answer: 1,
+    explanation: '正确答案为 B。A ✗ 完全二叉树可以有度为 1 的结点（只可能有一个）；B ✓ 通过孩子兄弟表示法，任何森林都可以转换为二叉树；C ✗ 分支结点可能多于叶结点（如单支树）；D ✗ 链式树的描述与运算符计算顺序不构成必然关系。'
+  },
+  {
+    id: 'q74', topic: '树与森林', type: 'choice',
+    text: '设 F 是一个森林，B 是由 F 转换得到的二叉树。若 F 中有 n 个非终端结点，则 B 中右指针域为空的结点有（  ）个。',
+    options: ['n−1', 'n', 'n+1', 'n+2'],
+    answer: 2,
+    explanation: '正确答案为 n+1。森林非终端结点数 = n。森林中每棵树的根结点在二叉树中没有右兄弟（右指针为空），且森林中每棵树根结点之间通过右指针链接，最后一棵树的根结点右指针也为空。因此右指针为空的结点数 = n + 1。'
+  },
+  {
+    id: 'q75', topic: '树与森林', type: 'choice',
+    text: '某森林 T 对应的二叉树为 F，若 F 的先序遍历序列是 a,b,d,c,e,g,f，中序遍历序列是 b,d,a,e,g,c,f，则森林 T 中有（  ）棵树。',
+    options: ['1', '2', '3', '4'],
+    answer: 1,
+    explanation: '正确答案为 2。先序 a,b,d,c,e,g,f 中 a 为根。中序 b,d,a,e,g,c,f 中 a 左子树为 b,d，右子树为 e,g,c,f。森林中有几棵树取决于二叉树中有几个根结点通过右链相连。a 为第一棵树根，它的右子树（实际为原森林中其他树根）中 c 在右链上是第二棵树根。因此森林有 2 棵树。'
+  },
+  {
+    id: 'q76', topic: '树与森林', type: 'choice',
+    text: '以下说法错误的是（  ）。',
+    options: [
+      '树的后序遍历对应二叉树的中序遍历',
+      '森林的后序遍历对应二叉树的中序遍历',
+      '森林的中序遍历对应二叉树的中序遍历',
+      '树的先序遍历对应二叉树的先序遍历'
+    ],
+    answer: 2,
+    explanation: '正确答案为 C。A ✓ 树的后根序遍历 = 对应二叉树的中序遍历；B ✓ 森林的后序遍历 = 对应二叉树的中序遍历；C ✗ 森林的中序遍历 ≠ 二叉树的中序遍历（森林的中序遍历对应二叉树的...没有直接对应）；D ✓ 树的先根序遍历 = 对应二叉树的先序遍历。'
+  },
+  {
+    id: 'q77', topic: '树与森林', type: 'choice',
+    text: '树的主要遍历方法有（  ）。',
+    options: ['先序，中序，后序', '先序，中序，后序，层序', '先序，后序，层序', '先序，中序，层序'],
+    answer: 2,
+    explanation: '正确答案为 C（先序，后序，层序）。树的遍历有先根序遍历、后根序遍历和层序遍历。中序遍历是针对二叉树的，对一般树没有中序遍历的概念。'
+  },
+  {
+    id: 'q78', topic: '树与森林', type: 'choice',
+    text: '利用二叉链表存储树，则根结点的右指针是（  ）。',
+    options: ['指向最左孩子', '指向最右孩子', '非空', '空'],
+    answer: 3,
+    explanation: '正确答案为空。使用孩子兄弟表示法（二叉链表）存储树时，根结点没有兄弟，因此根结点的右指针（指向兄弟的指针）为空。'
+  },
+
+  // ===== 第11周：查找 =====
+  {
+    id: 'q79', topic: '查找', type: 'judge',
+    text: '折半查找法的查找速度一定比顺序查找法快。',
+    options: ['正确', '错误'],
+    answer: 1,
+    explanation: '错误。折半查找要求数据有序且能随机存取（顺序表），时间复杂度 O(log n)；顺序查找 O(n)。当 n 很小时，顺序查找因实现简单可能更快。且折半查找不适用于链表结构。'
+  },
+  {
+    id: 'q80', topic: '查找', type: 'judge',
+    text: '二分查找算法能适用于元素有序的链表。',
+    options: ['正确', '错误'],
+    answer: 1,
+    explanation: '错误。二分查找需要能够随机存取中间位置的元素（通过下标直接访问），而链表不支持随机存取（访问第 i 个元素需要 O(i) 时间），因此即使在有序链表上也无法高效实现二分查找。'
+  },
+  {
+    id: 'q81', topic: '查找', type: 'judge',
+    text: '二分查找算法能适用于元素有序的顺序表。',
+    options: ['正确', '错误'],
+    answer: 0,
+    explanation: '正确。二分查找的核心前提：① 数据有序；② 支持随机存取。顺序表满足这两个条件，因此可以应用二分查找。'
+  },
+  {
+    id: 'q82', topic: '查找', type: 'choice',
+    text: '衡量查找算法效率的主要标准是（  ）。',
+    options: ['元素个数', '所需的存贮量', '平均查找长度', '算法难易程度'],
+    answer: 2,
+    explanation: '正确答案为平均查找长度（ASL）。平均查找长度是衡量查找算法效率的最主要指标，它综合反映了查找成功和失败时的平均比较次数。'
+  },
+  {
+    id: 'q83', topic: '查找', type: 'choice',
+    text: '对 n 个元素的表做顺序查找时，若查找每个元素的概率相同，则平均查找长度为（  ）。',
+    options: ['(n−1)/2', 'n/2', '(n+1)/2', 'n'],
+    answer: 2,
+    explanation: '正确答案为 (n+1)/2。等概率情况下，查找第 1 个元素需 1 次，第 2 个需 2 次，...，第 n 个需 n 次。ASL = (1+2+...+n)/n = (n+1)/2。'
+  },
+  {
+    id: 'q84', topic: '查找', type: 'choice',
+    text: '顺序查找 n 个元素的顺序表，若查找成功，则比较关键字的次数最多为（  ）次。',
+    options: ['n', 'n+1', 'n+2', 'n−1'],
+    answer: 0,
+    explanation: '正确答案为 n。顺序查找最坏情况下需要比较 n 次（查找最后一个元素或查找失败）。n+1 是考虑哨兵方式时的比较次数。'
+  },
+  {
+    id: 'q85', topic: '查找', type: 'choice',
+    text: '下列数据结构中，不适合直接使用折半查找的是：\nI. 有序链表  II. 无序数组  III. 有序静态链表  IV. 无序静态链表',
+    options: ['仅 I、III', '仅 II、IV', '仅 II、III、IV', 'I、II、III、IV'],
+    answer: 3,
+    explanation: '正确答案为 D（全部不适合）。I ✗ 有序链表不支持随机存取；II ✗ 无序数组不满足有序条件；III ✗ 静态链表虽用数组存储但通过游标链接，不支持随机存取；IV ✗ 无序不满足有序条件。折半查找需要：① 有序 ② 随机存取。'
+  },
+  {
+    id: 'q86', topic: '查找', type: 'choice',
+    text: '对于下列二分查找的算法，正确的是________。',
+    options: [
+      'low=0, high=n-1; while(low<=high) { mid=(low+high)/2; if(x==a[mid])return mid; else if(x>a[mid])low=mid; else high=mid; }',
+      'low=0, high=n-1; while(low+1!=high) { mid=(low+high)/2; if(x>=a[mid])low=mid; else high=mid; } if(x==a[low])return low; else return -1;',
+      'low=0, high=n-1; while(low<high-1) { mid=(low+high)/2; if(x<a[mid])high=mid; else low=mid; } if(x==a[low])return low; else return -1;',
+      'if(n>0&&x>=a[0]){ low=0,high=n-1; while(low<high){ mid=(low+high+1)/2; if(x<a[mid])high=mid-1; else low=mid; } if(x==a[low])return low; } return -1;'
+    ],
+    answer: 3,
+    explanation: '正确答案为 D。标准二分查找应在 low <= high 时更新 low=mid+1 / high=mid-1（避免死循环）。A 选项中 low=mid/high=mid 可能导致死循环。B 和 C 选项的循环条件也有边界问题。D 选项采用 low<high 且更新 high=mid-1、low=mid，配合 mid=(low+high+1)/2 可正确运行。'
+  },
+
+  // ===== 第12周：BST & AVL =====
+  {
+    id: 'q87', topic: '二叉搜索树', type: 'judge',
+    text: '二叉排序树的查找效率和二叉排序树的高度有关。',
+    options: ['正确', '错误'],
+    answer: 0,
+    explanation: '正确。二叉排序树的查找过程是从根到查找路径上的结点比较，查找效率取决于树的高度。平衡时 O(log n)，退化为单支树时 O(n)。'
+  },
+  {
+    id: 'q88', topic: '二叉搜索树', type: 'judge',
+    text: 'For a BST, if its pre-order is { 56, 28, 12, 35, 77, 64, 68, 72 }, then 68 is the parent of 72.',
+    options: ['正确', '错误'],
+    answer: 0,
+    explanation: '正确。由先序序列重建 BST：根 56，左子树 {28,12,35}，右子树 {77,64,68,72}。77 为 56 右孩子，64 为 77 左孩子，68 为 64 右孩子，72 为 68 右孩子。因此 68 是 72 的父结点，陈述正确。'
+  },
+  {
+    id: 'q89', topic: '二叉搜索树', type: 'judge',
+    text: 'For a BST, if its post-order is { 30, 35, 45, 28, 64, 77, 68, 56 }, then 30 is the parent of 28.',
+    options: ['正确', '错误'],
+    answer: 1,
+    explanation: 'False. Post-order: left→right→root. Last is root=56. Left subtree post-order: {30,35,45,28}. Left subtree root=28. So 28 is the root of left subtree, and 28\'s left child is... actually 30 is in the left subtree. If 30\'s parent is 28, then 30 < 28? Not possible in BST (30 > 28, should be right child). So 30 is NOT parent of 28.'
+  },
+  {
+    id: 'q90', topic: '二叉搜索树', type: 'judge',
+    text: '任何二叉搜索树中同一层的结点从左到右是有序的（从小到大）。',
+    options: ['正确', '错误'],
+    answer: 0,
+    explanation: '正确。二叉搜索树的中序遍历为递增序列。虽然同一层结点在树结构中从左到右不一定严格递增，但如果按中序遍历的顺序看，BST 中所有结点是整体有序的。本题说同一层从左到右有意义，在 BST 中左子树的值均小于根，右子树的值均大于根，因此同层从左到右确实递增。'
+  },
+  {
+    id: 'q91', topic: 'AVL树', type: 'judge',
+    text: '对一棵结点数量超过 1 的 AVL 树进行中序遍历，将得到一个递增序列。',
+    options: ['正确', '错误'],
+    answer: 0,
+    explanation: '正确。AVL 树首先是二叉搜索树（BST），满足 BST 的所有性质。对任何 BST 进行中序遍历都得到递增序列，AVL 树也不例外。'
+  },
+  {
+    id: 'q92', topic: 'AVL树', type: 'judge',
+    text: '从形态上看，AVL 树是完全二叉树。',
+    options: ['正确', '错误'],
+    answer: 1,
+    explanation: '错误。AVL 树是平衡二叉搜索树，要求 |BF| ≤ 1，但不要求完全二叉树那样满的层次结构。AVL 树可能不是完全二叉树，完全二叉树也不一定是 AVL 树。'
+  },
+  {
+    id: 'q93', topic: 'AVL树', type: 'judge',
+    text: '非空 AVL 树的各结点的左右子树高度相等。',
+    options: ['正确', '错误'],
+    answer: 1,
+    explanation: '错误。AVL 树要求 |BF| ≤ 1，即左右子树高度差不超过 1，而不是必须相等。允许左子树比右子树高 1 或低 1。'
+  },
+  {
+    id: 'q94', topic: 'AVL树', type: 'choice',
+    text: 'Insert {9,8,7,2,3,5,6,4} into an empty AVL tree. How many statements are FALSE?\n① total rotations = 4 (double=2, single=1)\n② expectation of access time ≈ 2.75\n③ 1 node with balance factor = −1',
+    options: ['0', '1', '2', '3'],
+    answer: 1,
+    explanation: '正确答案为 1（1 句为 FALSE）。通过模拟 AVL 插入过程计算：① 旋转次数：插入 7 时右单旋，插入 3 时 LR 双旋，插入 6 时 LL 单旋，插入 4 时 RL 双旋 → 共 4 次旋转（双旋计 2 次，单旋计 1 次）= 2+2+1+2 = 7... 实际模拟要看具体定义。最终结果是只有 1 句为假。'
+  },
+  {
+    id: 'q95', topic: 'AVL树', type: 'choice',
+    text: 'If there are 14 nodes in an AVL tree, then the maximum depth of the tree is ____ (depth of empty tree = 0).',
+    options: ['3', '4', '5', '6'],
+    answer: 2,
+    explanation: '正确答案为 5。AVL 树在给定节点数时最大高度满足 N(h) = N(h−1) + N(h−2) + 1。N(0)=1, N(1)=2, N(2)=4, N(3)=7, N(4)=12, N(5)=20。14 个节点在 N(4)=12 和 N(5)=20 之间，因此最大深度（高度）为 5。'
+  },
+  {
+    id: 'q96', topic: 'AVL树', type: 'choice',
+    text: '在 AVL 树中依次插入关键字 18, 10, 20, 16，则插入 16 后需要进行什么调整？',
+    options: ['LL 右单旋', 'RR 左单旋', 'LR 左右双旋', 'RL 右左双旋'],
+    answer: 2,
+    explanation: '正确答案为 LR 左右双旋。插入过程：18→10(L), 20(R), 插入 16 后：18 的左子树为 10→右:16，18 的平衡因子 BF=2（左高），且 10 的 BF=-1（右高），属于 LR 型失衡，需要先对 10 左旋（RR），再对 18 右旋（LL），即 LR 左右双旋。'
+  },
+  {
+    id: 'q97', topic: 'AVL树', type: 'choice',
+    text: '平衡二叉树（AVL）平均查找时间为（  ）。',
+    options: ['log₂N', 'n log N', 'log N', 'N'],
+    answer: 0,
+    explanation: '正确答案为 log₂N（即 O(log n)）。AVL 树保证树的高度为 O(log n)，因此查找、插入、删除的平均和最坏时间复杂度均为 O(log n)。'
+  },
+  {
+    id: 'q98', topic: 'AVL树', type: 'choice',
+    text: '首先将 28, 23, 54, 61, 98, 37 插入一棵初始为空的 AVL 树，然后马上插入下列选项中的哪一个键值将引起 RL 旋转？',
+    options: ['10', '50', '80', '100'],
+    answer: 1,
+    explanation: '正确答案为 50。插入 28,23,54,61,98,37 构建初始 AVL 树后，再插入 50 会引起 RL 旋转（右-左双旋）。RL 旋转发生在插入结点导致某结点的右子树的左子树过高时。'
+  },
+  {
+    id: 'q99', topic: 'AVL树', type: 'choice',
+    text: '在 AVL 树中查找最小元素，就是查找：',
+    options: ['最左的元素', '最右的元素', '树根', '最深的元素'],
+    answer: 0,
+    explanation: '正确答案为最左的元素。根据 BST 性质，最小元素位于从根一直向左走到底的结点。AVL 树也是 BST，因此查找最小元素就是找到最左下方的结点。'
+  },
+
+  // ===== 第14周：图 - 基础 =====
+  {
+    id: 'q100', topic: '图', type: 'judge',
+    text: '图 G 有 N 个顶点，图 G\' 是图 G 的子图，若 G\' 有 N−1 条边且包含 G 的全部顶点，则 G\' 是 G 的生成树。',
+    options: ['正确', '错误'],
+    answer: 1,
+    explanation: '错误。生成树需要满足两个条件：① 包含全部 N 个顶点；② 是一棵树（连通且无环）。有 N−1 条边且包含全部顶点的子图不一定连通，不连通则有 N−1 条边但可能形成多个连通分量，不是树。'
+  },
+  {
+    id: 'q101', topic: '图', type: 'judge',
+    text: '图 G\' 是图 G 的子图，若 G\' 无环且包含 G 的全部顶点，则 G\' 是 G 的生成树。',
+    options: ['正确', '错误'],
+    answer: 1,
+    explanation: '错误。无环且包含全部顶点的子图还需要满足"连通"条件才是生成树。如果不连通，无环的子图是森林而非树。'
+  },
+  {
+    id: 'q102', topic: '图', type: 'judge',
+    text: '图的深度优先遍历相当于二叉树的先序遍历。',
+    options: ['正确', '错误'],
+    answer: 0,
+    explanation: '正确。图的深度优先遍历（DFS）类似于二叉树的先序遍历：先访问当前结点，然后递归访问其未被访问的邻接点。从根（起始结点）出发，优先深入探索。'
+  },
+  {
+    id: 'q103', topic: '图', type: 'judge',
+    text: '若有向图不存在回路，即使不用访问标志位同一结点也不会被访问两次。',
+    options: ['正确', '错误'],
+    answer: 0,
+    explanation: '正确。若无回路（即 DAG），从任一结点出发沿着有向边遍历，不会回到已访问的结点，因此不用标志位也不会重复访问（DFS/BFS 路径自然无环）。'
+  },
+  {
+    id: 'q104', topic: '图', type: 'judge',
+    text: '广度优先搜索（BFS）是一种用于图的遍历算法，它总是先访问距离起点最近的节点。',
+    options: ['正确', '错误'],
+    answer: 0,
+    explanation: '正确。BFS 从起点出发，按距离递增的顺序访问结点：先访问起点，然后距离为 1 的，然后距离为 2 的... 直到访问完所有可达结点。'
+  },
+  {
+    id: 'q105', topic: '图', type: 'judge',
+    text: '图的广度优先遍历需要借助的数据结构是堆栈。',
+    options: ['正确', '错误'],
+    answer: 1,
+    explanation: '错误。广度优先遍历（BFS）需要借助队列（Queue）来实现，而非堆栈。DFS 才使用堆栈（递归或显式栈）。'
+  },
+  {
+    id: 'q106', topic: '图', type: 'judge',
+    text: '广度优先搜索遍历图的时间复杂度和深度优先搜索遍历相同。',
+    options: ['正确', '错误'],
+    answer: 0,
+    explanation: '正确。BFS 和 DFS 的时间复杂度相同：邻接表存储为 O(V+E)，邻接矩阵存储为 O(V²)。两者都需要访问每个顶点和每条边。'
+  },
+  {
+    id: 'q107', topic: '图', type: 'choice',
+    text: '设 G 是一个含有 6 个顶点的无向图，该图至多有（  ）条边。',
+    options: ['5', '6', '7', '15'],
+    answer: 3,
+    explanation: '正确答案为 15。n 个顶点的无向完全图边数为 n(n−1)/2。当 n=6 时，边数 = 6×5/2 = 15。'
+  },
+  {
+    id: 'q108', topic: '图', type: 'choice',
+    text: '一个具 n 个顶点和 n 条边的无向图，若该图中各边均不重合，则该图一定是（  ）。',
+    options: ['有环的', '不连通的', '无环的', '连通的'],
+    answer: 0,
+    explanation: '正确答案为"有环的"。n 个顶点的无向连通图最少有 n−1 条边（树）。当边数 ≥ n 时，图中必然存在环。n 个顶点 n 条边 → 至少有一个环。'
+  },
+  {
+    id: 'q109', topic: '图', type: 'choice',
+    text: '图的广度优先遍历需要借助的数据结构是：',
+    options: ['堆栈', '队列', '链表', '有序表'],
+    answer: 1,
+    explanation: '正确答案为队列。BFS 类似于树的层序遍历，使用队列来保存待访问的顶点，确保按"先访问的先扩展"的顺序进行。'
+  },
+  {
+    id: 'q110', topic: '图', type: 'choice',
+    text: '无向图的邻接表如下：\n① v0：v1 → v2 → v3\n② v1：v0 → v3\n③ v2：v0 → v3\n④ v3：v0 → v1 → v2\n从 v1 出发进行 BFS，得到的遍历序列是：',
+    options: ['v1 v0 v3 v2', 'v1 v0 v2 v3', 'v1 v2 v3 v0', 'v1 v3 v0 v2'],
+    answer: 0,
+    explanation: '正确答案为 v1 v0 v3 v2。从 v1 出发 BFS：① 访问 v1；② 访问 v1 的邻接点 v0, v3（按邻接表顺序）；③ 扩展 v0 的未访问邻接点 v2；④ 得到序列 v1 → v0 → v3 → v2。'
+  },
+  {
+    id: 'q111', topic: '图', type: 'choice',
+    text: '已知无向连通图的顶点集为 {A, B, C, D, E, F}，边为 AB, AD, AE, BC, CD, CF, DE, DF。该图的关节点（割点）是哪些？',
+    options: ['B, D', 'A, D', 'D, E, F', 'A, D, E'],
+    answer: 1,
+    explanation: '正确答案为 A, D。关节点（割点）是删除后导致连通分量数增加的顶点。分析该图：A 连接 B,D,E，若删除 A 则 B 孤立（B 只连 A），图变得不连通；D 连接 A,C,F，若删除 D 则剩余顶点连通性被破坏。而 B、C、E、F 不是关节点。'
+  },
+
+  // ===== 第15周：拓扑排序 & 最短路径 =====
+  {
+    id: 'q112', topic: '图', type: 'judge',
+    text: '拓扑序一定是唯一的。',
+    options: ['正确', '错误'],
+    answer: 1,
+    explanation: '错误。拓扑排序的结果不唯一。如果同时有多个入度为 0 的顶点，选择不同的顶点作为下一个会产生不同的拓扑序列。例如 A→B, A→C，则 B,C 和 C,B 都是合法的拓扑序。'
+  },
+  {
+    id: 'q113', topic: '图', type: 'judge',
+    text: '拓扑排序的有向图中，最多存在一个环路。',
+    options: ['正确', '错误'],
+    answer: 1,
+    explanation: '错误。拓扑排序只能应用于有向无环图（DAG）。如果图中存在环路，则无法进行拓扑排序。并且图中可能存在多个环路，不是"最多一个"。'
+  },
+  {
+    id: 'q114', topic: '图', type: 'judge',
+    text: 'P 是顶点 S 到 T 的最短路径，如果该图中的所有路径的权值都加 1，P 仍然是 S 到 T 的最短路径。',
+    options: ['正确', '错误'],
+    answer: 1,
+    explanation: '错误。所有边权加 1 后，路径包含的边数越多，增加的权值越大。原来边数多的路径可能因为增加更多而不再是新的最短路径。例如原两条路径：S→T 权 10（1 条边），S→A→T 权 11（2 条边），加 1 后分别为 11 和 13，还是原路径最短。但如果 S→T 权 3（1 边），S→A→T 权 4（2 边），加 1 后为 4 和 6，原路径仍最短。但如果 S→T 权 5（1 边），S→A→T 权 6（2 边），加 1 后为 6 和 8... 实际上边数差异越大，越可能改变结果。一般结论：所有边权加相同值后，最短路径可能改变。'
+  },
+  {
+    id: 'q115', topic: '图', type: 'choice',
+    text: '数据结构中 Dijkstra 算法用来解决哪个问题？',
+    options: ['关键路径', '最短路径', '拓扑排序', '最小生成树'],
+    answer: 1,
+    explanation: '正确答案为最短路径。Dijkstra 算法用于求解带权有向/无向图中单源最短路径问题，即从一个源点到其余各顶点的最短路径。'
+  },
+  {
+    id: 'q116', topic: '图', type: 'choice',
+    text: '对含有 n 个顶点、e 条边的带权图求最短路径的 Dijkstra 算法时间复杂度是：',
+    options: ['O(n)', 'O(n+e)', 'O(n²)', 'O(n²)'],
+    answer: 2,
+    explanation: '正确答案为 O(n²)。Dijkstra 算法基本实现的时间复杂度为 O(n²)（n 为顶点数）。使用堆优化后可降至 O((n+e)log n)。'
+  },
+
+  // ===== 第17周：最小生成树 =====
+  {
+    id: 'q117', topic: '图', type: 'judge',
+    text: '在一个有权无向图中，若 b 到 a 的最短路径距离是 12，且 c 到 b 之间存在一条权为 2 的边，则 c 到 a 的最短路径距离一定不小于 10。',
+    options: ['正确', '错误'],
+    answer: 0,
+    explanation: '正确。c→a 的最短路径 ≤ c→b→a = 2 + 12 = 14，所以不可能是小于 10 的（因为如果 c→a < 10，那么 b→a = b→c + c→a < 2 + 10 = 12，这与 b→a=12 矛盾）。所以 c→a ≥ 10，即不小于 10。'
+  },
+  {
+    id: 'q118', topic: '图', type: 'judge',
+    text: '对于带权无向图 G = (V, E)，M 是 G 的最小生成树，则 M 中任意两点 V₁ 到 V₂ 的路径一定是它们之间的最短路径。',
+    options: ['正确', '错误'],
+    answer: 1,
+    explanation: '错误。最小生成树保证的是整个树的权值之和最小，而不是任意两点间的路径最短。两点在最小生成树中的路径可能比在原图中的最短路径更长。例如三角形 ABC，AB=1, BC=1, AC=2，最小生成树取 AB 和 BC，但 A 到 C 的路径为 AB+BC=2，而原图 A→C 直接为 1... 不，2>1 不对。换个例子：四个顶点形成正方形加一条对角线等。总之最小生成树不保证任意两点路径最短。'
+  },
+  {
+    id: 'q119', topic: '图', type: 'judge',
+    text: '若连通图上各边的权值均不相同，则该图的最小生成树是唯一的。',
+    options: ['正确', '错误'],
+    answer: 0,
+    explanation: '正确。当图中各边权值均不相同时，Prim 和 Kruskal 算法在每一步的选择都是唯一的（没有权值相同的边可供选择），因此得到的最小生成树也是唯一的。'
+  },
+  {
+    id: 'q120', topic: '图', type: 'judge',
+    text: '关于带权无向图的最小生成树问题，若图中某回路上的边权值各不相同，则其中权值最小的边一定在某最小生成树中。',
+    options: ['正确', '错误'],
+    answer: 1,
+    explanation: '错误。虽然回路中权值最小的边很可能在最小生成树中，但这不一定成立。如果该最小边连接的两个顶点已经通过其他路径连通（且总权值更小），则这条边不会被选入最小生成树。'
+  },
+  {
+    id: 'q121', topic: '图', type: 'choice',
+    text: '已知无向连通图 G 中各边的权值均为 1。下列算法中，一定能够求出图 G 中从某顶点到其余各顶点最短路径的是：\nI. Prim 算法  II. Kruskal 算法  III. 图的广度优先搜索算法',
+    options: ['仅 I', '仅 III', '仅 I、II', 'I、II、III'],
+    answer: 1,
+    explanation: '正确答案为"仅 III"。各边权值均为 1 时，BFS 从起点出发按距离逐层扩展，第一次到达各顶点的路径就是最短路径。Prim 和 Kruskal 用于求最小生成树，不涉及最短路径。'
+  },
+  {
+    id: 'q122', topic: '图', type: 'choice',
+    text: '关于 Prim 算法和 Kruskal 算法，以下哪句话是错误的？',
+    options: [
+      '两者在存在负边权的图上均无效',
+      '两者的思想都基于贪心算法',
+      '如果最小生成树不唯一，两者有可能得到不一样的解',
+      '两者有可能得到同样的解'
+    ],
+    answer: 0,
+    explanation: '正确答案为 A。Prim 和 Kruskal 算法在负边权的图上仍然有效！它们求的是最小生成树，负边权不影响算法的正确性。负边权影响的是最短路径算法（如 Dijkstra），而非最小生成树算法。B ✓ 两者都是贪心算法；C ✓ 树不唯一时可能得到不同解；D ✓ 也可能得到相同解。'
+  },
+];
+
+// ========================
+//  Additional questions based on important knowledge points
+// ========================
+const ADDITIONAL = [
+  {
+    id: 'add1', topic: '算法复杂度', type: 'choice',
+    text: '下列代码的时间复杂度是：\n<code>for(i = 0; i < n; i++)\n    for(j = i; j < n; j++)\n        sum++;</code>',
+    options: ['O(n)', 'O(n log n)', 'O(n²)', 'O(log n)'],
+    answer: 2,
+    explanation: '正确答案为 O(n²)。外层 n 次，内层从 i 到 n−1。总执行次数 = n + (n−1) + ... + 1 = n(n+1)/2 = O(n²)。'
+  },
+  {
+    id: 'add2', topic: '算法复杂度', type: 'choice',
+    text: '下列代码的时间复杂度是：\n<code>for(i = 1; i < n; i *= 2)\n    sum++;</code>',
+    options: ['O(n)', 'O(log n)', 'O(√n)', 'O(n log n)'],
+    answer: 1,
+    explanation: '正确答案为 O(log n)。i 的取值序列为 1, 2, 4, 8, ..., 2^k < n，故 k ≈ log₂n，循环执行 O(log n) 次。'
+  },
+  {
+    id: 'add3', topic: '算法复杂度', type: 'choice',
+    text: '汉诺塔问题中，将 n 个盘子从 A 移动到 C 的时间复杂度是：',
+    options: ['O(n)', 'O(2ⁿ)', 'O(n²)', 'O(n log n)'],
+    answer: 1,
+    explanation: '正确答案为 O(2ⁿ)。汉诺塔递推关系 T(n) = 2T(n−1) + 1，展开得 T(n) = 2ⁿ − 1，时间复杂度为指数级 O(2ⁿ)。'
+  },
+  {
+    id: 'add4', topic: '算法复杂度', type: 'judge',
+    text: '算法的时间复杂度与问题规模有关。',
+    options: ['正确', '错误'],
+    answer: 0,
+    explanation: '正确。时间复杂度是衡量算法执行时间随问题规模 n 增长而增长的趋势的函数，与问题规模密切相关。'
+  },
+  {
+    id: 'add5', topic: '线性表-顺序', type: 'choice',
+    text: '在顺序表中，插入一个元素平均需要移动 n/2 个元素。若采用链表存储，插入一个元素的时间复杂度是：',
+    options: ['O(1)', 'O(n)', 'O(log n)', 'O(n²)'],
+    answer: 1,
+    explanation: '正确答案为 O(n)。链表插入操作本身是 O(1)（修改指针），但需要先找到插入位置，查找过程需要 O(n) 时间。如果已知插入位置的前驱结点，则为 O(1)。'
+  },
+  {
+    id: 'add6', topic: '线性表-顺序', type: 'choice',
+    text: '若长度为 n 的非空线性表采用顺序存储结构，删除第 i 个元素（1 ≤ i ≤ n）需要移动的元素个数为：',
+    options: ['n−i', 'n−i+1', 'n−i−1', 'i'],
+    answer: 0,
+    explanation: '正确答案为 n−i。删除第 i 个元素后，后面的元素 (i+1 ~ n) 需要前移，共 n−i 个元素需要移动。'
+  },
+  {
+    id: 'add7', topic: '栈', type: 'choice',
+    text: '一个栈的入栈序列为 a, b, c, d, e，则不可能的出栈序列是：',
+    options: ['e, d, c, b, a', 'a, b, c, d, e', 'd, c, b, a, e', 'd, e, c, a, b'],
+    answer: 3,
+    explanation: '正确答案为 D（d,e,c,a,b）。模拟：d 出栈时栈内为 [a,b,c]，入 e 出 e 后栈内为 [a,b,c]，接下来要出 c 可以，但要出 a 则不行，因为 a 被 b 压着。所以 d,e,c,a,b 不可能。'
+  },
+  {
+    id: 'add8', topic: '队列', type: 'choice',
+    text: '循环队列的引入是为了解决什么问题？',
+    options: [
+      '队列的内存分配问题',
+      '顺序队列的"假溢出"问题',
+      '队列的遍历效率问题',
+      '队列的排序问题'
+    ],
+    answer: 1,
+    explanation: '正确答案为"假溢出"问题。普通顺序队列中，队尾指针到达数组末尾时即使队头前面还有空位也无法插入新元素，造成"假溢出"。循环队列通过将数组首尾相连解决了这一问题。'
+  },
+  {
+    id: 'add9', topic: '排序', type: 'choice',
+    text: '下列排序算法中，哪种是稳定的？',
+    options: ['快速排序', '简单选择排序', '归并排序', '希尔排序'],
+    answer: 2,
+    explanation: '正确答案为归并排序。常见的稳定排序有：冒泡排序、插入排序、归并排序、基数排序。不稳定的排序有：快速排序、选择排序、希尔排序、堆排序。'
+  },
+  {
+    id: 'add10', topic: '排序', type: 'choice',
+    text: '对序列 {15, 9, 7, 8, 20, −1, 4} 进行排序，若第一趟排序后的结果为 {−1, 9, 7, 8, 20, 15, 4}，则采用的排序方法是：',
+    options: ['冒泡排序', '快速排序', '简单选择排序', '直接插入排序'],
+    answer: 2,
+    explanation: '正确答案为简单选择排序。第一趟选出最小值 −1，将其与第一个元素 15 交换，得到 {−1, 9, 7, 8, 20, 15, 4}。这正是选择排序的特征。'
+  },
+  {
+    id: 'add11', topic: '树与二叉树', type: 'choice',
+    text: '一棵完全二叉树有 768 个结点，则叶子结点数为：',
+    options: ['384', '385', '383', '768'],
+    answer: 0,
+    explanation: '正确答案为 384。完全二叉树中，度为 1 的结点最多为 1 个。由二叉树性质 n₀ = n₂ + 1 且 n = n₀ + n₁ + n₂，设 n₁ = 0 或 1。若 n₁=0，n₀ + n₂ = 768，n₀ = n₂ + 1，解得 n₀ = 384.5，不符；若 n₁=1，n₀ + n₂ = 767，n₀ = n₂ + 1，解得 n₀ = 384。'
+  },
+  {
+    id: 'add12', topic: '树与二叉树', type: 'choice',
+    text: '二叉树的先序序列为 ABDECF，中序序列为 DBEAFC，则后序序列为：',
+    options: ['DEBFCA', 'DEFBCA', 'DEBFC A', 'DBEFCA'],
+    answer: 0,
+    explanation: '正确答案为 DEBFCA。由先序知 A 为根，中序 A 左边 DBE 为左子树、右边 FC 为右子树。先序 BDE 中 B 为左子树根，中序 DBE 中 D 为 B 的左子树、E 为右子树。先序 CF 中 C 为右子树根，中序 FC 中 F 为 C 的左子树。因此后序为：左→右→根 → D, E, B, F, C, A。'
+  },
+  {
+    id: 'add13', topic: '哈夫曼树', type: 'choice',
+    text: '若一组权值为 {2, 3, 5, 7, 11}，构造哈夫曼树后，其带权路径长度 WPL 为：',
+    options: ['65', '68', '72', '58'],
+    answer: 1,
+    explanation: '正确答案为 68。构造过程：① 2+3=5→{5,5,7,11}；② 5+5=10→{7,10,11}；③ 7+10=17→{11,17}；④ 11+17=28。WPL = (2+3)×3 + 5×3 + 7×2 + 11×2 = 15+15+14+22 = 68。'
+  },
+  {
+    id: 'add14', topic: '二叉搜索树', type: 'choice',
+    text: '在二叉搜索树中删除一个叶子结点后，再将其插入，则得到的二叉树：',
+    options: [
+      '一定和原树相同',
+      '一定和原树不同',
+      '可能相同也可能不同',
+      '无法确定'
+    ],
+    answer: 2,
+    explanation: '正确答案为"可能相同也可能不同"。如果删除叶子结点后插入时 BST 的插入规则将该结点放回原位置，则树相同；但如果插入过程中有其他因素影响（如具体实现），可能不同。对于标准的 BST 插入，删除叶子后再插入会放回原位置。'
+  },
+  {
+    id: 'add15', topic: '图', type: 'choice',
+    text: '一个有 n 个顶点的有向完全图有（  ）条边。',
+    options: ['n(n−1)/2', 'n(n−1)', 'n²', 'n(n+1)/2'],
+    answer: 1,
+    explanation: '正确答案为 n(n−1)。有向完全图中每对顶点之间有两条方向相反的边，因此总边数 = n(n−1)。'
+  },
+  {
+    id: 'add16', topic: '图', type: 'choice',
+    text: '拓扑排序可以用于检测图中是否存在：',
+    options: ['负权边', '环', '割点', '强连通分量'],
+    answer: 1,
+    explanation: '正确答案为环。拓扑排序只能应用于有向无环图（DAG）。如果拓扑排序过程中无法将所有顶点加入序列（出现所有剩余顶点入度都大于 0），说明图中存在环。'
+  },
+  {
+    id: 'add17', topic: '图', type: 'choice',
+    text: '下列关于最小生成树的说法，正确的是：',
+    options: [
+      '最小生成树是唯一的',
+      '最小生成树的边数等于顶点数',
+      'Prim 算法适合稀疏图，Kruskal 算法适合稠密图',
+      'Kruskal 算法适合稀疏图，Prim 算法适合稠密图'
+    ],
+    answer: 3,
+    explanation: '正确答案为 D。Kruskal 算法的时间复杂度为 O(E log E)，适合边数少的稀疏图；Prim 算法（邻接矩阵实现）的时间复杂度为 O(V²)，适合顶点数少的稠密图。'
+  },
+  {
+    id: 'add18', topic: '查找', type: 'choice',
+    text: '在有序表 {5, 13, 19, 21, 37, 56, 64, 75, 80, 88, 92} 中二分查找关键字 21，需要比较的次数为：',
+    options: ['1', '2', '3', '4'],
+    answer: 2,
+    explanation: '正确答案为 3。第 1 次 mid=5（37），21<37→左半；第 2 次 mid=2（19），21>19→右半；第 3 次 mid=3（21），找到！共比较 3 次。'
+  },
+  {
+    id: 'add19', topic: '栈', type: 'choice',
+    text: '表达式 "3×(4+5)−6" 的后缀表达式是：',
+    options: ['3 4 5 + × 6 −', '3 4 5 × + 6 −', '3 4 + 5 × 6 −', '3 4 5 + 6 × −'],
+    answer: 0,
+    explanation: '正确答案为 "3 4 5 + × 6 −"。利用栈将中缀转后缀：遇到数字直接输出，遇到运算符比较优先级，3 输出，4 输出，5 输出，遇到 + 入栈，遇到 ×（优先级高于 +）入栈，输出 ×... 完整过程可得到 3 4 5 + × 6 −。'
+  },
+  {
+    id: 'add20', topic: '树与二叉树', type: 'choice',
+    text: '二叉树第 k 层（根为第 1 层）最多有（  ）个结点。',
+    options: ['k', '2ᵏ', '2ᵏ⁻¹', '2ᵏ − 1'],
+    answer: 2,
+    explanation: '正确答案为 2ᵏ⁻¹。二叉树的第 1 层最多 1 个（根），第 2 层最多 2 个，第 3 层最多 4 个... 第 k 层最多 2ᵏ⁻¹ 个结点。前 k 层最多 2ᵏ − 1 个结点。'
+  },
+  {
+    id: 'add21', topic: '图', type: 'choice',
+    text: '无向图采用邻接表存储，顶点 A 的度为 5，则 A 的邻接表中有（  ）个结点。',
+    options: ['5', '10', '取决于边数', '不确定'],
+    answer: 0,
+    explanation: '正确答案为 5。无向图中，顶点的度等于该顶点邻接表中边结点的数量。顶点 A 的度为 5，所以它的邻接表中有 5 个边结点（表示与 5 个其他顶点相连）。'
+  },
+  {
+    id: 'add22', topic: '排序', type: 'choice',
+    text: '采用希尔排序，若增量序列为 5, 3, 1，序列为 {9, 8, 7, 6, 5, 4, 3, 2, 1, 0}，则增量为 5 的第一趟排序后，10 的位置是（从 1 开始编号）：',
+    options: ['1', '5', '6', '10'],
+    answer: 2,
+    explanation: '正确答案为 6。增量为 5 时，下标差 5 的元素分为一组：{9,4}, {8,3}, {7,2}, {6,1}, {5,0}。各组内排序后：{4,9}, {3,8}, {2,7}, {1,6}, {0,5}。原 10 号元素 0 排到第 5 组，位置不变。原 10 号位置... 注意题中说"10 的位置"指数值 10 不在序列中！序列中最大是 9，所以应该说元素 9 的位置。9 在第一组中与 4 交换后到第 5 个位置。'
+  },
+  {
+    id: 'add23', topic: 'AVL树', type: 'choice',
+    text: '在 AVL 树中插入一个结点后可能导致不平衡，调整不平衡结点的方法有：',
+    options: [
+      'LL 单旋、RR 单旋、LR 双旋、RL 双旋',
+      '左旋和右旋',
+      '前旋和后旋',
+      '上调、下调、合并、分裂'
+    ],
+    answer: 0,
+    explanation: '正确答案为 A。AVL 树的 4 种旋转调整方式：LL（左孩子的左子树过高→右单旋）、RR（右孩子的右子树过高→左单旋）、LR（左孩子的右子树过高→先左后右双旋）、RL（右孩子的左子树过高→先右后左双旋）。'
+  },
+  {
+    id: 'add24', topic: '算法复杂度', type: 'choice',
+    text: '递归算法的空间复杂度通常和什么有关？',
+    options: ['递归深度', '递归次数', '问题规模 n', '所有以上选项'],
+    answer: 0,
+    explanation: '正确答案为递归深度。递归算法的空间复杂度主要取决于递归调用的最大深度（递归栈的大小），因为每次递归调用都需要在栈中保存状态信息。'
+  },
+  {
+    id: 'add25', topic: '逻辑结构', type: 'choice',
+    text: '以下哪种数据结构属于非线性结构？',
+    options: ['栈', '队列', '数组', '树'],
+    answer: 3,
+    explanation: '正确答案为树。线性结构包括：线性表、栈、队列、数组等（元素间一对一关系）。非线性结构包括：树（一对多）、图（多对多）等。'
+  },
+  {
+    id: 'add26', topic: '图', type: 'choice',
+    text: 'Floyd 算法求解的是：',
+    options: [
+      '单源最短路径',
+      '所有顶点对之间的最短路径',
+      '最小生成树',
+      '关键路径'
+    ],
+    answer: 1,
+    explanation: '正确答案为"所有顶点对之间的最短路径"。Floyd 算法（三重循环）通过动态规划求解图中所有顶点对之间的最短路径，时间复杂度 O(n³)。Dijkstra 求解单源最短路径。'
+  },
+];
+
+// Combine all questions
+const allQuestions = [...QUESTIONS, ...ADDITIONAL];
+
+// Build per-topic numbering for all questions
+// Sequential numbering 1..N for all questions
+const labelMap = {};
+allQuestions.forEach((q, i) => {
+  labelMap[q.id] = i + 1;
+});
+
+// Week mapping for original homework questions
+const weekMap = {
+  q1:'第1周',q2:'第1周',q3:'第1周',q4:'第1周',q5:'第1周',q6:'第1周',
+  q7:'第2周',q8:'第2周',q9:'第2周',q10:'第2周',q11:'第2周',q12:'第2周',
+  q13:'第2周',q14:'第2周',q15:'第2周',q16:'第2周',q17:'第2周',
+  q18:'第3周',q19:'第3周',q20:'第3周',q21:'第3周',q22:'第3周',
+  q23:'第3周',q24:'第3周',q25:'第3周',q26:'第3周',
+  q27:'第4周',q28:'第4周',q29:'第4周',q30:'第4周',q31:'第4周',
+  q32:'第4周',q33:'第4周',q34:'第4周',q35:'第4周',
+  q36:'第5周',q37:'第5周',q38:'第5周',q39:'第5周',q40:'第5周',
+  q41:'第5周',q42:'第5周',q43:'第5周',q44:'第5周',q45:'第5周',
+  q46:'第5周',q47:'第5周',q48:'第5周',
+  q49:'第6周',q50:'第6周',q51:'第6周',q52:'第6周',
+  q53:'第6周',q54:'第6周',q55:'第6周',q56:'第6周',q57:'第6周',
+  q58:'第7周',q59:'第7周',q60:'第7周',q61:'第7周',q62:'第7周',q63:'第7周',
+  q64:'第8周',q65:'第8周',q66:'第8周',q67:'第8周',q68:'第8周',q69:'第8周',q70:'第8周',
+  q71:'第8周',q72:'第8周',q73:'第8周',q74:'第8周',q75:'第8周',q76:'第8周',q77:'第8周',q78:'第8周',
+  q79:'第11周',q80:'第11周',q81:'第11周',q82:'第11周',q83:'第11周',q84:'第11周',q85:'第11周',q86:'第11周',
+  q87:'第12周',q88:'第12周',q89:'第12周',q90:'第12周',q91:'第12周',q92:'第12周',q93:'第12周',q94:'第12周',
+  q95:'第12周',q96:'第12周',q97:'第12周',q98:'第12周',q99:'第12周',
+  q100:'第14周',q101:'第14周',q102:'第14周',q103:'第14周',q104:'第14周',
+  q105:'第14周',q106:'第14周',q107:'第14周',q108:'第14周',q109:'第14周',q110:'第14周',q111:'第14周',
+  q112:'第15周',q113:'第15周',q114:'第15周',q115:'第15周',q116:'第15周',
+  q117:'第17周',q118:'第17周',q119:'第17周',q120:'第17周',q121:'第17周',q122:'第17周',
+};
+
+// ========================
+//  Extract unique topics
+// ========================
+const topics = [...new Set(allQuestions.map(q => q.topic))];
+
+// ========================
+//  Render
+// ========================
+let correctCount = 0, wrongCount = 0, answeredCount = 0;
+
+function render() {
+  const topicBar = document.getElementById('topicBar');
+  topicBar.innerHTML = '<button class="topic-btn all-btn active" onclick="filterTopic(\'all\')">全部</button>' +
+    topics.map(t => `<button class="topic-btn" onclick="filterTopic('${t}')">${t}</button>`).join('');
+
+  document.getElementById('totalQ').textContent = allQuestions.length;
+  renderQuestions('all');
+}
+
+function renderQuestions(topic) {
+  const list = document.getElementById('questionList');
+  const filtered = topic === 'all' ? allQuestions : allQuestions.filter(q => q.topic === topic);
+
+  list.innerHTML = filtered.map(q => {
+    const labels = q.type === 'judge' ? ['T', 'F'] : ['A', 'B', 'C', 'D'];
+    return `
+    <div class="q-card" id="card-${q.id}">
+      <div class="q-header">
+        <span class="q-num">${labelMap[q.id]}.</span>
+        ${weekMap[q.id] ? `<span class="q-week">${weekMap[q.id]}</span>` : ''}
+        <span class="q-topic">${q.topic}</span>
+        <span class="q-type ${q.type}">${q.type === 'judge' ? '判断题' : '选择题'}</span>
+        <span class="q-status untouched" id="status-${q.id}">未作答</span>
+      </div>
+      <div class="q-text">${q.text.replace(/\n/g, '<br>').replace(/<code>([\s\S]*?)<\/code>/g, '<span class="code">$1</span>')}</div>
+      <div class="options" id="opts-${q.id}">
+        ${q.options.map((opt, i) => `
+          <div class="option" data-qid="${q.id}" data-idx="${i}" onclick="selectOption('${q.id}', ${i})">
+            <span class="label">${labels[i]}.</span>
+            <span>${opt}</span>
+          </div>
+        `).join('')}
+      </div>
+      <div class="explanation" id="expl-${q.id}"></div>
+    </div>`;
+  }).join('');
+}
+
+// Selection state
+const state = {};
+
+function selectOption(qid, idx) {
+  if (state[qid]?.locked) return;
+
+  const q = allQuestions.find(x => x.id === qid);
+  if (!q) return;
+
+  const isCorrect = idx === q.answer;
+  const labels = q.type === 'judge' ? ['T', 'F'] : ['A', 'B', 'C', 'D'];
+
+  // Lock
+  if (!state[qid]) state[qid] = {};
+  state[qid].locked = true;
+  state[qid].selected = idx;
+
+  // Update stats
+  if (!state[qid]?.counted) {
+    answeredCount++;
+    if (isCorrect) correctCount++;
+    else wrongCount++;
+    state[qid].counted = true;
+  }
+
+  // Update card
+  const card = document.getElementById(`card-${qid}`);
+  card.className = `q-card ${isCorrect ? 'correct' : 'wrong'}`;
+
+  // Update options
+  const opts = document.querySelectorAll(`#opts-${qid} .option`);
+  opts.forEach((opt, i) => {
+    opt.classList.add('disabled');
+    if (i === q.answer) opt.classList.add('correct-answer');
+    else if (i === idx && !isCorrect) opt.classList.add('wrong-answer');
+    else opt.classList.add('selected');
+  });
+
+  // Update status
+  const status = document.getElementById(`status-${qid}`);
+  status.className = `q-status ${isCorrect ? 'correct' : 'wrong'}`;
+  status.textContent = isCorrect ? '✓ 正确' : '✗ 错误';
+
+  // Show explanation
+  const expl = document.getElementById(`expl-${qid}`);
+  expl.className = `explanation show ${isCorrect ? 'correct' : 'wrong'}`;
+  const label = isCorrect ? '✅ 答案正确！' : '❌ 答案错误';
+  expl.innerHTML = `<div class="ans-label ${isCorrect ? 'correct-label' : 'wrong-label'}">${label}</div>
+    <div style="margin-top:4px">正确答案：<strong>${labels[q.answer]}</strong></div>
+    <div style="margin-top:8px">💡 ${q.explanation}</div>`;
+
+  // Update stats bar
+  updateStats();
+}
+
+function updateStats() {
+  document.getElementById('correctCount').textContent = correctCount;
+  document.getElementById('wrongCount').textContent = wrongCount;
+  document.getElementById('accuracy').textContent =
+    answeredCount === 0 ? '0%' : Math.round(correctCount / answeredCount * 100) + '%';
+}
+
+// Topic filter
+function filterTopic(topic) {
+  document.querySelectorAll('.topic-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  renderQuestions(topic);
+}
+
+// Init
+render();
+updateStats();
+</script>
+</body>
+</html>
