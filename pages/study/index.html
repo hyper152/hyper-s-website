@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>学习 · hyper的Vlog</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+    background: #f0f2f5;
+    color: #1a1a2e;
+    padding: 20px;
+  }
+  .container { max-width: 900px; margin: 0 auto; }
+  h1 {
+    text-align: center;
+    font-size: 28px;
+    margin: 30px 0 8px;
+    background: linear-gradient(135deg, #4f46e5, #06b6d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .subtitle { text-align:center; color:#888; font-size:14px; margin-bottom:30px; }
+  .card-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap:20px; }
+  .card {
+    background:#fff; border-radius:14px; padding:28px 24px;
+    text-decoration:none; color:inherit;
+    box-shadow: 0 2px 10px rgba(0,0,0,.06);
+    transition: .25s ease;
+    display:flex; flex-direction:column; align-items:center; text-align:center;
+    gap:12px;
+  }
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 24px rgba(79,70,229,.15);
+  }
+  .card i { font-size:2.8rem; }
+  .card h3 { font-size:1.3rem; font-weight:600; }
+  .card p { font-size:0.9rem; color:#888; line-height:1.5; }
+  .back { display:inline-flex; align-items:center; gap:6px; color:#4f46e5; text-decoration:none; margin-bottom:20px; font-size:14px; }
+  .back:hover { text-decoration:underline; }
+</style>
+</head>
+<body>
+<div class="container">
+  <a href="/home/index.html" class="back"><i class="fas fa-arrow-left"></i> 返回首页</a>
+  <h1><i class="fas fa-graduation-cap"></i> 学习</h1>
+  <p class="subtitle">课程学习笔记与知识整理</p>
+  <div class="card-grid">
+    <a href="/pages/study/cs/2026CQU-DataStructure-Algorithm_Course.html" class="card">
+      <i class="fas fa-code" style="color:#4f46e5;"></i>
+      <h3>数据结构与算法</h3>
+      <p>CQU 2025级 · 选择题练习与知识点总结</p>
+    </a>
+    <a href="/pages/study/思法/" class="card">
+      <i class="fas fa-gavel" style="color:#dc2626;"></i>
+      <h3>思想道德与法治</h3>
+      <p>期末复习重点 · 高频考点整理</p>
+    </a>
+  </div>
+</div>
+</body>
+</html>

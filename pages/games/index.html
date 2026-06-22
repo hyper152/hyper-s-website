@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>游戏栏 · hyper的Vlog</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+    background: #f0f2f5;
+    color: #1a1a2e;
+    padding:20px;
+  }
+  .container { max-width:900px; margin:0 auto; }
+  .back { display:inline-flex; align-items:center; gap:6px; color:#3b8526; text-decoration:none; margin-bottom:12px; font-size:14px; }
+  .back:hover { text-decoration:underline; }
+  h1 { text-align:center; font-size:28px; margin:20px 0 4px; }
+  h1 i { color:#3b8526; }
+  .subtitle { text-align:center; color:#888; font-size:13px; margin-bottom:24px; }
+  .card-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:16px; }
+  .card {
+    background:#fff; border-radius:14px; padding:24px; text-decoration:none; color:inherit;
+    box-shadow:0 2px 10px rgba(0,0,0,.06); transition:.25s ease; border-left:4px solid transparent;
+    display:flex; flex-direction:column; align-items:center; text-align:center; gap:10px;
+  }
+  .card:hover { transform:translateY(-5px); box-shadow:0 8px 24px rgba(59,133,38,.12); }
+  .card i { font-size:2.5rem; }
+  .card .title { font-size:16px; font-weight:600; }
+  .card .desc { font-size:13px; color:#888; line-height:1.5; }
+  .card .tags { display:flex; gap:6px; flex-wrap:wrap; justify-content:center; }
+  .card .tags span {
+    font-size:11px; padding:2px 8px; border-radius:8px; background:#f0fdf4; color:#15803d;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <a href="/home/index.html" class="back"><i class="fas fa-arrow-left"></i> 返回首页</a>
+  <h1><i class="fas fa-gamepad"></i> 游戏栏</h1>
+  <p class="subtitle">游戏时光，快乐分享</p>
+  <div class="card-grid">
+
+    <a href="/pages/games/mc/" class="card" style="border-left-color:#3b8526;">
+      <i class="fas fa-cube" style="color:#3b8526;"></i>
+      <div class="title">我的世界 · 温州育英重建计划</div>
+      <div class="desc">在方块中复刻高中记忆！服务器 mc.0o0hyper0o0.cyou 已开放，版本 1.21.1-Fabric 0.16.10，欢迎加入共建。</div>
+      <div class="tags"><span>🏗 重建</span><span>🎮 1.21.1</span></div>
+    </a>
+
+    <a href="/pages/games/CS/" class="card" style="border-left-color:#e67e22;">
+      <i class="fas fa-crosshairs" style="color:#e67e22;"></i>
+      <div class="title">反恐精英 · 游戏记录</div>
+      <div class="desc">CS 游戏历程与实战记录。</div>
+      <div class="tags"><span>🔫 CS2</span></div>
+    </a>
+
+  </div>
+</div>
+</body>
+</html>
