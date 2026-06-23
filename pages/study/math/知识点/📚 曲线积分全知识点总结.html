@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📚 曲线积分全知识点总结 — 高等数学II-2</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; line-height: 1.8; color: #333; background: #f4f6f8; padding: 20px; max-width: 880px; margin: 0 auto; }
+        .header { text-align: center; padding-bottom: 20px; border-bottom: 2px solid #e0e0e0; margin-bottom: 30px; }
+        .header h1 { color: #2c3e50; margin-bottom: 5px; font-size: 1.6em; }
+        .header .subtitle { color: #7f8c8d; font-size: 0.9em; }
+        .download-link { display: inline-flex; align-items: center; gap: 8px; background: #3498db; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; margin: 15px 0; transition: background 0.2s; }
+        .download-link:hover { background: #2980b9; }
+        .nav-back { display: inline-flex; align-items: center; gap: 6px; color: #555; text-decoration: none; font-size: 0.9em; margin-bottom: 15px; }
+        .nav-back:hover { color: #3498db; }
+        .section { background: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 20px 25px; margin-bottom: 20px; border-left: 4px solid #3498db; }
+        .section h2 { color: #2980b9; margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 8px; font-size: 1.2em; }
+        .section h3 { color: #2c3e50; font-size: 1.05em; margin: 15px 0 8px; }
+        .math-tex { font-family: "Times New Roman", Times, serif; font-style: italic; background: #f9f9f9; padding: 2px 6px; border-radius: 3px; }
+        .formula-box { background: #f0f4ff; border: 1px solid #d0d8f0; border-radius: 6px; padding: 12px 16px; margin: 10px 0; text-align: center; font-size: 1.1em; }
+        .example-box { background: #f8f9fa; border-left: 3px solid #27ae60; padding: 10px 15px; margin: 10px 0; border-radius: 0 4px 4px 0; }
+        .note-box { background: #fff8e1; border-left: 3px solid #ffc107; padding: 10px 15px; margin: 10px 0; border-radius: 0 4px 4px 0; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+        th { background: #f0f4ff; font-weight: bold; }
+        ul, ol { padding-left: 20px; }
+        li { margin-bottom: 6px; }
+        .footer-note { text-align: center; color: #95a5a6; font-size: 0.85em; margin-top: 40px; border-top: 1px solid #e0e0e0; padding-top: 20px; }
+        .two-col { display: flex; gap: 20px; flex-wrap: wrap; }
+        .two-col > div { flex: 1; min-width: 280px; }
+    </style>
+</head>
+<body>
+    <a href="../main.html" class="nav-back">⬅ 返回考点大纲</a>
+    <div class="header">
+        <h1>📚 曲线积分全知识点总结</h1>
+        <p class="subtitle">重积分与线面积分</p>
+    </div>
+    <a href="📚 曲线积分全知识点总结.pdf" class="download-link" download>📥 下载 PDF 原文</a>
+
+    <!-- 一、概述与分类 -->
+    <div class="section">
+        <h2>一、曲线积分概述</h2>
+        <p>曲线积分是多元函数积分学的重要组成部分，它研究的是函数沿曲线的积分。根据被积函数的类型和积分路径的方向性，曲线积分分为两大类：</p>
+        <table>
+            <tr>
+                <th>类型</th>
+                <th>名称</th>
+                <th>被积对象</th>
+                <th>物理意义</th>
+            </tr>
+            <tr>
+                <td>第一型</td>
+                <td>对弧长的曲线积分</td>
+                <td>标量函数 <span class="math-tex">f(x,y,z)</span></td>
+                <td>曲线质量、弧长等</td>
+            </tr>
+            <tr>
+                <td>第二型</td>
+                <td>对坐标的曲线积分</td>
+                <td>向量场 <span class="math-tex">F = (P,Q,R)</span></td>
+                <td>变力沿曲线做功、环流量</td>
+            </tr>
+        </table>
+        <div class="note-box">
+            <strong>关键区别：</strong> 第一型曲线积分与方向无关（无向），第二型曲线积分与方向有关（有向），反转路径方向会使第二型曲线积分变号。
+        </div>
+    </div>
+
+    <!-- 二、第一型曲线积分 -->
+    <div class="section">
+        <h2>二、第一型曲线积分（对弧长的曲线积分）</h2>
+
+        <h3>1. 定义</h3>
+        <p>设 <span class="math-tex">L</span> 为空间中一条可求长的光滑曲线，<span class="math-tex">f(x,y,z)</span> 在 <span class="math-tex">L</span> 上有定义，将 <span class="math-tex">L</span> 任意分割为 <span class="math-tex">n</span> 个小弧段，在每个弧段上任取一点，作黎曼和的极限：</p>
+        <div class="formula-box">
+            <span class="math-tex">∫<sub>L</sub> f(x,y,z) ds = lim<sub>λ→0</sub> ∑<sub>i=1</sub><sup>n</sup> f(ξ<sub>i</sub>, η<sub>i</sub>, ζ<sub>i</sub>) Δs<sub>i</sub></span>
+        </div>
+        <p>其中 <span class="math-tex">ds</span> 称为<strong>弧长微元</strong>。</p>
+
+        <h3>2. 计算方法（参数方程法）</h3>
+        <p>若曲线 <span class="math-tex">L</span> 由参数方程 <span class="math-tex">x = x(t), y = y(t), z = z(t)</span>（<span class="math-tex">α ≤ t ≤ β</span>）给出，则：</p>
+        <div class="formula-box">
+            <span class="math-tex">∫<sub>L</sub> f(x,y,z) ds = ∫<sub>α</sub><sup>β</sup> f(x(t), y(t), z(t)) √(x'(t)² + y'(t)² + z'(t)²) dt</span>
+        </div>
+        <p>其中 <span class="math-tex">ds = √(x'(t)² + y'(t)² + z'(t)²) dt</span> 为弧长微分公式。</p>
+
+        <h3>3. 几种特殊情形</h3>
+        <ul>
+            <li><strong>平面曲线</strong> <span class="math-tex">y = y(x)</span>（<span class="math-tex">a ≤ x ≤ b</span>）：<br>
+                <span class="math-tex">∫<sub>L</sub> f(x,y) ds = ∫<sub>a</sub><sup>b</sup> f(x, y(x)) √(1 + (y'(x))²) dx</span></li>
+            <li><strong>极坐标曲线</strong> <span class="math-tex">r = r(θ)</span>（<span class="math-tex">α ≤ θ ≤ β</span>）：<br>
+                <span class="math-tex">∫<sub>L</sub> f(r,θ) ds = ∫<sub>α</sub><sup>β</sup> f(r(θ),θ) √(r(θ)² + (r'(θ))²) dθ</span></li>
+        </ul>
+
+        <h3>4. 性质</h3>
+        <table>
+            <tr><th>性质</th><th>表达式</th></tr>
+            <tr><td>线性性</td><td><span class="math-tex">∫ (αf + βg) ds = α∫f ds + β∫g ds</span></td></tr>
+            <tr><td>路径可加性</td><td><span class="math-tex">∫<sub>L<sub>1</sub>+L<sub>2</sub></sub> f ds = ∫<sub>L<sub>1</sub></sub> f ds + ∫<sub>L<sub>2</sub></sub> f ds</span></td></tr>
+            <tr><td>无方向性</td><td><span class="math-tex">∫<sub>L<sup>−</sup></sub> f ds = ∫<sub>L</sub> f ds</span>（与方向无关）</td></tr>
+            <tr><td>比较定理</td><td>若 <span class="math-tex">f ≤ g</span> 在 <span class="math-tex">L</span> 上，则 <span class="math-tex">∫<sub>L</sub> f ds ≤ ∫<sub>L</sub> g ds</span></td></tr>
+        </table>
+    </div>
+
+    <!-- 三、第二型曲线积分 -->
+    <div class="section">
+        <h2>三、第二型曲线积分（对坐标的曲线积分）</h2>
+
+        <h3>1. 定义</h3>
+        <p>设向量值函数 <span class="math-tex">F(x,y,z) = (P(x,y,z), Q(x,y,z), R(x,y,z))</span> 在有向光滑曲线 <span class="math-tex">L</span> 上连续，则：</p>
+        <div class="formula-box">
+            <span class="math-tex">∫<sub>L</sub> P dx + Q dy + R dz = ∫<sub>L</sub> F · dr</span>
+        </div>
+        <p>其中 <span class="math-tex">dr = (dx, dy, dz)</span> 为有向弧微元。</p>
+
+        <h3>2. 计算方法（参数方程法）</h3>
+        <p>若 <span class="math-tex">L</span> 由参数方程 <span class="math-tex">x = x(t), y = y(t), z = z(t)</span>（<span class="math-tex">t: α → β</span>，<span class="math-tex">α</span> 为起点，<span class="math-tex">β</span> 为终点）给出：</p>
+        <div class="formula-box">
+            <span class="math-tex">∫<sub>L</sub> P dx + Q dy + R dz = ∫<sub>α</sub><sup>β</sup> [P·x'(t) + Q·y'(t) + R·z'(t)] dt</span>
+        </div>
+
+        <h3>3. 两种曲线积分之间的联系</h3>
+        <p>同一曲线上，两类曲线积分通过切向量方向余弦相互转换：</p>
+        <div class="formula-box">
+            <span class="math-tex">∫<sub>L</sub> P dx + Q dy + R dz = ∫<sub>L</sub> (P cos α + Q cos β + R cos γ) ds</span>
+        </div>
+        <p>其中 <span class="math-tex">(cos α, cos β, cos γ)</span> 为曲线 <span class="math-tex">L</span> 在指定方向上的<strong>单位切向量</strong>的方向余弦。</p>
+    </div>
+
+    <!-- 四、格林公式 -->
+    <div class="section">
+        <h2>四、格林公式（Green 公式）</h2>
+
+        <h3>1. 定理表述</h3>
+        <p>设闭区域 <span class="math-tex">D</span> 由分段光滑的闭曲线 <span class="math-tex">L</span> 围成，函数 <span class="math-tex">P(x,y)</span> 和 <span class="math-tex">Q(x,y)</span> 在 <span class="math-tex">D</span> 上具有一阶连续偏导数，则：</p>
+        <div class="formula-box">
+            <span class="math-tex">∮<sub>L</sub> P dx + Q dy = ∬<sub>D</sub> (∂Q/∂x − ∂P/∂y) dxdy</span>
+        </div>
+        <p>其中 <span class="math-tex">L</span> 取<strong>正向</strong>（即区域 <span class="math-tex">D</span> 始终在左侧的行走方向，对应逆时针方向）。</p>
+
+        <h3>2. 格林公式的应用</h3>
+        <ul>
+            <li><strong>计算封闭曲线上的第二型曲线积分</strong>：转化为二重积分计算</li>
+            <li><strong>计算平面区域面积</strong>：取 <span class="math-tex">P = −y, Q = x</span>，得：
+                <div class="formula-box" style="margin-top: 8px;">
+                    <span class="math-tex">A = ∬<sub>D</sub> dxdy = ½ ∮<sub>L</sub> x dy − y dx</span>
+                </div>
+            </li>
+            <li><strong>判断曲线积分与路径无关</strong>：当 <span class="math-tex">∂Q/∂x − ∂P/∂y = 0</span> 且 <span class="math-tex">D</span> 为单连通区域时，积分与路径无关</li>
+        </ul>
+
+        <div class="note-box">
+            <strong>注意：</strong> 如果函数 <span class="math-tex">P,Q</span> 在 <span class="math-tex">D</span> 内部有奇点（不连续点），不能直接使用格林公式，需要通过<strong>挖洞法</strong>（取绕奇点的小圆或闭合回路）处理。
+        </div>
+    </div>
+
+    <!-- 五、曲线积分与路径无关的条件 -->
+    <div class="section">
+        <h2>五、曲线积分与路径无关</h2>
+
+        <h3>1. 等价条件</h3>
+        <p>设 <span class="math-tex">D</span> 是单连通区域，<span class="math-tex">P,Q</span> 在 <span class="math-tex">D</span> 上连续可微，则以下命题等价：</p>
+        <ol>
+            <li>曲线积分 <span class="math-tex">∫<sub>L</sub> P dx + Q dy</span> 在 <span class="math-tex">D</span> 内与路径无关</li>
+            <li>对 <span class="math-tex">D</span> 内任意闭曲线 <span class="math-tex">C</span>，有 <span class="math-tex">∮<sub>C</sub> P dx + Q dy = 0</span></li>
+            <li>在 <span class="math-tex">D</span> 内恒有 <span class="math-tex">∂Q/∂x = ∂P/∂y</span></li>
+            <li>存在可微函数 <span class="math-tex">u(x,y)</span> 使 <span class="math-tex">du = P dx + Q dy</span>（即 <span class="math-tex">P = ∂u/∂x</span>，<span class="math-tex">Q = ∂u/∂y</span>）</li>
+        </ol>
+
+        <h3>2. 原函数的求法</h3>
+        <p>当积分与路径无关时，可选特殊路径（如折线）计算原函数：</p>
+        <div class="formula-box">
+            <span class="math-tex">u(x,y) = ∫<sub>(x₀,y₀)</sub><sup>(x,y)</sup> P dx + Q dy</span>
+        </div>
+        <p>通常取 <span class="math-tex">(x₀,y₀)</span> 为原点或方便的起始点，路径由平行于坐标轴的折线构成。</p>
+    </div>
+
+    <!-- 六、典型例题 -->
+    <div class="section">
+        <h2>六、典型例题</h2>
+
+        <div class="example-box">
+            <strong>例 1：</strong> 计算第一型曲线积分 <span class="math-tex">∫<sub>L</sub> (x² + y²) ds</span>，其中 <span class="math-tex">L</span> 为圆周 <span class="math-tex">x = a cos t, y = a sin t</span>（<span class="math-tex">0 ≤ t ≤ 2π</span>）。<br><br>
+            <strong>解：</strong> <span class="math-tex">ds = √(x'(t)² + y'(t)²) dt = √((−a sin t)² + (a cos t)²) dt = a dt</span><br>
+            <span class="math-tex">∫<sub>L</sub> (x² + y²) ds = ∫<sub>0</sub><sup>2π</sup> (a² cos² t + a² sin² t) · a dt = ∫<sub>0</sub><sup>2π</sup> a³ dt = 2π a³</span>
+        </div>
+
+        <div class="example-box">
+            <strong>例 2：</strong> 计算第二型曲线积分 <span class="math-tex">∫<sub>L</sub> y dx + x dy</span>，其中 <span class="math-tex">L</span> 为从 <span class="math-tex">(1,0)</span> 到 <span class="math-tex">(0,1)</span> 的上半圆弧 <span class="math-tex">x² + y² = 1</span>。<br><br>
+            <strong>解：</strong> 参数化 <span class="math-tex">x = cos t, y = sin t</span>（<span class="math-tex">t: 0 → π/2</span>）<br>
+            <span class="math-tex">∫<sub>L</sub> y dx + x dy = ∫<sub>0</sub><sup>π/2</sup> [sin t · (−sin t) + cos t · cos t] dt</span><br>
+            <span class="math-tex">= ∫<sub>0</sub><sup>π/2</sup> (−sin² t + cos² t) dt = ∫<sub>0</sub><sup>π/2</sup> cos(2t) dt = 0</span>
+        </div>
+
+        <div class="example-box">
+            <strong>例 3（格林公式应用）：</strong> 计算 <span class="math-tex">∮<sub>L</sub> (2xy − x²) dx + (x + y²) dy</span>，<span class="math-tex">L</span> 为正向圆周 <span class="math-tex">x² + y² = 4</span>。<br><br>
+            <strong>解：</strong> <span class="math-tex">P = 2xy − x², Q = x + y²</span><br>
+            <span class="math-tex">∂Q/∂x = 1, ∂P/∂y = 2x</span><br>
+            <span class="math-tex">∮<sub>L</sub> P dx + Q dy = ∬<sub>D</sub> (1 − 2x) dxdy = ∬<sub>D</sub> 1 dxdy − 2 ∬<sub>D</sub> x dxdy</span><br>
+            由对称性 <span class="math-tex">∬<sub>D</sub> x dxdy = 0</span>，<span class="math-tex">∬<sub>D</sub> dxdy = 4π</span>，故结果为 <span class="math-tex"><strong>4π</strong></span>。
+        </div>
+
+        <div class="example-box">
+            <strong>例 4（与路径无关）：</strong> 验证积分 <span class="math-tex">∫<sub>L</sub> (2xy + 1) dx + (x² + 2y) dy</span> 与路径无关，并求从 <span class="math-tex">(0,0)</span> 到 <span class="math-tex">(1,2)</span> 的积分值。<br><br>
+            <strong>验证：</strong> <span class="math-tex">P = 2xy + 1, Q = x² + 2y</span><br>
+            <span class="math-tex">∂P/∂y = 2x, ∂Q/∂x = 2x</span>，满足 <span class="math-tex">∂Q/∂x = ∂P/∂y</span>，故与路径无关。<br><br>
+            <strong>计算：</strong> 取折线路径 <span class="math-tex">(0,0) → (1,0) → (1,2)</span><br>
+            第一段（<span class="math-tex">y=0, dy=0</span>, x: 0→1）：<span class="math-tex">∫<sub>0</sub><sup>1</sup> (2x·0 + 1) dx = ∫<sub>0</sub><sup>1</sup> dx = 1</span><br>
+            第二段（<span class="math-tex">x=1, dx=0</span>, y: 0→2）：<span class="math-tex">∫<sub>0</sub><sup>2</sup> (1² + 2y) dy = [y + y²]<sub>0</sub><sup>2</sup> = 2 + 4 = 6</span><br>
+            总积分 = <strong>7</strong>
+        </div>
+    </div>
+
+    <!-- 七、常见误区与技巧 -->
+    <div class="section">
+        <h2>七、常见误区与解题技巧</h2>
+
+        <div class="two-col">
+            <div>
+                <h3>常见误区</h3>
+                <ul>
+                    <li><strong>混淆两类曲线积分</strong>：第一型对弧长（标量），第二型对坐标（向量）</li>
+                    <li><strong>忘记弧长微元</strong>：第一型积分中 <span class="math-tex">ds</span> 不是 <span class="math-tex">dt</span>，而是 <span class="math-tex">√(x'² + y'²) dt</span></li>
+                    <li><strong>忽略方向</strong>：第二型曲线积分换向时记得加负号</li>
+                    <li><strong>格林公式方向</strong>：闭曲线方向必须是正向（逆时针），否则差一个负号</li>
+                    <li><strong>奇点问题</strong>：被积函数在围成区域内有奇点时不能直接使用格林公式</li>
+                </ul>
+            </div>
+            <div>
+                <h3>解题技巧</h3>
+                <ul>
+                    <li><strong>对称性</strong>：利用积分曲线的对称性简化被积函数</li>
+                    <li><strong>代入曲线方程</strong>：第一型曲线积分中，可将曲线方程代入被积函数化简</li>
+                    <li><strong>补线法</strong>：对非闭曲线的第二型积分，可补一条简单曲线使之闭合后使用格林公式</li>
+                    <li><strong>凑微分法</strong>：寻找原函数直接计算积分值</li>
+                    <li><strong>参数化技巧</strong>：选择合适的参数化形式可大幅简化计算</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        📚 曲线积分全知识点总结 | 高等数学II-2 知识点
+    </div>
+</body>
+</html>

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>梯度运算的常用推论表 — 高等数学II-2</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; line-height: 1.8; color: #333; background: #f4f6f8; padding: 20px; max-width: 880px; margin: 0 auto; }
+        .header { text-align: center; padding-bottom: 20px; border-bottom: 2px solid #e0e0e0; margin-bottom: 30px; }
+        .header h1 { color: #2c3e50; margin-bottom: 5px; font-size: 1.6em; }
+        .header .subtitle { color: #7f8c8d; font-size: 0.9em; }
+        .download-link { display: inline-flex; align-items: center; gap: 8px; background: #3498db; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; margin: 15px 0; transition: background 0.2s; }
+        .download-link:hover { background: #2980b9; }
+        .nav-back { display: inline-flex; align-items: center; gap: 6px; color: #555; text-decoration: none; font-size: 0.9em; margin-bottom: 15px; }
+        .nav-back:hover { color: #3498db; }
+        .section { background: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 20px 25px; margin-bottom: 20px; border-left: 4px solid #3498db; }
+        .section h2 { color: #2980b9; margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 8px; font-size: 1.2em; }
+        .section h3 { color: #2c3e50; font-size: 1.05em; margin: 15px 0 8px; }
+        .math-tex { font-family: "Times New Roman", Times, serif; font-style: italic; background: #f9f9f9; padding: 2px 6px; border-radius: 3px; }
+        .formula-box { background: #f0f4ff; border: 1px solid #d0d8f0; border-radius: 6px; padding: 12px 16px; margin: 10px 0; text-align: center; font-size: 1.1em; }
+        .example-box { background: #f8f9fa; border-left: 3px solid #27ae60; padding: 10px 15px; margin: 10px 0; border-radius: 0 4px 4px 0; }
+        .note-box { background: #fff8e1; border-left: 3px solid #ffc107; padding: 10px 15px; margin: 10px 0; border-radius: 0 4px 4px 0; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+        th { background: #f0f4ff; font-weight: bold; }
+        ul, ol { padding-left: 20px; }
+        li { margin-bottom: 6px; }
+        .footer-note { text-align: center; color: #95a5a6; font-size: 0.85em; margin-top: 40px; border-top: 1px solid #e0e0e0; padding-top: 20px; }
+    </style>
+</head>
+<body>
+    <a href="../main.html" class="nav-back">⬅ 返回考点大纲</a>
+    <div class="header">
+        <h1>梯度运算的常用推论表</h1>
+        <p class="subtitle">多元函数微分学 — 梯度运算的各种恒等式与推论汇总</p>
+    </div>
+    <a href="梯度运算的常用推论表.pdf" class="download-link" download>📥 下载 PDF 原文</a>
+
+    <div class="section">
+        <h2>一、梯度定义与基本概念</h2>
+        <p>梯度（Gradient）是多元函数微分学中的核心概念。设 <span class="math-tex">u = f(x, y, z)</span> 在区域 <span class="math-tex">D</span> 内具有一阶连续偏导数，则函数 <span class="math-tex">f</span> 在点 <span class="math-tex">P(x, y, z)</span> 处的梯度定义为：</p>
+        <div class="formula-box">
+            <span class="math-tex">grad f = &#x2207;f = (&#x2202;f/&#x2202;x, &#x2202;f/&#x2202;y, &#x2202;f/&#x2202;z)</span>
+        </div>
+        <p>其中 <span class="math-tex">&#x2207; = (&#x2202;/&#x2202;x, &#x2202;/&#x2202;y, &#x2202;/&#x2202;z)</span> 称为 Hamilton 算子（Nabla 算子）。梯度方向是函数在该点处方向导数最大的方向，其模等于该方向导数的最大值。</p>
+        <div class="note-box">
+            <strong>几何意义：</strong>梯度方向是等值面（等值线）的法线方向，指向函数值增加最快的方向。梯度向量与等高线（等值面）正交。
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>二、梯度运算的基本法则</h2>
+        <p>设 <span class="math-tex">u = f(x), v = g(x)</span> 为可微函数，<span class="math-tex">C</span> 为常数。以下为梯度运算的基本法则表：</p>
+
+        <table>
+            <tr>
+                <th>性质</th>
+                <th>公式</th>
+                <th>名称</th>
+            </tr>
+            <tr>
+                <td>线性性</td>
+                <td><span class="math-tex">&#x2207;(C &#xb7; u) = C &#xb7; &#x2207;u</span></td>
+                <td>常数倍法则</td>
+            </tr>
+            <tr>
+                <td>线性性</td>
+                <td><span class="math-tex">&#x2207;(u &#xb1; v) = &#x2207;u &#xb1; &#x2207;v</span></td>
+                <td>加法/减法法则</td>
+            </tr>
+            <tr>
+                <td>乘积法则</td>
+                <td><span class="math-tex">&#x2207;(uv) = v &#xb7; &#x2207;u + u &#xb7; &#x2207;v</span></td>
+                <td>Leibniz 法则</td>
+            </tr>
+            <tr>
+                <td>商法则</td>
+                <td><span class="math-tex">&#x2207;(u/v) = (v&#x2207;u &#x2212; u&#x2207;v) / v<sup>2</sup></span> (<span class="math-tex">v &#x2260; 0</span>)</td>
+                <td>分式法则</td>
+            </tr>
+            <tr>
+                <td>幂法则</td>
+                <td><span class="math-tex">&#x2207;(u<sup>n</sup>) = n u<sup>n&#x2212;1</sup> &#xb7; &#x2207;u</span></td>
+                <td>复合函数求导</td>
+            </tr>
+        </table>
+
+        <p>这些法则与一元函数求导法则在形式上高度一致，但梯度算子作用于多元函数时，结果是一个向量而非标量。</p>
+    </div>
+
+    <div class="section">
+        <h2>三、链式法则与复合函数梯度</h2>
+        <p>设 <span class="math-tex">y = f(u<sub>1</sub>, u<sub>2</sub>, ..., u<sub>m</sub>)</span>，其中 <span class="math-tex">u<sub>i</sub> = g<sub>i</sub>(x<sub>1</sub>, x<sub>2</sub>, ..., x<sub>n</sub>)</span>，则复合函数的梯度满足以下链式法则：</p>
+
+        <div class="formula-box">
+            <span class="math-tex">&#x2207;y = &#x2211;<sub>i=1</sub><sup>m</sup> (&#x2202;f/&#x2202;u<sub>i</sub>) &#xb7; &#x2207;g<sub>i</sub></span>
+        </div>
+
+        <p>特别地，对于一元外函数与多元内函数的复合 <span class="math-tex">y = f(u), u = g(x, y, z)</span>，有：</p>
+        <div class="formula-box">
+            <span class="math-tex">&#x2207;f(u) = f'(u) &#xb7; &#x2207;u</span>
+        </div>
+
+        <div class="example-box">
+            <strong>示例：</strong>求 <span class="math-tex">f(x, y) = sin(x<sup>2</sup> + y<sup>2</sup>)</span> 的梯度。<br>
+            <strong>解：</strong>令 <span class="math-tex">u = x<sup>2</sup> + y<sup>2</sup></span>，则 <span class="math-tex">f = sin u</span>，<span class="math-tex">&#x2207;f = cos u &#xb7; &#x2207;u = cos(x<sup>2</sup> + y<sup>2</sup>) &#xb7; (2x, 2y) = (2x cos(x<sup>2</sup> + y<sup>2</sup>), 2y cos(x<sup>2</sup> + y<sup>2</sup>))</span>。
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>四、梯度运算的常用恒等式</h2>
+        <p>以下为梯度运算中重要的恒等式汇总，涉及标量函数与向量函数的交互：</p>
+
+        <h3>4.1 向量点积的梯度恒等式</h3>
+        <p>设 <span class="math-tex">F = (F<sub>1</sub>, F<sub>2</sub>, F<sub>3</sub>)</span> 和 <span class="math-tex">G = (G<sub>1</sub>, G<sub>2</sub>, G<sub>3</sub>)</span> 为向量值函数，<span class="math-tex">f, g</span> 为标量函数：</p>
+        <div class="formula-box">
+            <span class="math-tex">&#x2207;(F &#xb7; G) = (G &#xb7; &#x2207;)F + (F &#xb7; &#x2207;)G + G &#xd7; (&#x2207; &#xd7; F) + F &#xd7; (&#x2207; &#xd7; G)</span>
+        </div>
+        <p>其中 <span class="math-tex">(F &#xb7; &#x2207;)G</span> 表示方向导数算子 <span class="math-tex">(F<sub>1</sub>&#x2202;/&#x2202;x + F<sub>2</sub>&#x2202;/&#x2202;y + F<sub>3</sub>&#x2202;/&#x2202;z)</span> 作用于 <span class="math-tex">G</span> 的每个分量。</p>
+
+        <h3>4.2 数量积的梯度</h3>
+        <div class="formula-box">
+            <span class="math-tex">&#x2207;(f g) = f &#xb7; &#x2207;g + g &#xb7; &#x2207;f</span>
+        </div>
+        <p>这是乘积法则的直接推广，与一元情形一致。</p>
+
+        <h3>4.3 复合函数的梯度恒等式</h3>
+        <div class="formula-box">
+            <span class="math-tex">&#x2207;(f &#x2218; &#x3c6;) = f'(&#x3c6;) &#xb7; &#x2207;&#x3c6;</span>
+        </div>
+        <p>其中 <span class="math-tex">&#x3c6;: &#x211d;<sup>n</sup> &#x2192; &#x211d;</span> 为可微函数，<span class="math-tex">f: &#x211d; &#x2192; &#x211d;</span> 为可微函数。</p>
+
+        <h3>4.4 线性函数的梯度</h3>
+        <p>对线性函数 <span class="math-tex">f(x) = a &#xb7; x = a<sub>1</sub>x<sub>1</sub> + a<sub>2</sub>x<sub>2</sub> + ... + a<sub>n</sub>x<sub>n</sub></span>：</p>
+        <div class="formula-box">
+            <span class="math-tex">&#x2207;(a &#xb7; x) = a</span>
+        </div>
+        <p>特别地，<span class="math-tex">&#x2207;x<sub>i</sub> = e<sub>i</sub></span>（第 i 个标准基向量），<span class="math-tex">&#x2207;||x||<sup>2</sup> = 2x</span>。</p>
+
+        <h3>4.5 二次型的梯度</h3>
+        <p>设 <span class="math-tex">A</span> 为 <span class="math-tex">n &#xd7; n</span> 对称矩阵，<span class="math-tex">f(x) = x<sup>T</sup> A x</span>：</p>
+        <div class="formula-box">
+            <span class="math-tex">&#x2207;(x<sup>T</sup> A x) = 2 A x</span>
+        </div>
+
+        <h3>4.6 距离函数的梯度</h3>
+        <div class="formula-box">
+            <span class="math-tex">&#x2207;(||x &#x2212; a||) = (x &#x2212; a) / ||x &#x2212; a||</span>
+            <br>
+            <span class="math-tex">&#x2207;(||x &#x2212; a||<sup>2</sup>) = 2(x &#x2212; a)</span>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>五、梯度与方向导数的关系推论</h2>
+        <p>方向导数是梯度概念的核心应用之一。设 <span class="math-tex">u = f(x, y, z)</span> 在点 <span class="math-tex">P</span> 处可微，<span class="math-tex">l</span> 为单位向量，则：</p>
+        <div class="formula-box">
+            <span class="math-tex">&#x2202;f/&#x2202;l = &#x2207;f &#xb7; l = |&#x2207;f| &#xb7; cos(&#x3b8;)</span>
+        </div>
+        <p>其中 <span class="math-tex">&#x3b8;</span> 为梯度方向与 <span class="math-tex">l</span> 方向的夹角。</p>
+
+        <table>
+            <tr>
+                <th>方向</th>
+                <th>夹角 <span class="math-tex">&#x3b8;</span></th>
+                <th>方向导数值</th>
+                <th>意义</th>
+            </tr>
+            <tr>
+                <td>沿梯度方向</td>
+                <td><span class="math-tex">&#x3b8; = 0</span></td>
+                <td><span class="math-tex">|&#x2207;f|</span></td>
+                <td>函数增长最快</td>
+            </tr>
+            <tr>
+                <td>逆梯度方向</td>
+                <td><span class="math-tex">&#x3b8; = &#x3c0;</span></td>
+                <td><span class="math-tex">&#x2212;|&#x2207;f|</span></td>
+                <td>函数下降最快</td>
+            </tr>
+            <tr>
+                <td>沿等值面切向</td>
+                <td><span class="math-tex">&#x3b8; = &#x3c0;/2</span></td>
+                <td><span class="math-tex">0</span></td>
+                <td>函数值不变</td>
+            </tr>
+        </table>
+
+        <div class="note-box">
+            <strong>推论：</strong>梯度方向是函数变化率最大的方向，且梯度的模即为该最大方向导数值。这一推论在优化算法（如梯度下降法）中有着核心应用。
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>六、梯度与等值面的关系推论</h2>
+        <p>设曲面方程为 <span class="math-tex">F(x, y, z) = C</span>，则曲面上点 <span class="math-tex">P<sub>0</sub>(x<sub>0</sub>, y<sub>0</sub>, z<sub>0</sub>)</span> 处的切平面法向量为：</p>
+        <div class="formula-box">
+            <span class="math-tex">n = &#x2207;F(P<sub>0</sub>) = (F<sub>x</sub>(P<sub>0</sub>), F<sub>y</sub>(P<sub>0</sub>), F<sub>z</sub>(P<sub>0</sub>))</span>
+        </div>
+        <p>从而切平面方程为：</p>
+        <div class="formula-box">
+            <span class="math-tex">F<sub>x</sub>(P<sub>0</sub>)(x &#x2212; x<sub>0</sub>) + F<sub>y</sub>(P<sub>0</sub>)(y &#x2212; y<sub>0</sub>) + F<sub>z</sub>(P<sub>0</sub>)(z &#x2212; z<sub>0</sub>) = 0</span>
+        </div>
+        <p>法线方程为：</p>
+        <div class="formula-box">
+            <span class="math-tex">(x &#x2212; x<sub>0</sub>) / F<sub>x</sub>(P<sub>0</sub>) = (y &#x2212; y<sub>0</sub>) / F<sub>y</sub>(P<sub>0</sub>) = (z &#x2212; z<sub>0</sub>) / F<sub>z</sub>(P<sub>0</sub>)</span>
+        </div>
+
+        <div class="example-box">
+            <strong>示例：</strong>求椭球面 <span class="math-tex">x<sup>2</sup> + 2y<sup>2</sup> + 3z<sup>2</sup> = 6</span> 在点 <span class="math-tex">(1, 1, 1)</span> 处的切平面方程。<br>
+            <strong>解：</strong>设 <span class="math-tex">F(x, y, z) = x<sup>2</sup> + 2y<sup>2</sup> + 3z<sup>2</sup></span>，则 <span class="math-tex">&#x2207;F = (2x, 4y, 6z)</span>，在点 <span class="math-tex">(1, 1, 1)</span> 处 <span class="math-tex">&#x2207;F = (2, 4, 6)</span>。切平面方程为：<span class="math-tex">2(x &#x2212; 1) + 4(y &#x2212; 1) + 6(z &#x2212; 1) = 0</span>，即 <span class="math-tex">x + 2y + 3z = 6</span>。
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>七、梯度运算的进阶推论</h2>
+
+        <h3>7.1 梯度场与保守场</h3>
+        <p>若向量场 <span class="math-tex">F</span> 是某个标量函数 <span class="math-tex">f</span> 的梯度场，即 <span class="math-tex">F = &#x2207;f</span>，则 <span class="math-tex">F</span> 为保守场（无旋场），满足：</p>
+        <div class="formula-box">
+            <span class="math-tex">&#x2207; &#xd7; F = 0</span>
+        </div>
+        <p>且对任意闭合曲线 <span class="math-tex">C</span>，有：</p>
+        <div class="formula-box">
+            <span class="math-tex">&#x222e;<sub>C</sub> F &#xb7; dr = 0</span>
+        </div>
+        <p>这构成了梯度场是否为保守场的判定依据。</p>
+
+        <h3>7.2 梯度的散度与拉普拉斯算子</h3>
+        <div class="formula-box">
+            <span class="math-tex">&#x2207; &#xb7; (&#x2207;f) = &#x2207;<sup>2</sup>f = &#x2202;<sup>2</sup>f/&#x2202;x<sup>2</sup> + &#x2202;<sup>2</sup>f/&#x2202;y<sup>2</sup> + &#x2202;<sup>2</sup>f/&#x2202;z<sup>2</sup></span>
+        </div>
+        <p>梯度的散度即为 Laplace 算子，在偏微分方程（热传导方程、波动方程等）中具有重要地位。</p>
+
+        <h3>7.3 梯度的旋度恒为零</h3>
+        <div class="formula-box">
+            <span class="math-tex">&#x2207; &#xd7; (&#x2207;f) = 0</span>
+        </div>
+        <p>该恒等式表明任意标量场的梯度场均为无旋场，在向量分析中属于基本恒等式之一。</p>
+
+        <h3>7.4 乘积的拉普拉斯算子</h3>
+        <div class="formula-box">
+            <span class="math-tex">&#x2207;<sup>2</sup>(fg) = f &#xb7; &#x2207;<sup>2</sup>g + g &#xb7; &#x2207;<sup>2</sup>f + 2&#x2207;f &#xb7; &#x2207;g</span>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>八、常用推论速查表</h2>
+        <table>
+            <tr>
+                <th>序号</th>
+                <th>恒等式</th>
+                <th>备注</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td><span class="math-tex">&#x2207;C = 0</span></td>
+                <td>常数的梯度为零向量</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td><span class="math-tex">&#x2207;(x<sub>i</sub>) = e<sub>i</sub></span></td>
+                <td>坐标函数的梯度</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td><span class="math-tex">&#x2207;(||x||) = x / ||x||</span></td>
+                <td>径向函数梯度</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td><span class="math-tex">&#x2207;(||x||<sup>n</sup>) = n||x||<sup>n&#x2212;2</sup> x</span></td>
+                <td>幂次径向函数</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td><span class="math-tex">&#x2207;(r<sup>n</sup>) = nr<sup>n&#x2212;1</sup> &#xb7; e<sub>r</sub></span></td>
+                <td>极坐标形式，<span class="math-tex">e<sub>r</sub></span> 为单位径向向量</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td><span class="math-tex">&#x2207;(1/r) = &#x2212;e<sub>r</sub> / r<sup>2</sup></span></td>
+                <td>调和函数基本解</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td><span class="math-tex">&#x2207;(e<sup>u</sup>) = e<sup>u</sup> &#xb7; &#x2207;u</span></td>
+                <td>指数函数复合梯度</td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td><span class="math-tex">&#x2207;(ln u) = &#x2207;u / u</span></td>
+                <td>对数函数复合梯度</td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td><span class="math-tex">&#x2207;(sin u) = cos u &#xb7; &#x2207;u</span></td>
+                <td>三角函数的梯度</td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td><span class="math-tex">&#x2207;(cos u) = &#x2212;sin u &#xb7; &#x2207;u</span></td>
+                <td>三角函数的梯度</td>
+            </tr>
+            <tr>
+                <td>11</td>
+                <td><span class="math-tex">&#x2207;(e<sup>ax</sup>) = a e<sup>ax</sup></span></td>
+                <td>一元指数函数</td>
+            </tr>
+            <tr>
+                <td>12</td>
+                <td><span class="math-tex">&#x2207;(a &#xb7; x) = a</span></td>
+                <td>线性泛函梯度</td>
+            </tr>
+            <tr>
+                <td>13</td>
+                <td><span class="math-tex">&#x2207; &#xd7; (&#x2207;f) = 0</span></td>
+                <td>旋度恒为零</td>
+            </tr>
+            <tr>
+                <td>14</td>
+                <td><span class="math-tex">&#x2207; &#xb7; (&#x2207; &#xd7; F) = 0</span></td>
+                <td>旋度的散度为零（相关推论）</td>
+            </tr>
+            <tr>
+                <td>15</td>
+                <td><span class="math-tex">&#x2207;(f &#xb7; g) = f&#x2207;g + g&#x2207;f</span></td>
+                <td>标量乘积法则</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>九、常见误区与注意事项</h2>
+        <ul>
+            <li><strong>梯度与方向导数的区别：</strong>梯度是向量，方向导数是标量。梯度给出方向导数的最大变化率方向，而非方向导数本身。</li>
+            <li><strong>梯度的存在条件：</strong>函数必须在某点的邻域内可微（偏导数连续），梯度才存在。</li>
+            <li><strong>梯度与偏导的维度关系：</strong>对于 <span class="math-tex">n</span> 元函数，梯度是 <span class="math-tex">n</span> 维向量，其每个分量即为对应的偏导数。</li>
+            <li><strong>零梯度条件：</strong><span class="math-tex">&#x2207;f = 0</span> 表示该点为驻点（临界点），是极值点的必要条件。</li>
+            <li><strong>梯度场积分与路径无关：</strong>当向量场为梯度场时，曲线积分与路径无关，仅为起点和终点的函数值之差。</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>十、梯度在机器学习中的应用</h2>
+        <p>梯度运算是机器学习优化的数学基础。以下简要列举几个核心应用场景：</p>
+        <ul>
+            <li><strong>梯度下降法（Gradient Descent）：</strong><span class="math-tex">x<sub>k+1</sub> = x<sub>k</sub> &#x2212; &#x3b7; &#xb7; &#x2207;f(x<sub>k</sub>)</span>，沿负梯度方向迭代更新，寻找函数极小值。</li>
+            <li><strong>反向传播（Backpropagation）：</strong>利用链式法则逐层计算神经网络中损失函数对权重的梯度。</li>
+            <li><strong>随机梯度下降（SGD）：</strong>在大规模数据中采用随机近似梯度，高效优化目标函数。</li>
+            <li><strong>梯度裁剪（Gradient Clipping）：</strong>防止梯度爆炸，将梯度的模限制在一定范围内。</li>
+        </ul>
+        <div class="note-box">
+            <strong>注：</strong>以上应用属于梯度概念的推广部分，考试中主要考察上述恒等式的推导与应用，建议熟练掌握速查表内容。
+        </div>
+    </div>
+
+    <div class="footer-note">
+        梯度运算的常用推论表 | 高等数学II-2 知识点
+    </div>
+</body>
+</html>

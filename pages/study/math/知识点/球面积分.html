@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>球面积分 — 高等数学II-2</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; line-height: 1.8; color: #333; background: #f4f6f8; padding: 20px; max-width: 880px; margin: 0 auto; }
+        .header { text-align: center; padding-bottom: 20px; border-bottom: 2px solid #e0e0e0; margin-bottom: 30px; }
+        .header h1 { color: #2c3e50; margin-bottom: 5px; font-size: 1.6em; }
+        .header .subtitle { color: #7f8c8d; font-size: 0.9em; }
+        .download-link { display: inline-flex; align-items: center; gap: 8px; background: #3498db; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; margin: 15px 0; transition: background 0.2s; }
+        .download-link:hover { background: #2980b9; }
+        .nav-back { display: inline-flex; align-items: center; gap: 6px; color: #555; text-decoration: none; font-size: 0.9em; margin-bottom: 15px; }
+        .nav-back:hover { color: #3498db; }
+        .section { background: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 20px 25px; margin-bottom: 20px; border-left: 4px solid #3498db; }
+        .section h2 { color: #2980b9; margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 8px; font-size: 1.2em; }
+        .section h3 { color: #2c3e50; font-size: 1.05em; margin: 15px 0 8px; }
+        .math-tex { font-family: "Times New Roman", Times, serif; font-style: italic; background: #f9f9f9; padding: 2px 6px; border-radius: 3px; }
+        .formula-box { background: #f0f4ff; border: 1px solid #d0d8f0; border-radius: 6px; padding: 12px 16px; margin: 10px 0; text-align: center; font-size: 1.1em; }
+        .example-box { background: #f8f9fa; border-left: 3px solid #27ae60; padding: 10px 15px; margin: 10px 0; border-radius: 0 4px 4px 0; }
+        .note-box { background: #fff8e1; border-left: 3px solid #ffc107; padding: 10px 15px; margin: 10px 0; border-radius: 0 4px 4px 0; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+        th { background: #f0f4ff; font-weight: bold; }
+        ul, ol { padding-left: 20px; }
+        li { margin-bottom: 6px; }
+        .footer-note { text-align: center; color: #95a5a6; font-size: 0.85em; margin-top: 40px; border-top: 1px solid #e0e0e0; padding-top: 20px; }
+    </style>
+</head>
+<body>
+    <a href="../main.html" class="nav-back">⬅ 返回考点大纲</a>
+    <div class="header">
+        <h1>球面积分</h1>
+        <p class="subtitle">重积分与线面积分</p>
+    </div>
+    <a href="球面积分.pdf" class="download-link" download>📥 下载 PDF 原文</a>
+
+    <div class="section">
+        <h2>一、球面坐标系</h2>
+        <p>球面坐标系是三维空间中处理球对称问题的重要坐标系。空间中任意一点 <span class="math-tex">P(x, y, z)</span> 可用三个坐标表示：</p>
+        <ul>
+            <li><strong>径向距离</strong> <span class="math-tex">r</span>：原点到点 <span class="math-tex">P</span> 的距离，<span class="math-tex">r = &radic;(x² + y² + z²) &ge; 0</span></li>
+            <li><strong>极角（余纬度）</strong> <span class="math-tex">&phi;</span>：<span class="math-tex">z</span> 轴正方向与位置向量的夹角，<span class="math-tex">0 &le; &phi; &le; &pi;</span></li>
+            <li><strong>方位角</strong> <span class="math-tex">&theta;</span>：<span class="math-tex">x</span> 轴正方向到 <span class="math-tex">OP</span> 在 <span class="math-tex">xOy</span> 平面投影的夹角，<span class="math-tex">0 &le; &theta; &le; 2&pi;</span></li>
+        </ul>
+
+        <h3>直角坐标与球面坐标的转换关系</h3>
+        <div class="formula-box">
+            x = r sin&phi; cos&theta; , &emsp; y = r sin&phi; sin&theta; , &emsp; z = r cos&phi;
+        </div>
+
+        <h3>球面坐标下的体积元</h3>
+        <div class="formula-box">
+            dV = dx dy dz = r² sin&phi; dr d&phi; d&theta;
+        </div>
+        <p>其中 <span class="math-tex">r² sin&phi;</span> 为球面坐标系的雅可比行列式的绝对值。</p>
+    </div>
+
+    <div class="section">
+        <h2>二、三重积分的球面坐标计算</h2>
+        <p>将三重积分从直角坐标转换到球面坐标：</p>
+        <div class="formula-box">
+            &iiint;<sub>&Omega;</sub> f(x, y, z) dV = &int;<sub>&theta;</sub> &int;<sub>&phi;</sub> &int;<sub>r</sub> f(r sin&phi; cos&theta;, r sin&phi; sin&theta;, r cos&phi;) &middot; r² sin&phi; dr d&phi; d&theta;
+        </div>
+
+        <h3>一般积分次序</h3>
+        <div class="formula-box">
+            &iiint;<sub>&Omega;</sub> f &middot; dV = &int;<sub>0</sub><sup>2&pi;</sup> d&theta; &int;<sub>0</sub><sup>&pi;</sup> d&phi; &int;<sub>0</sub><sup>R</sup> f(r, &phi;, &theta;) r² sin&phi; dr
+        </div>
+        <p>（对于半径为 <span class="math-tex">R</span> 的完整球体区域）。</p>
+
+        <h3>常用积分区域对应的参数范围</h3>
+        <table>
+            <tr><th>区域形状</th><th><span class="math-tex">r</span> 范围</th><th><span class="math-tex">&phi;</span> 范围</th><th><span class="math-tex">&theta;</span> 范围</th></tr>
+            <tr><td>球心在原点的球体（半径 <span class="math-tex">R</span>）</td><td><span class="math-tex">0 &le; r &le; R</span></td><td><span class="math-tex">0 &le; &phi; &le; &pi;</span></td><td><span class="math-tex">0 &le; &theta; &le; 2&pi;</span></td></tr>
+            <tr><td>上半球体</td><td><span class="math-tex">0 &le; r &le; R</span></td><td><span class="math-tex">0 &le; &phi; &le; &pi;/2</span></td><td><span class="math-tex">0 &le; &theta; &le; 2&pi;</span></td></tr>
+            <tr><td>圆锥体（半顶角 &alpha;）</td><td><span class="math-tex">0 &le; r &le; R</span></td><td><span class="math-tex">0 &le; &phi; &le; &alpha;</span></td><td><span class="math-tex">0 &le; &theta; &le; 2&pi;</span></td></tr>
+            <tr><td>球壳（内径 <span class="math-tex">R₁</span> 外径 <span class="math-tex">R₂</span>）</td><td><span class="math-tex">R₁ &le; r &le; R₂</span></td><td><span class="math-tex">0 &le; &phi; &le; &pi;</span></td><td><span class="math-tex">0 &le; &theta; &le; 2&pi;</span></td></tr>
+            <tr><td>球面坐标平移：球心在 <span class="math-tex">(0, 0, a)</span></td><td><span class="math-tex">0 &le; r &le; 2a cos&phi;</span></td><td><span class="math-tex">0 &le; &phi; &le; &pi;/2</span></td><td><span class="math-tex">0 &le; &theta; &le; 2&pi;</span></td></tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>三、球面上的面积分（第一类曲面积分）</h2>
+        <p>对于定义在球面 <span class="math-tex">S</span> 上的函数 <span class="math-tex">f(x, y, z)</span>，曲面积分在球面坐标系下的表达式为：</p>
+        <div class="formula-box">
+            &iint;<sub>S</sub> f(x, y, z) dS = &int;<sub>0</sub><sup>2&pi;</sup> &int;<sub>0</sub><sup>&pi;</sup> f(R sin&phi; cos&theta;, R sin&phi; sin&theta;, R cos&phi;) &middot; R² sin&phi; d&phi; d&theta;
+        </div>
+        <p>其中 <span class="math-tex">dS = R² sin&phi; d&phi; d&theta;</span> 为球面上的面积元。</p>
+
+        <h3>球面面积元推导</h3>
+        <p>球面参数方程 <span class="math-tex">r(&phi;, &theta;) = (R sin&phi; cos&theta;, R sin&phi; sin&theta;, R cos&phi;)</span>：</p>
+        <ul>
+            <li>经线方向切向量：<span class="math-tex">r<sub>&phi;</sub> = (R cos&phi; cos&theta;, R cos&phi; sin&theta;, -R sin&phi;)</span></li>
+            <li>纬线方向切向量：<span class="math-tex">r<sub>&theta;</sub> = (-R sin&phi; sin&theta;, R sin&phi; cos&theta;, 0)</span></li>
+            <li>法向量模长：<span class="math-tex">|r<sub>&phi;</sub> &times; r<sub>&theta;</sub>| = R² sin&phi;</span></li>
+        </ul>
+        <p>因此 <span class="math-tex">dS = |r<sub>&phi;</sub> &times; r<sub>&theta;</sub>| d&phi; d&theta; = R² sin&phi; d&phi; d&theta;</span>。</p>
+    </div>
+
+    <div class="section">
+        <h2>四、常用球面积分公式</h2>
+
+        <h3>球的表面积</h3>
+        <div class="formula-box">
+            S = &iint;<sub>S</sub> dS = &int;<sub>0</sub><sup>2&pi;</sup> d&theta; &int;<sub>0</sub><sup>&pi;</sup> R² sin&phi; d&phi; = 4&pi;R²
+        </div>
+
+        <h3>球的体积</h3>
+        <div class="formula-box">
+            V = &iiint;<sub>&Omega;</sub> dV = &int;<sub>0</sub><sup>2&pi;</sup> d&theta; &int;<sub>0</sub><sup>&pi;</sup> d&phi; &int;<sub>0</sub><sup>R</sup> r² sin&phi; dr = &frac43;&pi;R³
+        </div>
+
+        <h3>重要积分恒等式</h3>
+        <div class="formula-box">
+            &iint;<sub>S</sub> x² dS = &iint;<sub>S</sub> y² dS = &iint;<sub>S</sub> z² dS = &frac13; &iint;<sub>S</sub> (x² + y² + z²) dS = &frac13;R² &middot; 4&pi;R² = &frac43;&pi;R⁴
+        </div>
+
+        <div class="formula-box">
+            &iiint;<sub>&Omega;</sub> x² dV = &iiint;<sub>&Omega;</sub> y² dV = &iiint;<sub>&Omega;</sub> z² dV = &frac13; &iiint;<sub>&Omega;</sub> r² dV = &frac13; &int;<sub>0</sub><sup>2&pi;</sup> d&theta; &int;<sub>0</sub><sup>&pi;</sup> d&phi; &int;<sub>0</sub><sup>R</sup> r⁴ sin&phi; dr = &frac415;&pi;R⁵
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>五、典型例题</h2>
+
+        <div class="example-box">
+            <strong>例 1：</strong>计算曲面积分 <span class="math-tex">I = &iint;<sub>S</sub> (x² + y²) dS</span>，其中 <span class="math-tex">S</span> 为球面 <span class="math-tex">x² + y² + z² = a²</span>。
+            <br><br>
+            <strong>解：</strong>由于对称性，<span class="math-tex">x² + y² = a² - z²</span>。
+            <br>
+            在球面坐标下，<span class="math-tex">x² + y² = a² sin²&phi;</span>，<span class="math-tex">dS = a² sin&phi; d&phi; d&theta;</span>。
+            <br>
+            <span class="math-tex">I = &int;<sub>0</sub><sup>2&pi;</sup> d&theta; &int;<sub>0</sub><sup>&pi;</sup> a² sin²&phi; &middot; a² sin&phi; d&phi; = 2&pi;a⁴ &int;<sub>0</sub><sup>&pi;</sup> sin³&phi; d&phi; = 2&pi;a⁴ &middot; &frac43; = &frac83;&pi;a⁴</span>
+        </div>
+
+        <div class="example-box">
+            <strong>例 2：</strong>计算三重积分 <span class="math-tex">I = &iiint;<sub>&Omega;</sub> (x² + y² + z²) dV</span>，其中 <span class="math-tex">&Omega;</span> 是球体 <span class="math-tex">x² + y² + z² &le; R²</span>。
+            <br><br>
+            <strong>解：</strong>在球面坐标下，<span class="math-tex">x² + y² + z² = r²</span>，<span class="math-tex">dV = r² sin&phi; dr d&phi; d&theta;</span>。
+            <br>
+            <span class="math-tex">I = &int;<sub>0</sub><sup>2&pi;</sup> d&theta; &int;<sub>0</sub><sup>&pi;</sup> d&phi; &int;<sub>0</sub><sup>R</sup> r² &middot; r² sin&phi; dr</span>
+            <br>
+            <span class="math-tex">= 2&pi; &middot; 2 &middot; &int;<sub>0</sub><sup>R</sup> r⁴ dr = 4&pi; &middot; &frac15;R⁵ = &frac45;&pi;R⁵</span>
+        </div>
+
+        <div class="example-box">
+            <strong>例 3：</strong>计算由球面 <span class="math-tex">x² + y² + z² = 2az</span> 围成的球体体积。
+            <br><br>
+            <strong>解：</strong>将方程配方为 <span class="math-tex">x² + y² + (z - a)² = a²</span>，球心 <span class="math-tex">(0, 0, a)</span>，半径 <span class="math-tex">R = a</span>。
+            <br>
+            在球面坐标下，球面的极坐标方程为 <span class="math-tex">r = 2a cos&phi;</span>，<span class="math-tex">0 &le; &phi; &le; &pi;/2</span>。
+            <br>
+            <span class="math-tex">V = &int;<sub>0</sub><sup>2&pi;</sup> d&theta; &int;<sub>0</sub><sup>&pi;/2</sup> d&phi; &int;<sub>0</sub><sup>2a cos&phi;</sup> r² sin&phi; dr</span>
+            <br>
+            <span class="math-tex">= 2&pi; &int;<sub>0</sub><sup>&pi;/2</sup> &frac13;(2a cos&phi;)³ sin&phi; d&phi; = &frac{16&pi;a³}{3} &int;<sub>0</sub><sup>&pi;/2</sup> cos³&phi; sin&phi; d&phi;</span>
+            <br>
+            <span class="math-tex">= &frac{16&pi;a³}{3} &middot; &frac14; = &frac43;&pi;a³</span>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>六、柱面坐标与球面坐标的选择对比</h2>
+        <table>
+            <tr><th>被积区域特征</th><th>推荐坐标系</th><th>说明</th></tr>
+            <tr><td>球体、半球体、球壳</td><td><strong>球面坐标</strong></td><td>被积函数含 <span class="math-tex">x² + y² + z²</span> 时尤佳</td></tr>
+            <tr><td>圆柱体、圆锥体、旋转抛物面</td><td><strong>柱面坐标</strong></td><td>被积函数含 <span class="math-tex">x² + y²</span> 时适用</td></tr>
+            <tr><td>长方体、四面体等直角边区域</td><td><strong>直角坐标</strong></td><td>区域边界为坐标平面时优先考虑</td></tr>
+            <tr><td>旋转体（绕 z 轴）</td><td><strong>柱面坐标</strong></td><td>用 <span class="math-tex">r, &theta;, z</span> 表示边界简单</td></tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>七、常见注意事项与易错点</h2>
+        <div class="note-box">
+            <strong>⚠ 注意事项：</strong>
+            <ol>
+                <li><strong>体积元不能遗漏因子</strong>：球面坐标的体积元是 <span class="math-tex">r² sin&phi;</span>，初学者常遗漏 <span class="math-tex">r²</span> 或 <span class="math-tex">sin&phi;</span>。</li>
+                <li><strong>角度范围</strong>：<span class="math-tex">&phi;</span> 的范围是 <span class="math-tex">0</span> 到 <span class="math-tex">&pi;</span>（不是到 <span class="math-tex">2&pi;</span>），<span class="math-tex">&theta;</span> 的范围是 <span class="math-tex">0</span> 到 <span class="math-tex">2&pi;</span>。</li>
+                <li><strong>被积函数代换</strong>：直角坐标下的被积函数 <span class="math-tex">f(x, y, z)</span> 必须全部代换为 <span class="math-tex">r, &phi;, &theta;</span> 的表达式。</li>
+                <li><strong>区域对称性利用</strong>：当被积函数具有奇偶性且区域对称时，可先判断是否为零以简化计算。</li>
+                <li><strong>球面面积分 vs 三重积分</strong>：球面面积分只有两个积分变量 <span class="math-tex">(&phi;, &theta;)</span>，面积元为 <span class="math-tex">R² sin&phi;</span>；三重积分有三层积分，体积元为 <span class="math-tex">r² sin&phi;</span>。</li>
+                <li><strong>球心不在原点时</strong>：可以先平移坐标系，使球心在坐标轴上，再利用球面坐标的平移形式。</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>八、球面坐标下的梯度、散度与旋度</h2>
+        <p>在球面坐标系 <span class="math-tex">(r, &phi;, &theta;)</span> 中，向量微分算子的表达式为：</p>
+
+        <h3>梯度（标量场 <span class="math-tex">f</span>）</h3>
+        <div class="formula-box">
+            &nabla;f = &part;f/&part;r &middot; e<sub>r</sub> + (1/r) &middot; &part;f/&part;&phi; &middot; e<sub>&phi;</sub> + (1/(r sin&phi;)) &middot; &part;f/&part;&theta; &middot; e<sub>&theta;</sub>
+        </div>
+
+        <h3>散度（向量场 <span class="math-tex">A = A<sub>r</sub> e<sub>r</sub> + A<sub>&phi;</sub> e<sub>&phi;</sub> + A<sub>&theta;</sub> e<sub>&theta;</sub></span>）</h3>
+        <div class="formula-box">
+            &nabla;&middot;A = (1/r²) &part;(r² A<sub>r</sub>)/&part;r + (1/(r sin&phi;)) &part;(sin&phi; A<sub>&phi;</sub>)/&part;&phi; + (1/(r sin&phi;)) &part;A<sub>&theta;</sub>/&part;&theta;
+        </div>
+
+        <h3>拉普拉斯算子</h3>
+        <div class="formula-box">
+            &nabla;²f = (1/r²) &part;(r² &part;f/&part;r)/&part;r + (1/(r² sin&phi;)) &part;(sin&phi; &part;f/&part;&phi;)/&part;&phi; + (1/(r² sin²&phi;)) &part;²f/&part;&theta;²
+        </div>
+        <p>这些公式在求解具有球对称性的偏微分方程（如拉普拉斯方程、热传导方程）中具有重要应用。</p>
+    </div>
+
+    <div class="footer-note">
+        球面积分 | 高等数学II-2 知识点
+    </div>
+</body>
+</html>

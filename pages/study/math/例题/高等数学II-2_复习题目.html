@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高等数学II-2 期末复习 — 分类精选题目</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #f5f6fa; font-family: 'Georgia', 'Times New Roman', '宋体', serif; color: #1e272e; line-height: 2; font-size: 18px; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+  header { background: linear-gradient(135deg, #2c3e50, #3498db); color: #fff; padding: 48px 36px; border-radius: 14px; margin-bottom: 36px; text-align: center; }
+  header h1 { font-size: 34px; margin-bottom: 12px; letter-spacing: 2px; }
+  header p { font-size: 18px; opacity: 0.85; }
+  .section { background: #fff; border-radius: 14px; margin-bottom: 28px; box-shadow: 0 2px 14px rgba(0,0,0,0.07); overflow: hidden; }
+  .section-header { padding: 22px 32px; font-size: 24px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: space-between; border-bottom: 3px solid; user-select: none; }
+  .section-header .num { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; font-size: 18px; margin-right: 16px; }
+  .section-header .arrow { transition: transform 0.3s; font-size: 14px; color: #999; }
+  .section-header.collapsed .arrow { transform: rotate(-90deg); }
+  .section-body { padding: 24px 32px; }
+  .section-header.collapsed + .section-body { display: none; }
+  .section-body p, .section-body .problem { margin-bottom: 16px; }
+  .section-body ul, .section-body ol { padding-left: 24px; margin-bottom: 16px; }
+  .section-body li { margin-bottom: 8px; }
+  .problem { background: #fafbfc; border-left: 5px solid #3498db; padding: 20px 24px; margin-bottom: 22px; border-radius: 0 10px 10px 0; }
+  .problem .source { font-size: 15px; color: #95a5a6; margin-bottom: 8px; }
+  .problem .question { font-size: 18px; line-height: 2; }
+  .problem .answer { margin-top: 12px; padding: 12px 18px; background: #f0f7ff; border-radius: 8px; font-size: 17px; color: #2c3e50; line-height: 1.9; }
+  .problem .answer-label { font-weight: bold; color: #3498db; }
+  .tag { display: inline-block; background: #ecf0f1; color: #7f8c8d; font-size: 13px; padding: 3px 12px; border-radius: 12px; margin-left: 8px; }
+  .katex { font-size: 1.1em; }
+  .formula { font-family: 'Times New Roman', serif; font-style: italic; }
+  .sec1 { border-color: #e74c3c; } .sec2 { border-color: #e67e22; } .sec3 { border-color: #2ecc71; }
+  .sec4 { border-color: #3498db; } .sec5 { border-color: #9b59b6; } .sec6 { border-color: #1abc9c; }
+  .color1 { background: #e74c3c; } .color2 { background: #e67e22; } .color3 { background: #2ecc71; }
+  .color4 { background: #3498db; } .color5 { background: #9b59b6; } .color6 { background: #1abc9c; }
+  .toc { background: #fff; border-radius: 14px; padding: 24px 32px; margin-bottom: 28px; box-shadow: 0 2px 14px rgba(0,0,0,0.07); }
+  .toc h3 { margin-bottom: 14px; color: #2c3e50; font-size: 20px; }
+  .toc a { display: block; padding: 8px 0; color: #3498db; text-decoration: none; font-size: 18px; }
+  .toc a:hover { color: #2980b9; text-decoration: underline; }
+  .toc .toc-num { display: inline-block; width: 30px; height: 30px; border-radius: 50%; color: #fff; text-align: center; line-height: 30px; font-size: 15px; margin-right: 12px; }
+  footer { text-align: center; padding: 30px; color: #95a5a6; font-size: 15px; }
+  @media (max-width: 640px) { .container { padding: 10px; } header { padding: 28px 18px; } .section-body { padding: 16px 18px; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>📐 高等数学II-2 期末复习</h1>
+  <p>摘自重庆大学 2019–2025 年期中/期末试卷 · 按考点分类整理</p>
+</header>
+
+<div class="toc">
+  <h3>📑 目录 — 六大模块</h3>
+  <a href="#sec1"><span class="toc-num color1">一</span> 空间解析几何</a>
+  <a href="#sec2"><span class="toc-num color2">二</span> 多元函数微分学</a>
+  <a href="#sec3"><span class="toc-num color3">三</span> 重积分</a>
+  <a href="#sec4"><span class="toc-num color4">四</span> 线面积分</a>
+  <a href="#sec5"><span class="toc-num color5">五</span> 无穷级数</a>
+  <a href="#sec6"><span class="toc-num color6">六</span> 微分方程</a>
+</div>
+
+<!-- ============================================================ -->
+<!-- 一、空间解析几何 -->
+<!-- ============================================================ -->
+<div class="section" id="sec1">
+  <div class="section-header sec1" onclick="this.classList.toggle('collapsed')">
+    <span><span class="num color1">一</span>空间解析几何</span>
+    <span class="arrow">▼</span>
+  </div>
+  <div class="section-body">
+
+    <div class="problem">
+      <div class="source">📄 2022 春 半期 · 填空 1</div>
+      <div class="question">过点 M(1,1,1) 且与直线 <span class="formula">L: { x − 2y + z = 0, 2x + 2y + 3z − 6 = 0 }</span> 平行的直线方程为 ________。</div>
+      <div class="answer"><span class="answer-label">【答案】</span> <span class="formula">(x−1)/(−8) = (y−1)/(−1) = (z−1)/6</span></div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2023 春 半期 · 选择 3</div>
+      <div class="question">球面 <span class="formula">x² + y² + z² = 9</span> 与平面 <span class="formula">x + z = 1</span> 的交线在 <span class="formula">xOy</span> 坐标面上的投影图形是（ ）。<br>
+      (A) 椭圆 &nbsp; (B) 柱面 &nbsp; (C) 双曲线 &nbsp; (D) 抛物线</div>
+      <div class="answer"><span class="answer-label">【答案】</span> (A) 椭圆</div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2023 春 半期 · 选择 4</div>
+      <div class="question">一条直线绕 <span class="formula">z</span> 轴旋转一周所形成的曲面不可能是（ ）。<br>
+      (A) 圆柱面 &nbsp; (B) 平面 &nbsp; (C) 马鞍面 &nbsp; (D) 锥面</div>
+      <div class="answer"><span class="answer-label">【答案】</span> (C) 马鞍面</div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2023 春 半期 · 填空 7</div>
+      <div class="question">过点 M(1,1,1) 且与平面 <span class="formula">x − 2y + z = 0</span> 垂直的直线方程为 ________。</div>
+      <div class="answer"><span class="answer-label">【答案】</span> <span class="formula">(x−1)/1 = (y−1)/(−2) = (z−1)/1</span></div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2023 春 半期 · 填空 8</div>
+      <div class="question">由 A(1,1,1), B(2,3,4), C(3,2,1), D(1,3,2) 为顶点的四面体的体积为 ________。</div>
+      <div class="answer"><span class="answer-label">【答案】</span> 2/3</div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2022 春 半期 · 填空 5</div>
+      <div class="question">已知三点 A(2,−1,2), B(1,2,−1), C(3,2,1)，则垂直于 A、B、C 所在平面的单位向量 <span class="formula">n₀ =</span> ________。</div>
+      <div class="answer"><span class="answer-label">【答案】</span> <span class="formula">(3, −2, −3) / √22</span></div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2022 春 半期 · 计算 2</div>
+      <div class="question">求直线 <span class="formula">L: { 2x − 4y + z = 0, 3x − y − 2z − 9 = 0 }</span> 在平面 <span class="formula">π: 4x − y + z + 1 = 0</span> 上的投影直线方程。</div>
+      <div class="answer"><span class="answer-label">【答案】</span> <span class="formula">{ 17x + 31y − 37z − 117 = 0, 4x − y + z + 1 = 0 }</span></div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2023 春 半期 · 计算 14</div>
+      <div class="question">求过点 P(1,2,3) 且与两直线 <span class="formula">L₁: (x−1)/1 = (y+2)/0 = (z+3)/(−1)</span> 和 <span class="formula">L₂: (x+2)/2 = (y−1)/1 = z/1</span> 均垂直的直线 L 的方程。</div>
+      <div class="answer"><span class="answer-label">【答案】</span> <span class="formula">(x−1)/1 = (y−2)/(−3) = (z−3)/1</span></div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2022 春 半期 · 选择 1</div>
+      <div class="question">已知 <span class="formula">a, b</span> 均为单位向量，<span class="formula">a</span> 与 <span class="formula">b</span> 的夹角 <span class="formula">φ = π/3</span>，则 <span class="formula">|a − 2b|</span> 为（ ）。<br>
+      (A) √3 &nbsp; (B) 4 &nbsp; (C) √7 &nbsp; (D) 2</div>
+      <div class="answer"><span class="answer-label">【答案】</span> (A) √3</div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2025 春 半期 · 选择 1</div>
+      <div class="question">方程 <span class="formula">x²/5 + y²/5 + z²/3 = 1</span> 表示（ ）。<br>
+      (A) 单叶双曲面 &nbsp; (B) 双叶双曲面 &nbsp; (C) 椭球面 &nbsp; (D) 双曲抛物面</div>
+      <div class="answer"><span class="answer-label">【答案】</span> (C) 椭球面</div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2025 春 半期 · 选择 2</div>
+      <div class="question">与原点和点 P(2,3,4) 的距离之比为 1:2 的点的全体所构成的曲面是（ ）。<br>
+      (A) 平面 &nbsp; (B) 球面 &nbsp; (C) 圆锥面 &nbsp; (D) 抛物面</div>
+      <div class="answer"><span class="answer-label">【答案】</span> (B) 球面</div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2019 春 期末 · 计算 1</div>
+      <div class="question">求过点 (2,4,−1) 且与两平面 <span class="formula">π₁: x + 2y − 3z + 4 = 0</span>, <span class="formula">π₂: x + 3y − z = 0</span> 都垂直的平面方程。</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 二、多元函数微分学 -->
+<!-- ============================================================ -->
+<div class="section" id="sec2">
+  <div class="section-header sec2" onclick="this.classList.toggle('collapsed')">
+    <span><span class="num color2">二</span>多元函数微分学</span>
+    <span class="arrow">▼</span>
+  </div>
+  <div class="section-body">
+
+    <div class="problem">
+      <div class="source">📄 2022 春 半期 · 计算 1</div>
+      <div class="question">设 <span class="formula">z = f(eˣ sin y, x² + y²)</span>，其中 <span class="formula">f</span> 具有二阶连续偏导数，求 <span class="formula">∂z/∂x</span> 和 <span class="formula">∂²z/∂x∂y</span>。</div>
+      <div class="answer"><span class="answer-label">【答案】</span>
+        <span class="formula">∂z/∂x = f₁'eˣ sin y + 2x f₂'</span><br>
+        <span class="formula">∂²z/∂x∂y = f₁'eˣ cos y + eˣ sin y[f₁₁'' eˣ cos y + 2y f₁₂''] + 2x[f₂₁'' eˣ cos y + 2y f₂₂'']</span>
+      </div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2023 春 半期 · 计算 13</div>
+      <div class="question">设 <span class="formula">z = f(y/x, x² + y²)</span>，其中 <span class="formula">f</span> 具有二阶连续偏导数，求 <span class="formula">∂z/∂x</span> 和 <span class="formula">∂²z/∂x∂y</span>。</div>
+      <div class="answer"><span class="answer-label">【答案】</span>
+        <span class="formula">∂z/∂x = −(y/x²)f₁' + 2x f₂'</span><br>
+        <span class="formula">∂²z/∂x∂y = −(1/x²)f₁' − (y/x³)f₁₁'' + 2/x·f₁₂'' + 4xy f₂₂''</span>
+      </div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2022 春 半期 · 选择 2</div>
+      <div class="question">函数 <span class="formula">z = x³ + y³ − 15xy</span> 在（ ）。<br>
+      (A) 点 (0,0) 处取极小值，点 (5,5) 处取极大值<br>
+      (B) 点 (0,0) 处不取极值，点 (5,5) 处取极小值<br>
+      (C) 点 (0,0) 处取极小值，点 (5,5) 处不取极值<br>
+      (D) 点 (0,0) 处取极大值，点 (5,5) 处取极小值</div>
+      <div class="answer"><span class="answer-label">【答案】</span> (B)</div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2022 春 半期 · 填空 2</div>
+      <div class="question">函数 <span class="formula">z = 3x²y − y²</span> 在点 P(2,3) 沿曲线 <span class="formula">y = x² − 1</span> 朝 x 增大方向的方向导数是 ________。</div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2022 春 半期 · 计算 4</div>
+      <div class="question">求由方程 <span class="formula">xyz + x² + y² + z² = 2</span> 所确定的函数 <span class="formula">z = z(x,y)</span> 在点 (1,0,−1) 处的全微分 <span class="formula">dz</span>。</div>
+      <div class="answer"><span class="answer-label">【答案】</span> <span class="formula">dz = dx − 2dy</span></div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2022 春 半期 · 计算 4（压轴）</div>
+      <div class="question">求由方程 <span class="formula">x² − 6xy + 10y² − 2yz − z² + 18 = 0</span> 确定的函数 <span class="formula">z = z(x,y)</span> 的极值。</div>
+      <div class="answer"><span class="answer-label">【答案】</span> <span class="formula">z(9,3) = 3</span> 为极小值，<span class="formula">z(−9,−3) = −3</span> 为极大值</div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2023 春 半期 · 选择 1</div>
+      <div class="question">二重极限 <span class="formula">lim_{(x,y)→(0,0)} sin(xy)/(x² + y²) =</span>（ ）。<br>
+      (A) 等于 1/2 &nbsp; (B) 等于 0 &nbsp; (C) 等于 ∞ &nbsp; (D) 不存在</div>
+      <div class="answer"><span class="answer-label">【答案】</span> (D) 不存在</div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2023 春 半期 · 选择 2</div>
+      <div class="question">函数 <span class="formula">z = x² + y²</span> 在点 (0,0) 处（ ）。<br>
+      (A) 不连续 &nbsp; (B) 偏导数存在 &nbsp; (C) 任意方向的方向导数存在且相等 &nbsp; (D) 可微</div>
+      <div class="answer"><span class="answer-label">【答案】</span> (C) 任意方向的方向导数存在且相等</div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2023 春 半期 · 填空 9</div>
+      <div class="question">曲面 <span class="formula">z − eᶻ + 2xy = 3</span> 在点 (1,2,0) 处的切平面方程为 ________。</div>
+      <div class="answer"><span class="answer-label">【答案】</span> <span class="formula">2x + y − 4 = 0</span></div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2023 春 半期 · 填空 10</div>
+      <div class="question">二元函数 <span class="formula">z = 2x + y</span> 在点 (1,2) 沿各个方向的方向导数的最大值为 ________。</div>
+      <div class="answer"><span class="answer-label">【答案】</span> √5</div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2024 期末 · 综合题</div>
+      <div class="question">求二元函数 <span class="formula">f(x,y) = x⁴ + y⁴ − x² − y² − 2xy</span> 的极值。</div>
+      <div class="answer"><span class="answer-label">【答案】</span> 在 (−1,−1) 和 (1,1) 处取得极小值 −2；在 (0,0) 处不取极值</div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2021 期末 · 填空 2</div>
+      <div class="question">设函数 <span class="formula">f(x,y) = x²y</span>，则 <span class="formula">div(grad f(x,y)) =</span> ________。</div>
+      <div class="answer"><span class="answer-label">【答案】</span> <span class="formula">2y</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 三、重积分 -->
+<!-- ============================================================ -->
+<div class="section" id="sec3">
+  <div class="section-header sec3" onclick="this.classList.toggle('collapsed')">
+    <span><span class="num color3">三</span>重积分</span>
+    <span class="arrow">▼</span>
+  </div>
+  <div class="section-body">
+
+    <div class="problem">
+      <div class="source">📄 2022 春 半期 · 填空 3</div>
+      <div class="question">设平面区域 D 是曲线 <span class="formula">x² + y² = 2y</span> 所围成，则积分 <span class="formula">∬_D x² dxdy =</span> ________。</div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2022 春 半期 · 计算 2（利用对称性和轮换性）</div>
+      <div class="question">计算三重积分 <span class="formula">∭_Ω (x + 2y + 3z + 4)² dxdydz</span>，其中 <span class="formula">Ω = {(x,y,z): |x| ≤ 1, |y| ≤ 1, |z| ≤ 1}</span>。</div>
+      <div class="answer"><span class="answer-label">【答案】</span> <span class="formula">496/3</span>（利用对称性：交叉项积分为 0，<span class="formula">∭_Ω x² = ∭_Ω y² = ∭_Ω z²</span>）</div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2022 春 半期 · 填空 6</div>
+      <div class="question">设 <span class="formula">Ω: x² + y² ≤ 1, 0 ≤ z ≤ 1</span>，则 <span class="formula">∭_Ω [e^{z³} arctan(x⁴y³) + 2] dv =</span> ________。</div>
+      <div class="answer"><span class="answer-label">【答案】</span> <span class="formula">2π</span>（利用对称性：奇函数部分积分为 0）</div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2022 春 半期 · 计算 3</div>
+      <div class="question">计算 <span class="formula">∭_Ω z² dv</span>，其中 <span class="formula">Ω</span> 由曲面 <span class="formula">x² + y² + z² = R²</span> 及 <span class="formula">x² + y² + (z − R)² = R²</span> 围成的公共部分。</div>
+      <div class="answer"><span class="answer-label">【答案】</span> <span class="formula">(59/480)πR⁵</span></div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2022 春 半期 · 选择 5</div>
+      <div class="question">设区域 D 由 (1,1), (−1,1), (−1,−1) 为顶点的三角形，<span class="formula">D₁</span> 为 D 在第一象限的部分，则 <span class="formula">∬_D (xye^{x²} + cos x sin y) dxdy =</span>（ ）。<br>
+      (A) <span class="formula">2∬_{D₁} cos x sin y dxdy</span> &nbsp; (B) <span class="formula">2∬_{D₁} xye^{x²} dxdy</span><br>
+      (C) <span class="formula">4∬_{D₁} cos x sin y dxdy</span> &nbsp; (D) 0</div>
+      <div class="answer"><span class="answer-label">【答案】</span> (C)</div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2025 春 半期 · 填空 8</div>
+      <div class="question"><span class="formula">∬_D (4x² − 3 sin x + 2y + 1) dxdy =</span> ________，其中 D 为单位圆 <span class="formula">x² + y² ≤ 1</span>。</div>
+      <div class="answer"><span class="answer-label">【答案】</span> <span class="formula">π + 2π = 3π</span></div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2023 春 半期 · 选择 5</div>
+      <div class="question">设积分区域 <span class="formula">D: |x| + |y| ≤ 1</span>，则 <span class="formula">∬_D [1 + x(x − 2y)²] dxdy =</span>（ ）。<br>
+      (A) 0 &nbsp; (B) 1 &nbsp; (C) 2 &nbsp; (D) 2√2</div>
+      <div class="answer"><span class="answer-label">【答案】</span> (C) 2</div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2023 春 半期 · 计算 15</div>
+      <div class="question">计算二次积分 <span class="formula">∫₀¹ dx ∫₀^{2−x²} (x + y)² dy</span>。</div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2025 春 半期 · 填空 11</div>
+      <div class="question">设二元函数 <span class="formula">z = z(x,y)</span> 由方程 <span class="formula">z = 2x + e^{2y−3z}</span> 所确定，则 <span class="formula">(1/x)∂z/∂x + ∂z/∂y =</span> ________。</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 四、线面积分 -->
+<!-- ============================================================ -->
+<div class="section" id="sec4">
+  <div class="section-header sec4" onclick="this.classList.toggle('collapsed')">
+    <span><span class="num color4">四</span>线面积分</span>
+    <span class="arrow">▼</span>
+  </div>
+  <div class="section-body">
+
+    <div class="problem">
+      <div class="source">📄 2019 春 期末</div>
+      <div class="question">设曲线 <span class="formula">Γ: x = t, y = t², z = t³ (0 ≤ t ≤ 1)</span>，第一型曲线积分 <span class="formula">∫_Γ 2y ds =</span>（ ）。<br>
+      (A) √14 &nbsp; (B) √14/12 &nbsp; (C) √14/6 &nbsp; (D) √14/3</div>
+      <div class="answer"><span class="answer-label">【答案】</span> (C)</div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2019 春 期末</div>
+      <div class="question">设向量场 <span class="formula">A = (2z − 3y)i + (3x − z)j + (y − 2x)k</span>，则旋度 <span class="formula">rot A =</span> ________。</div>
+      <div class="answer"><span class="answer-label">【答案】</span> <span class="formula">2i + 4j + 6k</span></div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2020 春 期末</div>
+      <div class="question">设曲面 <span class="formula">S: x + y + z = 1</span>，则 <span class="formula">∬_S (x + y) dS =</span> ________。</div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2022 春 期末</div>
+      <div class="question">求向量场 <span class="formula">A(x,y,z) = i + zj + k</span> 穿过曲面 <span class="formula">Σ</span> 的流量，其中 <span class="formula">Σ</span> 为曲线绕 z 轴旋转一周所得的旋转曲面（外侧）。</div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2021 春 期末</div>
+      <div class="question">计算 <span class="formula">∫_C y² dx + xy dy + xz dz</span>，其中 C 是围成有界区域的光滑闭曲线。</div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2021 春 期末</div>
+      <div class="question">设 <span class="formula">Σ</span> 是曲面 <span class="formula">x² + y² − z² = 1</span> 介于 <span class="formula">z = 0</span> 与 <span class="formula">z = 1</span> 的外侧，函数 <span class="formula">f(u)</span> 在 <span class="formula">(−∞, +∞)</span> 上有连续导数，利用高斯公式计算曲面积分。</div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2024 春 期末</div>
+      <div class="question">设 <span class="formula">Σ: x² + y² + z² = R²</span>，则 <span class="formula">∬_Σ (x + y + z)² dS =</span> ________。</div>
+      <div class="answer"><span class="answer-label">【答案】</span> <span class="formula">4πR⁴</span></div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2025 春 期末 · 大题 19</div>
+      <div class="question">已知在空间第一卦限内的任意光滑闭曲面 <span class="formula">Σ</span> 的外侧上，均有<br>
+      <span class="formula">∯_Σ [ −xzeˣ dxdy + x f(x) dydz − (x+1)y f(x) dzdx ] ≡ 0</span>，<br>
+      求 <span class="formula">f(x)</span>。</div>
+      <div class="answer"><span class="answer-label">【答案】</span> 由高斯公式得 <span class="formula">f'(x) − f(x) = eˣ</span>，解得 <span class="formula">f(x) = xeˣ</span></div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2019 春 期末 · 综合</div>
+      <div class="question">利用高斯公式并利用轮换对称性：<span class="formula">I = ∭_Ω (y² + x²) dxdydz</span>，其中 <span class="formula">Ω</span> 为球体 <span class="formula">x² + y² + z² ≤ R²</span>。</div>
+      <div class="answer"><span class="answer-label">【答案】</span> <span class="formula">I = 8πR⁵/15</span></div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2022 春 半期 · 综合 2</div>
+      <div class="question">设体密度为 <span class="formula">ρ(x,y,z) = x²/ + y²/ + z²/</span>，几何体 <span class="formula">Ω</span> 是由 <span class="formula">x² + y² + z² = R²</span> 及 <span class="formula">x² + y² = z² (z ≥ 0)</span> 所围成的有界闭区域，证明此几何体的质量为 <span class="formula">m = πR⁵(2 − √2)/5</span>。</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 五、无穷级数 -->
+<!-- ============================================================ -->
+<div class="section" id="sec5">
+  <div class="section-header sec5" onclick="this.classList.toggle('collapsed')">
+    <span><span class="num color5">五</span>无穷级数</span>
+    <span class="arrow">▼</span>
+  </div>
+  <div class="section-body">
+
+    <div class="problem">
+      <div class="source">📄 2022 春 期末 · 选择 1</div>
+      <div class="question">已知幂级数 <span class="formula">∑ a_n (x − 1)ⁿ</span> 在 <span class="formula">x = 2</span> 处条件收敛，则该幂级数（ ）。<br>
+      (A) 收敛半径为 0 &nbsp; (B) 收敛半径为 1<br>
+      (C) 收敛区间为 (0,2) &nbsp; (D) 收敛域为 [0,2]</div>
+      <div class="answer"><span class="answer-label">【答案】</span> (C) 收敛区间为 (0,2)</div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2019 春 期末</div>
+      <div class="question">已知幂级数 <span class="formula">∑ a_n (x + 2)ⁿ</span> 在 <span class="formula">x = 0</span> 处收敛，在 <span class="formula">x = −4</span> 处发散，则幂级数 <span class="formula">∑ a_n (x − 3)ⁿ</span> 的收敛域为 ________。</div>
+      <div class="answer"><span class="answer-label">【答案】</span> (1, 5]</div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2019 春 期末</div>
+      <div class="question">判断级数 <span class="formula">∑_{n=1}^∞ (n+1)/n · e^{-n}</span> 的收敛性（绝对收敛 or 条件收敛 or 发散）。</div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2020 春 期末</div>
+      <div class="question">求幂级数 <span class="formula">∑_{n=1}^∞ [x^n/(n(n+1))]</span> 的收敛域与和函数 <span class="formula">S(x)</span>。</div>
+      <div class="answer"><span class="answer-label">【答案】</span> 收敛域 [−1,1]，<span class="formula">S(x) = 1 + (1−x)ln(1−x)/x + (1+x)ln(1+x)/x</span></div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2025 春 期末 · 计算 16</div>
+      <div class="question">求幂级数 <span class="formula">∑_{n=0}^∞ (n+1)² xⁿ</span> 的收敛半径、收敛区间、收敛域与和函数。</div>
+      <div class="answer"><span class="answer-label">【答案】</span> <span class="formula">R = 1</span>，收敛区间 (−1,1)，和函数 <span class="formula">S(x) = (1+x)/(1−x)³</span></div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2020 春 期末</div>
+      <div class="question">求幂级数 <span class="formula">∑_{n=1}^∞ n² xⁿ</span> 的收敛域及和函数。</div>
+      <div class="answer"><span class="answer-label">【答案】</span> <span class="formula">S(x) = x(1+x)/(1−x)³, x ∈ (−1,1)</span></div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2025 春 期末 · 填空 10</div>
+      <div class="question">数项级数 <span class="formula">∑_{n=1}^∞ n/2ⁿ</span> 的和为 ________。</div>
+      <div class="answer"><span class="answer-label">【答案】</span> <span class="formula">2</span>（<span class="formula">∑ nxⁿ = x/(1−x)², x=1/2</span>）</div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2025 春 期末 · 填空 11</div>
+      <div class="question">将函数 <span class="formula">f(x) = 1/(2x+3)</span> 展开成 <span class="formula">(x − 1)</span> 的幂级数，则该幂级数为 ________。</div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2024 春 期末 · 计算 16</div>
+      <div class="question">求幂级数 <span class="formula">∑_{n=0}^∞ x^{2n}/(2n+1)</span> 的收敛域与和函数。</div>
+      <div class="answer"><span class="answer-label">【答案】</span> 收敛域 <span class="formula">(−√2, √2)</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 六、微分方程 -->
+<!-- ============================================================ -->
+<div class="section" id="sec6">
+  <div class="section-header sec6" onclick="this.classList.toggle('collapsed')">
+    <span><span class="num color6">六</span>微分方程</span>
+    <span class="arrow">▼</span>
+  </div>
+  <div class="section-body">
+
+    <div class="problem">
+      <div class="source">📄 2019 春 期末</div>
+      <div class="question">求微分方程 <span class="formula">y'' + 2y' + 3y = 0</span> 的通解。</div>
+      <div class="answer"><span class="answer-label">【答案】</span> <span class="formula">y = e^{-x}(C₁ cos √2 x + C₂ sin √2 x)</span></div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2020 春 期末</div>
+      <div class="question">用待定系数法求非齐次方程 <span class="formula">y'' − 2y' + y = (x+1)eˣ</span> 的一个特解形式。</div>
+      <div class="answer"><span class="answer-label">【答案】</span> 设 <span class="formula">y* = x²(Ax+B)eˣ</span></div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2021 春 期末</div>
+      <div class="question">微分方程 <span class="formula">y dx + (x − 3y²) dy = 0</span> 满足 <span class="formula">y(1) = 1</span> 的特解。</div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2025 春 期末 · 大题 19（结合高斯公式）</div>
+      <div class="question">已知 <span class="formula">f'(x) − f(x) = eˣ</span>，<span class="formula">f(1) = e</span>，求 <span class="formula">f(x)</span>。</div>
+      <div class="answer"><span class="answer-label">【答案】</span> <span class="formula">f(x) = xeˣ</span>（一阶线性非齐次微分方程，通解 <span class="formula">f(x) = eˣ(x + C)</span>）</div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2025 春 期末 · 大题 20（应用题）</div>
+      <div class="question">某教室体积 2000 m³，空气中含 0.1% CO。用风量 200 m³/min 的换气扇通入含 0.03% CO 的新鲜空气，同时等量排出混合均匀的空气。问开动 10 分钟后，教室中 CO 的百分比含量？</div>
+      <div class="answer"><span class="answer-label">【答案】</span> 建立微分方程 <span class="formula">dx/dt = −0.1(x − 0.03)</span>，解得 <span class="formula">x(10) ≈ 0.056%</span></div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2024 春 期末 · 填空 12</div>
+      <div class="question">微分方程 <span class="formula">y''' − 2y'' + 5y' = 0</span> 的通解为 <span class="formula">y(x) =</span> ________。</div>
+      <div class="answer"><span class="answer-label">【答案】</span> <span class="formula">y = C₁ + eˣ(C₂ cos 2x + C₃ sin 2x)</span></div>
+    </div>
+
+    <div class="problem">
+      <div class="source">📄 2022 春 期末</div>
+      <div class="question">已知函数 <span class="formula">f(x)</span> 满足 <span class="formula">f'(x) + f(x) = x</span>，<span class="formula">f(0) = 1</span>，求 <span class="formula">f(x)</span>。</div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  📚 重庆大学高等数学 II-2 历年试卷精选 · 整理自 2019–2025 期中/期末考试
+</footer>
+
+</div>
+
+<script>
+  // Collapse/expand sections
+  document.querySelectorAll('.section-header').forEach(hdr => {
+    hdr.addEventListener('click', function() {
+      this.classList.toggle('collapsed');
+    });
+  });
+</script>
+
+</body>
+</html>

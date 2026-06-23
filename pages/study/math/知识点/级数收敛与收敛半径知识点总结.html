@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>级数收敛与收敛半径知识点总结 — 高等数学II-2</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; line-height: 1.8; color: #333; background: #f4f6f8; padding: 20px; max-width: 880px; margin: 0 auto; }
+        .header { text-align: center; padding-bottom: 20px; border-bottom: 2px solid #e0e0e0; margin-bottom: 30px; }
+        .header h1 { color: #2c3e50; margin-bottom: 5px; font-size: 1.6em; }
+        .header .subtitle { color: #7f8c8d; font-size: 0.9em; }
+        .download-link { display: inline-flex; align-items: center; gap: 8px; background: #3498db; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; margin: 15px 0; transition: background 0.2s; }
+        .download-link:hover { background: #2980b9; }
+        .nav-back { display: inline-flex; align-items: center; gap: 6px; color: #555; text-decoration: none; font-size: 0.9em; margin-bottom: 15px; }
+        .nav-back:hover { color: #3498db; }
+        .section { background: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 20px 25px; margin-bottom: 20px; border-left: 4px solid #3498db; }
+        .section h2 { color: #2980b9; margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 8px; font-size: 1.2em; }
+        .section h3 { color: #2c3e50; font-size: 1.05em; margin: 15px 0 8px; }
+        .math-tex { font-family: "Times New Roman", Times, serif; font-style: italic; background: #f9f9f9; padding: 2px 6px; border-radius: 3px; }
+        .formula-box { background: #f0f4ff; border: 1px solid #d0d8f0; border-radius: 6px; padding: 12px 16px; margin: 10px 0; text-align: center; font-size: 1.1em; }
+        .example-box { background: #f8f9fa; border-left: 3px solid #27ae60; padding: 10px 15px; margin: 10px 0; border-radius: 0 4px 4px 0; }
+        .note-box { background: #fff8e1; border-left: 3px solid #ffc107; padding: 10px 15px; margin: 10px 0; border-radius: 0 4px 4px 0; }
+        .warning-box { background: #fce4e4; border-left: 3px solid #e74c3c; padding: 10px 15px; margin: 10px 0; border-radius: 0 4px 4px 0; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+        th { background: #f0f4ff; font-weight: bold; }
+        ul, ol { padding-left: 20px; }
+        li { margin-bottom: 6px; }
+        .footer-note { text-align: center; color: #95a5a6; font-size: 0.85em; margin-top: 40px; border-top: 1px solid #e0e0e0; padding-top: 20px; }
+        .method-step { background: #eef5ff; border-radius: 6px; padding: 10px 15px; margin: 8px 0; counter-increment: step; }
+    </style>
+</head>
+<body>
+    <a href="../main.html" class="nav-back">⬅ 返回考点大纲</a>
+    <div class="header">
+        <h1>级数收敛与收敛半径知识点总结</h1>
+        <p class="subtitle">无穷级数</p>
+    </div>
+    <a href="级数收敛与收敛半径知识点总结.pdf" class="download-link" download>📥 下载 PDF 原文</a>
+
+    <div class="section">
+        <h2>一、级数的基本概念</h2>
+        <p>无穷级数是由无穷多个数按一定次序相加而成的表达式：</p>
+        <div class="formula-box">
+            &sum;<sub>n=1</sub><sup>&infin;</sup> a<sub>n</sub> = a<sub>1</sub> + a<sub>2</sub> + a<sub>3</sub> + &hellip; + a<sub>n</sub> + &hellip;
+        </div>
+        <p>记部分和 <span class="math-tex">S<sub>n</sub> = &sum;<sub>k=1</sub><sup>n</sup> a<sub>k</sub></span>。若极限 <span class="math-tex">lim<sub>n&rarr;&infin;</sub> S<sub>n</sub> = S</span> 存在且有限，则称级数<strong>收敛</strong>于 <span class="math-tex">S</span>；否则称级数<strong>发散</strong>。</p>
+
+        <h3>收敛级数的基本性质</h3>
+        <ol>
+            <li>若 <span class="math-tex">&sum; a<sub>n</sub></span> 收敛，则 <span class="math-tex">lim<sub>n&rarr;&infin;</sub> a<sub>n</sub> = 0</span>（收敛的必要条件）</li>
+            <li>若 <span class="math-tex">&sum; a<sub>n</sub></span> 和 <span class="math-tex">&sum; b<sub>n</sub></span> 都收敛，则 <span class="math-tex">&sum; (a<sub>n</sub> &plusmn; b<sub>n</sub>)</span> 也收敛</li>
+            <li>若 <span class="math-tex">&sum; a<sub>n</sub></span> 收敛，<span class="math-tex">c</span> 为常数，则 <span class="math-tex">&sum; ca<sub>n</sub></span> 也收敛</li>
+            <li>级数收敛则加括号后仍收敛（但逆命题不成立）</li>
+            <li>去掉、添加或改变级数的有限项不影响其敛散性</li>
+        </ol>
+    </div>
+
+    <div class="section">
+        <h2>二、正项级数的审敛法</h2>
+        <p>若级数的每一项 <span class="math-tex">a<sub>n</sub> &ge; 0</span>，则称为正项级数。以下是正项级数常用的审敛法：</p>
+
+        <h3>1. 比较审敛法</h3>
+        <div class="formula-box">
+            设 0 &le; a<sub>n</sub> &le; b<sub>n</sub>（对充分大的 n），则：<br>
+            &bull; 若 &sum; b<sub>n</sub> 收敛，则 &sum; a<sub>n</sub> 收敛<br>
+            &bull; 若 &sum; a<sub>n</sub> 发散，则 &sum; b<sub>n</sub> 发散
+        </div>
+
+        <h3>2. 比较审敛法的极限形式</h3>
+        <div class="formula-box">
+            设 a<sub>n</sub>, b<sub>n</sub> &gt; 0，且 <span class="math-tex">lim<sub>n&rarr;&infin;</sub> a<sub>n</sub>/b<sub>n</sub> = l</span> (0 &le; l &le; +&infin;)，则：<br>
+            &bull; 若 0 &lt; l &lt; +&infin;，则 &sum; a<sub>n</sub> 与 &sum; b<sub>n</sub> 同敛散<br>
+            &bull; 若 l = 0 且 &sum; b<sub>n</sub> 收敛，则 &sum; a<sub>n</sub> 收敛<br>
+            &bull; 若 l = +&infin; 且 &sum; b<sub>n</sub> 发散，则 &sum; a<sub>n</sub> 发散
+        </div>
+
+        <h3>3. 比值审敛法（达朗贝尔判别法，d'Alembert）</h3>
+        <div class="formula-box">
+            设 a<sub>n</sub> &gt; 0，且 <span class="math-tex">lim<sub>n&rarr;&infin;</sub> a<sub>n+1</sub>/a<sub>n</sub> = &rho;</span>，则：<br>
+            &bull; &rho; &lt; 1 &rArr; 级数收敛<br>
+            &bull; &rho; &gt; 1 &rArr; 级数发散<br>
+            &bull; &rho; = 1 &rArr; 此法失效，需换用其他方法
+        </div>
+        <p><strong>适用条件：</strong>通项含 <span class="math-tex">n!</span>、<span class="math-tex">a<sup>n</sup></span> 等因子时最为有效。</p>
+
+        <h3>4. 根值审敛法（柯西判别法，Cauchy）</h3>
+        <div class="formula-box">
+            设 a<sub>n</sub> &ge; 0，且 <span class="math-tex">lim<sub>n&rarr;&infin;</sub> &radic;(a<sub>n</sub>) = &rho;</span>，则：<br>
+            &bull; &rho; &lt; 1 &rArr; 级数收敛<br>
+            &bull; &rho; &gt; 1 &rArr; 级数发散<br>
+            &bull; &rho; = 1 &rArr; 此法失效
+        </div>
+        <p><strong>适用条件：</strong>通项含 <span class="math-tex">n</span> 次幂（如 <span class="math-tex">a<sub>n</sub> = (b<sub>n</sub>)<sup>n</sup></span>）时最为有效。</p>
+
+        <h3>5. 积分审敛法</h3>
+        <div class="formula-box">
+            设 f(x) 在 [1, +&infin;) 上连续、非负且单调递减，a<sub>n</sub> = f(n)，则：<br>
+            &sum;<sub>n=1</sub><sup>&infin;</sup> a<sub>n</sub> 收敛 &hArr; &int;<sub>1</sub><sup>+&infin;</sup> f(x) dx 收敛
+        </div>
+
+        <h3>6. 常用参考级数</h3>
+        <table>
+            <tr><th>级数类型</th><th>表达式</th><th>收敛条件</th><th>发散条件</th></tr>
+            <tr><td><strong>p-级数</strong></td><td><span class="math-tex">&sum; 1/n<sup>p</sup></span></td><td><span class="math-tex">p &gt; 1</span> 收敛</td><td><span class="math-tex">p &le; 1</span> 发散</td></tr>
+            <tr><td><strong>调和级数</strong></td><td><span class="math-tex">&sum; 1/n</span></td><td>—</td><td>发散（p=1 的特例）</td></tr>
+            <tr><td><strong>几何级数</strong></td><td><span class="math-tex">&sum; ar<sup>n-1</sup></span></td><td><span class="math-tex">|r| &lt; 1</span> 收敛</td><td><span class="math-tex">|r| &ge; 1</span> 发散</td></tr>
+            <tr><td><strong>p-级数变体</strong></td><td><span class="math-tex">&sum; 1/(n ln<sup>p</sup> n)</span></td><td><span class="math-tex">p &gt; 1</span> 收敛</td><td><span class="math-tex">p &le; 1</span> 发散</td></tr>
+            <tr><td><strong>交错 p-级数</strong></td><td><span class="math-tex">&sum; (-1)<sup>n-1</sup>/n<sup>p</sup></span></td><td><span class="math-tex">p &gt; 0</span> 条件收敛</td><td><span class="math-tex">p &le; 0</span> 发散</td></tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>三、交错级数审敛法</h2>
+        <p>形如 <span class="math-tex">&sum; (-1)<sup>n-1</sup> u<sub>n</sub></span>（<span class="math-tex">u<sub>n</sub> &gt; 0</span>）的级数称为交错级数。</p>
+
+        <h3>莱布尼茨审敛法（Leibniz）</h3>
+        <div class="formula-box">
+            若交错级数 &sum; (-1)<sup>n-1</sup> u<sub>n</sub> 满足：<br>
+            (1) u<sub>n</sub> &ge; u<sub>n+1</sub> &gt; 0（单调递减趋于零）<br>
+            (2) lim<sub>n&rarr;&infin;</sub> u<sub>n</sub> = 0<br>
+            则级数收敛（称为条件收敛）。
+        </div>
+
+        <h3>绝对收敛与条件收敛</h3>
+        <p>对于任意项级数 <span class="math-tex">&sum; a<sub>n</sub></span>：</p>
+        <ul>
+            <li>若 <span class="math-tex">&sum; |a<sub>n</sub>|</span> 收敛，则称 <span class="math-tex">&sum; a<sub>n</sub></span> <strong>绝对收敛</strong></li>
+            <li>若 <span class="math-tex">&sum; a<sub>n</sub></span> 收敛但 <span class="math-tex">&sum; |a<sub>n</sub>|</span> 发散，则称 <span class="math-tex">&sum; a<sub>n</sub></span> <strong>条件收敛</strong></li>
+            <li><strong>定理：</strong>绝对收敛的级数必收敛</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>四、幂级数与收敛半径</h2>
+        <p>形如 <span class="math-tex">&sum;<sub>n=0</sub><sup>&infin;</sup> a<sub>n</sub>(x - x<sub>0</sub>)<sup>n</sup></span> 的级数称为幂级数。研究幂级数的关键是确定其<strong>收敛半径</strong>和<strong>收敛域</strong>。</p>
+
+        <h3>阿贝尔定理（Abel）</h3>
+        <div class="formula-box">
+            若幂级数 &sum; a<sub>n</sub>x<sup>n</sup> 在 x = x<sub>0</sub> (&ne; 0) 处收敛，<br>
+            则对任意 |x| &lt; |x<sub>0</sub>|，幂级数绝对收敛；<br>
+            若在 x = x<sub>0</sub> 处发散，则对任意 |x| &gt; |x<sub>0</sub>|，幂级数发散。
+        </div>
+
+        <h3>收敛半径的求法</h3>
+
+        <h4>方法一：比值法（系数模比值法）</h4>
+        <div class="formula-box">
+            设 <span class="math-tex">lim<sub>n&rarr;&infin;</sub> |a<sub>n+1</sub>/a<sub>n</sub>| = &rho;</span>（或为 +&infin;），则收敛半径为：<br>
+            R = 1/&rho; &emsp;（当 &rho; &ne; 0 且有限）<br>
+            R = +&infin; &emsp;（当 &rho; = 0）<br>
+            R = 0 &emsp;（当 &rho; = +&infin;）
+        </div>
+
+        <h4>方法二：根值法（系数模 n 次根法）</h4>
+        <div class="formula-box">
+            设 <span class="math-tex">lim<sub>n&rarr;&infin;</sub> &radic;(|a<sub>n</sub>|) = &rho;</span>，则：<br>
+            R = 1/&rho;
+        </div>
+
+        <h4>方法三：缺项幂级数的处理</h4>
+        <p>若幂级数存在缺项（如只含偶数次项 <span class="math-tex">&sum; a<sub>n</sub>x<sup>2n</sup></span>），不能直接使用系数公式，而应使用比值法直接对项处理：</p>
+        <div class="formula-box">
+            令 u<sub>n</sub>(x) = a<sub>n</sub> &middot; x<sup>2n</sup>，则：<br>
+            lim<sub>n&rarr;&infin;</sub> |u<sub>n+1</sub>(x)/u<sub>n</sub>(x)| = lim<sub>n&rarr;&infin;</sub> |a<sub>n+1</sub>/a<sub>n</sub>| &middot; |x|²<br>
+            令极限 &lt; 1 解出 |x| &lt; R
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>五、收敛域的确定步骤</h2>
+
+        <div class="method-step">
+            <strong>Step 1：</strong>用比值法或根值法求出收敛半径 <span class="math-tex">R</span>，确定开区间 <span class="math-tex">(-R, R)</span> 内绝对收敛。
+        </div>
+        <div class="method-step">
+            <strong>Step 2：</strong>分别讨论端点 <span class="math-tex">x = &plusmn;R</span>（或 <span class="math-tex">x = x<sub>0</sub> &plusmn; R</span>）处的敛散性。
+        </div>
+        <div class="method-step">
+            <strong>Step 3：</strong>综合上述结果，写出收敛域（可能为开区间、闭区间或半开半闭区间）。
+        </div>
+
+        <div class="note-box">
+            <strong>💡 端点判断要点：</strong>将 <span class="math-tex">x = &plusmn;R</span> 代入原级数，化为常数项级数，再利用正项级数审敛法或交错级数审敛法判断。
+        </div>
+
+        <h3>收敛域的常见形式</h3>
+        <table>
+            <tr><th>收敛半径</th><th>收敛域可能情形</th></tr>
+            <tr><td><span class="math-tex">R = +&infin;</span></td><td><span class="math-tex">(-&infin;, +&infin;)</span></td></tr>
+            <tr><td><span class="math-tex">R = 0</span></td><td>仅在 <span class="math-tex">x = 0</span>（或 <span class="math-tex">x = x<sub>0</sub></span>）处收敛</td></tr>
+            <tr><td><span class="math-tex">R &gt; 0</span> 有限</td><td><span class="math-tex">(-R, R)</span>、<span class="math-tex">[-R, R)</span>、<span class="math-tex">(-R, R]</span>、<span class="math-tex">[-R, R]</span></td></tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>六、典型例题</h2>
+
+        <div class="example-box">
+            <strong>例 1：</strong>判断级数 <span class="math-tex">&sum;<sub>n=1</sub><sup>&infin;</sup> n/(2n + 1)<sup>n</sup></span> 的敛散性。
+            <br><br>
+            <strong>解：</strong>使用根值审敛法。<br>
+            <span class="math-tex">lim<sub>n&rarr;&infin;</sub> &radic;(a<sub>n</sub>) = lim<sub>n&rarr;&infin;</sub> &radic;(n)/(2n + 1) = 0 &lt; 1</span><br>
+            <strong>结论：</strong>级数收敛。
+        </div>
+
+        <div class="example-box">
+            <strong>例 2：</strong>判断级数 <span class="math-tex">&sum;<sub>n=1</sub><sup>&infin;</sup> (2n)!/(n!)² &middot; (1/4)<sup>n</sup></span> 的敛散性。
+            <br><br>
+            <strong>解：</strong>使用比值审敛法。<br>
+            <span class="math-tex">lim<sub>n&rarr;&infin;</sub> a<sub>n+1</sub>/a<sub>n</sub> = lim<sub>n&rarr;&infin;</sub> (2n+2)(2n+1)/(n+1)² &middot; 1/4 = lim<sub>n&rarr;&infin;</sub> (4n²+6n+2)/(4n²+8n+4) = 1</span><br>
+            &rho; = 1，审敛法失效。改用拉贝审敛法或斯特林公式判断。<br>
+            实际上由 <span class="math-tex">(2n)!/(n!)² &sim; 4<sup>n</sup>/&radic;(&pi;n)</span> 得通项 <span class="math-tex">&sim; 1/&radic;(&pi;n)</span>，发散。
+            <br><strong>结论：</strong>级数发散。
+        </div>
+
+        <div class="example-box">
+            <strong>例 3：</strong>求幂级数 <span class="math-tex">&sum;<sub>n=1</sub><sup>&infin;</sup> (-1)<sup>n-1</sup> x<sup>n</sup>/n</span> 的收敛半径与收敛域。
+            <br><br>
+            <strong>解：</strong>系数 <span class="math-tex">a<sub>n</sub> = (-1)<sup>n-1</sup>/n</span>。<br>
+            <span class="math-tex">&rho; = lim<sub>n&rarr;&infin;</sub> |a<sub>n+1</sub>/a<sub>n</sub>| = lim<sub>n&rarr;&infin;</sub> n/(n+1) = 1</span><br>
+            收敛半径 <span class="math-tex">R = 1</span>。<br>
+            在 <span class="math-tex">x = 1</span> 处：<span class="math-tex">&sum; (-1)<sup>n-1</sup>/n</span>，由莱布尼茨判别法知条件收敛。<br>
+            在 <span class="math-tex">x = -1</span> 处：<span class="math-tex">&sum; (-1)<sup>n-1</sup> &middot; (-1)<sup>n</sup>/n = &sum; -1/n</span>，发散（负的调和级数）。<br>
+            <strong>结论：</strong>收敛半径 <span class="math-tex">R = 1</span>，收敛域为 <span class="math-tex">(-1, 1]</span>。
+        </div>
+
+        <div class="example-box">
+            <strong>例 4：</strong>求幂级数 <span class="math-tex">&sum;<sub>n=1</sub><sup>&infin;</sup> (x - 1)<sup>n</sup>/(2<sup>n</sup> &middot; n)</span> 的收敛域。
+            <br><br>
+            <strong>解：</strong>令 <span class="math-tex">t = x - 1</span>，原级数化为 <span class="math-tex">&sum; t<sup>n</sup>/(2<sup>n</sup> n)</span>。<br>
+            <span class="math-tex">a<sub>n</sub> = 1/(2<sup>n</sup> n)</span>，<span class="math-tex">&rho; = lim |a<sub>n+1</sub>/a<sub>n</sub>| = lim 2<sup>n</sup>n/(2<sup>n+1</sup>(n+1)) = 1/2</span>。<br>
+            收敛半径 <span class="math-tex">R<sub>t</sub> = 2</span>。<br>
+            当 <span class="math-tex">t = 2</span>（即 <span class="math-tex">x = 3</span>）：<span class="math-tex">&sum; 2<sup>n</sup>/(2<sup>n</sup> n) = &sum; 1/n</span>，发散。<br>
+            当 <span class="math-tex">t = -2</span>（即 <span class="math-tex">x = -1</span>）：<span class="math-tex">&sum; (-2)<sup>n</sup>/(2<sup>n</sup> n) = &sum; (-1)<sup>n</sup>/n</span>，条件收敛。<br>
+            <strong>结论：</strong>原级数收敛域为 <span class="math-tex">[-1, 3)</span>。
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>七、审敛法选择策略</h2>
+        <table>
+            <tr><th>通项特征</th><th>优先选用的审敛法</th></tr>
+            <tr><td>含 <span class="math-tex">n!</span>、<span class="math-tex">a<sup>n</sup></span>、<span class="math-tex">(2n)!/(n!)²</span></td><td>比值审敛法</td></tr>
+            <tr><td>含 <span class="math-tex">n<sup>n</sup></span>、<span class="math-tex">(f(n))<sup>n</sup></span></td><td>根值审敛法</td></tr>
+            <tr><td>分式有理函数 <span class="math-tex">P(n)/Q(n)</span></td><td>比较审敛法（与 <span class="math-tex">1/n<sup>p</sup></span> 比）</td></tr>
+            <tr><td>含 <span class="math-tex">ln n</span> 因子</td><td>积分审敛法 或 比较法</td></tr>
+            <tr><td>交错符号 <span class="math-tex">(-1)<sup>n</sup></span></td><td>莱布尼茨判别法（先证 <span class="math-tex">u<sub>n</sub> &rarr; 0</span>）</td></tr>
+            <tr><td>比值/根值极限 <span class="math-tex">= 1</span></td><td>换用拉贝判别法或比较法</td></tr>
+        </table>
+
+        <div class="note-box">
+            <strong>💡 审敛步骤：</strong>
+            <ol>
+                <li>先看 <span class="math-tex">lim a<sub>n</sub></span> 是否为零（必要条件）—— 不为零则直接发散</li>
+                <li>正项级数优先尝试比值法和根值法（通常最便捷）</li>
+                <li>若极限为 1，改用比较法或积分法</li>
+                <li>交错级数先判断是否绝对收敛；若不是，再用莱布尼茨判别法</li>
+                <li>含参数的级数注意分类讨论</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>八、幂级数的运算与性质</h2>
+
+        <h3>幂级数的四则运算</h3>
+        <p>设 <span class="math-tex">&sum; a<sub>n</sub>x<sup>n</sup></span> 和 <span class="math-tex">&sum; b<sub>n</sub>x<sup>n</sup></span> 的收敛半径分别为 <span class="math-tex">R<sub>1</sub></span> 和 <span class="math-tex">R<sub>2</sub></span>：</p>
+        <ul>
+            <li>加减法：<span class="math-tex">&sum; a<sub>n</sub>x<sup>n</sup> &plusmn; &sum; b<sub>n</sub>x<sup>n</sup> = &sum; (a<sub>n</sub> &plusmn; b<sub>n</sub>)x<sup>n</sup></span>，收敛半径 <span class="math-tex">R &ge; min{R<sub>1</sub>, R<sub>2</sub>}</span></li>
+            <li>乘法（柯西乘积）：<span class="math-tex">(&sum; a<sub>n</sub>x<sup>n</sup>) &middot; (&sum; b<sub>n</sub>x<sup>n</sup>) = &sum; c<sub>n</sub>x<sup>n</sup></span>，其中 <span class="math-tex">c<sub>n</sub> = &sum;<sub>k=0</sub><sup>n</sup> a<sub>k</sub>b<sub>n-k</sub></span></li>
+        </ul>
+
+        <h3>幂级数的分析性质</h3>
+        <p>设幂级数 <span class="math-tex">&sum; a<sub>n</sub>x<sup>n</sup></span> 的收敛半径为 <span class="math-tex">R &gt; 0</span>，和函数为 <span class="math-tex">S(x)</span>：</p>
+        <ul>
+            <li><strong>内闭一致收敛：</strong>对任意 <span class="math-tex">0 &lt; r &lt; R</span>，在 <span class="math-tex">[-r, r]</span> 上一致收敛</li>
+            <li><strong>逐项可微：</strong><span class="math-tex">S'(x) = &sum; na<sub>n</sub>x<sup>n-1</sup></span>，且收敛半径仍为 <span class="math-tex">R</span></li>
+            <li><strong>逐项可积：</strong><span class="math-tex">&int;<sub>0</sub><sup>x</sup> S(t) dt = &sum; a<sub>n</sub>x<sup>n+1</sup>/(n+1)</span>，且收敛半径仍为 <span class="math-tex">R</span></li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>九、常见易错点提醒</h2>
+        <div class="warning-box">
+            <strong>⚠ 常见错误：</strong>
+            <ol>
+                <li><strong>必要条件误用：</strong><span class="math-tex">a<sub>n</sub> &rarr; 0</span> 是收敛的必要条件而非充分条件（如调和级数）</li>
+                <li><strong>比值法条件适用：</strong>比值法要求 <span class="math-tex">a<sub>n</sub> &gt; 0</span>（正项级数），对任意项级数需加绝对值</li>
+                <li><strong>交错级数审敛忘记验证单调性：</strong>莱布尼茨判别法要求 <span class="math-tex">u<sub>n</sub></span> 单调递减</li>
+                <li><strong>缺项幂级数误用系数公式：</strong>缺项时用 <span class="math-tex">lim |a<sub>n</sub>/a<sub>n+1</sub>|</span> 会出错，应用比值法处理 <span class="math-tex">u<sub>n</sub>(x)</span></li>
+                <li><strong>端点忘记单独验证：</strong>收敛半径只给出开区间内的收敛性，端点必须单独代入判断</li>
+                <li><strong>绝对收敛与条件收敛混淆：</strong>"收敛"不等于"绝对收敛"，交错 p-级数在 <span class="math-tex">0 &lt; p &le; 1</span> 时为条件收敛</li>
+                <li><strong>幂级数逐项求导/积分后端点敛散性可能改变</strong></li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>十、常用幂级数展开式</h2>
+        <table>
+            <tr><th>函数</th><th>幂级数展开</th><th>收敛域</th></tr>
+            <tr><td><span class="math-tex">1/(1 - x)</span></td><td><span class="math-tex">&sum;<sub>n=0</sub><sup>&infin;</sup> x<sup>n</sup></span></td><td><span class="math-tex">(-1, 1)</span></td></tr>
+            <tr><td><span class="math-tex">1/(1 + x)</span></td><td><span class="math-tex">&sum;<sub>n=0</sub><sup>&infin;</sup> (-1)<sup>n</sup> x<sup>n</sup></span></td><td><span class="math-tex">(-1, 1)</span></td></tr>
+            <tr><td><span class="math-tex">ln(1 + x)</span></td><td><span class="math-tex">&sum;<sub>n=1</sub><sup>&infin;</sup> (-1)<sup>n-1</sup> x<sup>n</sup>/n</span></td><td><span class="math-tex">(-1, 1]</span></td></tr>
+            <tr><td><span class="math-tex">ln(1 - x)</span></td><td><span class="math-tex">&sum;<sub>n=1</sub><sup>&infin;</sup> -x<sup>n</sup>/n</span></td><td><span class="math-tex">[-1, 1)</span></td></tr>
+            <tr><td><span class="math-tex">e<sup>x</sup></span></td><td><span class="math-tex">&sum;<sub>n=0</sub><sup>&infin;</sup> x<sup>n</sup>/n!</span></td><td><span class="math-tex">(-&infin;, +&infin;)</span></td></tr>
+            <tr><td><span class="math-tex">sin x</span></td><td><span class="math-tex">&sum;<sub>n=0</sub><sup>&infin;</sup> (-1)<sup>n</sup> x<sup>2n+1</sup>/(2n+1)!</span></td><td><span class="math-tex">(-&infin;, +&infin;)</span></td></tr>
+            <tr><td><span class="math-tex">cos x</span></td><td><span class="math-tex">&sum;<sub>n=0</sub><sup>&infin;</sup> (-1)<sup>n</sup> x<sup>2n</sup>/(2n)!</span></td><td><span class="math-tex">(-&infin;, +&infin;)</span></td></tr>
+            <tr><td><span class="math-tex">arctan x</span></td><td><span class="math-tex">&sum;<sub>n=0</sub><sup>&infin;</sup> (-1)<sup>n</sup> x<sup>2n+1</sup>/(2n+1)</span></td><td><span class="math-tex">[-1, 1]</span></td></tr>
+            <tr><td><span class="math-tex">(1 + x)<sup>&alpha;</sup></span></td><td><span class="math-tex">&sum;<sub>n=0</sub><sup>&infin;</sup> C(&alpha;, n) x<sup>n</sup></span></td><td><span class="math-tex">(-1, 1)</span>（&alpha; 非正整数时）</td></tr>
+        </table>
+    </div>
+
+    <div class="footer-note">
+        级数收敛与收敛半径知识点总结 | 高等数学II-2 知识点
+    </div>
+</body>
+</html>

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>曲面法向量的核心求解方法 — 高等数学II-2</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; line-height: 1.8; color: #333; background: #f4f6f8; padding: 20px; max-width: 880px; margin: 0 auto; }
+        .header { text-align: center; padding-bottom: 20px; border-bottom: 2px solid #e0e0e0; margin-bottom: 30px; }
+        .header h1 { color: #2c3e50; margin-bottom: 5px; font-size: 1.6em; }
+        .header .subtitle { color: #7f8c8d; font-size: 0.9em; }
+        .download-link { display: inline-flex; align-items: center; gap: 8px; background: #3498db; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; margin: 15px 0; transition: background 0.2s; }
+        .download-link:hover { background: #2980b9; }
+        .nav-back { display: inline-flex; align-items: center; gap: 6px; color: #555; text-decoration: none; font-size: 0.9em; margin-bottom: 15px; }
+        .nav-back:hover { color: #3498db; }
+        .section { background: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 20px 25px; margin-bottom: 20px; border-left: 4px solid #3498db; }
+        .section h2 { color: #2980b9; margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 8px; font-size: 1.2em; }
+        .section h3 { color: #2c3e50; font-size: 1.05em; margin: 15px 0 8px; }
+        .math-tex { font-family: "Times New Roman", Times, serif; font-style: italic; background: #f9f9f9; padding: 2px 6px; border-radius: 3px; }
+        .formula-box { background: #f0f4ff; border: 1px solid #d0d8f0; border-radius: 6px; padding: 12px 16px; margin: 10px 0; text-align: center; font-size: 1.1em; }
+        .example-box { background: #f8f9fa; border-left: 3px solid #27ae60; padding: 10px 15px; margin: 10px 0; border-radius: 0 4px 4px 0; }
+        .note-box { background: #fff8e1; border-left: 3px solid #ffc107; padding: 10px 15px; margin: 10px 0; border-radius: 0 4px 4px 0; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+        th { background: #f0f4ff; font-weight: bold; }
+        ul, ol { padding-left: 20px; }
+        li { margin-bottom: 6px; }
+        .footer-note { text-align: center; color: #95a5a6; font-size: 0.85em; margin-top: 40px; border-top: 1px solid #e0e0e0; padding-top: 20px; }
+        .two-col { display: flex; gap: 20px; flex-wrap: wrap; }
+        .two-col > div { flex: 1; min-width: 280px; }
+    </style>
+</head>
+<body>
+    <a href="../main.html" class="nav-back">⬅ 返回考点大纲</a>
+    <div class="header">
+        <h1>曲面法向量的核心求解方法</h1>
+        <p class="subtitle">重积分与线面积分</p>
+    </div>
+    <a href="曲面法向量的核心求解方法.pdf" class="download-link" download>📥 下载 PDF 原文</a>
+
+    <!-- 一、概述 -->
+    <div class="section">
+        <h2>一、曲面法向量概述</h2>
+        <p>曲面的法向量是垂直于曲面切平面的向量，在曲面积分中有着至关重要的地位。无论是第一型曲面积分（对面积的曲面积分）还是第二型曲面积分（对坐标的曲面积分），都需要明确曲面的法向量方向。</p>
+        <p>根据曲面的表达方式不同，法向量的计算方法也分为三类：</p>
+        <table>
+            <tr><th>曲面表达形式</th><th>示例</th><th>法向量求法</th></tr>
+            <tr><td>显式方程 <span class="math-tex">z = f(x,y)</span></td><td><span class="math-tex">z = x² + y²</span></td><td>梯度法：<span class="math-tex">(−f<sub>x</sub>, −f<sub>y</sub>, 1)</span></td></tr>
+            <tr><td>隐式方程 <span class="math-tex">F(x,y,z) = 0</span></td><td><span class="math-tex">x² + y² + z² = R²</span></td><td>梯度法：<span class="math-tex">∇F = (F<sub>x</sub>, F<sub>y</sub>, F<sub>z</sub>)</span></td></tr>
+            <tr><td>参数方程 <span class="math-tex">r(u,v)</span></td><td><span class="math-tex">r = (u,v,u²+v²)</span></td><td>叉积法：<span class="math-tex">r<sub>u</sub> × r<sub>v</sub></span></td></tr>
+        </table>
+    </div>
+
+    <!-- 二、隐式方程曲面法向量 -->
+    <div class="section">
+        <h2>二、隐式方程 <span class="math-tex">F(x,y,z) = 0</span> 的法向量</h2>
+
+        <h3>1. 方法原理</h3>
+        <p>对于由隐式方程 <span class="math-tex">F(x,y,z) = 0</span> 定义的曲面，法向量由梯度给出：</p>
+        <div class="formula-box">
+            <span class="math-tex">n = ∇F = (∂F/∂x, ∂F/∂y, ∂F/∂z)</span>
+        </div>
+
+        <h3>2. 单位法向量</h3>
+        <div class="formula-box">
+            <span class="math-tex">n° = ∇F / |∇F| = (F<sub>x</sub>, F<sub>y</sub>, F<sub>z</sub>) / √(F<sub>x</sub>² + F<sub>y</sub>² + F<sub>z</sub>²)</span>
+        </div>
+
+        <h3>3. 常用曲面的法向量</h3>
+        <table>
+            <tr><th>曲面方程</th><th>法向量 <span class="math-tex">n</span></th></tr>
+            <tr><td><span class="math-tex">x² + y² + z² = R²</span>（球面）</td><td><span class="math-tex">(2x, 2y, 2z) ∥ (x, y, z)</span></td></tr>
+            <tr><td><span class="math-tex">x²/a² + y²/b² + z²/c² = 1</span>（椭球面）</td><td><span class="math-tex">(2x/a², 2y/b², 2z/c²)</span></td></tr>
+            <tr><td><span class="math-tex">z − f(x,y) = 0</span>（显式曲面的隐式形式）</td><td><span class="math-tex">(−f<sub>x</sub>, −f<sub>y</sub>, 1)</span></td></tr>
+            <tr><td><span class="math-tex">Ax + By + Cz + D = 0</span>（平面）</td><td><span class="math-tex">(A, B, C)</span>（常向量）</td></tr>
+        </table>
+
+        <div class="note-box">
+            <strong>注意方向：</strong> <span class="math-tex">∇F</span> 指向 <span class="math-tex">F</span> 值增加的方向（即函数值增大最快的方向）。对于闭合曲面（如球面 <span class="math-tex">x²+y²+z²=R²</span>），取 <span class="math-tex">F = x²+y²+z²−R²</span>，<span class="math-tex">∇F</span> 指向外侧；若取 <span class="math-tex">F = R²−x²−y²−z²</span>，则指向内侧。
+        </div>
+    </div>
+
+    <!-- 三、显式方程曲面法向量 -->
+    <div class="section">
+        <h2>三、显式方程 <span class="math-tex">z = f(x,y)</span> 的法向量</h2>
+
+        <h3>1. 方法推导</h3>
+        <p>将显式方程改写为隐式形式 <span class="math-tex">F(x,y,z) = z − f(x,y) = 0</span>，则：</p>
+        <div class="formula-box">
+            <span class="math-tex">n = (−∂f/∂x, −∂f/∂y, 1) = (−f<sub>x</sub>, −f<sub>y</sub>, 1)</span>
+        </div>
+
+        <h3>2. 指向判定</h3>
+        <ul>
+            <li><strong>上侧法向量</strong>：<span class="math-tex">n<sub>上</sub> = (−f<sub>x</sub>, −f<sub>y</sub>, 1)</span>（竖直分量 > 0，指向 z 轴正向）</li>
+            <li><strong>下侧法向量</strong>：<span class="math-tex">n<sub>下</sub> = (f<sub>x</sub>, f<sub>y</sub>, −1)</span>（竖直分量 < 0，指向 z 轴负向）</li>
+        </ul>
+
+        <h3>3. 面积微元与方向余弦</h3>
+        <div class="formula-box">
+            <span class="math-tex">dS = √(1 + f<sub>x</sub>² + f<sub>y</sub>²) dxdy</span>
+        </div>
+        <p>单位法向量的方向余弦：</p>
+        <div class="formula-box">
+            <span class="math-tex">cos α = −f<sub>x</sub> / √(1 + f<sub>x</sub>² + f<sub>y</sub>²)</span><br>
+            <span class="math-tex">cos β = −f<sub>y</sub> / √(1 + f<sub>x</sub>² + f<sub>y</sub>²)</span><br>
+            <span class="math-tex">cos γ = 1 / √(1 + f<sub>x</sub>² + f<sub>y</sub>²)</span>
+        </div>
+        <p><span class="math-tex">(cos α, cos β, cos γ)</span> 即为上侧单位法向量。</p>
+
+        <h3>4. 推广到其他显式形式</h3>
+        <ul>
+            <li><span class="math-tex">x = g(y,z)</span>：法向量 <span class="math-tex">(1, −g<sub>y</sub>, −g<sub>z</sub>)</span></li>
+            <li><span class="math-tex">y = h(x,z)</span>：法向量 <span class="math-tex">(−h<sub>x</sub>, 1, −h<sub>z</sub>)</span></li>
+        </ul>
+    </div>
+
+    <!-- 四、参数方程曲面法向量 -->
+    <div class="section">
+        <h2>四、参数方程 <span class="math-tex">r(u,v)</span> 的法向量</h2>
+
+        <h3>1. 方法原理</h3>
+        <p>若曲面由参数方程 <span class="math-tex">r(u,v) = (x(u,v), y(u,v), z(u,v))</span> 给出，则两个切向量分别为：</p>
+        <div class="formula-box">
+            <span class="math-tex">r<sub>u</sub> = (∂x/∂u, ∂y/∂u, ∂z/∂u)</span><br>
+            <span class="math-tex">r<sub>v</sub> = (∂x/∂v, ∂y/∂v, ∂z/∂v)</span>
+        </div>
+        <p>法向量由这两个切向量的叉积给出：</p>
+        <div class="formula-box">
+            <span class="math-tex">n = r<sub>u</sub> × r<sub>v</sub></span>
+        </div>
+
+        <h3>2. 叉积展开式</h3>
+        <div class="formula-box">
+            <span class="math-tex">r<sub>u</sub> × r<sub>v</sub> =
+            ∣ i &nbsp;&nbsp; j &nbsp;&nbsp; k ∣<br>
+            ∣ x<sub>u</sub> y<sub>u</sub> z<sub>u</sub> ∣<br>
+            ∣ x<sub>v</sub> y<sub>v</sub> z<sub>v</sub> ∣</span>
+            <br><br>
+            <span class="math-tex">= (y<sub>u</sub> z<sub>v</sub> − z<sub>u</sub> y<sub>v</sub>, z<sub>u</sub> x<sub>v</sub> − x<sub>u</sub> z<sub>v</sub>, x<sub>u</sub> y<sub>v</sub> − y<sub>u</sub> x<sub>v</sub>)</span>
+        </div>
+
+        <h3>3. 参数曲面的面积微元</h3>
+        <div class="formula-box">
+            <span class="math-tex">dS = |r<sub>u</sub> × r<sub>v</sub>| du dv</span>
+        </div>
+
+        <h3>4. 常用曲面的参数化</h3>
+        <table>
+            <tr><th>曲面</th><th>参数化</th><th><span class="math-tex">r<sub>u</sub> × r<sub>v</sub></span></th></tr>
+            <tr>
+                <td>球面 <span class="math-tex">x²+y²+z²=R²</span></td>
+                <td><span class="math-tex">r(θ,φ) = (R sin φ cos θ, R sin φ sin θ, R cos φ)</span><br><span class="math-tex">0≤θ<2π, 0≤φ≤π</span></td>
+                <td><span class="math-tex">(R² sin² φ cos θ, R² sin² φ sin θ, R² sin φ cos φ)</span><br><span class="math-tex">|r<sub>θ</sub> × r<sub>φ</sub>| = R² sin φ</span></td>
+            </tr>
+            <tr>
+                <td>柱面 <span class="math-tex">x²+y²=R²</span></td>
+                <td><span class="math-tex">r(θ,z) = (R cos θ, R sin θ, z)</span><br><span class="math-tex">0≤θ<2π</span></td>
+                <td><span class="math-tex">(R cos θ, R sin θ, 0)</span><br><span class="math-tex">|r<sub>θ</sub> × r<sub>z</sub>| = R</span></td>
+            </tr>
+            <tr>
+                <td>圆锥面 <span class="math-tex">z = √(x²+y²)</span></td>
+                <td><span class="math-tex">r(r,θ) = (r cos θ, r sin θ, r)</span><br><span class="math-tex">r≥0, 0≤θ<2π</span></td>
+                <td><span class="math-tex">(−r cos θ, −r sin θ, r)</span><br><span class="math-tex">|r<sub>r</sub> × r<sub>θ</sub>| = r√2</span></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- 五、法向量在曲面积分中的应用 -->
+    <div class="section">
+        <h2>五、法向量在曲面积分中的应用</h2>
+
+        <h3>1. 第一型曲面积分（对面积的曲面积分）</h3>
+        <div class="formula-box">
+            <span class="math-tex">∬<sub>Σ</sub> f(x,y,z) dS = ∬<sub>D</sub> f(x,y,z(x,y)) √(1 + z<sub>x</sub>² + z<sub>y</sub>²) dxdy</span>
+        </div>
+        <p>其中 <span class="math-tex">dS = √(1 + f<sub>x</sub>² + f<sub>y</sub>²) dxdy</span> 即为法向量模长的几何意义。</p>
+
+        <h3>2. 第二型曲面积分（对坐标的曲面积分）</h3>
+        <div class="formula-box">
+            <span class="math-tex">∬<sub>Σ</sub> P dy∧dz + Q dz∧dx + R dx∧dy = ∬<sub>Σ</sub> (F · n) dS</span>
+        </div>
+        <p>其中 <span class="math-tex">n</span> 为指定侧的单位法向量。转换为投影计算：</p>
+        <div class="formula-box">
+            <span class="math-tex">∬<sub>Σ</sub> R dx∧dy = ∬<sub>D<sub>xy</sub></sub> R(x,y,z(x,y)) · (±1) dxdy</span>
+        </div>
+        <p><strong>符号选择：</strong> 取上侧时为正，下侧时为负。</p>
+
+        <h3>3. 高斯公式（散度定理）</h3>
+        <p>高斯公式建立了第二型曲面积分和三重积分之间的桥梁：</p>
+        <div class="formula-box">
+            <span class="math-tex">∯<sub>∂Ω</sub> F · dS = ∭<sub>Ω</sub> (∇ · F) dV</span>
+        </div>
+        <p>其中 <span class="math-tex">∂Ω</span> 取外侧法向量，<span class="math-tex">∇ · F = ∂P/∂x + ∂Q/∂y + ∂R/∂z</span> 为向量场 <span class="math-tex">F</span> 的散度。</p>
+
+        <div class="note-box">
+            <strong>关键技巧：</strong> 在处理第二型曲面积分时，一定要明确曲面的侧（外侧/内侧、上侧/下侧、前侧/后侧），这决定了法向量的方向和积分结果的符号。
+        </div>
+    </div>
+
+    <!-- 六、典型例题 -->
+    <div class="section">
+        <h2>六、典型例题</h2>
+
+        <div class="example-box">
+            <strong>例 1（球面法向量）：</strong> 求球面 <span class="math-tex">x² + y² + z² = 4</span> 在点 <span class="math-tex">(1,1,√2)</span> 处的上侧单位法向量。<br><br>
+            <strong>解：</strong> 令 <span class="math-tex">F(x,y,z) = x² + y² + z² − 4</span><br>
+            <span class="math-tex">∇F = (2x, 2y, 2z)</span>，在 <span class="math-tex">(1,1,√2)</span> 处为 <span class="math-tex">(2, 2, 2√2)</span><br>
+            <span class="math-tex">|∇F| = √(4 + 4 + 8) = 4</span><br>
+            单位法向量 <span class="math-tex">n° = (2/4, 2/4, 2√2/4) = (1/2, 1/2, √2/2)</span><br>
+            由于该点处 <span class="math-tex">z > 0</span> 且第三个分量为正，即为上侧外法向。
+        </div>
+
+        <div class="example-box">
+            <strong>例 2（参数曲面法向量）：</strong> 求参数曲面 <span class="math-tex">r(u,v) = (u cos v, u sin v, v)</span>（螺旋面）在点 <span class="math-tex">(u=1, v=0)</span> 处的法向量。<br><br>
+            <strong>解：</strong> <span class="math-tex">r<sub>u</sub> = (cos v, sin v, 0)</span><br>
+            <span class="math-tex">r<sub>v</sub> = (−u sin v, u cos v, 1)</span><br>
+            在 <span class="math-tex">(1,0)</span> 处：<span class="math-tex">r<sub>u</sub> = (1,0,0)</span>，<span class="math-tex">r<sub>v</sub> = (0,1,1)</span><br>
+            <span class="math-tex">n = r<sub>u</sub> × r<sub>v</sub> = (0, −1, 1)</span>
+        </div>
+
+        <div class="example-box">
+            <strong>例 3（曲面积分中的应用）：</strong> 计算第二型曲面积分 <span class="math-tex">∬<sub>Σ</sub> x dy∧dz + y dz∧dx + z dx∧dy</span>，<span class="math-tex">Σ</span> 为球面 <span class="math-tex">x²+y²+z²=R²</span> 的外侧。<br><br>
+            <strong>解法一（高斯公式）：</strong><br>
+            <span class="math-tex">P = x, Q = y, R = z</span><br>
+            <span class="math-tex">∇ · F = ∂P/∂x + ∂Q/∂y + ∂R/∂z = 1 + 1 + 1 = 3</span><br>
+            <span class="math-tex">∯<sub>Σ</sub> F · dS = ∭<sub>Ω</sub> 3 dV = 3 · (4/3)πR³ = 4πR³</span><br><br>
+            <strong>解法二（投影法）：</strong><br>
+            球面外侧的单位法向量 <span class="math-tex">n = (x/R, y/R, z/R)</span><br>
+            <span class="math-tex">F · n = x·(x/R) + y·(y/R) + z·(z/R) = (x²+y²+z²)/R = R²/R = R</span><br>
+            <span class="math-tex">∬<sub>Σ</sub> F · n dS = R · ∬<sub>Σ</sub> dS = R · 4πR² = 4πR³</span><br>
+            两种解法结果一致。
+        </div>
+
+        <div class="example-box">
+            <strong>例 4（方向余弦法）：</strong> 计算 <span class="math-tex">∬<sub>Σ</sub> z² dx∧dy</span>，<span class="math-tex">Σ</span> 为锥面 <span class="math-tex">z = √(x²+y²)</span> 被 <span class="math-tex">z=1</span> 和 <span class="math-tex">z=2</span> 截下的外侧。<br><br>
+            <strong>解：</strong> 将曲面投影到 xoy 平面，<span class="math-tex">D<sub>xy</sub></span> 为环形域 <span class="math-tex">1 ≤ x²+y² ≤ 4</span>。<br>
+            锥面上侧的法向量为 <span class="math-tex">(−z<sub>x</sub>, −z<sub>y</sub>, 1) = (−x/√(x²+y²), −y/√(x²+y²), 1)</span><br>
+            第三分量为正（上侧），但题目要求外侧，对锥面外侧指向斜上方，第三分量仍为正。<br>
+            <span class="math-tex">∬<sub>Σ</sub> z² dxdy = ∬<sub>D<sub>xy</sub></sub> (x²+y²) · (+1) dxdy</span><br>
+            换极坐标：<span class="math-tex">∫<sub>0</sub><sup>2π</sup> dθ ∫<sub>1</sub><sup>2</sup> r² · r dr = 2π · [r⁴/4]<sub>1</sub><sup>2</sup> = 2π · (4 − 1/4) = 2π · 15/4 = <strong>15π/2</strong></span>
+        </div>
+    </div>
+
+    <!-- 七、常见误区与总结 -->
+    <div class="section">
+        <h2>七、常见误区与解题总结</h2>
+
+        <div class="two-col">
+            <div>
+                <h3>常见误区</h3>
+                <ul>
+                    <li><strong>混淆隐式与显式法向量</strong>：显式 <span class="math-tex">z = f(x,y)</span> 的法向量是 <span class="math-tex">(−f<sub>x</sub>, −f<sub>y</sub>, 1)</span>，不是 <span class="math-tex">(f<sub>x</sub>, f<sub>y</sub>, −1)</span></li>
+                    <li><strong>忘记单位化</strong>：在第二型曲面积分的向量点积形式中，需要的是<strong>单位</strong>法向量</li>
+                    <li><strong>方向选取错误</strong>：高斯公式要求外侧法向量，投影法需要明确曲面侧对应的符号</li>
+                    <li><strong>参数法向量的顺序</strong>：<span class="math-tex">r<sub>u</sub> × r<sub>v</sub></span> 的方向依赖于参数顺序，交换 <span class="math-tex">u,v</span> 顺序会使法向量反向</li>
+                </ul>
+            </div>
+            <div>
+                <h3>解题步骤总结</h3>
+                <ol>
+                    <li><strong>识别曲面类型</strong>：隐式、显式还是参数形式？</li>
+                    <li><strong>确定法向量方向</strong>：题目指定了哪一侧？</li>
+                    <li><strong>计算法向量</strong>：
+                        <ul>
+                            <li>隐式：<span class="math-tex">∇F</span></li>
+                            <li>显式：<span class="math-tex">(±f<sub>x</sub>, ±f<sub>y</sub>, ±1)</span></li>
+                            <li>参数：<span class="math-tex">r<sub>u</sub> × r<sub>v</sub></span></li>
+                        </ul>
+                    </li>
+                    <li><strong>单位化（如需）</strong>：<span class="math-tex">n° = n / |n|</span></li>
+                    <li><strong>代入积分</strong>：根据积分类型使用对应公式</li>
+                </ol>
+            </div>
+        </div>
+
+        <h3>核心公式速查表</h3>
+        <table>
+            <tr><th>曲面形式</th><th>法向量（非单位）</th><th><span class="math-tex">dS</span></th></tr>
+            <tr><td><span class="math-tex">F(x,y,z)=0</span></td><td><span class="math-tex">(F<sub>x</sub>, F<sub>y</sub>, F<sub>z</sub>)</span></td><td><span class="math-tex">|∇F| / |F<sub>z</sub>| dxdy</span>（投影到 xoy）</td></tr>
+            <tr><td><span class="math-tex">z = f(x,y)</span></td><td><span class="math-tex">(−f<sub>x</sub>, −f<sub>y</sub>, 1)</span></td><td><span class="math-tex">√(1 + f<sub>x</sub>² + f<sub>y</sub>²) dxdy</span></td></tr>
+            <tr><td><span class="math-tex">r(u,v)</span></td><td><span class="math-tex">r<sub>u</sub> × r<sub>v</sub></span></td><td><span class="math-tex">|r<sub>u</sub> × r<sub>v</sub>| du dv</span></td></tr>
+        </table>
+    </div>
+
+    <div class="footer-note">
+        曲面法向量的核心求解方法 | 高等数学II-2 知识点
+    </div>
+</body>
+</html>

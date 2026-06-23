@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>平面点集基本定义 — 高等数学II-2</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; line-height: 1.8; color: #333; background: #f4f6f8; padding: 20px; max-width: 880px; margin: 0 auto; }
+        .header { text-align: center; padding-bottom: 20px; border-bottom: 2px solid #e0e0e0; margin-bottom: 30px; }
+        .header h1 { color: #2c3e50; margin-bottom: 5px; font-size: 1.6em; }
+        .header .subtitle { color: #7f8c8d; font-size: 0.9em; }
+        .download-link { display: inline-flex; align-items: center; gap: 8px; background: #3498db; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; margin: 15px 0; transition: background 0.2s; }
+        .download-link:hover { background: #2980b9; }
+        .nav-back { display: inline-flex; align-items: center; gap: 6px; color: #555; text-decoration: none; font-size: 0.9em; margin-bottom: 15px; }
+        .nav-back:hover { color: #3498db; }
+        .section { background: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 20px 25px; margin-bottom: 20px; border-left: 4px solid #3498db; }
+        .section h2 { color: #2980b9; margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 8px; font-size: 1.2em; }
+        .section h3 { color: #2c3e50; font-size: 1.05em; margin: 15px 0 8px; }
+        .math-tex { font-family: "Times New Roman", Times, serif; font-style: italic; background: #f9f9f9; padding: 2px 6px; border-radius: 3px; }
+        .formula-box { background: #f0f4ff; border: 1px solid #d0d8f0; border-radius: 6px; padding: 12px 16px; margin: 10px 0; text-align: center; font-size: 1.1em; }
+        .example-box { background: #f8f9fa; border-left: 3px solid #27ae60; padding: 10px 15px; margin: 10px 0; border-radius: 0 4px 4px 0; }
+        .note-box { background: #fff8e1; border-left: 3px solid #ffc107; padding: 10px 15px; margin: 10px 0; border-radius: 0 4px 4px 0; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+        th { background: #f0f4ff; font-weight: bold; }
+        ul, ol { padding-left: 20px; }
+        li { margin-bottom: 6px; }
+        .footer-note { text-align: center; color: #95a5a6; font-size: 0.85em; margin-top: 40px; border-top: 1px solid #e0e0e0; padding-top: 20px; }
+    </style>
+</head>
+<body>
+    <a href="../main.html" class="nav-back">⬅ 返回考点大纲</a>
+    <div class="header">
+        <h1>平面点集基本定义</h1>
+        <p class="subtitle">空间解析几何 — 邻域、聚点、开集、闭集、区域等基本概念</p>
+    </div>
+    <a href="平面点集基本定义.pdf" class="download-link" download>📥 下载 PDF 原文</a>
+
+    <div class="section">
+        <h2>一、平面点集的基本概念</h2>
+
+        <p>平面点集是 <span class="math-tex">R<sup>2</sup></span> 中点的集合，即坐标平面 <span class="math-tex">xOy</span> 上满足某种条件的点的全体。一般记为：</p>
+        <div class="formula-box">
+            <span class="math-tex">E = { (x, y) | (x, y) 满足某种条件 }</span>
+        </div>
+        <p>例如：<span class="math-tex">E = { (x, y) | x<sup>2</sup> + y<sup>2</sup> &lt; 1 }</span> 表示单位圆内部（不含边界）的所有点。</p>
+
+        <p>空间 <span class="math-tex">R<sup>2</sup></span> 中任意两点 <span class="math-tex">P<sub>1</sub>(x<sub>1</sub>, y<sub>1</sub>)</span> 和 <span class="math-tex">P<sub>2</sub>(x<sub>2</sub>, y<sub>2</sub>)</span> 之间的距离定义为：</p>
+        <div class="formula-box">
+            <span class="math-tex">d(P<sub>1</sub>, P<sub>2</sub>) = √[(x<sub>1</sub> - x<sub>2</sub>)<sup>2</sup> + (y<sub>1</sub> - y<sub>2</sub>)<sup>2</sup>]</span>
+        </div>
+        <p>这是欧几里得距离（Euclidean distance）。</p>
+    </div>
+
+    <div class="section">
+        <h2>二、邻域</h2>
+
+        <h3>1. &delta; 邻域（圆形邻域）</h3>
+        <p>设 <span class="math-tex">P<sub>0</sub>(x<sub>0</sub>, y<sub>0</sub>)</span> 是 <span class="math-tex">xOy</span> 平面上的一个点，<span class="math-tex">δ</span> 为某一正数。称点集：</p>
+        <div class="formula-box">
+            <span class="math-tex">U(P<sub>0</sub>, δ) = { P | d(P, P<sub>0</sub>) &lt; δ }</span>
+        </div>
+        <p>为点 <span class="math-tex">P<sub>0</sub></span> 的 <strong>δ 邻域</strong>。它表示以 <span class="math-tex">P<sub>0</sub></span> 为圆心、<span class="math-tex">δ</span> 为半径的圆盘内部（不含边界）。</p>
+
+        <h3>2. 去心邻域</h3>
+        <p>从 δ 邻域中除去中心点 <span class="math-tex">P<sub>0</sub></span> 本身，称为 <strong>去心 δ 邻域</strong>：</p>
+        <div class="formula-box">
+            <span class="math-tex">Ů(P<sub>0</sub>, δ) = { P | 0 &lt; d(P, P<sub>0</sub>) &lt; δ }</span>
+        </div>
+
+        <h3>3. 方形邻域</h3>
+        <p>有时也使用方形邻域：</p>
+        <div class="formula-box">
+            <span class="math-tex">U<sub>□</sub>(P<sub>0</sub>, δ) = { (x, y) | |x - x<sub>0</sub>| &lt; δ, |y - y<sub>0</sub>| &lt; δ }</span>
+        </div>
+        <p>即以 <span class="math-tex">P<sub>0</sub></span> 为中心、边长为 <span class="math-tex">2δ</span> 的开正方形区域。</p>
+
+        <div class="note-box">
+            <strong>注：</strong>圆形邻域和方形邻域在拓扑上是等价的——对于任意一个圆形邻域，总可以找到一个包含在其中的方形邻域，反之亦然。因此在实际论证中，两者可以互换使用。
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>三、点与点集的关系</h2>
+
+        <p>设 <span class="math-tex">E</span> 是 <span class="math-tex">R<sup>2</sup></span> 中的一个点集，<span class="math-tex">P<sub>0</sub></span> 为平面上的一个点。根据 <span class="math-tex">P<sub>0</sub></span> 与 <span class="math-tex">E</span> 的关系，可作如下分类：</p>
+
+        <table>
+            <tr>
+                <th>类型</th>
+                <th>定义</th>
+                <th>符号</th>
+                <th>说明</th>
+            </tr>
+            <tr>
+                <td><strong>内点</strong></td>
+                <td>存在 <span class="math-tex">δ &gt; 0</span> 使得 <span class="math-tex">U(P<sub>0</sub>, δ) ⊂ E</span></td>
+                <td><span class="math-tex">P<sub>0</sub></span> 是 <span class="math-tex">E</span> 的内点</td>
+                <td>周围所有点都属于 <span class="math-tex">E</span></td>
+            </tr>
+            <tr>
+                <td><strong>外点</strong></td>
+                <td>存在 <span class="math-tex">δ &gt; 0</span> 使得 <span class="math-tex">U(P<sub>0</sub>, δ) ∩ E = ∅</span></td>
+                <td><span class="math-tex">P<sub>0</sub></span> 是 <span class="math-tex">E</span> 的外点</td>
+                <td>周围所有点都不属于 <span class="math-tex">E</span></td>
+            </tr>
+            <tr>
+                <td><strong>边界点</strong></td>
+                <td>对任意 <span class="math-tex">δ &gt; 0</span>，<span class="math-tex">U(P<sub>0</sub>, δ)</span> 既含有 <span class="math-tex">E</span> 的点又含有非 <span class="math-tex">E</span> 的点</td>
+                <td><span class="math-tex">P<sub>0</sub></span> 是 <span class="math-tex">E</span> 的边界点</td>
+                <td>任意邻域中都混有 <span class="math-tex">E</span> 内外的点</td>
+            </tr>
+            <tr>
+                <td><strong>聚点</strong></td>
+                <td>对任意 <span class="math-tex">δ &gt; 0</span>，去心邻域 <span class="math-tex">Ů(P<sub>0</sub>, δ)</span> 中至少含有 <span class="math-tex">E</span> 的一个点</td>
+                <td><span class="math-tex">P<sub>0</sub></span> 是 <span class="math-tex">E</span> 的聚点</td>
+                <td>附近有无限多 <span class="math-tex">E</span> 的点（可以是 <span class="math-tex">E</span> 的内点或边界点）</td>
+            </tr>
+            <tr>
+                <td><strong>孤立点</strong></td>
+                <td><span class="math-tex">P<sub>0</sub> ∈ E</span>，但存在 <span class="math-tex">δ &gt; 0</span> 使得 <span class="math-tex">U(P<sub>0</sub>, δ) ∩ E = {P<sub>0</sub>}</span></td>
+                <td><span class="math-tex">P<sub>0</sub></span> 是 <span class="math-tex">E</span> 的孤立点</td>
+                <td>属于 <span class="math-tex">E</span> 但不是聚点</td>
+            </tr>
+        </table>
+
+        <div class="example-box">
+            <strong>例题 1：</strong>设 <span class="math-tex">E = { (x, y) | x<sup>2</sup> + y<sup>2</sup> ≤ 1 }</span>（单位闭圆盘），请判断：<br><br>
+            (1) 点 <span class="math-tex">(0, 0)</span> 是内点还是边界点？<br>
+            (2) 点 <span class="math-tex">(1, 0)</span> 呢？<br>
+            (3) 点 <span class="math-tex">(2, 0)</span> 呢？<br><br>
+            <strong>解：</strong><br>
+            (1) <span class="math-tex">(0, 0)</span> 是内点。因为取 <span class="math-tex">δ = 0.5</span>，所有到 <span class="math-tex">(0,0)</span> 距离 < 0.5 的点都满足 <span class="math-tex">x<sup>2</sup>+y<sup>2</sup> < 0.25 < 1</span>，故完全包含在 <span class="math-tex">E</span> 内。<br>
+            (2) <span class="math-tex">(1, 0)</span> 是边界点。因为无论 <span class="math-tex">δ</span> 多小，邻域内既有圆内点（如 <span class="math-tex">(1-δ/2, 0)</span>），也有圆外点（如 <span class="math-tex">(1+δ/2, 0)</span>）。<br>
+            (3) <span class="math-tex">(2, 0)</span> 是外点。取 <span class="math-tex">δ = 0.5</span>，所有到 <span class="math-tex">(2,0)</span> 距离 < 0.5 的点都离圆心 > 1，故与 <span class="math-tex">E</span> 无交集。<br><br>
+            此外，<span class="math-tex">E</span> 的边界为 <span class="math-tex">{ (x, y) | x<sup>2</sup> + y<sup>2</sup> = 1 }</span>，整个 <span class="math-tex">E</span> 的聚点集为 <span class="math-tex">{ (x, y) | x<sup>2</sup> + y<sup>2</sup> ≤ 1 }</span>（所有内点和边界点都是聚点）。
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>四、聚点定理（Bolzano-Weierstrass 定理）</h2>
+
+        <div class="formula-box" style="background:#e8f0fe; border-color:#1a73e8;">
+            <strong>Bolzano-Weierstrass 定理（聚点定理）：</strong><br>
+            <span class="math-tex">R<sup>2</sup></span> 中的任意有界无限点集至少有一个聚点。
+        </div>
+
+        <p>等价表述：有界无限点列必有收敛子列。</p>
+        <p>这是数学分析中极为重要的定理，它建立了"无限"与"聚集"之间的联系，是后续学习紧致性概念的基础。</p>
+
+        <div class="note-box">
+            <strong>说明：</strong>此定理是 <span class="math-tex">R<sup>1</sup></span> 中 Bolzano-Weierstrass 定理（有界数列必有收敛子列）在 <span class="math-tex">R<sup>2</sup></span> 中的推广，更一般地，该定理在 <span class="math-tex">R<sup>n</sup></span> 中均成立。
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>五、开集与闭集</h2>
+
+        <h3>1. 开集</h3>
+        <p>如果点集 <span class="math-tex">E</span> 中的每个点都是 <span class="math-tex">E</span> 的内点，则称 <span class="math-tex">E</span> 为<strong>开集</strong>。</p>
+        <div class="formula-box">
+            <span class="math-tex">E</span> 是开集 <span class="math-tex">⇔</span> 对任意 <span class="math-tex">P ∈ E</span>，存在 <span class="math-tex">δ &gt; 0</span> 使 <span class="math-tex">U(P, δ) ⊂ E</span>
+        </div>
+        <p>直观理解：开集不包含它的任何边界点。</p>
+        <p><strong>例子：</strong></p>
+        <ul>
+            <li><span class="math-tex">{ (x, y) | x<sup>2</sup> + y<sup>2</sup> < 1 }</span>（开圆盘）—— 是开集</li>
+            <li><span class="math-tex">R<sup>2</sup></span> 本身 —— 是开集</li>
+            <li>空集 <span class="math-tex">∅</span> —— 是开集（规定）</li>
+            <li><span class="math-tex">{ (x, y) | 0 < x < 1, 0 < y < 1 }</span>（开正方形）—— 是开集</li>
+        </ul>
+
+        <h3>2. 闭集</h3>
+        <p>如果点集 <span class="math-tex">E</span> 的所有聚点都属于 <span class="math-tex">E</span>（即 <span class="math-tex">E</span> 包含其全部极限点），则称 <span class="math-tex">E</span> 为<strong>闭集</strong>。</p>
+        <p>等价定义：如果 <span class="math-tex">E</span> 的补集 <span class="math-tex">E<sup>c</sup> = R<sup>2</sup> \ E</span> 是开集，则 <span class="math-tex">E</span> 是闭集。</p>
+        <p><strong>例子：</strong></p>
+        <ul>
+            <li><span class="math-tex">{ (x, y) | x<sup>2</sup> + y<sup>2</sup> ≤ 1 }</span>（闭圆盘）—— 是闭集</li>
+            <li><span class="math-tex">{ (x, y) | 0 ≤ x ≤ 1, 0 ≤ y ≤ 1 }</span>（闭正方形）—— 是闭集</li>
+            <li><span class="math-tex">R<sup>2</sup></span> 本身 —— 既是开集又是闭集</li>
+            <li>空集 <span class="math-tex">∅</span> —— 既是开集又是闭集</li>
+        </ul>
+
+        <div class="note-box">
+            <strong>重要区分：</strong>开集和闭集并非"非此即彼"的关系。一个点集可以既是开集也是闭集（如 <span class="math-tex">R<sup>2</sup></span> 和 <span class="math-tex">∅</span>），也可以既不是开集也不是闭集（如半开半闭区间 <span class="math-tex">{ (x, y) | 0 < x ≤ 1 }</span>）。
+        </div>
+
+        <h3>3. 开集与闭集的性质</h3>
+        <table>
+            <tr>
+                <th></th>
+                <th>开集</th>
+                <th>闭集</th>
+            </tr>
+            <tr>
+                <td><strong>任意并</strong></td>
+                <td>任意个开集的并集仍是开集</td>
+                <td>有限个闭集的并集仍是闭集</td>
+            </tr>
+            <tr>
+                <td><strong>有限交</strong></td>
+                <td>有限个开集的交集仍是开集</td>
+                <td>任意个闭集的交集仍是闭集</td>
+            </tr>
+            <tr>
+                <td><strong>补集</strong></td>
+                <td>开集的补集是闭集</td>
+                <td>闭集的补集是开集</td>
+            </tr>
+        </table>
+        <p>（注意：无限个开集的交集未必是开集，无限个闭集的并集也未必是闭集。）</p>
+    </div>
+
+    <div class="section">
+        <h2>六、区域</h2>
+
+        <h3>1. 连通性</h3>
+        <p>设 <span class="math-tex">E</span> 是一个点集。如果 <span class="math-tex">E</span> 中任意两点都能用完全属于 <span class="math-tex">E</span> 的折线连接起来，则称 <span class="math-tex">E</span> 是<strong>连通</strong>的。</p>
+
+        <div class="example-box">
+            <strong>例题 2：</strong>判断以下集合是否连通：<br><br>
+            (a) <span class="math-tex">E<sub>1</sub> = { (x, y) | x<sup>2</sup> + y<sup>2</sup> < 1 }</span><br>
+            (b) <span class="math-tex">E<sub>2</sub> = { (x, y) | x < 0 } ∪ { (x, y) | x > 0 }</span><br>
+            (c) <span class="math-tex">E<sub>3</sub> = { (x, y) | 1 < x<sup>2</sup> + y<sup>2</sup> < 4 }</span><br><br>
+            <strong>解：</strong><br>
+            (a) 连通。单位圆内任意两点都可以用直线段连接，且线段完全在圆内。<br>
+            (b) 不连通。左右半平面被 <span class="math-tex">x = 0</span> 隔开，无法用折线连接。<br>
+            (c) 连通。圆环区域中任意两点可以用绕行的折线连接。
+        </div>
+
+        <h3>2. 开区域（简称区域）</h3>
+        <p>如果 <span class="math-tex">E</span> 既是开集又是连通的，则称 <span class="math-tex">E</span> 为<strong>开区域</strong>（简称<strong>区域</strong>）。</p>
+        <p><strong>例子：</strong></p>
+        <ul>
+            <li><span class="math-tex">{ (x, y) | x<sup>2</sup> + y<sup>2</sup> < 1 }</span>（开圆盘）—— 是区域</li>
+            <li><span class="math-tex">{ (x, y) | x > 0 }</span>（右半平面）—— 是区域</li>
+            <li><span class="math-tex">{ (x, y) | 1 < x<sup>2</sup> + y<sup>2</sup> < 4 }</span>（开圆环）—— 是区域</li>
+            <li><span class="math-tex">{ (x, y) | x<sup>2</sup> + y<sup>2</sup> ≤ 1 }</span>（闭圆盘）—— 不是开集，不是区域</li>
+        </ul>
+
+        <h3>3. 闭区域</h3>
+        <p>开区域连同其边界所组成的集合称为<strong>闭区域</strong>。</p>
+        <p>更准确地说：如果 <span class="math-tex">D</span> 是一个开区域，则 <span class="math-tex">D ∪ ∂D</span> 称为闭区域（其中 <span class="math-tex">∂D</span> 表示 <span class="math-tex">D</span> 的边界）。</p>
+        <p><strong>例子：</strong></p>
+        <ul>
+            <li><span class="math-tex">{ (x, y) | x<sup>2</sup> + y<sup>2</sup> ≤ 1 }</span>（闭圆盘）—— 是闭区域</li>
+            <li><span class="math-tex">{ (x, y) | 0 ≤ x ≤ 1, 0 ≤ y ≤ 1 }</span>（闭正方形）—— 是闭区域</li>
+        </ul>
+
+        <h3>4. 有界集与无界集</h3>
+        <p>如果存在一个以原点为中心的圆盘 <span class="math-tex">U(0, R)</span> 使得 <span class="math-tex">E ⊂ U(0, R)</span>，则称 <span class="math-tex">E</span> 是<strong>有界集</strong>；否则称为<strong>无界集</strong>。</p>
+
+        <table>
+            <tr>
+                <th>概念</th>
+                <th>定义要点</th>
+                <th>常见例子</th>
+            </tr>
+            <tr>
+                <td><strong>开区域</strong></td>
+                <td>开集 + 连通</td>
+                <td>开圆盘、开矩形、开圆环</td>
+            </tr>
+            <tr>
+                <td><strong>闭区域</strong></td>
+                <td>开区域 + 边界</td>
+                <td>闭圆盘、闭矩形</td>
+            </tr>
+            <tr>
+                <td><strong>有界闭区域</strong></td>
+                <td>闭区域 + 有界</td>
+                <td>闭圆盘、闭三角形</td>
+            </tr>
+            <tr>
+                <td><strong>有界开区域</strong></td>
+                <td>开区域 + 有界</td>
+                <td>开圆盘、开矩形</td>
+            </tr>
+            <tr>
+                <td><strong>无界区域</strong></td>
+                <td>区域 + 无界</td>
+                <td>上半平面、右半平面</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>七、点集拓扑概念一览表</h2>
+
+        <table>
+            <tr>
+                <th>概念</th>
+                <th>英文</th>
+                <th>简短定义</th>
+            </tr>
+            <tr>
+                <td><strong>邻域</strong></td>
+                <td>Neighborhood</td>
+                <td>以某点为中心、<span class="math-tex">δ</span> 为半径的开圆盘</td>
+            </tr>
+            <tr>
+                <td><strong>内点</strong></td>
+                <td>Interior point</td>
+                <td>存在邻域完全包含在集合中</td>
+            </tr>
+            <tr>
+                <td><strong>外点</strong></td>
+                <td>Exterior point</td>
+                <td>存在邻域完全不含集合的点</td>
+            </tr>
+            <tr>
+                <td><strong>边界点</strong></td>
+                <td>Boundary point</td>
+                <td>任意邻域既含集合内也含集合外的点</td>
+            </tr>
+            <tr>
+                <td><strong>聚点</strong></td>
+                <td>Accumulation / Limit point</td>
+                <td>任意去心邻域至少含一个集合的点</td>
+            </tr>
+            <tr>
+                <td><strong>孤立点</strong></td>
+                <td>Isolated point</td>
+                <td>属于集合但不是聚点</td>
+            </tr>
+            <tr>
+                <td><strong>开集</strong></td>
+                <td>Open set</td>
+                <td>每个点都是内点</td>
+            </tr>
+            <tr>
+                <td><strong>闭集</strong></td>
+                <td>Closed set</td>
+                <td>包含所有聚点（或补集为开集）</td>
+            </tr>
+            <tr>
+                <td><strong>区域</strong></td>
+                <td>Domain / Region</td>
+                <td>连通的开集（即开区域）</td>
+            </tr>
+            <tr>
+                <td><strong>闭区域</strong></td>
+                <td>Closed region</td>
+                <td>区域连同其边界</td>
+            </tr>
+            <tr>
+                <td><strong>有界集</strong></td>
+                <td>Bounded set</td>
+                <td>可被某个大圆盘完全覆盖</td>
+            </tr>
+            <tr>
+                <td><strong>紧致集</strong></td>
+                <td>Compact set</td>
+                <td><span class="math-tex">R<sup>n</sup></span> 中有界闭集</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>八、常见题型与方法总结</h2>
+
+        <table>
+            <tr>
+                <th>题型</th>
+                <th>解题思路</th>
+            </tr>
+            <tr>
+                <td>判断某个点是否为内点、边界点、聚点</td>
+                <td>
+                    取一般 <span class="math-tex">δ</span> 邻域，检查邻域中点的坐标是否满足条件。<br>
+                    内点：要证明存在某个 <span class="math-tex">δ</span> 使邻域完全在集合内。<br>
+                    边界点/聚点：要证明对任意 <span class="math-tex">δ</span> 邻域都含有特定性质的点。
+                </td>
+            </tr>
+            <tr>
+                <td>判断点集是开集还是闭集</td>
+                <td>
+                    检查边界是否包含在集合中：<br>
+                    — 不含任何边界点 → 开集<br>
+                    — 包含所有边界点（即所有聚点）→ 闭集
+                </td>
+            </tr>
+            <tr>
+                <td>判断是否为区域</td>
+                <td>
+                    两步法：① 检查是否为开集；② 检查是否连通
+                </td>
+            </tr>
+            <tr>
+                <td>求点集的聚点集</td>
+                <td>
+                    聚点 = 内点集 ∪ 边界点集（但不是所有边界点都是聚点）。<br>
+                    注意孤立点不是聚点。
+                </td>
+            </tr>
+        </table>
+
+        <div class="example-box">
+            <strong>例题 3：</strong>判断以下点集是开集、闭集还是都不是，并求其聚点集和边界。<br><br>
+            (a) <span class="math-tex">E<sub>1</sub> = { (x, y) | 0 &lt; x &lt; 1, 0 &lt; y &lt; 1 }</span><br>
+            (b) <span class="math-tex">E<sub>2</sub> = { (1/n, 0) | n = 1, 2, 3, ... }</span><br>
+            (c) <span class="math-tex">E<sub>3</sub> = { (x, y) | x<sup>2</sup> + y<sup>2</sup> = 1 }</span><br><br>
+            <strong>解：</strong><br>
+            (a) <span class="math-tex">E<sub>1</sub></span> 是开集（不含任何边界），是区域（连通的开集）。<br>
+            &emsp;聚点集：<span class="math-tex">{ (x, y) | 0 ≤ x ≤ 1, 0 ≤ y ≤ 1 }</span>（闭正方形）<br>
+            &emsp;边界：正方形的四条边（但不含内部）<br><br>
+            (b) <span class="math-tex">E<sub>2</sub></span> 既不是开集也不是闭集。每个点都是孤立点。<br>
+            &emsp;聚点集：<span class="math-tex">{ (0, 0) }</span>（仅原点，因为它不在集合中但任何邻域都含有某个 <span class="math-tex">(1/n, 0)</span>）<br>
+            &emsp;边界：<span class="math-tex">E<sub>2</sub> ∪ { (0, 0) }</span><br><br>
+            (c) <span class="math-tex">E<sub>3</sub></span> 是闭集（单位圆周，不含内点，所有点都是边界点）。<br>
+            &emsp;聚点集：<span class="math-tex">{ (x, y) | x<sup>2</sup> + y<sup>2</sup> = 1 }</span>（自身）<br>
+            &emsp;边界：自身
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>九、在多元函数中的重要性</h2>
+
+        <p>平面点集的基本概念是学习<strong>多元函数微分学</strong>的几何基础。以下是这些概念在后续章节中的应用：</p>
+
+        <table>
+            <tr>
+                <th>概念</th>
+                <th>在多元函数中的应用</th>
+            </tr>
+            <tr>
+                <td><strong>邻域</strong></td>
+                <td>定义多元函数的极限、连续性的基础</td>
+            </tr>
+            <tr>
+                <td><strong>聚点</strong></td>
+                <td>多元函数极限存在的必要条件（自变量趋近的方向分析）</td>
+            </tr>
+            <tr>
+                <td><strong>开区域</strong></td>
+                <td>多元函数的定义域通常是开区域（例如 <span class="math-tex">z = ln(1 - x<sup>2</sup> - y<sup>2</sup>)</span> 定义域是开圆盘）</td>
+            </tr>
+            <tr>
+                <td><strong>闭区域</strong></td>
+                <td>在有界闭区域上，连续函数必有最大值和最小值（最值定理）</td>
+            </tr>
+            <tr>
+                <td><strong>边界</strong></td>
+                <td>函数的最值可能出现在边界上（条件极值）</td>
+            </tr>
+            <tr>
+                <td><strong>连通性</strong></td>
+                <td>与路径无关的曲线积分需要积分区域是连通的开区域</td>
+            </tr>
+        </table>
+
+        <div class="note-box">
+            <strong>学习建议：</strong>这些点集拓扑的基本概念是多元函数微积分学的逻辑基石。建议通过绘制图形来辅助理解——在坐标系中画出点集，标出内点、边界点和外点，直观感受开集、闭集和区域的区别。
+        </div>
+    </div>
+
+    <div class="footer-note">
+        平面点集基本定义 | 高等数学II-2 知识点
+    </div>
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>点火公式详解 — 高等数学II-2</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; line-height: 1.8; color: #333; background: #f4f6f8; padding: 20px; max-width: 880px; margin: 0 auto; }
+        .header { text-align: center; padding-bottom: 20px; border-bottom: 2px solid #e0e0e0; margin-bottom: 30px; }
+        .header h1 { color: #2c3e50; margin-bottom: 5px; font-size: 1.6em; }
+        .header .subtitle { color: #7f8c8d; font-size: 0.9em; }
+        .download-link { display: inline-flex; align-items: center; gap: 8px; background: #3498db; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; margin: 15px 0; transition: background 0.2s; }
+        .download-link:hover { background: #2980b9; }
+        .nav-back { display: inline-flex; align-items: center; gap: 6px; color: #555; text-decoration: none; font-size: 0.9em; margin-bottom: 15px; }
+        .nav-back:hover { color: #3498db; }
+        .section { background: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 20px 25px; margin-bottom: 20px; border-left: 4px solid #3498db; }
+        .section h2 { color: #2980b9; margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 8px; font-size: 1.2em; }
+        .section h3 { color: #2c3e50; font-size: 1.05em; margin: 15px 0 8px; }
+        .math-tex { font-family: "Times New Roman", Times, serif; font-style: italic; background: #f9f9f9; padding: 2px 6px; border-radius: 3px; }
+        .formula-box { background: #f0f4ff; border: 1px solid #d0d8f0; border-radius: 6px; padding: 12px 16px; margin: 10px 0; text-align: center; font-size: 1.1em; }
+        .example-box { background: #f8f9fa; border-left: 3px solid #27ae60; padding: 10px 15px; margin: 10px 0; border-radius: 0 4px 4px 0; }
+        .note-box { background: #fff8e1; border-left: 3px solid #ffc107; padding: 10px 15px; margin: 10px 0; border-radius: 0 4px 4px 0; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+        th { background: #f0f4ff; font-weight: bold; }
+        ul, ol { padding-left: 20px; }
+        li { margin-bottom: 6px; }
+        .footer-note { text-align: center; color: #95a5a6; font-size: 0.85em; margin-top: 40px; border-top: 1px solid #e0e0e0; padding-top: 20px; }
+    </style>
+</head>
+<body>
+    <a href="../main.html" class="nav-back">⬅ 返回考点大纲</a>
+    <div class="header">
+        <h1>点火公式详解</h1>
+        <p class="subtitle">无穷级数 — Wallis公式（点火公式）及其在积分中的应用</p>
+    </div>
+    <a href="点火公式详解.pdf" class="download-link" download>📥 下载 PDF 原文</a>
+
+    <!-- 概述 -->
+    <div class="section">
+        <h2>一、概述</h2>
+        <p><strong>点火公式</strong>（亦称 <strong>Wallis 公式</strong>）是处理形如 <span class="math-tex">sin<sup>n</sup>x</span> 和 <span class="math-tex">cos<sup>n</sup>x</span> 在区间 <span class="math-tex">[0, π/2]</span> 上定积分的重要工具。其名称来源于"点火"递推过程——每当指数 <span class="math-tex">n</span> 减小 2，就"引燃"一个系数，最终抵达 <span class="math-tex">n = 0</span> 或 <span class="math-tex">n = 1</span> 的基值。</p>
+        <p>Wallis 公式不仅仅是一个积分递推式，它还给出了 <span class="math-tex">π</span> 的一个无穷乘积表达式，在概率论（计算 Gauss 积分）、组合数学（Stirling 公式推导）中均有重要应用。</p>
+    </div>
+
+    <!-- 核心公式 -->
+    <div class="section">
+        <h2>二、点火公式（Wallis 积分递推公式）</h2>
+
+        <h3>2.1 基本形式</h3>
+        <p>设正整数 <span class="math-tex">n ≥ 0</span>，定义：</p>
+        <div class="formula-box">
+            <span class="math-tex">I<sub>n</sub> = ∫<sub>0</sub><sup>π/2</sup> sin<sup>n</sup>x dx = ∫<sub>0</sub><sup>π/2</sup> cos<sup>n</sup>x dx</span>
+        </div>
+        <p>则满足以下递推关系：</p>
+        <div class="formula-box">
+            <span class="math-tex">I<sub>n</sub> = (n-1)/n · I<sub>n-2</sub> ， n ≥ 2</span>
+        </div>
+        <p>其中初始值：</p>
+        <div class="formula-box">
+            <span class="math-tex">I<sub>0</sub> = π/2 ， I<sub>1</sub> = 1</span>
+        </div>
+
+        <h3>2.2 点火展开（具体结果）</h3>
+        <p>反复应用递推公式，可得分段闭合表达式：</p>
+
+        <table>
+            <tr>
+                <th>n 的奇偶性</th>
+                <th>公式</th>
+            </tr>
+            <tr>
+                <td><strong>n 为偶数</strong>（<span class="math-tex">n = 2k</span>）</td>
+                <td><span class="math-tex">I<sub>2k</sub> = ( (2k-1)!! / (2k)!! ) · π/2</span></td>
+            </tr>
+            <tr>
+                <td><strong>n 为奇数</strong>（<span class="math-tex">n = 2k+1</span>）</td>
+                <td><span class="math-tex">I<sub>2k+1</sub> = ( (2k)!! / (2k+1)!! )</span></td>
+            </tr>
+        </table>
+
+        <p>其中双阶乘定义：</p>
+        <ul>
+            <li><span class="math-tex">(2k)!! = 2 · 4 · 6 · ... · (2k) = 2<sup>k</sup> · k!</span></li>
+            <li><span class="math-tex">(2k-1)!! = 1 · 3 · 5 · ... · (2k-1)</span></li>
+        </ul>
+
+        <div class="note-box">
+            <strong>💡 记忆口诀：</strong>"偶次乘 π/2，奇次乘 1；分子分母交替降，点火到 0 或 1。"<br>
+            即从 <span class="math-tex">n</span> 开始，每隔 2 乘一个分数 <span class="math-tex">(k-1)/k</span>，直到遇 0 或 1。
+        </div>
+    </div>
+
+    <!-- Wallis 乘积 -->
+    <div class="section">
+        <h2>三、Wallis 乘积（π 的无穷乘积表示）</h2>
+        <p>由点火公式可导出著名的 <strong>Wallis 乘积</strong>：</p>
+        <div class="formula-box">
+            <span class="math-tex">π/2 = lim<sub>k→∞</sub> [ (2·2·4·4·6·6·...·(2k)·(2k)) / (1·3·3·5·5·7·...·(2k-1)·(2k+1)) ]</span>
+        </div>
+        <p>等价写作：</p>
+        <div class="formula-box">
+            <span class="math-tex">π/2 = ∏<sub>k=1</sub><sup>∞</sup> ( (2k)<sup>2</sup> / ((2k-1)(2k+1)) )</span>
+        </div>
+        <p>推导思路：考虑比值 <span class="math-tex">I<sub>2k+1</sub> / I<sub>2k</sub></span>，利用夹逼定理令 <span class="math-tex">k → ∞</span> 即得。Wallis 乘积是历史上第一个将常数 π 表示为无穷乘积的公式，也是 Stirling 公式推导的关键工具。</p>
+    </div>
+
+    <!-- 广义形式 -->
+    <div class="section">
+        <h2>四、推广形式</h2>
+
+        <h3>4.1 任意区间上的推广</h3>
+        <div class="formula-box">
+            <span class="math-tex">∫<sub>0</sub><sup>π</sup> sin<sup>n</sup>x dx = ∫<sub>0</sub><sup>π</sup> cos<sup>n</sup>x dx = 2I<sub>n</sub></span>
+        </div>
+        <div class="formula-box">
+            <span class="math-tex">∫<sub>0</sub><sup>2π</sup> sin<sup>n</sup>x dx = ∫<sub>0</sub><sup>2π</sup> cos<sup>n</sup>x dx =
+            <br> n 为奇数 → 0
+            <br> n 为偶数 → 4I<sub>n</sub></span>
+        </div>
+
+        <h3>4.2 带幂次修正的积分</h3>
+        <div class="formula-box">
+            <span class="math-tex">∫<sub>0</sub><sup>π/2</sup> sin<sup>m</sup>x cos<sup>n</sup>x dx = ( (m-1)!! (n-1)!! / (m+n)!! ) · T</span>
+        </div>
+        <p>其中常数 <span class="math-tex">T</span> 取值规则：</p>
+        <ul>
+            <li>若 <span class="math-tex">m</span> 和 <span class="math-tex">n</span> 均为偶数 → <span class="math-tex">T = π/2</span></li>
+            <li>其他情况（至少一个奇数）→ <span class="math-tex">T = 1</span></li>
+        </ul>
+
+        <h3>4.3 Beta 函数形式</h3>
+        <p>点火公式本质上是 <strong>Beta 函数</strong>的特例：</p>
+        <div class="formula-box">
+            <span class="math-tex">I<sub>n</sub> = ½ B( (n+1)/2, ½ ) = ½ · Γ((n+1)/2) Γ(½) / Γ((n+2)/2)</span>
+        </div>
+        <p>其中 <span class="math-tex">Γ(½) = √π</span>。这一观点将递推整数指数推广到了任意实数指数。</p>
+    </div>
+
+    <!-- 典型例题 -->
+    <div class="section">
+        <h2>五、典型例题</h2>
+
+        <div class="example-box">
+            <strong>例 1</strong> 计算 <span class="math-tex">∫<sub>0</sub><sup>π/2</sup> sin<sup>8</sup>x dx</span><br><br>
+            <strong>解：</strong><span class="math-tex">n = 8</span> 为偶数，使用点火公式：<br>
+            <span class="math-tex">I<sub>8</sub> = (7/8)(5/6)(3/4)(1/2) · π/2</span><br>
+            <span class="math-tex">= (7·5·3·1)/(8·6·4·2) · π/2</span><br>
+            <span class="math-tex">= (105)/(384) · π/2 = 105π/768 = 35π/256</span>
+        </div>
+
+        <div class="example-box">
+            <strong>例 2</strong> 计算 <span class="math-tex">∫<sub>0</sub><sup>π</sup> sin<sup>5</sup>x dx</span><br><br>
+            <strong>解：</strong>先利用对称性 <span class="math-tex">∫<sub>0</sub><sup>π</sup> sin<sup>5</sup>x dx = 2I<sub>5</sub></span><br>
+            <span class="math-tex">I<sub>5</sub> = (4/5)(2/3) · 1 = 8/15</span><br>
+            <span class="math-tex">原积分 = 2 × 8/15 = 16/15</span>
+        </div>
+
+        <div class="example-box">
+            <strong>例 3</strong> 计算 <span class="math-tex">∫<sub>0</sub><sup>2π</sup> cos<sup>4</sup>x dx</span><br><br>
+            <strong>解：</strong><span class="math-tex">n = 4</span> 为偶数，在 <span class="math-tex">[0, 2π]</span> 上：<br>
+            <span class="math-tex">原积分 = 4I<sub>4</sub> = 4 · (3/4)(1/2) · π/2</span><br>
+            <span class="math-tex">= 4 · 3/8 · π/2 = 12π/16 = 3π/4</span>
+        </div>
+
+        <div class="example-box">
+            <strong>例 4</strong> 计算 <span class="math-tex">∫<sub>0</sub><sup>π/2</sup> sin<sup>3</sup>x cos<sup>2</sup>x dx</span><br><br>
+            <strong>解：</strong>利用推广公式，<span class="math-tex">m = 3</span>（奇数），<span class="math-tex">n = 2</span>（偶数）：<br>
+            <span class="math-tex">原积分 = (2!! · 1!!) / (5!!) · 1</span><br>
+            <span class="math-tex">= (2·1) / (5·3·1) = 2/15</span><br>
+            <br>也可直接利用三角函数恒等式 + 点火公式验算。
+        </div>
+    </div>
+
+    <!-- 应用场景 -->
+    <div class="section">
+        <h2>六、常见应用场景</h2>
+        <table>
+            <tr>
+                <th>应用领域</th>
+                <th>具体使用方式</th>
+            </tr>
+            <tr>
+                <td>定积分计算</td>
+                <td>快速求 <span class="math-tex">∫ sin<sup>n</sup>x dx</span>、<span class="math-tex">∫ cos<sup>n</sup>x dx</span> 等三角幂积分</td>
+            </tr>
+            <tr>
+                <td>概率论与数理统计</td>
+                <td>推导 <span class="math-tex">∫<sub>-∞</sub><sup>+∞</sup> e<sup>-x<sup>2</sup></sup> dx = √π</span>（Gauss 积分）</td>
+            </tr>
+            <tr>
+                <td>Stirling 公式推导</td>
+                <td>Wallis 乘积 ⇒ <span class="math-tex">n! ~ √(2πn) (n/e)<sup>n</sup></span></td>
+            </tr>
+            <tr>
+                <td>Gamma 函数计算</td>
+                <td>通过 Beta 函数连接，计算 Γ(k+½) 的值</td>
+            </tr>
+            <tr>
+                <td>傅里叶级数</td>
+                <td>计算三角级数展开中的系数积分</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- 常见误区 -->
+    <div class="section">
+        <h2>七、常见误区与注意事项</h2>
+        <div class="note-box">
+            <strong>⚠ 误区 1：</strong>混淆双阶乘计算。注意 <span class="math-tex">(2k)!! ≠ 2·(k!)</span>，正确为 <span class="math-tex">(2k)!! = 2<sup>k</sup>·k!</span>。<br><br>
+            <strong>⚠ 误区 2：</strong>忽略积分区间。点火公式仅适用于 <span class="math-tex">[0, π/2]</span>，扩展到 <span class="math-tex">[0, π]</span> 或 <span class="math-tex">[0, 2π]</span> 需乘相应倍数。<br><br>
+            <strong>⚠ 误区 3：</strong>误认为 <span class="math-tex">n</span> 为任意实数。最简递推形式仅对正整数 <span class="math-tex">n</span> 成立，实数推广需借助 Gamma 函数。<br><br>
+            <strong>⚠ 误区 4：</strong>点火顺序错误。递推是从 <span class="math-tex">n</span> 开始每隔 2 乘以 <span class="math-tex">(n-1)/n</span>，不是从 1 开始的连乘。
+        </div>
+    </div>
+
+    <!-- 速查表 -->
+    <div class="section">
+        <h2>八、常用值速查表</h2>
+        <table>
+            <tr><th>n</th><th><span class="math-tex">I<sub>n</sub></span> 值</th></tr>
+            <tr><td>0</td><td><span class="math-tex">π/2</span></td></tr>
+            <tr><td>1</td><td>1</td></tr>
+            <tr><td>2</td><td><span class="math-tex">π/4</span></td></tr>
+            <tr><td>3</td><td><span class="math-tex">2/3</span></td></tr>
+            <tr><td>4</td><td><span class="math-tex">3π/16</span></td></tr>
+            <tr><td>5</td><td><span class="math-tex">8/15</span></td></tr>
+            <tr><td>6</td><td><span class="math-tex">5π/32</span></td></tr>
+            <tr><td>7</td><td><span class="math-tex">16/35</span></td></tr>
+            <tr><td>8</td><td><span class="math-tex">35π/256</span></td></tr>
+        </table>
+    </div>
+
+    <div class="footer-note">
+        点火公式详解 | 高等数学II-2 知识点
+    </div>
+</body>
+</html>

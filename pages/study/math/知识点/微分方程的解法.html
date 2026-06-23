@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微分方程的解法 — 高等数学II-2</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; line-height: 1.8; color: #333; background: #f4f6f8; padding: 20px; max-width: 880px; margin: 0 auto; }
+        .header { text-align: center; padding-bottom: 20px; border-bottom: 2px solid #e0e0e0; margin-bottom: 30px; }
+        .header h1 { color: #2c3e50; margin-bottom: 5px; font-size: 1.6em; }
+        .header .subtitle { color: #7f8c8d; font-size: 0.9em; }
+        .download-link { display: inline-flex; align-items: center; gap: 8px; background: #3498db; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; margin: 15px 0; transition: background 0.2s; }
+        .download-link:hover { background: #2980b9; }
+        .nav-back { display: inline-flex; align-items: center; gap: 6px; color: #555; text-decoration: none; font-size: 0.9em; margin-bottom: 15px; }
+        .nav-back:hover { color: #3498db; }
+        .section { background: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 20px 25px; margin-bottom: 20px; border-left: 4px solid #3498db; }
+        .section h2 { color: #2980b9; margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 8px; font-size: 1.2em; }
+        .section h3 { color: #2c3e50; font-size: 1.05em; margin: 15px 0 8px; }
+        .math-tex { font-family: "Times New Roman", Times, serif; font-style: italic; background: #f9f9f9; padding: 2px 6px; border-radius: 3px; }
+        .formula-box { background: #f0f4ff; border: 1px solid #d0d8f0; border-radius: 6px; padding: 12px 16px; margin: 10px 0; text-align: center; font-size: 1.1em; }
+        .example-box { background: #f8f9fa; border-left: 3px solid #27ae60; padding: 10px 15px; margin: 10px 0; border-radius: 0 4px 4px 0; }
+        .note-box { background: #fff8e1; border-left: 3px solid #ffc107; padding: 10px 15px; margin: 10px 0; border-radius: 0 4px 4px 0; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+        th { background: #f0f4ff; font-weight: bold; }
+        ul, ol { padding-left: 20px; }
+        li { margin-bottom: 6px; }
+        .footer-note { text-align: center; color: #95a5a6; font-size: 0.85em; margin-top: 40px; border-top: 1px solid #e0e0e0; padding-top: 20px; }
+    </style>
+</head>
+<body>
+    <a href="../main.html" class="nav-back">⬅ 返回考点大纲</a>
+    <div class="header">
+        <h1>微分方程的解法</h1>
+        <p class="subtitle">微分方程 — 一阶、二阶、高阶微分方程的各类解法全梳理</p>
+    </div>
+    <a href="微分方程的解法.pdf" class="download-link" download>📥 下载 PDF 原文</a>
+
+    <!-- 概述 -->
+    <div class="section">
+        <h2>一、概述</h2>
+        <p><strong>微分方程</strong>是描述未知函数及其导数之间关系的方程，是高等数学的核心内容之一。根据阶数、线性性、齐次性等特征，微分方程可分为多种类型，各自有特定的求解方法。本文系统梳理从一阶到高阶微分方程的主要解法，涵盖可分离变量、齐次方程、一阶线性微分方程、可降阶方程、常系数线性微分方程及 Euler 方程等核心类型。</p>
+        <p>微分方程在物理（运动方程、热传导）、工程（电路分析、控制理论）、生物（种群模型）等领域有极其广泛的应用。</p>
+    </div>
+
+    <!-- 一阶微分方程 -->
+    <div class="section">
+        <h2>二、一阶微分方程的解法</h2>
+
+        <p>一阶微分方程的一般形式为 <span class="math-tex">F(x, y, y') = 0</span> 或 <span class="math-tex">y' = f(x, y)</span>。以下是几种主要类型及其解法。</p>
+
+        <h3>2.1 可分离变量方程</h3>
+        <p><strong>形式：</strong><span class="math-tex">y' = g(x)h(y)</span> 或 <span class="math-tex">M(x)N(y)dx + P(x)Q(y)dy = 0</span></p>
+        <p><strong>解法：</strong>分离变量后两边积分。</p>
+        <div class="formula-box">
+            <span class="math-tex">dy/dx = g(x)h(y) ⇒ ∫ dy/h(y) = ∫ g(x) dx + C</span>
+        </div>
+        <div class="example-box">
+            <strong>例：</strong>求 <span class="math-tex">y' = 2xy</span> 的通解。<br>
+            <strong>解：</strong>分离变量 <span class="math-tex">dy/y = 2x dx</span>，积分 <span class="math-tex">∫ dy/y = ∫ 2x dx</span>，得 <span class="math-tex">ln|y| = x<sup>2</sup> + C</span>，即 <span class="math-tex">y = Ce<sup>x<sup>2</sup></sup></span>。
+        </div>
+
+        <h3>2.2 一阶齐次方程</h3>
+        <p><strong>形式：</strong><span class="math-tex">y' = f(y/x)</span></p>
+        <p><strong>解法：</strong>令 <span class="math-tex">u = y/x</span>，则 <span class="math-tex">y = ux</span>，<span class="math-tex">y' = u + x·du/dx</span>，代入后化为可分离变量方程。</p>
+        <div class="formula-box">
+            <span class="math-tex">u + x·du/dx = f(u) ⇒ ∫ du/(f(u) - u) = ∫ dx/x + C</span>
+        </div>
+
+        <h3>2.3 一阶线性微分方程</h3>
+        <p><strong>形式：</strong><span class="math-tex">y' + P(x)y = Q(x)</span></p>
+        <p><strong>解法：</strong>使用 <strong>积分因子法</strong>（常数变易法）。</p>
+        <div class="formula-box">
+            <span class="math-tex">积分因子 μ(x) = e<sup>∫ P(x) dx</sup></span><br><br>
+            <span class="math-tex">通解：y = (1/μ(x)) ∫ μ(x)Q(x) dx + C/μ(x)</span>
+        </div>
+        <p>步骤：</p>
+        <ol>
+            <li>计算积分因子 <span class="math-tex">μ = e<sup>∫ P(x) dx</sup></span></li>
+            <li>方程两边同乘 <span class="math-tex">μ</span>，化为 <span class="math-tex">(μy)' = μQ</span></li>
+            <li>两边积分即得通解</li>
+        </ol>
+        <div class="example-box">
+            <strong>例：</strong>求 <span class="math-tex">y' + 2xy = x</span> 的通解。<br>
+            <strong>解：</strong><span class="math-tex">P(x) = 2x</span>，<span class="math-tex">μ = e<sup>∫ 2x dx</sup> = e<sup>x<sup>2</sup></sup></span><br>
+            方程变为 <span class="math-tex">(e<sup>x<sup>2</sup></sup>y)' = xe<sup>x<sup>2</sup></sup></span><br>
+            积分得 <span class="math-tex">e<sup>x<sup>2</sup></sup>y = ½e<sup>x<sup>2</sup></sup> + C</span><br>
+            即 <span class="math-tex">y = ½ + Ce<sup>-x<sup>2</sup></sup></span>
+        </div>
+
+        <h3>2.4 伯努利方程</h3>
+        <p><strong>形式：</strong><span class="math-tex">y' + P(x)y = Q(x)y<sup>n</sup></span>（<span class="math-tex">n ≠ 0, 1</span>）</p>
+        <p><strong>解法：</strong>令 <span class="math-tex">z = y<sup>1-n</sup></span>，化为关于 <span class="math-tex">z</span> 的一阶线性方程。</p>
+        <div class="formula-box">
+            <span class="math-tex">z = y<sup>1-n</sup> ⇒ z'/(1-n) + P(x)z = Q(x)</span><br>
+            <span class="math-tex">即 z' + (1-n)P(x)z = (1-n)Q(x)</span>
+        </div>
+
+        <h3>2.5 一阶微分方程解法速查表</h3>
+        <table>
+            <tr><th>方程类型</th><th>标准形式</th><th>解法要点</th></tr>
+            <tr><td>可分离变量</td><td><span class="math-tex">y' = g(x)h(y)</span></td><td>分离 → 积分</td></tr>
+            <tr><td>齐次方程</td><td><span class="math-tex">y' = f(y/x)</span></td><td>令 <span class="math-tex">u = y/x</span> → 可分离</td></tr>
+            <tr><td>一阶线性</td><td><span class="math-tex">y' + P(x)y = Q(x)</span></td><td>积分因子 <span class="math-tex">μ = e<sup>∫ Pdx</sup></span></td></tr>
+            <tr><td>伯努利方程</td><td><span class="math-tex">y' + P(x)y = Q(x)y<sup>n</sup></span></td><td>令 <span class="math-tex">z = y<sup>1-n</sup></span> → 线性</td></tr>
+            <tr><td>全微分方程</td><td><span class="math-tex">Mdx + Ndy = 0</span><br><span class="math-tex">∂M/∂y = ∂N/∂x</span></td><td>求势函数 <span class="math-tex">F</span> 使 <span class="math-tex">dF = Mdx + Ndy</span></td></tr>
+        </table>
+    </div>
+
+    <!-- 可降阶方程 -->
+    <div class="section">
+        <h2>三、可降阶的高阶微分方程</h2>
+        <p>某些高阶方程可通过变量代换降为一阶方程求解。</p>
+
+        <h3>3.1 <span class="math-tex">y<sup>(n)</sup> = f(x)</span> 型</h3>
+        <p>直接逐次积分 <span class="math-tex">n</span> 次即得通解。</p>
+        <div class="formula-box">
+            <span class="math-tex">y = ∫ ⋯ ∫ f(x) dx ⋯ dx（n 次积分）+ C<sub>1</sub>x<sup>n-1</sup> + C<sub>2</sub>x<sup>n-2</sup> + ... + C<sub>n</sub></span>
+        </div>
+
+        <h3>3.2 不显含 <span class="math-tex">y</span> 的方程</h3>
+        <p><strong>形式：</strong><span class="math-tex">F(x, y', y'') = 0</span></p>
+        <p><strong>解法：</strong>令 <span class="math-tex">p = y'</span>，则 <span class="math-tex">y'' = p'</span>，化为关于 <span class="math-tex">p</span> 的一阶方程。</p>
+
+        <h3>3.3 不显含 <span class="math-tex">x</span> 的方程</h3>
+        <p><strong>形式：</strong><span class="math-tex">F(y, y', y'') = 0</span></p>
+        <p><strong>解法：</strong>令 <span class="math-tex">p = y'</span>，利用 <span class="math-tex">y'' = p·dp/dy</span> 化为关于 <span class="math-tex">p</span> 的一阶方程。</p>
+        <div class="formula-box">
+            <span class="math-tex">y'' = d(y')/dx = (dp/dy)·(dy/dx) = p·dp/dy</span>
+        </div>
+        <div class="example-box">
+            <strong>例：</strong>求 <span class="math-tex">yy'' = (y')<sup>2</sup></span> 的通解。<br>
+            <strong>解：</strong>不显含 <span class="math-tex">x</span>，令 <span class="math-tex">p = y'</span>，<span class="math-tex">y'' = p·dp/dy</span><br>
+            代入得 <span class="math-tex">y·p·dp/dy = p<sup>2</sup></span>，若 <span class="math-tex">p ≠ 0</span>，消去 <span class="math-tex">p</span>：<br>
+            <span class="math-tex">y·dp/dy = p ⇒ dp/p = dy/y</span><br>
+            积分得 <span class="math-tex">ln|p| = ln|y| + C<sub>1</sub></span>，即 <span class="math-tex">p = C<sub>1</sub>y</span><br>
+            <span class="math-tex">dy/dx = C<sub>1</sub>y ⇒ y = C<sub>2</sub>e<sup>C<sub>1</sub>x</sup></span>
+        </div>
+    </div>
+
+    <!-- 高阶线性微分方程 -->
+    <div class="section">
+        <h2>四、高阶线性微分方程</h2>
+
+        <h3>4.1 解的结构</h3>
+        <p><span class="math-tex">n</span> 阶线性微分方程的一般形式：</p>
+        <div class="formula-box">
+            <span class="math-tex">y<sup>(n)</sup> + a<sub>1</sub>(x)y<sup>(n-1)</sup> + ... + a<sub>n-1</sub>(x)y' + a<sub>n</sub>(x)y = f(x)</span>
+        </div>
+        <p>解的结构定理：</p>
+        <ul>
+            <li><strong>齐次解（通解）：</strong><span class="math-tex">y<sub>h</sub> = C<sub>1</sub>y<sub>1</sub> + C<sub>2</sub>y<sub>2</sub> + ... + C<sub>n</sub>y<sub>n</sub></span>（<span class="math-tex">y<sub>1</sub>, ..., y<sub>n</sub></span> 为 <span class="math-tex">n</span> 个线性无关的特解）</li>
+            <li><strong>非齐次通解：</strong><span class="math-tex">y = y<sub>h</sub> + y<sub>p</sub></span>（齐次通解 + 一个特解）</li>
+        </ul>
+
+        <h3>4.2 常系数齐次线性微分方程</h3>
+        <p><strong>形式：</strong><span class="math-tex">y<sup>''</sup> + py' + qy = 0</span>（二阶）或更高阶</p>
+        <p><strong>解法：</strong>列 <strong>特征方程</strong>，解特征根。</p>
+        <div class="formula-box">
+            <span class="math-tex">二阶：r<sup>2</sup> + pr + q = 0</span>
+        </div>
+
+        <table>
+            <tr><th>特征根情况</th><th>通解形式</th></tr>
+            <tr><td>两个不等实根 <span class="math-tex">r<sub>1</sub> ≠ r<sub>2</sub></span></td><td><span class="math-tex">y = C<sub>1</sub>e<sup>r<sub>1</sub>x</sup> + C<sub>2</sub>e<sup>r<sub>2</sub>x</sup></span></td></tr>
+            <tr><td>两个相等实根 <span class="math-tex">r<sub>1</sub> = r<sub>2</sub> = r</span></td><td><span class="math-tex">y = (C<sub>1</sub> + C<sub>2</sub>x)e<sup>rx</sup></span></td></tr>
+            <tr><td>共轭复根 <span class="math-tex">r = α ± iβ</span></td><td><span class="math-tex">y = e<sup>αx</sup>(C<sub>1</sub>cosβx + C<sub>2</sub>sinβx)</span></td></tr>
+        </table>
+
+        <div class="example-box">
+            <strong>例：</strong>求 <span class="math-tex">y'' + 4y = 0</span> 的通解。<br>
+            <strong>解：</strong>特征方程 <span class="math-tex">r<sup>2</sup> + 4 = 0</span>，<span class="math-tex">r = ±2i</span><br>
+            <span class="math-tex">α = 0</span>，<span class="math-tex">β = 2</span><br>
+            通解：<span class="math-tex">y = C<sub>1</sub>cos2x + C<sub>2</sub>sin2x</span>
+        </div>
+
+        <h3>4.3 常系数非齐次线性微分方程</h3>
+        <p><strong>形式：</strong><span class="math-tex">y'' + py' + qy = f(x)</span></p>
+        <p><strong>解法：</strong>先用前一方法求齐次通解 <span class="math-tex">y<sub>h</sub></span>，再用以下方法求特解 <span class="math-tex">y<sub>p</sub></span>。</p>
+
+        <h4>方法一：待定系数法（常用）</h4>
+        <p>根据 <span class="math-tex">f(x)</span> 的形式，设特解形式，代入方程确定系数。</p>
+        <table>
+            <tr><th><span class="math-tex">f(x)</span> 的形式</th><th>特解形式</th></tr>
+            <tr><td><span class="math-tex">P<sub>m</sub>(x)e<sup>λx</sup></span></td><td><span class="math-tex">y<sub>p</sub> = x<sup>k</sup>Q<sub>m</sub>(x)e<sup>λx</sup></span></td></tr>
+            <tr><td><span class="math-tex">e<sup>αx</sup>[P<sub>l</sub>(x)cosβx + Q<sub>n</sub>(x)sinβx]</span></td><td><span class="math-tex">y<sub>p</sub> = x<sup>k</sup>e<sup>αx</sup>[R<sub>m</sub>(x)cosβx + S<sub>m</sub>(x)sinβx]</span></td></tr>
+        </table>
+        <p>其中 <span class="math-tex">k</span> 为 <span class="math-tex">λ</span>（或 <span class="math-tex">α + iβ</span>）作为特征根的重数，<span class="math-tex">m = max(l, n)</span>。</p>
+
+        <h4>方法二：常数变易法</h4>
+        <p>设 <span class="math-tex">y<sub>p</sub> = u<sub>1</sub>(x)y<sub>1</sub> + u<sub>2</sub>(x)y<sub>2</sub></span>，其中 <span class="math-tex">y<sub>1</sub>, y<sub>2</sub></span> 为齐次方程的两个线性无关解。列出方程组求解 <span class="math-tex">u<sub>1</sub>', u<sub>2</sub>'</span>。</p>
+        <div class="formula-box">
+            <span class="math-tex">u<sub>1</sub>'y<sub>1</sub> + u<sub>2</sub>'y<sub>2</sub> = 0</span><br>
+            <span class="math-tex">u<sub>1</sub>'y<sub>1</sub>' + u<sub>2</sub>'y<sub>2</sub>' = f(x)</span>
+        </div>
+
+        <div class="example-box">
+            <strong>例：</strong>求 <span class="math-tex">y'' + 4y = 8sin2x</span> 的通解。<br>
+            <strong>解：</strong>齐次通解 <span class="math-tex">y<sub>h</sub> = C<sub>1</sub>cos2x + C<sub>2</sub>sin2x</span><br>
+            <span class="math-tex">f(x) = 8sin2x</span>，<span class="math-tex">α = 0</span>，<span class="math-tex">β = 2</span> 是特征根（单根），<span class="math-tex">k = 1</span><br>
+            设 <span class="math-tex">y<sub>p</sub> = x(Acos2x + Bsin2x)</span>，代入得 <span class="math-tex">A = -2</span>，<span class="math-tex">B = 0</span><br>
+            通解：<span class="math-tex">y = C<sub>1</sub>cos2x + C<sub>2</sub>sin2x - 2xcos2x</span>
+        </div>
+    </div>
+
+    <!-- Euler 方程 -->
+    <div class="section">
+        <h2>五、Euler 方程（变系数可化常系数）</h2>
+        <p><strong>形式：</strong></p>
+        <div class="formula-box">
+            <span class="math-tex">x<sup>2</sup>y'' + pxy' + qy = f(x)</span>
+        </div>
+        <p><strong>解法：</strong>令 <span class="math-tex">x = e<sup>t</sup></span>（或 <span class="math-tex">t = ln|x|</span>），化为关于 <span class="math-tex">t</span> 的常系数方程。</p>
+        <div class="formula-box">
+            记 <span class="math-tex">D = d/dt</span>，则：<br>
+            <span class="math-tex">xy' = Dy</span>，<span class="math-tex">x<sup>2</sup>y'' = D(D-1)y</span><br>
+            原方程化为 <span class="math-tex">D(D-1)y + pDy + qy = f(e<sup>t</sup>)</span>
+        </div>
+        <div class="example-box">
+            <strong>例：</strong>求 <span class="math-tex">x<sup>2</sup>y'' - 2xy' + 2y = 0</span> 的通解。<br>
+            <strong>解：</strong>令 <span class="math-tex">x = e<sup>t</sup></span>，<span class="math-tex">xy' = Dy</span>，<span class="math-tex">x<sup>2</sup>y'' = D(D-1)y</span><br>
+            代入得 <span class="math-tex">D(D-1)y - 2Dy + 2y = 0</span><br>
+            即 <span class="math-tex">(D<sup>2</sup> - 3D + 2)y = 0</span>，特征方程 <span class="math-tex">r<sup>2</sup> - 3r + 2 = 0</span><br>
+            <span class="math-tex">r<sub>1</sub> = 1</span>，<span class="math-tex">r<sub>2</sub> = 2</span><br>
+            <span class="math-tex">y = C<sub>1</sub>e<sup>t</sup> + C<sub>2</sub>e<sup>2t</sup> = C<sub>1</sub>x + C<sub>2</sub>x<sup>2</sup></span>
+        </div>
+    </div>
+
+    <!-- 微分方程组与特殊技巧 -->
+    <div class="section">
+        <h2>六、特殊类型与解题技巧</h2>
+
+        <h3>6.1 恰当方程与积分因子</h3>
+        <p>对于 <span class="math-tex">M(x,y)dx + N(x,y)dy = 0</span>，若 <span class="math-tex">∂M/∂y ≠ ∂N/∂x</span>，可寻找积分因子 <span class="math-tex">μ(x,y)</span>，使 <span class="math-tex">μMdx + μNdy = 0</span> 成为恰当方程。</p>
+
+        <h3>6.2 一阶隐式方程</h3>
+        <p>形式 <span class="math-tex">F(x, y, y') = 0</span>，可尝试：</p>
+        <ul>
+            <li>解出 <span class="math-tex">y'</span> → 化为显式方程</li>
+            <li>引入参数法（如设 <span class="math-tex">y' = p</span>，将 <span class="math-tex">x</span> 或 <span class="math-tex">y</span> 表示为 <span class="math-tex">p</span> 的函数）</li>
+            <li>Clairaut 方程：<span class="math-tex">y = xy' + φ(y')</span>，通解为 <span class="math-tex">y = Cx + φ(C)</span></li>
+        </ul>
+
+        <h3>6.3 解的结构图示</h3>
+        <table>
+            <tr><th>微分方程类型</th><th>解法路径</th></tr>
+            <tr><td>一阶</td><td>判别类型 → 分离变量/齐次/线性/伯努利 → 求解</td></tr>
+            <tr><td>可降阶</td><td>判断缺 x 或缺 y → 令 p = y' 降阶 → 一阶方程</td></tr>
+            <tr><td>高阶常系数线性</td><td>特征方程 → 齐次通解 + 特解（待定系数/常数变易）</td></tr>
+            <tr><td>Euler 方程</td><td>令 x = e<sup>t</sup> → 常系数方程 → 求解 → 代回</td></tr>
+        </table>
+    </div>
+
+    <!-- 应用示例 -->
+    <div class="section">
+        <h2>七、应用举例</h2>
+
+        <div class="example-box">
+            <strong>应用 1：弹簧振子（简谐振动）</strong><br>
+            由 Newton 第二定律 <span class="math-tex">F = ma</span> 和 Hooke 定律 <span class="math-tex">F = -kx</span>：<br>
+            <span class="math-tex">m·d<sup>2</sup>x/dt<sup>2</sup> + kx = 0</span> （二阶常系数齐次方程）<br>
+            特征方程 <span class="math-tex">mr<sup>2</sup> + k = 0</span>，<span class="math-tex">r = ±i√(k/m)</span><br>
+            通解：<span class="math-tex">x(t) = A cos(ωt) + B sin(ωt)</span>，其中 <span class="math-tex">ω = √(k/m)</span>
+        </div>
+
+        <div class="example-box">
+            <strong>应用 2：RC 电路</strong><br>
+            电阻 <span class="math-tex">R</span> 与电容 <span class="math-tex">C</span> 串联，输入电压 <span class="math-tex">E(t)</span>：<br>
+            <span class="math-tex">R·dq/dt + q/C = E(t)</span> （一阶线性方程）<br>
+            积分因子 <span class="math-tex">μ = e<sup>t/(RC)</sup></span>，<br>
+            <span class="math-tex">q(t) = e<sup>-t/(RC)</sup>[∫ e<sup>t/(RC)</sup> E(t)/R dt + C<sub>0</sub>]</span>
+        </div>
+
+        <div class="example-box">
+            <strong>应用 3：Logistic 增长模型（种群生态学）</strong><br>
+            <span class="math-tex">dP/dt = rP(1 - P/K)</span> （可分离变量的一阶方程）<br>
+            分离变量 <span class="math-tex">dP/[P(1 - P/K)] = r dt</span>，部分分式展开求积分：<br>
+            <span class="math-tex">P(t) = K / [1 + (K/P<sub>0</sub> - 1)e<sup>-rt</sup>]</span>
+        </div>
+    </div>
+
+    <!-- 解题流程 -->
+    <div class="section">
+        <h2>八、微分方程解题总体流程</h2>
+        <ol>
+            <li><strong>确定阶数：</strong>最高阶导数的阶数即为方程阶数</li>
+            <li><strong>判断线性性：</strong>是否为 <span class="math-tex">y</span> 及其导数的线性组合</li>
+            <li><strong>一阶方程：</strong>判别是否为可分离/齐次/线性/伯努利/恰当等类型，适用对应解法</li>
+            <li><strong>高阶方程：</strong>
+                <ul>
+                    <li>若能降阶（不显含 <span class="math-tex">x</span> 或 <span class="math-tex">y</span>），降为低阶求解</li>
+                    <li>常系数 → 特征方程法 + 待定系数法</li>
+                    <li>Euler 型 → 变量代换为常系数</li>
+                    <li>一般变系数 → 常数变易法或级数解法</li>
+                </ul>
+            </li>
+            <li><strong>验证：</strong>将解代入原方程，检查是否满足初始/边界条件</li>
+        </ol>
+
+        <div class="note-box">
+            <strong>💡 常用技巧：</strong><br>
+            • 观察方程是否能写成某种"凑微分"形式<br>
+            • 对于非齐次项，先判断是否与齐次解中的项"共振"，决定特解形式中的 <span class="math-tex">x<sup>k</sup></span> 因子<br>
+            • 二阶方程记住两类特殊情况：<span class="math-tex">f(x)</span> 为多项式/指数/三角函数的组合<br>
+            • 遇到复杂的方程先化简（变量代换、同除公因子），再判断类型
+        </div>
+    </div>
+
+    <div class="footer-note">
+        微分方程的解法 | 高等数学II-2 知识点
+    </div>
+</body>
+</html>

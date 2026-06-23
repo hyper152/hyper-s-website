@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>斯托克斯公式知识点总结 — 高等数学II-2</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; line-height: 1.8; color: #333; background: #f4f6f8; padding: 20px; max-width: 880px; margin: 0 auto; }
+        .header { text-align: center; padding-bottom: 20px; border-bottom: 2px solid #e0e0e0; margin-bottom: 30px; }
+        .header h1 { color: #2c3e50; margin-bottom: 5px; font-size: 1.6em; }
+        .header .subtitle { color: #7f8c8d; font-size: 0.9em; }
+        .download-link { display: inline-flex; align-items: center; gap: 8px; background: #3498db; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; margin: 15px 0; transition: background 0.2s; }
+        .download-link:hover { background: #2980b9; }
+        .nav-back { display: inline-flex; align-items: center; gap: 6px; color: #555; text-decoration: none; font-size: 0.9em; margin-bottom: 15px; }
+        .nav-back:hover { color: #3498db; }
+        .section { background: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 20px 25px; margin-bottom: 20px; border-left: 4px solid #3498db; }
+        .section h2 { color: #2980b9; margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 8px; font-size: 1.2em; }
+        .section h3 { color: #2c3e50; font-size: 1.05em; margin: 15px 0 8px; }
+        .math-tex { font-family: "Times New Roman", Times, serif; font-style: italic; background: #f9f9f9; padding: 2px 6px; border-radius: 3px; }
+        .formula-box { background: #f0f4ff; border: 1px solid #d0d8f0; border-radius: 6px; padding: 12px 16px; margin: 10px 0; text-align: center; font-size: 1.1em; }
+        .example-box { background: #f8f9fa; border-left: 3px solid #27ae60; padding: 10px 15px; margin: 10px 0; border-radius: 0 4px 4px 0; }
+        .note-box { background: #fff8e1; border-left: 3px solid #ffc107; padding: 10px 15px; margin: 10px 0; border-radius: 0 4px 4px 0; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+        th { background: #f0f4ff; font-weight: bold; }
+        ul, ol { padding-left: 20px; }
+        li { margin-bottom: 6px; }
+        .footer-note { text-align: center; color: #95a5a6; font-size: 0.85em; margin-top: 40px; border-top: 1px solid #e0e0e0; padding-top: 20px; }
+    </style>
+</head>
+<body>
+    <a href="../main.html" class="nav-back">⬅ 返回考点大纲</a>
+    <div class="header">
+        <h1>斯托克斯公式知识点总结</h1>
+        <p class="subtitle">重积分与线面积分 — 斯托克斯公式、旋度与曲线积分的关系</p>
+    </div>
+    <a href="斯托克斯公式知识点总结.pdf" class="download-link" download>📥 下载 PDF 原文</a>
+
+    <div class="section">
+        <h2>一、斯托克斯公式概述</h2>
+        <p>
+            <strong>斯托克斯公式</strong>（Stokes' Theorem）是矢量分析中三大基本积分定理之一，
+            它将<strong>空间曲面上</strong>的<strong>曲面积分</strong>与
+            <strong>该曲面边界上的曲线积分</strong>联系起来。
+            斯托克斯公式可以看作格林公式从二维平面到三维曲面的推广。
+        </p>
+        <p>
+            斯托克斯公式揭示了向量场的<strong>旋度</strong>在曲面上的积分等于该向量场沿曲面边界的环量，
+            是连接"局部旋转"与"整体环流"的桥梁。
+        </p>
+        <div class="note-box">
+            <strong>核心思想：</strong> 曲面上的旋度积分 ↔ 边界曲线上的环量。
+            斯托克斯公式将空间曲线积分转化为曲面积分（或反之），大大简化了计算。
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>二、斯托克斯公式定理</h2>
+        <h3>1. 定理内容</h3>
+        <p>
+            设 <span class="math-tex">&Sigma;</span> 为分片光滑的有向曲面，
+            <span class="math-tex">L</span> 是其边界曲线（分段光滑），方向与 <span class="math-tex">&Sigma;</span> 的侧符合右手法则。
+            若函数 <span class="math-tex">P(x,y,z)</span>、<span class="math-tex">Q(x,y,z)</span>、<span class="math-tex">R(x,y,z)</span>
+            在 <span class="math-tex">&Sigma;</span>（包括边界）上具有一阶连续偏导数，则：
+        </p>
+        <div class="formula-box">
+            <span class="math-tex">
+                &oint;<sub>L</sub> P dx + Q dy + R dz
+                = &iint;<sub>&Sigma;</sub>
+                (&part;R/&part;y - &part;Q/&part;z) dy dz
+                + (&part;P/&part;z - &part;R/&part;x) dz dx
+                + (&part;Q/&part;x - &part;P/&part;y) dx dy
+            </span>
+        </div>
+        <p>向量形式：</p>
+        <div class="formula-box">
+            <span class="math-tex">
+                &oint;<sub>L</sub> <b>A</b> &sdot; d<b>r</b>
+                = &iint;<sub>&Sigma;</sub> rot <b>A</b> &sdot; <b>n</b> dS
+                = &iint;<sub>&Sigma;</sub> (&nabla; &times; <b>A</b>) &sdot; d<b>S</b>
+            </span>
+        </div>
+        <p>其中 <span class="math-tex"><b>A</b> = (P, Q, R)</span>，<span class="math-tex">rot <b>A</b> = &nabla; &times; <b>A</b></span> 为旋度。</p>
+
+        <h3>2. 方向判定（右手定则）</h3>
+        <p>
+            曲面 <span class="math-tex">&Sigma;</span> 的侧与边界曲线 <span class="math-tex">L</span> 的方向需满足<strong>右手法则</strong>：
+            <br>右手拇指指向曲面法向量方向，四指弯曲的方向即为曲线 <span class="math-tex">L</span> 的正向。
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>三、旋度的概念与计算</h2>
+        <h3>1. 旋度的定义</h3>
+        <p>
+            向量场 <span class="math-tex"><b>A</b> = (P, Q, R)</span> 的<strong>旋度</strong>定义为：
+        </p>
+        <div class="formula-box">
+            <span class="math-tex">
+                rot <b>A</b> = &nabla; &times; <b>A</b>
+                = <b>i</b>(&part;R/&part;y - &part;Q/&part;z)
+                + <b>j</b>(&part;P/&part;z - &part;R/&part;x)
+                + <b>k</b>(&part;Q/&part;x - &part;P/&part;y)
+            </span>
+        </div>
+        <p>也可写作行列式形式：</p>
+        <div class="formula-box">
+            <span class="math-tex">
+                rot <b>A</b> = det [
+                [<b>i</b>, <b>j</b>, <b>k</b>],
+                [&part;/&part;x, &part;/&part;y, &part;/&part;z],
+                [P, Q, R]
+                ]
+            </span>
+        </div>
+
+        <h3>2. 旋度的物理意义</h3>
+        <p>
+            旋度描述向量场在某点处的<strong>旋转强度</strong>和<strong>旋转方向</strong>：
+        </p>
+        <ul>
+            <li><strong>大小：</strong> 旋度向量的大小表示该点处最大环量面密度</li>
+            <li><strong>方向：</strong> 旋度向量的方向为最大环量面密度的方向（右手法则确定的旋转轴方向）</li>
+            <li><strong>物理量纲：</strong> 角速度的 2 倍（对于刚体旋转速度场 <span class="math-tex"><b>v</b> = &omega; &times; <b>r</b></span>，
+                <span class="math-tex">rot <b>v</b> = 2&omega;</span>）</li>
+        </ul>
+
+        <h3>3. 旋度的运算法则</h3>
+        <ul>
+            <li><span class="math-tex">rot (c<b>A</b>) = c rot <b>A</b></span>（c 为常数）</li>
+            <li><span class="math-tex">rot (<b>A</b> + <b>B</b>) = rot <b>A</b> + rot <b>B</b></span></li>
+            <li><span class="math-tex">rot (u<b>A</b>) = u rot <b>A</b> + &nabla;u &times; <b>A</b></span>（u 为标量函数）</li>
+            <li><span class="math-tex">div (rot <b>A</b>) = 0</span>（旋度的散度恒为零）</li>
+            <li><span class="math-tex">rot (&nabla;u) = 0</span>（梯度场的旋度恒为零）</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>四、斯托克斯公式的应用方法</h2>
+        <h3>1. 用曲面积分计算空间曲线积分</h3>
+        <p>
+            将复杂的空间曲线积分转化为曲面积分，是斯托克斯公式最重要的应用。
+            当曲面积分更容易计算时（如曲面为平面区域），这种方法特别有效。
+        </p>
+        <div class="example-box">
+            <strong>例 1：</strong> 计算曲线积分
+            <span class="math-tex">&oint;<sub>L</sub> (y<sup>2</sup> - z<sup>2</sup>) dx + (z<sup>2</sup> - x<sup>2</sup>) dy + (x<sup>2</sup> - y<sup>2</sup>) dz</span>，
+            其中 <span class="math-tex">L</span> 是平面 <span class="math-tex">x + y + z = 1</span> 被三个坐标平面所截三角形的边界（从 <span class="math-tex">z</span> 轴正向看为逆时针方向）。<br><br>
+            <strong>解：</strong><br>
+            <span class="math-tex">P = y<sup>2</sup> - z<sup>2</sup></span>，
+            <span class="math-tex">Q = z<sup>2</sup> - x<sup>2</sup></span>，
+            <span class="math-tex">R = x<sup>2</sup> - y<sup>2</sup></span><br>
+            计算旋度各分量：<br>
+            <span class="math-tex">&part;R/&part;y - &part;Q/&part;z = -2y - 2z = -2(y + z)</span><br>
+            <span class="math-tex">&part;P/&part;z - &part;R/&part;x = -2z - 2x = -2(z + x)</span><br>
+            <span class="math-tex">&part;Q/&part;x - &part;P/&part;y = -2x - 2y = -2(x + y)</span><br>
+            由斯托克斯公式：<br>
+            <span class="math-tex">原式 = &iint;<sub>&Sigma;</sub> -2(y+z) dy dz - 2(z+x) dz dx - 2(x+y) dx dy</span><br>
+            取 <span class="math-tex">&Sigma;</span> 为平面 <span class="math-tex">x + y + z = 1</span> 上被三角形区域 <span class="math-tex">D</span>。
+            曲面法向量 <span class="math-tex"><b>n</b> = (1, 1, 1)/&radic;3</span>，方向符合右手法则。<br>
+            将曲面积分投影到 <span class="math-tex">xOy</span> 平面：<span class="math-tex">z = 1 - x - y</span>，
+            <span class="math-tex">dS = &radic;(1 + z<sub>x</sub><sup>2</sup> + z<sub>y</sub><sup>2</sup>) dxdy = &radic;3 dxdy</span><br>
+            <span class="math-tex">rot <b>A</b> &sdot; <b>n</b> = -2[(y+z)+(z+x)+(x+y)]/&radic;3 = -4(x+y+z)/&radic;3 = -4/&radic;3</span><br>
+            因此原式 <span class="math-tex">= &iint;<sub>D</sub> (-4/&radic;3) &radic;3 dxdy = -4 &times; (面积) = -4 &times; (1/2) = -2</span>
+        </div>
+
+        <h3>2. 用曲线积分计算曲面积分</h3>
+        <p>
+            反向使用斯托克斯公式：将曲面积分转化为边界上的曲线积分，
+            当边界曲线简单时非常有用。
+        </p>
+        <div class="example-box">
+            <strong>例 2：</strong> 计算曲面积分
+            <span class="math-tex">&iint;<sub>&Sigma;</sub> rot <b>A</b> &sdot; d<b>S</b></span>，
+            其中 <span class="math-tex"><b>A</b> = (y - z, z - x, x - y)</span>，
+            <span class="math-tex">&Sigma;</span> 是上半球面 <span class="math-tex">z = &radic;(1 - x<sup>2</sup> - y<sup>2</sup>)</span> 的上侧。<br><br>
+            <strong>解：</strong><br>
+            由斯托克斯公式：<span class="math-tex">&iint;<sub>&Sigma;</sub> rot <b>A</b> &sdot; d<b>S</b> = &oint;<sub>L</sub> <b>A</b> &sdot; d<b>r</b></span><br>
+            边界 <span class="math-tex">L</span> 是平面 <span class="math-tex">z = 0</span> 上的单位圆 <span class="math-tex">x<sup>2</sup> + y<sup>2</sup> = 1</span>，
+            方向与曲面侧对应（从上往下看为逆时针）。<br>
+            在 <span class="math-tex">z = 0</span> 上：<span class="math-tex"><b>A</b> = (y, -x, x - y)</span><br>
+            参数化：<span class="math-tex">x = cos t, y = sin t, t: 0 &rarr; 2&pi;</span><br>
+            <span class="math-tex">dx = -sin t dt, dy = cos t dt</span><br>
+            <span class="math-tex">&oint;<sub>L</sub> <b>A</b> &sdot; d<b>r</b> = &int;<sub>0</sub><sup>2&pi;</sup> [sin t &sdot; (-sin t) + (-cos t) &sdot; cos t] dt</span><br>
+            <span class="math-tex">= &int;<sub>0</sub><sup>2&pi;</sup> (-sin<sup>2</sup>t - cos<sup>2</sup>t) dt = -&int;<sub>0</sub><sup>2&pi;</sup> dt = -2&pi;</span>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>五、旋度与环量的物理意义</h2>
+        <h3>1. 环量的概念</h3>
+        <p>
+            向量场 <span class="math-tex"><b>A</b></span> 沿封闭曲线 <span class="math-tex">L</span> 的<strong>环量</strong>定义为：
+        </p>
+        <div class="formula-box">
+            <span class="math-tex">
+                &Gamma; = &oint;<sub>L</sub> <b>A</b> &sdot; d<b>r</b>
+                = &oint;<sub>L</sub> P dx + Q dy + R dz
+            </span>
+        </div>
+        <ul>
+            <li>对流速场 <span class="math-tex"><b>v</b></span>，环量表示绕曲线的环流强度</li>
+            <li>对电场 <span class="math-tex"><b>E</b></span>，环量表示电动势</li>
+        </ul>
+
+        <h3>2. 环量面密度</h3>
+        <p>
+            斯托克斯公式揭示了<strong>环量面密度</strong>的概念：
+            旋度在法方向上的投影等于该方向上的环量面密度：
+        </p>
+        <div class="formula-box">
+            <span class="math-tex">
+                (rot <b>A</b>)<sub><b>n</b></sub>
+                = lim<sub>S &rarr; 0</sub> (1/S) &oint;<sub>L</sub> <b>A</b> &sdot; d<b>r</b>
+            </span>
+        </div>
+        <p>
+            这表示旋度的物理意义：旋度在 <span class="math-tex"><b>n</b></span> 方向的分量
+            等于单位面积上的环量（环量面密度）。
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>六、三大积分公式对比</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>对比项</th>
+                    <th>格林公式</th>
+                    <th>高斯公式</th>
+                    <th>斯托克斯公式</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>适用维度</td>
+                    <td>二维平面</td>
+                    <td>三维空间区域</td>
+                    <td>三维曲面</td>
+                </tr>
+                <tr>
+                    <td>左侧积分</td>
+                    <td>封闭曲线积分</td>
+                    <td>封闭曲面积分</td>
+                    <td>封闭曲线积分</td>
+                </tr>
+                <tr>
+                    <td>右侧积分</td>
+                    <td>二重积分</td>
+                    <td>三重积分</td>
+                    <td>曲面积分</td>
+                </tr>
+                <tr>
+                    <td>微分算子</td>
+                    <td>旋度（二维）</td>
+                    <td>散度</td>
+                    <td>旋度（三维）</td>
+                </tr>
+                <tr>
+                    <td>连通关系</td>
+                    <td>平面区域 ↔ 边界曲线</td>
+                    <td>空间区域 ↔ 边界曲面</td>
+                    <td>曲面 ↔ 边界曲线</td>
+                </tr>
+                <tr>
+                    <td>物理意义</td>
+                    <td>环量 = 旋度面积分</td>
+                    <td>通量 = 散度体积分</td>
+                    <td>环量 = 旋度面积分</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>七、格林公式与斯托克斯公式的关系</h2>
+        <p>
+            当斯托克斯公式中的曲面 <span class="math-tex">&Sigma;</span> 退化为平面区域时，
+            斯托克斯公式退化为格林公式。
+        </p>
+        <p>设 <span class="math-tex">&Sigma;</span> 在 <span class="math-tex">xOy</span> 平面内，
+        则 <span class="math-tex">z = 0</span>，<span class="math-tex">dz = 0</span>，<span class="math-tex"><b>n</b> = (0, 0, 1)</span>：</p>
+        <div class="formula-box">
+            <span class="math-tex">
+                &oint;<sub>L</sub> P dx + Q dy
+                = &iint;<sub>&Sigma;</sub> (&part;Q/&part;x - &part;P/&part;y) dx dy
+            </span>
+        </div>
+        <p>这正是平面上的格林公式。因此，格林公式是斯托克斯公式的<strong>特例</strong>。</p>
+    </div>
+
+    <div class="section">
+        <h2>八、斯托克斯公式的适用条件与注意事项</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>条件/注意事项</th>
+                    <th>说明</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>曲面方向一致</td>
+                    <td>曲面侧与边界方向须满足右手法则</td>
+                </tr>
+                <tr>
+                    <td>偏导数连续</td>
+                    <td><span class="math-tex">P,Q,R</span> 在 <span class="math-tex">&Sigma;</span> 上有一阶连续偏导</td>
+                </tr>
+                <tr>
+                    <td>曲面分片光滑</td>
+                    <td>允许由多片光滑曲面拼接，边界分段光滑</td>
+                </tr>
+                <tr>
+                    <td>曲面选取灵活</td>
+                    <td>以同一曲线为边界的任意曲面均可使用，选择计算简单的曲面</td>
+                </tr>
+                <tr>
+                    <td>方向一致性检验</td>
+                    <td>如果曲线方向与曲面侧不匹配，结果差一个负号</td>
+                </tr>
+                <tr>
+                    <td>与格林公式区别</td>
+                    <td>注意斯托克斯公式是<strong>空间</strong>中的公式，
+                        格林公式是<strong>平面</strong>上的特例</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="note-box">
+            <strong>常见陷阱：</strong> (1) 最容易出错的是曲面方向与曲线方向的对应关系，
+            务必用右手法则确认。(2) 当曲线为平面曲线时，
+            选取曲线所在的平面区域作为积分曲面通常最方便。
+            (3) 如果曲线非封闭，需补线使其封闭再应用公式。
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>九、典型综合例题</h2>
+        <div class="example-box">
+            <strong>例 3：</strong> 综合应用：计算曲线积分
+            <br>
+            计算 <span class="math-tex">&oint;<sub>L</sub> (y<sup>2</sup> + z<sup>2</sup>) dx + (z<sup>2</sup> + x<sup>2</sup>) dy + (x<sup>2</sup> + y<sup>2</sup>) dz</span>，
+            其中 <span class="math-tex">L</span> 是曲线
+            <span class="math-tex">
+                <nobr>{ x<sup>2</sup> + y<sup>2</sup> + z<sup>2</sup> = 2Rz, x<sup>2</sup> + y<sup>2</sup> = R<sup>2</sup> (z &gt; 0) }</nobr>
+            </span>的方向从 <span class="math-tex">z</span> 轴正向看为逆时针。
+            <br><br>
+            <strong>解：</strong>
+            注意第一个方程可化为 <span class="math-tex">x<sup>2</sup> + y<sup>2</sup> + (z - R)<sup>2</sup> = R<sup>2</sup></span>，
+            即球心在 <span class="math-tex">(0,0,R)</span>、半径为 <span class="math-tex">R</span> 的球面。
+            第二个方程是圆柱面。两曲面交线 <span class="math-tex">L</span> 在平面 <span class="math-tex">z = R</span> 上。
+            <br>
+            取 <span class="math-tex">&Sigma;</span> 为平面 <span class="math-tex">z = R</span> 上的圆盘 <span class="math-tex">x<sup>2</sup> + y<sup>2</sup> &le; R<sup>2</sup></span>，
+            取上侧（法向量 <span class="math-tex"><b>n</b> = (0,0,1)</span>）。<br>
+            计算旋度：<br>
+            <span class="math-tex">P = y<sup>2</sup> + z<sup>2</sup></span>，
+            <span class="math-tex">Q = z<sup>2</sup> + x<sup>2</sup></span>，
+            <span class="math-tex">R = x<sup>2</sup> + y<sup>2</sup></span><br>
+            <span class="math-tex">&part;R/&part;y - &part;Q/&part;z = 2y - 2z</span><br>
+            <span class="math-tex">&part;P/&part;z - &part;R/&part;x = 2z - 2x</span><br>
+            <span class="math-tex">&part;Q/&part;x - &part;P/&part;y = 2x - 2y</span><br>
+            在平面 <span class="math-tex">z = R</span> 上，
+            <span class="math-tex">rot <b>A</b> &sdot; <b>n</b> = &part;Q/&part;x - &part;P/&part;y = 2x - 2y</span><br>
+            由斯托克斯公式：<br>
+            <span class="math-tex">原式 = &iint;<sub>&Sigma;</sub> (2x - 2y) dS</span><br>
+            利用对称性：<span class="math-tex">&iint;<sub>&Sigma;</sub> x dS = 0</span>，
+            <span class="math-tex">&iint;<sub>&Sigma;</sub> y dS = 0</span><br>
+            因此原式 = <span class="math-tex">0</span>
+        </div>
+
+        <div class="example-box">
+            <strong>例 4：</strong> 曲线积分与路径无关性（旋度为零的场）
+            <br>
+            判断曲线积分 <span class="math-tex">&int;<sub>L</sub> yz dx + zx dy + xy dz</span>
+            是否与路径无关，并计算 <span class="math-tex">&oint;<sub>L</sub> yz dx + zx dy + xy dz</span>
+            沿单位圆 <span class="math-tex">x<sup>2</sup> + y<sup>2</sup> = 1, z = 0</span> 的积分。<br><br>
+            <strong>解：</strong><br>
+            计算旋度：<br>
+            <span class="math-tex">P = yz, Q = zx, R = xy</span><br>
+            <span class="math-tex">&part;R/&part;y - &part;Q/&part;z = x - x = 0</span><br>
+            <span class="math-tex">&part;P/&part;z - &part;R/&part;x = y - y = 0</span><br>
+            <span class="math-tex">&part;Q/&part;x - &part;P/&part;y = z - z = 0</span><br>
+            旋度处处为零，因此积分与路径无关。<br>
+            由于是保守场，沿任何封闭曲线的积分均为零：<br>
+            <span class="math-tex">&oint;<sub>L</sub> yz dx + zx dy + xy dz = 0</span><br>
+            <br>
+            事实上，存在势函数 <span class="math-tex">u(x,y,z) = xyz</span>，使得
+            <span class="math-tex">du = yz dx + zx dy + xy dz</span>。
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>十、斯托克斯公式应用总结</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>应用场景</th>
+                    <th>方法</th>
+                    <th>典型条件</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>空间曲线积分计算</td>
+                    <td>转化为曲面积分（正向使用公式）</td>
+                    <td>曲面好找且曲面积分易算</td>
+                </tr>
+                <tr>
+                    <td>旋度的曲面积分计算</td>
+                    <td>转化为曲线积分（反向使用公式）</td>
+                    <td>边界曲线简单易参数化</td>
+                </tr>
+                <tr>
+                    <td>判断保守场</td>
+                    <td>检查旋度是否为零</td>
+                    <td>旋度处处为零 → 保守场</td>
+                </tr>
+                <tr>
+                    <td>求势函数</td>
+                    <td>积分与路径无关，选择特殊路径</td>
+                    <td>保守场中成立</td>
+                </tr>
+                <tr>
+                    <td>非封闭曲线处理</td>
+                    <td>补线法：加辅助路径形成封闭曲线</td>
+                    <td>辅助路径积分易算</td>
+                </tr>
+                <tr>
+                    <td>平面曲线退化</td>
+                    <td>退化为格林公式</td>
+                    <td>曲面选为曲线所在平面</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="note-box">
+            <strong>记忆口诀：</strong><br>
+            格林平面连曲线，高斯封闭通量连。<br>
+            斯托克斯连空曲，旋度面积等于环。<br>
+            右手法则定向好，偏导连续是前提。<br>
+            补面补线变封闭，三大公式活运用。
+        </div>
+    </div>
+
+    <div class="footer-note">
+        斯托克斯公式知识点总结 | 高等数学II-2 知识点
+    </div>
+</body>
+</html>

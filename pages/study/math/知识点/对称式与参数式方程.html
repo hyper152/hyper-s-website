@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>对称式与参数式方程 — 高等数学II-2</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; line-height: 1.8; color: #333; background: #f4f6f8; padding: 20px; max-width: 880px; margin: 0 auto; }
+        .header { text-align: center; padding-bottom: 20px; border-bottom: 2px solid #e0e0e0; margin-bottom: 30px; }
+        .header h1 { color: #2c3e50; margin-bottom: 5px; font-size: 1.6em; }
+        .header .subtitle { color: #7f8c8d; font-size: 0.9em; }
+        .download-link { display: inline-flex; align-items: center; gap: 8px; background: #3498db; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; margin: 15px 0; transition: background 0.2s; }
+        .download-link:hover { background: #2980b9; }
+        .nav-back { display: inline-flex; align-items: center; gap: 6px; color: #555; text-decoration: none; font-size: 0.9em; margin-bottom: 15px; }
+        .nav-back:hover { color: #3498db; }
+        .section { background: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 20px 25px; margin-bottom: 20px; border-left: 4px solid #3498db; }
+        .section h2 { color: #2980b9; margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 8px; font-size: 1.2em; }
+        .section h3 { color: #2c3e50; font-size: 1.05em; margin: 15px 0 8px; }
+        .math-tex { font-family: "Times New Roman", Times, serif; font-style: italic; background: #f9f9f9; padding: 2px 6px; border-radius: 3px; }
+        .formula-box { background: #f0f4ff; border: 1px solid #d0d8f0; border-radius: 6px; padding: 12px 16px; margin: 10px 0; text-align: center; font-size: 1.1em; }
+        .example-box { background: #f8f9fa; border-left: 3px solid #27ae60; padding: 10px 15px; margin: 10px 0; border-radius: 0 4px 4px 0; }
+        .note-box { background: #fff8e1; border-left: 3px solid #ffc107; padding: 10px 15px; margin: 10px 0; border-radius: 0 4px 4px 0; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+        th { background: #f0f4ff; font-weight: bold; }
+        ul, ol { padding-left: 20px; }
+        li { margin-bottom: 6px; }
+        .footer-note { text-align: center; color: #95a5a6; font-size: 0.85em; margin-top: 40px; border-top: 1px solid #e0e0e0; padding-top: 20px; }
+    </style>
+</head>
+<body>
+    <a href="../main.html" class="nav-back">⬅ 返回考点大纲</a>
+    <div class="header">
+        <h1>对称式与参数式方程</h1>
+        <p class="subtitle">空间解析几何 — 空间直线的方程表示与转换</p>
+    </div>
+    <a href="对称式与参数式方程.pdf" class="download-link" download>📥 下载 PDF 原文</a>
+
+    <div class="section">
+        <h2>一、空间直线方程的三种基本形式</h2>
+
+        <h3>1. 一般式方程（交面式）</h3>
+        <p>空间直线可以看作两个平面的交线。设平面 <span class="math-tex">π<sub>1</sub></span> 和 <span class="math-tex">π<sub>2</sub></span> 的方程分别为：</p>
+        <div class="formula-box">
+            <span class="math-tex">A<sub>1</sub>x + B<sub>1</sub>y + C<sub>1</sub>z + D<sub>1</sub> = 0</span><br>
+            <span class="math-tex">A<sub>2</sub>x + B<sub>2</sub>y + C<sub>2</sub>z + D<sub>2</sub> = 0</span>
+        </div>
+        <p>则直线的一般式方程为联立形式：</p>
+        <div class="formula-box">
+            <span class="math-tex">&#x23AE;</span> <span class="math-tex">A<sub>1</sub>x + B<sub>1</sub>y + C<sub>1</sub>z + D<sub>1</sub> = 0</span><br>
+            <span class="math-tex">&#x23AE;</span> <span class="math-tex">A<sub>2</sub>x + B<sub>2</sub>y + C<sub>2</sub>z + D<sub>2</sub> = 0</span>
+        </div>
+        <p>其中 <span class="math-tex">(A<sub>1</sub>, B<sub>1</sub>, C<sub>1</sub>)</span> 与 <span class="math-tex">(A<sub>2</sub>, B<sub>2</sub>, C<sub>2</sub>)</span> 不共线（即两平面不平行）。直线的方向向量 <span class="math-tex">s</span> 可由两平面法向量的向量积得到：</p>
+        <div class="formula-box">
+            <span class="math-tex">s = n<sub>1</sub> × n<sub>2</sub> = (A<sub>1</sub>, B<sub>1</sub>, C<sub>1</sub>) × (A<sub>2</sub>, B<sub>2</sub>, C<sub>2</sub>)</span>
+        </div>
+
+        <h3>2. 对称式方程（点向式）</h3>
+        <p>若直线过已知点 <span class="math-tex">M<sub>0</sub>(x<sub>0</sub>, y<sub>0</sub>, z<sub>0</sub>)</span>，方向向量为 <span class="math-tex">s = (m, n, p)</span>（<span class="math-tex">m, n, p</span> 不全为零），则直线上任意一点 <span class="math-tex">M(x, y, z)</span> 满足 <span class="math-tex">M<sub>0</sub>M</span> 与 <span class="math-tex">s</span> 平行，即对应坐标成比例：</p>
+        <div class="formula-box">
+            <span class="math-tex">&#x23AE;</span> <span class="math-tex">x - x<sub>0</sub> / m = y - y<sub>0</sub> / n = z - z<sub>0</sub> / p</span>
+        </div>
+        <p>这就是直线的<strong>对称式方程</strong>（也称为<strong>点向式方程</strong>）。</p>
+
+        <div class="note-box">
+            <strong>注意：</strong>若方向向量的某个分量为零，如 <span class="math-tex">m = 0</span>，则对称式应理解为 <span class="math-tex">x - x<sub>0</sub> = 0</span> 且 <span class="math-tex">(y - y<sub>0</sub>) / n = (z - z<sub>0</sub>) / p</span>。
+        </div>
+
+        <h3>3. 参数式方程</h3>
+        <p>令对称式方程中的比值为参数 <span class="math-tex">t</span>，即：</p>
+        <div class="formula-box">
+            <span class="math-tex">x - x<sub>0</sub> / m = y - y<sub>0</sub> / n = z - z<sub>0</sub> / p = t</span>
+        </div>
+        <p>得到参数式方程：</p>
+        <div class="formula-box">
+            <span class="math-tex">&#x23AE;</span> <span class="math-tex">x = x<sub>0</sub> + m t</span><br>
+            <span class="math-tex">&#x23AE;</span> <span class="math-tex">y = y<sub>0</sub> + n t</span><br>
+            <span class="math-tex">&#x23AE;</span> <span class="math-tex">z = z<sub>0</sub> + p t</span><br>
+            <span class="math-tex">t</span> 为参数，<span class="math-tex">t</span> ∈ <span class="math-tex">R</span>
+        </div>
+        <p>参数 <span class="math-tex">t</span> 的几何意义：当 <span class="math-tex">|s| = 1</span> 时（即方向向量为单位向量），<span class="math-tex">|t|</span> 表示点 <span class="math-tex">M</span> 到点 <span class="math-tex">M<sub>0</sub></span> 的距离。</p>
+    </div>
+
+    <div class="section">
+        <h2>二、三种形式之间的相互转换</h2>
+
+        <table>
+            <tr>
+                <th>转换方向</th>
+                <th>方法</th>
+            </tr>
+            <tr>
+                <td><strong>一般式 → 对称式</strong></td>
+                <td>
+                    1. 求方向向量 <span class="math-tex">s = n<sub>1</sub> × n<sub>2</sub></span><br>
+                    2. 求直线上一点：令 <span class="math-tex">x = 0</span>（或其他方便的值），解方程组得到 <span class="math-tex">y, z</span><br>
+                    3. 代入对称式公式
+                </td>
+            </tr>
+            <tr>
+                <td><strong>一般式 → 参数式</strong></td>
+                <td>
+                    先化为对称式，再令比值等于 <span class="math-tex">t</span>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>对称式 → 参数式</strong></td>
+                <td>
+                    令 <span class="math-tex">(x - x<sub>0</sub>) / m = (y - y<sub>0</sub>) / n = (z - z<sub>0</sub>) / p = t</span>，解出 <span class="math-tex">x, y, z</span>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>对称式 → 一般式</strong></td>
+                <td>
+                    将对称式拆分为两个等式：<span class="math-tex">(x - x<sub>0</sub>) / m = (y - y<sub>0</sub>) / n</span> 和 <span class="math-tex">(y - y<sub>0</sub>) / n = (z - z<sub>0</sub>) / p</span>，交叉相乘化为平面方程
+                </td>
+            </tr>
+            <tr>
+                <td><strong>参数式 → 对称式</strong></td>
+                <td>
+                    从参数式中解出 <span class="math-tex">t = (x - x<sub>0</sub>) / m = (y - y<sub>0</sub>) / n = (z - z<sub>0</sub>) / p</span>
+                </td>
+            </tr>
+        </table>
+
+        <div class="example-box">
+            <strong>例题 1：</strong>将直线的一般式方程 <span class="math-tex">x + y + z + 1 = 0</span> 和 <span class="math-tex">2x - y + 3z + 4 = 0</span> 化为对称式和参数式。<br><br>
+            <strong>解：</strong><br>
+            ① 求方向向量：<span class="math-tex">s = n<sub>1</sub> × n<sub>2</sub> = (1,1,1) × (2,-1,3)</span><br>
+            &emsp;<span class="math-tex">= (1·3 - 1·(-1), 1·2 - 1·3, 1·(-1) - 1·2)</span><br>
+            &emsp;<span class="math-tex">= (3 + 1, 2 - 3, -1 - 2) = (4, -1, -3)</span><br><br>
+            ② 求直线上一点：令 <span class="math-tex">z = 0</span>，解 <span class="math-tex">x + y + 1 = 0, 2x - y + 4 = 0</span>，得 <span class="math-tex">x = -5/3, y = 2/3</span>，即点 <span class="math-tex">M<sub>0</sub>(-5/3, 2/3, 0)</span>。<br><br>
+            ③ 对称式：<span class="math-tex">(x + 5/3) / 4 = (y - 2/3) / (-1) = z / (-3)</span><br><br>
+            ④ 参数式：令比值 <span class="math-tex">= t</span>，得<br>
+            &emsp;<span class="math-tex">x = -5/3 + 4t, y = 2/3 - t, z = -3t</span>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>三、方向向量与方向余弦</h2>
+
+        <p>直线的<strong>方向向量</strong> <span class="math-tex">s = (m, n, p)</span> 决定了直线的方向。方向向量乘以任意非零常数仍表示同一条直线。</p>
+
+        <p>若将方向向量单位化，记 <span class="math-tex">s<sup>0</sup> = (cos α, cos β, cos γ)</span>，其中：</p>
+        <div class="formula-box">
+            <span class="math-tex">cos α = m / √(m<sup>2</sup> + n<sup>2</sup> + p<sup>2</sup>)</span><br>
+            <span class="math-tex">cos β = n / √(m<sup>2</sup> + n<sup>2</sup> + p<sup>2</sup>)</span><br>
+            <span class="math-tex">cos γ = p / √(m<sup>2</sup> + n<sup>2</sup> + p<sup>2</sup>)</span>
+        </div>
+        <p>称为直线的<strong>方向余弦</strong>，满足 <span class="math-tex">cos<sup>2</sup>α + cos<sup>2</sup>β + cos<sup>2</sup>γ = 1</span>。</p>
+
+        <p>此时直线的参数式可以写为：</p>
+        <div class="formula-box">
+            <span class="math-tex">x = x<sub>0</sub> + t cos α</span><br>
+            <span class="math-tex">y = y<sub>0</sub> + t cos β</span><br>
+            <span class="math-tex">z = z<sub>0</sub> + t cos γ</span>
+        </div>
+        <p>其中参数 <span class="math-tex">t</span> 的绝对值即为点到 <span class="math-tex">M<sub>0</sub></span> 的有向距离。</p>
+    </div>
+
+    <div class="section">
+        <h2>四、两直线的位置关系</h2>
+
+        <p>设两直线 <span class="math-tex">L<sub>1</sub></span> 和 <span class="math-tex">L<sub>2</sub></span> 的方向向量分别为 <span class="math-tex">s<sub>1</sub> = (m<sub>1</sub>, n<sub>1</sub>, p<sub>1</sub>)</span> 和 <span class="math-tex">s<sub>2</sub> = (m<sub>2</sub>, n<sub>2</sub>, p<sub>2</sub>)</span>，过点 <span class="math-tex">M<sub>1</sub></span> 和 <span class="math-tex">M<sub>2</sub></span>。</p>
+
+        <table>
+            <tr>
+                <th>位置关系</th>
+                <th>判定条件</th>
+            </tr>
+            <tr>
+                <td><strong>平行</strong></td>
+                <td><span class="math-tex">s<sub>1</sub> × s<sub>2</sub> = 0</span>（即方向向量共线）且 <span class="math-tex">M<sub>1</sub>M<sub>2</sub></span> 不与 <span class="math-tex">s<sub>1</sub></span> 平行</td>
+            </tr>
+            <tr>
+                <td><strong>重合</strong></td>
+                <td><span class="math-tex">s<sub>1</sub> ∥ s<sub>2</sub></span> 且 <span class="math-tex">M<sub>1</sub>M<sub>2</sub> ∥ s<sub>1</sub></span></td>
+            </tr>
+            <tr>
+                <td><strong>相交</strong></td>
+                <td><span class="math-tex">s<sub>1</sub></span> 与 <span class="math-tex">s<sub>2</sub></span> 不共线，且三向量 <span class="math-tex">s<sub>1</sub>, s<sub>2</sub>, M<sub>1</sub>M<sub>2</sub></span> 共面（混合积为零）</td>
+            </tr>
+            <tr>
+                <td><strong>异面</strong></td>
+                <td><span class="math-tex">s<sub>1</sub>, s<sub>2</sub>, M<sub>1</sub>M<sub>2</sub></span> 的混合积不为零，即 <span class="math-tex">(s<sub>1</sub> × s<sub>2</sub>) · M<sub>1</sub>M<sub>2</sub> ≠ 0</td>
+            </tr>
+            <tr>
+                <td><strong>垂直</strong></td>
+                <td><span class="math-tex">s<sub>1</sub> · s<sub>2</sub> = 0</span></td>
+            </tr>
+        </table>
+
+        <h3>两直线的夹角</h3>
+        <p>两直线方向向量的夹角（取锐角）即为两直线的夹角：</p>
+        <div class="formula-box">
+            <span class="math-tex">cos θ = |s<sub>1</sub> · s<sub>2</sub>| / |s<sub>1</sub>| |s<sub>2</sub>|</span>
+            <span class="math-tex">= |m<sub>1</sub>m<sub>2</sub> + n<sub>1</sub>n<sub>2</sub> + p<sub>1</sub>p<sub>2</sub>| / √(m<sub>1</sub><sup>2</sup> + n<sub>1</sub><sup>2</sup> + p<sub>1</sub><sup>2</sup>) √(m<sub>2</sub><sup>2</sup> + n<sub>2</sub><sup>2</sup> + p<sub>2</sub><sup>2</sup>)</span>
+        </div>
+        <p>其中 <span class="math-tex">0 ≤ θ ≤ π/2</span>。</p>
+
+        <div class="example-box">
+            <strong>例题 2：</strong>判断直线 <span class="math-tex">L<sub>1</sub>: (x-1)/2 = (y+2)/(-1) = (z-3)/4</span> 和 <span class="math-tex">L<sub>2</sub>: x = 2t, y = 3 - t, z = 1 + 2t</span> 的位置关系。<br><br>
+            <strong>解：</strong><br>
+            <span class="math-tex">L<sub>1</sub></span> 的方向向量 <span class="math-tex">s<sub>1</sub> = (2, -1, 4)</span>，过点 <span class="math-tex">M<sub>1</sub>(1, -2, 3)</span><br>
+            <span class="math-tex">L<sub>2</sub></span> 的方向向量 <span class="math-tex">s<sub>2</sub> = (2, -1, 2)</span>，过点 <span class="math-tex">M<sub>2</sub>(0, 3, 1)</span><br>
+            由于 <span class="math-tex">s<sub>1</sub></span> 与 <span class="math-tex">s<sub>2</sub></span> 不共线，计算混合积：<br>
+            <span class="math-tex">M<sub>1</sub>M<sub>2</sub> = (-1, 5, -2)</span><br>
+            <span class="math-tex">(s<sub>1</sub> × s<sub>2</sub>) · M<sub>1</sub>M<sub>2</sub> = ...</span><br>
+            计算得混合积 = 0，故两直线相交。
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>五、直线与平面的位置关系</h2>
+
+        <p>设直线 <span class="math-tex">L</span> 的方向向量为 <span class="math-tex">s = (m, n, p)</span>，平面 <span class="math-tex">π</span> 的法向量为 <span class="math-tex">n = (A, B, C)</span>。</p>
+
+        <table>
+            <tr>
+                <th>位置关系</th>
+                <th>判定条件</th>
+            </tr>
+            <tr>
+                <td><strong>直线在平面上</strong></td>
+                <td><span class="math-tex">s · n = 0</span> 且直线上一点满足平面方程</td>
+            </tr>
+            <tr>
+                <td><strong>直线与平面平行</strong></td>
+                <td><span class="math-tex">s · n = 0</span> 但直线上点不满足平面方程</td>
+            </tr>
+            <tr>
+                <td><strong>直线与平面相交</strong></td>
+                <td><span class="math-tex">s · n ≠ 0</span>（有唯一交点）</td>
+            </tr>
+            <tr>
+                <td><strong>直线与平面垂直</strong></td>
+                <td><span class="math-tex">s ∥ n</span>，即 <span class="math-tex">m/A = n/B = p/C</span></td>
+            </tr>
+        </table>
+
+        <h3>直线与平面的夹角</h3>
+        <p>直线与它在平面上的投影直线之间的夹角 <span class="math-tex">φ</span>（<span class="math-tex">0 ≤ φ ≤ π/2</span>）：</p>
+        <div class="formula-box">
+            <span class="math-tex">sin φ = |s · n| / |s| |n|</span>
+            <span class="math-tex">= |Am + Bn + Cp| / √(A<sup>2</sup> + B<sup>2</sup> + C<sup>2</sup>) √(m<sup>2</sup> + n<sup>2</sup> + p<sup>2</sup>)</span>
+        </div>
+
+        <h3>直线与平面的交点</h3>
+        <p>将直线的参数式代入平面方程，解出参数 <span class="math-tex">t</span>，再代回参数方程即得交点坐标。</p>
+
+        <div class="example-box">
+            <strong>例题 3：</strong>求直线 <span class="math-tex">(x-1)/2 = y/3 = (z+2)/(-1)</span> 与平面 <span class="math-tex">x - 2y + 3z - 1 = 0</span> 的交点。<br><br>
+            <strong>解：</strong>将直线化为参数式：<br>
+            <span class="math-tex">x = 1 + 2t, y = 3t, z = -2 - t</span><br>
+            代入平面方程：<span class="math-tex">(1 + 2t) - 2(3t) + 3(-2 - t) - 1 = 0</span><br>
+            <span class="math-tex">1 + 2t - 6t - 6 - 3t - 1 = 0</span><br>
+            <span class="math-tex">-7t - 6 = 0</span>，解得 <span class="math-tex">t = -6/7</span><br>
+            代入得交点 <span class="math-tex">(1 - 12/7, -18/7, -2 + 6/7) = (-5/7, -18/7, -8/7)</span>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>六、点到直线的距离</h2>
+
+        <p>设直线 <span class="math-tex">L</span> 过点 <span class="math-tex">M<sub>0</sub></span>，方向向量为 <span class="math-tex">s</span>，点 <span class="math-tex">M<sub>1</sub></span> 为直线外一点，则点 <span class="math-tex">M<sub>1</sub></span> 到直线 <span class="math-tex">L</span> 的距离为：</p>
+        <div class="formula-box">
+            <span class="math-tex">d = |M<sub>0</sub>M<sub>1</sub> × s| / |s|</span>
+        </div>
+        <p>即向量 <span class="math-tex">M<sub>0</sub>M<sub>1</sub></span> 与方向向量 <span class="math-tex">s</span> 所张平行四边形的面积除以底边长 <span class="math-tex">|s|</span>。</p>
+
+        <h3>两异面直线的距离</h3>
+        <p>设两异面直线 <span class="math-tex">L<sub>1</sub></span>（过点 <span class="math-tex">M<sub>1</sub></span>，方向 <span class="math-tex">s<sub>1</sub></span>）和 <span class="math-tex">L<sub>2</sub></span>（过点 <span class="math-tex">M<sub>2</sub></span>，方向 <span class="math-tex">s<sub>2</sub></span>）的公垂线距离为：</p>
+        <div class="formula-box">
+            <span class="math-tex">d = |(s<sub>1</sub> × s<sub>2</sub>) · M<sub>1</sub>M<sub>2</sub>| / |s<sub>1</sub> × s<sub>2</sub>|</span>
+        </div>
+        <p>即混合积的绝对值除以方向向量叉积的模。</p>
+    </div>
+
+    <div class="section">
+        <h2>七、常见题型与方法总结</h2>
+
+        <table>
+            <tr>
+                <th>题型</th>
+                <th>解题思路</th>
+            </tr>
+            <tr>
+                <td>求过一点且与已知直线平行的直线方程</td>
+                <td>使用相同的方向向量，代入点的坐标到对称式或参数式</td>
+            </tr>
+            <tr>
+                <td>求过一点且与已知平面垂直的直线方程</td>
+                <td>以平面的法向量作为直线的方向向量</td>
+            </tr>
+            <tr>
+                <td>求过一点且与两直线都垂直的直线方程</td>
+                <td>方向向量 <span class="math-tex">s = s<sub>1</sub> × s<sub>2</sub></span></td>
+            </tr>
+            <tr>
+                <td>求过一点且与已知直线垂直相交的直线</td>
+                <td>先求过该点且与已知直线垂直的平面，再求该平面与已知直线的交点</td>
+            </tr>
+            <tr>
+                <td>求直线在平面上的投影直线方程</td>
+                <td>先求过直线且与已知平面垂直的平面（法向量 <span class="math-tex">= s × n</span>），再联立两平面</td>
+            </tr>
+        </table>
+
+        <div class="note-box">
+            <strong>常见错误提醒：</strong><br>
+            1. 方向向量不是唯一的——任何非零倍数都是同一个方向向量。<br>
+            2. 对称式中分母为零时，表示对应坐标恒等于点的坐标。<br>
+            3. 两直线的夹角取锐角，用方向向量点积的绝对值除以模长之积。<br>
+            4. 参数 <span class="math-tex">t</span> 的取值约定不同会导致参数方程形式不同，但表示同一直线。
+        </div>
+    </div>
+
+    <div class="footer-note">
+        对称式与参数式方程 | 高等数学II-2 知识点
+    </div>
+</body>
+</html>

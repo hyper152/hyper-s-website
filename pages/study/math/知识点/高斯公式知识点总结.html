@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高斯公式知识点总结 — 高等数学II-2</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; line-height: 1.8; color: #333; background: #f4f6f8; padding: 20px; max-width: 880px; margin: 0 auto; }
+        .header { text-align: center; padding-bottom: 20px; border-bottom: 2px solid #e0e0e0; margin-bottom: 30px; }
+        .header h1 { color: #2c3e50; margin-bottom: 5px; font-size: 1.6em; }
+        .header .subtitle { color: #7f8c8d; font-size: 0.9em; }
+        .download-link { display: inline-flex; align-items: center; gap: 8px; background: #3498db; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; margin: 15px 0; transition: background 0.2s; }
+        .download-link:hover { background: #2980b9; }
+        .nav-back { display: inline-flex; align-items: center; gap: 6px; color: #555; text-decoration: none; font-size: 0.9em; margin-bottom: 15px; }
+        .nav-back:hover { color: #3498db; }
+        .section { background: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 20px 25px; margin-bottom: 20px; border-left: 4px solid #3498db; }
+        .section h2 { color: #2980b9; margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 8px; font-size: 1.2em; }
+        .section h3 { color: #2c3e50; font-size: 1.05em; margin: 15px 0 8px; }
+        .math-tex { font-family: "Times New Roman", Times, serif; font-style: italic; background: #f9f9f9; padding: 2px 6px; border-radius: 3px; }
+        .formula-box { background: #f0f4ff; border: 1px solid #d0d8f0; border-radius: 6px; padding: 12px 16px; margin: 10px 0; text-align: center; font-size: 1.1em; }
+        .example-box { background: #f8f9fa; border-left: 3px solid #27ae60; padding: 10px 15px; margin: 10px 0; border-radius: 0 4px 4px 0; }
+        .note-box { background: #fff8e1; border-left: 3px solid #ffc107; padding: 10px 15px; margin: 10px 0; border-radius: 0 4px 4px 0; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+        th { background: #f0f4ff; font-weight: bold; }
+        ul, ol { padding-left: 20px; }
+        li { margin-bottom: 6px; }
+        .footer-note { text-align: center; color: #95a5a6; font-size: 0.85em; margin-top: 40px; border-top: 1px solid #e0e0e0; padding-top: 20px; }
+    </style>
+</head>
+<body>
+    <a href="../main.html" class="nav-back">⬅ 返回考点大纲</a>
+    <div class="header">
+        <h1>高斯公式知识点总结</h1>
+        <p class="subtitle">重积分与线面积分 — 高斯公式及其应用、曲面积分与三重积分的联系</p>
+    </div>
+    <a href="高斯公式知识点总结.pdf" class="download-link" download>📥 下载 PDF 原文</a>
+
+    <div class="section">
+        <h2>一、高斯公式概述</h2>
+        <p>
+            <strong>高斯公式</strong>（Gauss's Theorem，又称散度定理）是矢量分析中的核心定理之一。
+            它建立了<strong>封闭曲面上的曲面积分</strong>与<strong>该曲面所围区域上的三重积分</strong>之间的联系。
+            本质上，高斯公式描述了向量场通过一个封闭曲面的通量等于该向量场的散度在曲面所围区域上的积分。
+        </p>
+        <p>
+            高斯公式与格林公式、斯托克斯公式共同构成了<strong>三大积分公式</strong>体系，
+            是将区域内部的性质与边界上的性质相互转化的桥梁。
+        </p>
+        <div class="note-box">
+            <strong>核心思想：</strong> 边界上的积分 ↔ 内部的积分。高斯公式将封闭曲面的通量转化为体积分，大大简化了计算。
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>二、高斯公式定理</h2>
+        <h3>1. 定理内容</h3>
+        <p>
+            设空间区域 <span class="math-tex">&Omega;</span> 由分片光滑的封闭曲面 <span class="math-tex">S</span> 所围成。
+            若函数 <span class="math-tex">P(x,y,z)</span>、<span class="math-tex">Q(x,y,z)</span>、<span class="math-tex">R(x,y,z)</span>
+            在 <span class="math-tex">&Omega;</span> 上具有一阶连续偏导数，则：
+        </p>
+        <div class="formula-box">
+            <span class="math-tex">
+                &iint;<sub>S</sub> P dy dz + Q dz dx + R dx dy
+                = &iiint;<sub>&Omega;</sub>
+                (&part;P/&part;x + &part;Q/&part;y + &part;R/&part;z) dv
+            </span>
+        </div>
+        <p>其中 <span class="math-tex">S</span> 取<strong>外侧</strong>为正向。上式也可写作向量形式：</p>
+        <div class="formula-box">
+            <span class="math-tex">
+                &iint;<sub>S</sub> <b>A</b> &sdot; d<b>S</b>
+                = &iiint;<sub>&Omega;</sub> div <b>A</b> dv
+            </span>
+        </div>
+        <p>其中 <span class="math-tex"><b>A</b> = (P, Q, R)</span> 为向量场，<span class="math-tex">div <b>A</b> = &nabla; &sdot; <b>A</b></span> 为散度。</p>
+
+        <h3>2. 三种常用形式</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>形式</th>
+                    <th>表达式</th>
+                    <th>说明</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>坐标形式</td>
+                    <td><span class="math-tex">&iint;<sub>S</sub> P dy dz + Q dz dx + R dx dy</span></td>
+                    <td>分别投影到坐标平面</td>
+                </tr>
+                <tr>
+                    <td>向量形式</td>
+                    <td><span class="math-tex">&iint;<sub>S</sub> <b>A</b> &sdot; <b>n</b> dS = &iiint;<sub>&Omega;</sub> &nabla; &sdot; <b>A</b> dv</span></td>
+                    <td><span class="math-tex"><b>n</b></span> 为单位外法向量</td>
+                </tr>
+                <tr>
+                    <td>分量展开</td>
+                    <td><span class="math-tex">&iint;<sub>S</sub> P dydz + Q dzdx + R dxdy = &iiint;<sub>&Omega;</sub> (P<sub>x</sub> + Q<sub>y</sub> + R<sub>z</sub>) dv</span></td>
+                    <td>偏导求和形式</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>三、散度的概念与计算</h2>
+        <h3>1. 散度定义</h3>
+        <p>
+            向量场 <span class="math-tex"><b>A</b> = (P(x,y,z), Q(x,y,z), R(x,y,z))</span>
+            在点 <span class="math-tex">(x,y,z)</span> 处的<strong>散度</strong>定义为：
+        </p>
+        <div class="formula-box">
+            <span class="math-tex">
+                div <b>A</b> = &nabla; &sdot; <b>A</b>
+                = &part;P/&part;x + &part;Q/&part;y + &part;R/&part;z
+            </span>
+        </div>
+        <p>散度的物理意义：散度表示向量场在某点处"发散"或"汇聚"的强度。</p>
+        <ul>
+            <li><strong>div <span class="math-tex"><b>A</b></span> &gt; 0</strong>：该点处有"源"（向外发散），如正电荷</li>
+            <li><strong>div <span class="math-tex"><b>A</b></span> &lt; 0</strong>：该点处有"汇"（向内汇聚），如负电荷</li>
+            <li><strong>div <span class="math-tex"><b>A</b></span> = 0</strong>：该点处无源无汇，称为<strong>无散场</strong>（管形场）</li>
+        </ul>
+
+        <h3>2. 散度的运算法则</h3>
+        <ul>
+            <li><span class="math-tex">div (c<b>A</b>) = c div <b>A</b></span>（c 为常数）</li>
+            <li><span class="math-tex">div (<b>A</b> + <b>B</b>) = div <b>A</b> + div <b>B</b></span></li>
+            <li><span class="math-tex">div (u<b>A</b>) = u div <b>A</b> + <b>A</b> &sdot; &nabla; u</span>（u 为标量函数）</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>四、高斯公式的应用方法</h2>
+        <h3>1. 计算封闭曲面的曲面积分</h3>
+        <p>
+            高斯公式最直接的应用：将曲面积分转化为三重积分，避免直接处理曲面投影的复杂性。
+        </p>
+        <div class="example-box">
+            <strong>例 1：</strong> 计算 <span class="math-tex">&iint;<sub>S</sub> x<sup>3</sup> dydz + y<sup>3</sup> dzdx + z<sup>3</sup> dxdy</span>，
+            其中 <span class="math-tex">S</span> 是球面 <span class="math-tex">x<sup>2</sup> + y<sup>2</sup> + z<sup>2</sup> = a<sup>2</sup></span> 的外侧。<br><br>
+            <strong>解：</strong><br>
+            由高斯公式：<br>
+            <span class="math-tex">&iint;<sub>S</sub> ... = &iiint;<sub>&Omega;</sub> (3x<sup>2</sup> + 3y<sup>2</sup> + 3z<sup>2</sup>) dv</span><br>
+            <span class="math-tex">= 3 &iiint;<sub>&Omega;</sub> (x<sup>2</sup> + y<sup>2</sup> + z<sup>2</sup>) dv</span><br>
+            采用球坐标：<span class="math-tex">x<sup>2</sup> + y<sup>2</sup> + z<sup>2</sup> = r<sup>2</sup></span>，
+            <span class="math-tex">dv = r<sup>2</sup> sin &phi; dr d&phi; d&theta;</span><br>
+            <span class="math-tex">= 3 &int;<sub>0</sub><sup>2&pi;</sup> d&theta; &int;<sub>0</sub><sup>&pi;</sup> sin &phi; d&phi; &int;<sub>0</sub><sup>a</sup> r<sup>4</sup> dr</span><br>
+            <span class="math-tex">= 3 &times; 2&pi; &times; 2 &times; a<sup>5</sup>/5 = 12&pi;a<sup>5</sup>/5</span>
+        </div>
+
+        <h3>2. 计算非封闭曲面（补面法）</h3>
+        <p>
+            当曲面不封闭时，可添加辅助曲面（如平面盖）使其封闭，再用高斯公式计算，
+            最后减去辅助曲面上的积分。
+        </p>
+        <div class="example-box">
+            <strong>例 2：</strong> 计算曲面积分
+            <span class="math-tex">&iint;<sub>&Sigma;</sub> x dydz + y dzdx + z dxdy</span>，
+            其中 <span class="math-tex">&Sigma;</span> 是锥面 <span class="math-tex">z = &radic;(x<sup>2</sup> + y<sup>2</sup>)</span>
+            被平面 <span class="math-tex">z = 1</span> 所截部分的下侧。<br><br>
+            <strong>解：</strong> 补上平面 <span class="math-tex">&Sigma;<sub>1</sub>: z = 1</span>（上侧），
+            使 <span class="math-tex">&Sigma; &cup; &Sigma;<sub>1</sub></span> 构成封闭曲面，取外侧。<br>
+            由高斯公式：<span class="math-tex">&iint;<sub>&Sigma;+&Sigma;<sub>1</sub></sub> ... = &iiint;<sub>&Omega;</sub> 3 dv = 3 &times; V</span><br>
+            锥体体积 <span class="math-tex">V = &pi;/3</span>，故原积分 <span class="math-tex">= &pi; - (补面上的积分)</span>，
+            补面 <span class="math-tex">z=1</span> 上 <span class="math-tex">dz = 0</span>，
+            <span class="math-tex">x dydz + y dzdx = 0</span>，<span class="math-tex">z dxdy = 1 &times; dxdy</span><br>
+            <span class="math-tex">&iint;<sub>&Sigma;<sub>1</sub></sub> dxdy = &pi;</span>（半径为 1 的圆面积）<br>
+            因此原积分 <span class="math-tex">= 3 &times; &pi;/3 - &pi; = 0</span>
+        </div>
+
+        <h3>3. 计算三重积分</h3>
+        <p>
+            在某些情形下，也可反向使用高斯公式，将复杂的体积分转化为曲面积分来简化计算。
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>五、通量与散度的物理意义</h2>
+        <h3>1. 通量的概念</h3>
+        <p>
+            向量场 <span class="math-tex"><b>A</b></span> 通过曲面 <span class="math-tex">S</span> 的<strong>通量</strong>定义为：
+        </p>
+        <div class="formula-box">
+            <span class="math-tex">
+                &Phi; = &iint;<sub>S</sub> <b>A</b> &sdot; d<b>S</b>
+                = &iint;<sub>S</sub> <b>A</b> &sdot; <b>n</b> dS
+            </span>
+        </div>
+        <p>通量表示向量场穿过曲面的"总量"：</p>
+        <ul>
+            <li>对流速场 <span class="math-tex"><b>v</b></span>，通量 = 单位时间流过曲面的流体体积</li>
+            <li>对电场 <span class="math-tex"><b>E</b></span>，通量 = 通过曲面的电通量</li>
+        </ul>
+
+        <h3>2. 散度的物理意义</h3>
+        <p>
+            散度的物理意义可通过高斯公式理解：
+        </p>
+        <div class="formula-box">
+            <span class="math-tex">
+                div <b>A</b>(x<sub>0</sub>, y<sub>0</sub>, z<sub>0</sub>)
+                = lim<sub>V &rarr; 0</sub> (1/V) &iint;<sub>S</sub> <b>A</b> &sdot; <b>n</b> dS
+            </span>
+        </div>
+        <p>
+            即散度是单位体积的通量，描述向量场在某点的"源密度"。
+            高斯公式本质上是将散度的体积分加起来等于总通量。
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>六、高斯公式的适用条件与注意事项</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>条件/注意事项</th>
+                    <th>说明</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>曲面必须封闭</td>
+                    <td>高斯公式要求 <span class="math-tex">S</span> 是封闭曲面；若不封闭，需补面处理</td>
+                </tr>
+                <tr>
+                    <td>取外侧方向</td>
+                    <td>标准高斯公式中外法线方向为正；若取内侧需加负号</td>
+                </tr>
+                <tr>
+                    <td>偏导数连续</td>
+                    <td><span class="math-tex">P,Q,R</span> 需在 <span class="math-tex">&Omega;</span> 内有一阶连续偏导</td>
+                </tr>
+                <tr>
+                    <td>奇点处理</td>
+                    <td>若有奇点（偏导不连续），需挖去小邻域再应用高斯公式</td>
+                </tr>
+                <tr>
+                    <td>曲面分片光滑</td>
+                    <td>允许曲面由多片光滑曲面拼接而成</td>
+                </tr>
+                <tr>
+                    <td>方向一致性</td>
+                    <td>补面时注意辅助曲面的方向与原曲面需构成封闭的外侧</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="note-box">
+            <strong>常见陷阱：</strong> 使用高斯公式时最容易忽略的是曲面方向问题。一定要确认曲面取的是外侧还是内侧，
+            以及被积函数在区域内是否具有一阶连续偏导数。若遇到分母有 <span class="math-tex">r</span> 的形式（如 <span class="math-tex">1/r<sup>2</sup></span> 场），
+            原点往往是奇点，需要特殊处理。
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>七、高斯公式与格林公式的对比</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>对比项</th>
+                    <th>格林公式（二维）</th>
+                    <th>高斯公式（三维）</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>适用维度</td>
+                    <td>二维平面</td>
+                    <td>三维空间</td>
+                </tr>
+                <tr>
+                    <td>边界</td>
+                    <td>平面封闭曲线</td>
+                    <td>空间封闭曲面</td>
+                </tr>
+                <tr>
+                    <td>内部区域</td>
+                    <td>平面区域 <span class="math-tex">D</span></td>
+                    <td>空间区域 <span class="math-tex">&Omega;</span></td>
+                </tr>
+                <tr>
+                    <td>边界积分</td>
+                    <td>对坐标的曲线积分</td>
+                    <td>对坐标的曲面积分</td>
+                </tr>
+                <tr>
+                    <td>内部积分</td>
+                    <td>二重积分</td>
+                    <td>三重积分</td>
+                </tr>
+                <tr>
+                    <td>核心算子</td>
+                    <td>旋度（二维）</td>
+                    <td>散度</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>八、典型例题分析</h2>
+        <div class="example-box">
+            <strong>例 3：</strong> 含奇点的高斯公式应用
+            <br>
+            求 <span class="math-tex">&iint;<sub>S</sub> (x dydz + y dzdx + z dxdy) / (x<sup>2</sup> + y<sup>2</sup> + z<sup>2</sup>)<sup>3/2</sup></span>，
+            其中 <span class="math-tex">S</span> 是球面 <span class="math-tex">x<sup>2</sup> + y<sup>2</sup> + z<sup>2</sup> = a<sup>2</sup></span> 的外侧。<br><br>
+            <strong>解：</strong> 被积函数在原点处不连续（奇点）。<br>
+            取 <span class="math-tex"><b>A</b> = (x, y, z) / r<sup>3</sup></span>，其中 <span class="math-tex">r = &radic;(x<sup>2</sup> + y<sup>2</sup> + z<sup>2</sup>)</span>。<br>
+            计算散度：<span class="math-tex">div <b>A</b> = 0</span>（在 <span class="math-tex">r &ne; 0</span> 处）<br>
+            但由于原点处有奇点，需挖去以原点为中心、
+            半径 <span class="math-tex">&epsilon; &rarr; 0</span> 的小球面 <span class="math-tex">S<sub>&epsilon;</sub></span>（取内侧）。<br>
+            在挖掉后的区域上使用高斯公式得：<br>
+            <span class="math-tex">&iint;<sub>S</sub> ... + &iint;<sub>S<sub>&epsilon;</sub></sub> ... = 0</span><br>
+            故 <span class="math-tex">&iint;<sub>S</sub> ... = - &iint;<sub>S<sub>&epsilon;</sub></sub> ...</span><br>
+            在 <span class="math-tex">S<sub>&epsilon;</sub></span> 上，<span class="math-tex">r = &epsilon;</span> 为常数，<br>
+            <span class="math-tex">&iint;<sub>S<sub>&epsilon;</sub></sub> ... = (1/&epsilon;<sup>3</sup>) &iint;<sub>S<sub>&epsilon;</sub></sub> x dydz + y dzdx + z dxdy</span><br>
+            由高斯公式（在球体内）：<br>
+            <span class="math-tex">= (1/&epsilon;<sup>3</sup>) &times; 3 &times; (4&pi;&epsilon;<sup>3</sup>/3) = 4&pi;</span><br>
+            注意 <span class="math-tex">S<sub>&epsilon;</sub></span> 取内侧，故最终结果为 <span class="math-tex">-4&pi;</span>。
+        </div>
+
+        <div class="example-box">
+            <strong>例 4：</strong> 利用高斯公式计算三重积分
+            <br>
+            计算 <span class="math-tex">&iiint;<sub>&Omega;</sub> (x<sup>2</sup> + y<sup>2</sup> + z<sup>2</sup>) dv</span>，
+            其中 <span class="math-tex">&Omega;</span> 是椭球面 <span class="math-tex">x<sup>2</sup>/a<sup>2</sup> + y<sup>2</sup>/b<sup>2</sup> + z<sup>2</sup>/c<sup>2</sup> = 1</span> 所围区域。<br><br>
+            <strong>解：</strong> 直接计算三重积分较复杂。<br>
+            取 <span class="math-tex">P = x<sup>3</sup>, Q = y<sup>3</sup>, R = z<sup>3</sup></span>，则
+            <span class="math-tex">&part;P/&part;x = 3x<sup>2</sup></span> 等。<br>
+            反向使用格林公式的推广（高斯公式的逆用并不直接简单），
+            更直接的做法是利用对称性和广义球坐标变换：<br>
+            <span class="math-tex">x = a&rho; sin&phi; cos&theta;, y = b&rho; sin&phi; sin&theta;, z = c&rho; cos&phi;</span><br>
+            <span class="math-tex">J = abc &rho;<sup>2</sup> sin&phi;</span><br>
+            <span class="math-tex">x<sup>2</sup> + y<sup>2</sup> + z<sup>2</sup> = a<sup>2</sup>&rho;<sup>2</sup> sin<sup>2</sup>&phi; cos<sup>2</sup>&theta;
+            + b<sup>2</sup>&rho;<sup>2</sup> sin<sup>2</sup>&phi; sin<sup>2</sup>&theta;
+            + c<sup>2</sup>&rho;<sup>2</sup> cos<sup>2</sup>&phi;</span><br>
+            积分：<span class="math-tex">&int;<sub>0</sub><sup>2&pi;</sup> cos<sup>2</sup>&theta; d&theta; = &pi;</span>，
+            <span class="math-tex">&int;<sub>0</sub><sup>2&pi;</sup> sin<sup>2</sup>&theta; d&theta; = &pi;</span>，
+            <span class="math-tex">&int;<sub>0</sub><sup>&pi;</sup> sin<sup>3</sup> &phi; d&phi; = 4/3</span>，
+            <span class="math-tex">&int;<sub>0</sub><sup>1</sup> &rho;<sup>4</sup> d&rho; = 1/5</span><br>
+            最终整理得：原式 = <span class="math-tex">(4&pi;abc/15)(a<sup>2</sup> + b<sup>2</sup> + c<sup>2</sup>)</span>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>九、应用场景总结</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>应用场景</th>
+                    <th>方法</th>
+                    <th>典型条件</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>封闭曲面上的曲面积分</td>
+                    <td>直接应用高斯公式</td>
+                    <td>曲面封闭、外侧、偏导连续</td>
+                </tr>
+                <tr>
+                    <td>非封闭曲面的曲面积分</td>
+                    <td>补面法：添加辅助面后减掉</td>
+                    <td>辅助面易于计算</td>
+                </tr>
+                <tr>
+                    <td>含奇点的曲面积分</td>
+                    <td>挖洞法：挖去奇点邻域</td>
+                    <td>奇点被挖掉后区域无奇点</td>
+                </tr>
+                <tr>
+                    <td>物理通量计算</td>
+                    <td>通量 = 散度体积分</td>
+                    <td>流速场、电场、磁场等</td>
+                </tr>
+                <tr>
+                    <td>利用对称性化简</td>
+                    <td>取适当 <span class="math-tex">P,Q,R</span> 反向使用</td>
+                    <td>被积函数有特殊形式</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer-note">
+        高斯公式知识点总结 | 高等数学II-2 知识点
+    </div>
+</body>
+</html>

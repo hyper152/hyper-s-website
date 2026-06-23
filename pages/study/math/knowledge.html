@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高等数学II-2 知识点详解</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f6f8;
+            padding: 20px;
+            max-width: 920px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        .header p {
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        .knowledge-card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            margin-bottom: 16px;
+            padding: 18px 22px;
+            border-left: 5px solid #3498db;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .knowledge-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .knowledge-card .info {
+            flex: 1;
+        }
+        .knowledge-card .info h3 {
+            margin: 0 0 4px 0;
+            font-size: 1.05em;
+            color: #2c3e50;
+        }
+        .knowledge-card .info .desc {
+            color: #7f8c8d;
+            font-size: 0.88em;
+            margin: 0;
+        }
+        .knowledge-card .badge {
+            background: #e8f0fe;
+            color: #1967d2;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.78em;
+            font-weight: bold;
+            white-space: nowrap;
+            margin-left: 12px;
+        }
+        .knowledge-card a {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+        .category-label {
+            font-size: 0.85em;
+            font-weight: bold;
+            color: #7f8c8d;
+            margin: 25px 0 12px 5px;
+            letter-spacing: 1px;
+        }
+        .footer-note {
+            text-align: center;
+            color: #95a5a6;
+            font-size: 0.85em;
+            margin-top: 40px;
+            border-top: 1px solid #e0e0e0;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="nav-buttons">
+        <a href="main.html"
+           style="display:flex; align-items:center; gap:8px; background:#f0f0f0; color:#555; text-decoration:none;
+                  padding:12px 24px; border-radius:8px; font-weight:bold; font-size:0.95em;
+                  transition:background 0.2s;"
+           onmouseover="this.style.background='#e0e0e0'"
+           onmouseout="this.style.background='#f0f0f0'">
+            ⬅ 返回考点大纲
+        </a>
+        <a href="2026CQU_Advanced_Mathematics_II-2_Review_Questions.html"
+           style="display:flex; align-items:center; gap:8px;
+                  background:linear-gradient(135deg,#667eea,#764ba2); color:#fff; text-decoration:none;
+                  padding:12px 24px; border-radius:8px; font-weight:bold; font-size:0.95em;
+                  box-shadow:0 3px 10px rgba(102,126,234,0.3); transition:transform 0.2s;"
+           onmouseover="this.style.transform='translateY(-1px)'"
+           onmouseout="this.style.transform=''">
+            📝 分类精选题
+        </a>
+    </div>
+
+    <div class="header">
+        <h1>高等数学II-2 知识点详解</h1>
+        <p>各专题知识点总结 PDF</p>
+    </div>
+
+    <div class="category-label">📐 空间解析几何</div>
+
+    <div class="knowledge-card">
+        <a href="知识点/对称式与参数式方程.html">
+            <div class="info">
+                <h3>对称式与参数式方程</h3>
+                <p class="desc">空间直线的对称式方程、参数方程及相互转换</p>
+            </div>
+            <span class="badge">PDF</span>
+        </a>
+    </div>
+
+    <div class="knowledge-card">
+        <a href="知识点/平面点集基本定义.html">
+            <div class="info">
+                <h3>平面点集基本定义</h3>
+                <p class="desc">邻域、聚点、开集、闭集、区域等基本概念</p>
+            </div>
+            <span class="badge">PDF</span>
+        </a>
+    </div>
+
+    <div class="category-label">🧮 多元函数微分学</div>
+
+    <div class="knowledge-card">
+        <a href="知识点/函数连续性、偏导数、可微性、方向导数关系与分析.html">
+            <div class="info">
+                <h3>函数连续性、偏导数、可微性、方向导数关系与分析</h3>
+                <p class="desc">多元函数连续、偏导、可微之间的逻辑关系梳理</p>
+            </div>
+            <span class="badge">PDF</span>
+        </a>
+    </div>
+
+    <div class="knowledge-card">
+        <a href="知识点/复合函数偏导数的链式法则核心知识点.html">
+            <div class="info">
+                <h3>复合函数偏导数的链式法则核心知识点</h3>
+                <p class="desc">链式法则的各类形式与典型例题</p>
+            </div>
+            <span class="badge">PDF</span>
+        </a>
+    </div>
+
+    <div class="knowledge-card">
+        <a href="知识点/二元函数极值计算方法.html">
+            <div class="info">
+                <h3>二元函数极值计算方法</h3>
+                <p class="desc">无条件极值、条件极值（拉格朗日乘数法）</p>
+            </div>
+            <span class="badge">PDF</span>
+        </a>
+    </div>
+
+    <div class="knowledge-card">
+        <a href="知识点/二元函数极限与泰勒公式速记版.html">
+            <div class="info">
+                <h3>二元函数极限与泰勒公式速记版</h3>
+                <p class="desc">二元函数极限判定方法与泰勒展开速记</p>
+            </div>
+            <span class="badge">PDF</span>
+        </a>
+    </div>
+
+    <div class="knowledge-card">
+        <a href="知识点/梯度运算的常用推论表.html">
+            <div class="info">
+                <h3>梯度运算的常用推论表</h3>
+                <p class="desc">梯度运算的各种恒等式与推论汇总</p>
+            </div>
+            <span class="badge">PDF</span>
+        </a>
+    </div>
+
+    <div class="category-label">📊 重积分 &amp; 线面积分</div>
+
+    <div class="knowledge-card">
+        <a href="知识点/格林公式知识点总结.html">
+            <div class="info">
+                <h3>格林公式知识点总结</h3>
+                <p class="desc">格林公式及其应用、曲线积分与二重积分的联系</p>
+            </div>
+            <span class="badge">PDF</span>
+        </a>
+    </div>
+
+    <div class="knowledge-card">
+        <a href="知识点/高斯公式知识点总结.html">
+            <div class="info">
+                <h3>高斯公式知识点总结</h3>
+                <p class="desc">高斯公式及其应用、曲面积分与三重积分的联系</p>
+            </div>
+            <span class="badge">PDF</span>
+        </a>
+    </div>
+
+    <div class="knowledge-card">
+        <a href="知识点/斯托克斯公式知识点总结.html">
+            <div class="info">
+                <h3>斯托克斯公式知识点总结</h3>
+                <p class="desc">斯托克斯公式、旋度与曲线积分的关系</p>
+            </div>
+            <span class="badge">PDF</span>
+        </a>
+    </div>
+
+    <div class="knowledge-card">
+        <a href="知识点/📚 曲线积分全知识点总结.html">
+            <div class="info">
+                <h3>📚 曲线积分全知识点总结</h3>
+                <p class="desc">第一型、第二型曲线积分的全面总结</p>
+            </div>
+            <span class="badge">PDF</span>
+        </a>
+    </div>
+
+    <div class="knowledge-card">
+        <a href="知识点/曲面法向量的核心求解方法.html">
+            <div class="info">
+                <h3>曲面法向量的核心求解方法</h3>
+                <p class="desc">曲面法向量的计算及在曲面积分中的应用</p>
+            </div>
+            <span class="badge">PDF</span>
+        </a>
+    </div>
+
+    <div class="knowledge-card">
+        <a href="知识点/球面积分.html">
+            <div class="info">
+                <h3>球面积分</h3>
+                <p class="desc">球面坐标系下的积分计算方法</p>
+            </div>
+            <span class="badge">PDF</span>
+        </a>
+    </div>
+
+    <div class="category-label">🔢 无穷级数</div>
+
+    <div class="knowledge-card">
+        <a href="知识点/级数收敛与收敛半径知识点总结.html">
+            <div class="info">
+                <h3>级数收敛与收敛半径知识点总结</h3>
+                <p class="desc">正项级数判别法、幂级数收敛半径与收敛域</p>
+            </div>
+            <span class="badge">PDF</span>
+        </a>
+    </div>
+
+    <div class="knowledge-card">
+        <a href="知识点/点火公式详解.html">
+            <div class="info">
+                <h3>点火公式详解</h3>
+                <p class="desc">Wallis 公式（点火公式）及其在积分中的应用</p>
+            </div>
+            <span class="badge">PDF</span>
+        </a>
+    </div>
+
+    <div class="category-label">📝 微分方程</div>
+
+    <div class="knowledge-card">
+        <a href="知识点/微分方程的解法.html">
+            <div class="info">
+                <h3>微分方程的解法</h3>
+                <p class="desc">一阶、二阶、高阶微分方程的各类解法全梳理</p>
+            </div>
+            <span class="badge">PDF</span>
+        </a>
+    </div>
+
+    <div class="footer-note">
+        知识点总结文档 | 高等数学II-2
+    </div>
+
+</body>
+</html>

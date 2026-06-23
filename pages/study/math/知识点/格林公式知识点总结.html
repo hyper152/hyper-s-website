@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>格林公式知识点总结 — 高等数学II-2</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; line-height: 1.8; color: #333; background: #f4f6f8; padding: 20px; max-width: 880px; margin: 0 auto; }
+        .header { text-align: center; padding-bottom: 20px; border-bottom: 2px solid #e0e0e0; margin-bottom: 30px; }
+        .header h1 { color: #2c3e50; margin-bottom: 5px; font-size: 1.6em; }
+        .header .subtitle { color: #7f8c8d; font-size: 0.9em; }
+        .download-link { display: inline-flex; align-items: center; gap: 8px; background: #3498db; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; margin: 15px 0; transition: background 0.2s; }
+        .download-link:hover { background: #2980b9; }
+        .nav-back { display: inline-flex; align-items: center; gap: 6px; color: #555; text-decoration: none; font-size: 0.9em; margin-bottom: 15px; }
+        .nav-back:hover { color: #3498db; }
+        .section { background: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 20px 25px; margin-bottom: 20px; border-left: 4px solid #3498db; }
+        .section h2 { color: #2980b9; margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 8px; font-size: 1.2em; }
+        .section h3 { color: #2c3e50; font-size: 1.05em; margin: 15px 0 8px; }
+        .math-tex { font-family: "Times New Roman", Times, serif; font-style: italic; background: #f9f9f9; padding: 2px 6px; border-radius: 3px; }
+        .formula-box { background: #f0f4ff; border: 1px solid #d0d8f0; border-radius: 6px; padding: 12px 16px; margin: 10px 0; text-align: center; font-size: 1.1em; }
+        .example-box { background: #f8f9fa; border-left: 3px solid #27ae60; padding: 10px 15px; margin: 10px 0; border-radius: 0 4px 4px 0; }
+        .note-box { background: #fff8e1; border-left: 3px solid #ffc107; padding: 10px 15px; margin: 10px 0; border-radius: 0 4px 4px 0; }
+        .warning-box { background: #fef0f0; border-left: 3px solid #e74c3c; padding: 10px 15px; margin: 10px 0; border-radius: 0 4px 4px 0; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+        th { background: #f0f4ff; font-weight: bold; }
+        ul, ol { padding-left: 20px; }
+        li { margin-bottom: 6px; }
+        .footer-note { text-align: center; color: #95a5a6; font-size: 0.85em; margin-top: 40px; border-top: 1px solid #e0e0e0; padding-top: 20px; }
+        .two-col { display: flex; gap: 15px; flex-wrap: wrap; }
+        .two-col > div { flex: 1; min-width: 280px; }
+    </style>
+</head>
+<body>
+    <a href="../main.html" class="nav-back">⬅ 返回考点大纲</a>
+    <div class="header">
+        <h1>格林公式知识点总结</h1>
+        <p class="subtitle">重积分与线面积分 — 格林公式及其应用、曲线积分与二重积分的联系</p>
+    </div>
+    <a href="格林公式知识点总结.pdf" class="download-link" download>📥 下载 PDF 原文</a>
+
+    <div class="section">
+        <h2>一、格林公式概述</h2>
+        <p>格林公式（Green's Theorem）是向量分析与积分理论中的重要定理，它建立了平面闭区域上的二重积分与其边界曲线上的曲线积分之间的联系。格林公式是斯托克斯定理（Stokes' Theorem）在二维情形下的特例，同时也是牛顿-莱布尼茨公式从一维到二维的推广。</p>
+
+        <div class="formula-box">
+            <strong>格林公式（基本形式）：</strong><br>
+            <span class="math-tex">&#x222e;<sub>C</sub> P(x, y) dx + Q(x, y) dy = &#x222c;<sub>D</sub> (&#x2202;Q/&#x2202;x &#x2212; &#x2202;P/&#x2202;y) dx dy</span>
+        </div>
+
+        <p>其中 <span class="math-tex">C</span> 为区域 <span class="math-tex">D</span> 的正向边界曲线（逆时针方向），<span class="math-tex">P(x, y)</span> 和 <span class="math-tex">Q(x, y)</span> 在 <span class="math-tex">D</span> 上具有一阶连续偏导数。</p>
+
+        <div class="note-box">
+            <strong>记忆口诀：</strong>"Q 对 x 求偏导，减去 P 对 y 求偏导。" 即被积函数为 <span class="math-tex">&#x2202;Q/&#x2202;x &#x2212; &#x2202;P/&#x2202;y</span>，顺序不可颠倒。
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>二、格林公式的适用条件</h2>
+        <p>格林公式的使用需要满足以下三个基本条件：</p>
+
+        <table>
+            <tr>
+                <th>条件</th>
+                <th>说明</th>
+                <th>常见反例</th>
+            </tr>
+            <tr>
+                <td>1. 区域连通性</td>
+                <td><span class="math-tex">D</span> 为平面有界闭区域，其边界 <span class="math-tex">C</span> 由有限条光滑或逐段光滑曲线组成</td>
+                <td>带有"洞"的区域需考虑多连通情形</td>
+            </tr>
+            <tr>
+                <td>2. 函数光滑性</td>
+                <td><span class="math-tex">P(x, y)</span> 和 <span class="math-tex">Q(x, y)</span> 在 <span class="math-tex">D</span> 上具有一阶连续偏导数</td>
+                <td>在区域内存在奇点（如 <span class="math-tex">(0,0)</span> 处不连续）</td>
+            </tr>
+            <tr>
+                <td>3. 边界方向</td>
+                <td>边界取正向（逆时针方向），即区域始终在左侧</td>
+                <td>顺时针方向时需加负号</td>
+            </tr>
+        </table>
+
+        <div class="warning-box">
+            <strong>注意：</strong>如果区域内有"空洞"或函数在区域内不连续，不能直接应用格林公式！此时需要将区域分割为多个单连通区域，或挖掉奇点处理。
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>三、格林公式的几种等价形式</h2>
+
+        <h3>3.1 向量点积形式</h3>
+        <div class="formula-box">
+            <span class="math-tex">&#x222e;<sub>C</sub> F &#xb7; dr = &#x222c;<sub>D</sub> (&#x2207; &#xd7; F) &#xb7; k dA</span>
+        </div>
+        <p>其中 <span class="math-tex">F = (P, Q)</span>，<span class="math-tex">dr = (dx, dy)</span>，<span class="math-tex">k</span> 为垂直于 <span class="math-tex">xy</span> 平面的单位向量。该形式揭示了格林公式是斯托克斯定理的二维版本。</p>
+
+        <h3>3.2 面积计算公式（格林公式的推论）</h3>
+        <p>利用格林公式可推导出平面图形的面积计算公式：</p>
+        <div class="formula-box">
+            <span class="math-tex">A = &#x222c;<sub>D</sub> dx dy = (1/2) &#x222e;<sub>C</sub> x dy &#x2212; y dx</span>
+        </div>
+        <p>或者写成：</p>
+        <div class="formula-box">
+            <span class="math-tex">A = &#x222e;<sub>C</sub> x dy = &#x2212;&#x222e;<sub>C</sub> y dx</span>
+        </div>
+
+        <div class="example-box">
+            <strong>示例：</strong>利用格林公式求椭圆 <span class="math-tex">x<sup>2</sup>/a<sup>2</sup> + y<sup>2</sup>/b<sup>2</sup> = 1</span> 的面积。<br>
+            <strong>解：</strong>椭圆参数方程为 <span class="math-tex">x = a cos t, y = b sin t, t &#x2208; [0, 2&#x3c0;]</span>。<br>
+            <span class="math-tex">A = (1/2) &#x222e;<sub>C</sub> x dy &#x2212; y dx = (1/2) &#x222b;<sub>0</sub><sup>2&#x3c0;</sup> [a cos t &#xb7; b cos t &#x2212; b sin t &#xb7; (&#x2212;a sin t)] dt</span><br>
+            <span class="math-tex">= (1/2) &#x222b;<sub>0</sub><sup>2&#x3c0;</sup> (ab cos<sup>2</sup>t + ab sin<sup>2</sup>t) dt = (1/2) &#xb7; ab &#xb7; 2&#x3c0; = &#x3c0;ab</span>。
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>四、格林公式的应用</h2>
+
+        <h3>4.1 应用一：曲线积分化为二重积分</h3>
+        <p>当直接计算曲线积分比较困难时，可利用格林公式将其转化为二重积分进行计算。这是格林公式最直接的应用。</p>
+
+        <div class="example-box">
+            <strong>示例：</strong>计算 <span class="math-tex">I = &#x222e;<sub>C</sub> (x<sup>2</sup> + y) dx + (y<sup>2</sup> &#x2212; x) dy</span>，其中 <span class="math-tex">C</span> 是以 <span class="math-tex">(0,0), (1,0), (0,1)</span> 为顶点的三角形正向边界。<br>
+            <strong>解：</strong><span class="math-tex">P = x<sup>2</sup> + y, Q = y<sup>2</sup> &#x2212; x</span>，<span class="math-tex">&#x2202;Q/&#x2202;x = &#x2212;1, &#x2202;P/&#x2202;y = 1</span>。<br>
+            由格林公式：<span class="math-tex">I = &#x222c;<sub>D</sub> (&#x2212;1 &#x2212; 1) dx dy = &#x2212;2 &#x222c;<sub>D</sub> dx dy = &#x2212;2 &#xd7; (1/2) = &#x2212;1</span>。
+        </div>
+
+        <h3>4.2 应用二：二重积分化为曲线积分</h3>
+        <p>反向使用格林公式可将二重积分转化为曲线积分，在边界曲线简单时尤为方便。</p>
+
+        <div class="example-box">
+            <strong>示例：</strong>利用曲线积分计算 <span class="math-tex">&#x222c;<sub>D</sub> x<sup>2</sup> y dx dy</span>，其中 <span class="math-tex">D</span> 为由 <span class="math-tex">y = x</span> 和 <span class="math-tex">y = x<sup>2</sup></span> 围成的区域。<br>
+            <strong>思路：</strong>选择适当的 <span class="math-tex">P, Q</span> 使 <span class="math-tex">&#x2202;Q/&#x2202;x &#x2212; &#x2202;P/&#x2202;y = x<sup>2</sup> y</span>。取 <span class="math-tex">P = 0</span>，<span class="math-tex">Q = (1/3)x<sup>3</sup>y</span>，则 <span class="math-tex">&#x2202;Q/&#x2202;x = x<sup>2</sup>y</span>。<br>
+            于是 <span class="math-tex">&#x222c;<sub>D</sub> x<sup>2</sup> y dx dy = &#x222e;<sub>C</sub> (1/3)x<sup>3</sup>y dy</span>，沿边界分段计算即可。
+        </div>
+
+        <h3>4.3 应用三：计算平面区域的面积</h3>
+        <p>如前述，利用格林公式的推论公式可计算任意闭曲线所围图形的面积：</p>
+        <div class="formula-box">
+            <span class="math-tex">A = (1/2) &#x222e;<sub>C</sub> x dy &#x2212; y dx</span>
+        </div>
+
+        <div class="example-box">
+            <strong>示例：</strong>求星形线 <span class="math-tex">x = a cos<sup>3</sup>t, y = a sin<sup>3</sup>t</span> 所围图形的面积。<br>
+            <strong>解：</strong><span class="math-tex">dx = &#x2212;3a cos<sup>2</sup>t sin t dt, dy = 3a sin<sup>2</sup>t cos t dt</span>。<br>
+            <span class="math-tex">A = (1/2) &#x222b;<sub>0</sub><sup>2&#x3c0;</sup> [a cos<sup>3</sup>t &#xb7; 3a sin<sup>2</sup>t cos t &#x2212; a sin<sup>3</sup>t &#xb7; (&#x2212;3a cos<sup>2</sup>t sin t)] dt</span><br>
+            <span class="math-tex">= (3a<sup>2</sup>/2) &#x222b;<sub>0</sub><sup>2&#x3c0;</sup> (cos<sup>4</sup>t sin<sup>2</sup>t + sin<sup>4</sup>t cos<sup>2</sup>t) dt = (3a<sup>2</sup>/8) &#x222b;<sub>0</sub><sup>2&#x3c0;</sup> sin<sup>2</sup>2t dt = 3&#x3c0;a<sup>2</sup>/8</span>。
+        </div>
+
+        <h3>4.4 应用四：判断曲线积分与路径无关</h3>
+        <p>设 <span class="math-tex">P, Q</span> 在单连通区域 <span class="math-tex">D</span> 上具有一阶连续偏导数，则曲线积分 <span class="math-tex">&#x222b;<sub>C</sub> P dx + Q dy</span> 在 <span class="math-tex">D</span> 内与路径无关的充要条件是：</p>
+        <div class="formula-box">
+            <span class="math-tex">&#x2202;P/&#x2202;y = &#x2202;Q/&#x2202;x</span> &nbsp;&nbsp;（在 <span class="math-tex">D</span> 内每一点成立）
+        </div>
+        <p>该条件等价于格林公式右端被积函数为零，即 <span class="math-tex">&#x2202;Q/&#x2202;x &#x2212; &#x2202;P/&#x2202;y = 0</span>。</p>
+
+        <div class="note-box">
+            <strong>推论：</strong>若 <span class="math-tex">&#x2202;P/&#x2202;y = &#x2202;Q/&#x2202;x</span> 在单连通区域 <span class="math-tex">D</span> 内恒成立，则：<br>
+            ① 曲线积分与路径无关；<br>
+            ② 沿 <span class="math-tex">D</span> 内任意闭曲线的积分为零；<br>
+            ③ 存在可微函数 <span class="math-tex">u(x, y)</span> 使得 <span class="math-tex">du = P dx + Q dy</span>（原函数存在）。
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>五、多连通区域上的格林公式</h2>
+        <p>当区域 <span class="math-tex">D</span> 为多连通区域（即区域内有"空洞"）时，格林公式需要修正。设 <span class="math-tex">D</span> 为复连通区域，其边界由外边界 <span class="math-tex">C<sub>0</sub></span> 和多个内边界 <span class="math-tex">C<sub>1</sub>, C<sub>2</sub>, ..., C<sub>k</sub></span> 组成，则：</p>
+
+        <div class="formula-box">
+            <span class="math-tex">&#x222c;<sub>D</sub> (&#x2202;Q/&#x2202;x &#x2212; &#x2202;P/&#x2202;y) dx dy = &#x222e;<sub>C<sub>0</sub></sub> P dx + Q dy + &#x2211;<sub>i=1</sub><sup>k</sup> &#x222e;<sub>C<sub>i</sub><sup>&#x2212;</sup></sub> P dx + Q dy</span>
+        </div>
+
+        <p>其中 <span class="math-tex">C<sub>0</sub></span> 取逆时针方向（正向），各内边界 <span class="math-tex">C<sub>i</sub></span> 取顺时针方向（相对于区域 <span class="math-tex">D</span> 仍为正向，即区域始终在左侧）。</p>
+
+        <p>等价地，若所有边界均取逆时针方向，则：</p>
+        <div class="formula-box">
+            <span class="math-tex">&#x222c;<sub>D</sub> (&#x2202;Q/&#x2202;x &#x2212; &#x2202;P/&#x2202;y) dx dy = &#x222e;<sub>C<sub>0</sub></sub> P dx + Q dy &#x2212; &#x2211;<sub>i=1</sub><sup>k</sup> &#x222e;<sub>C<sub>i</sub></sub> P dx + Q dy</span>
+        </div>
+
+        <div class="example-box">
+            <strong>示例：</strong>计算 <span class="math-tex">I = &#x222e;<sub>C</sub> [&#x2212;y/(x<sup>2</sup> + y<sup>2</sup>)] dx + [x/(x<sup>2</sup> + y<sup>2</sup>)] dy</span>，其中 <span class="math-tex">C</span> 为包含原点的任意正向闭曲线。<br>
+            <strong>分析：</strong>函数在 <span class="math-tex">(0,0)</span> 处不连续，不能直接应用格林公式。需挖去原点，构造复连通区域。<br>
+            <strong>解：</strong>作以原点为圆心、半径 <span class="math-tex">&#x3b5; &gt; 0</span> 的小圆 <span class="math-tex">C<sub>&#x3b5;</sub></span>（顺时针），由多连通格林公式可得：<br>
+            <span class="math-tex">&#x222e;<sub>C</sub> = &#x222e;<sub>C<sub>&#x3b5;</sub><sup>&#x2212;</sup></sub></span>（因 <span class="math-tex">&#x2202;Q/&#x2202;x &#x2212; &#x2202;P/&#x2202;y = 0</span> 在挖去原点后成立）。<br>
+            在 <span class="math-tex">C<sub>&#x3b5;</sub></span> 上，参数化 <span class="math-tex">x = &#x3b5; cos &#x3b8;, y = &#x3b5; sin &#x3b8;, &#x3b8;: 0 &#x2192; 2&#x3c0;</span>：<br>
+            <span class="math-tex">I = &#x222b;<sub>0</sub><sup>2&#x3c0;</sup> [(&#x2212;&#x3b5; sin &#x3b8;)(&#x2212;&#x3b5; sin &#x3b8;) + (&#x3b5; cos &#x3b8;)(&#x3b5; cos &#x3b8;)] / &#x3b5;<sup>2</sup> d&#x3b8; = &#x222b;<sub>0</sub><sup>2&#x3c0;</sup> d&#x3b8; = 2&#x3c0;</span>。
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>六、格林公式与曲线积分计算策略</h2>
+        <p>计算曲线积分时，应根据具体情况选择最合适的方法。以下为策略对比表：</p>
+
+        <table>
+            <tr>
+                <th>情况</th>
+                <th>推荐方法</th>
+                <th>理由</th>
+            </tr>
+            <tr>
+                <td>边界曲线复杂，被积函数简单</td>
+                <td><strong>格林公式</strong> → 二重积分</td>
+                <td>将复杂的线积分转化为较简单的面积分</td>
+            </tr>
+            <tr>
+                <td>边界曲线简单（如矩形、圆）</td>
+                <td>直接参数化计算</td>
+                <td>参数化代入计算更直接</td>
+            </tr>
+            <tr>
+                <td><span class="math-tex">&#x2202;P/&#x2202;y = &#x2202;Q/&#x2202;x</span> 成立</td>
+                <td>与路径无关 → 选择简单路径</td>
+                <td>可沿坐标轴折线积分</td>
+            </tr>
+            <tr>
+                <td>被积函数在某点不连续</td>
+                <td>挖奇点法（多连通格林公式）</td>
+                <td>避开奇点，利用复连通修正</td>
+            </tr>
+            <tr>
+                <td>求区域面积</td>
+                <td><span class="math-tex">A = (1/2) &#x222e; x dy &#x2212; y dx</span></td>
+                <td>格林公式的经典应用</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>七、格林公式与其它积分定理的联系</h2>
+        <p>格林公式是三大积分定理的二维基础，下表展示了它们之间的关系：</p>
+
+        <table>
+            <tr>
+                <th>定理</th>
+                <th>适用范围</th>
+                <th>核心关系</th>
+            </tr>
+            <tr>
+                <td><strong>格林公式</strong></td>
+                <td>二维平面</td>
+                <td><span class="math-tex">&#x222e;<sub>C</sub> Pdx + Qdy = &#x222c;<sub>D</sub> (&#x2202;Q/&#x2202;x &#x2212; &#x2202;P/&#x2202;y) dA</span></td>
+            </tr>
+            <tr>
+                <td><strong>高斯公式</strong></td>
+                <td>三维空间</td>
+                <td><span class="math-tex">&#x222c;<sub>S</sub> F &#xb7; dS = &#x222d;<sub>V</sub> &#x2207; &#xb7; F dV</span>（格林公式在三维的推广之一）</td>
+            </tr>
+            <tr>
+                <td><strong>斯托克斯公式</strong></td>
+                <td>三维空间中的曲面</td>
+                <td><span class="math-tex">&#x222e;<sub>C</sub> F &#xb7; dr = &#x222c;<sub>S</sub> &#x2207; &#xd7; F &#xb7; dS</span>（格林公式在三维的推广之二）</td>
+            </tr>
+            <tr>
+                <td><strong>牛顿-莱布尼茨公式</strong></td>
+                <td>一维区间</td>
+                <td><span class="math-tex">&#x222b;<sub>a</sub><sup>b</sup> f'(x) dx = f(b) &#x2212; f(a)</span>（格林公式在一维的类比）</td>
+            </tr>
+        </table>
+
+        <div class="note-box">
+            <strong>统一观点：</strong>这四个定理都可以统一表述为"区域上的积分等于边界上的积分"——这正是广义斯托克斯定理（Generalized Stokes' Theorem）的核心思想。
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>八、经典例题精讲</h2>
+
+        <h3>例题 1：直接应用格林公式</h3>
+        <div class="example-box">
+            计算 <span class="math-tex">I = &#x222e;<sub>C</sub> (y &#x2212; e<sup>x</sup>) dx + (2x + sin y) dy</span>，其中 <span class="math-tex">C</span> 为圆 <span class="math-tex">(x &#x2212; 1)<sup>2</sup> + (y &#x2212; 1)<sup>2</sup> = 4</span> 的正向边界。<br>
+            <strong>解：</strong><span class="math-tex">P = y &#x2212; e<sup>x</sup>, Q = 2x + sin y</span>，则 <span class="math-tex">&#x2202;P/&#x2202;y = 1</span>，<span class="math-tex">&#x2202;Q/&#x2202;x = 2</span>。<br>
+            由格林公式：<span class="math-tex">I = &#x222c;<sub>D</sub> (2 &#x2212; 1) dx dy = &#x222c;<sub>D</sub> dx dy = &#x3c0; &#xd7; 2<sup>2</sup> = 4&#x3c0;</span>。
+        </div>
+
+        <h3>例题 2：利用格林公式证明曲线积分与路径无关</h3>
+        <div class="example-box">
+            证明曲线积分 <span class="math-tex">&#x222b;<sub>C</sub> (3x<sup>2</sup>y + y<sup>3</sup>) dx + (x<sup>3</sup> + 3xy<sup>2</sup>) dy</span> 在 <span class="math-tex">xy</span> 平面上与路径无关，并求原函数。<br>
+            <strong>证明：</strong><span class="math-tex">&#x2202;P/&#x2202;y = 3x<sup>2</sup> + 3y<sup>2</sup></span>，<span class="math-tex">&#x2202;Q/&#x2202;x = 3x<sup>2</sup> + 3y<sup>2</sup></span>，故 <span class="math-tex">&#x2202;P/&#x2202;y = &#x2202;Q/&#x2202;x</span> 在全平面成立。<br>
+            <strong>求原函数：</strong>取 <span class="math-tex">(0,0) &#x2192; (x,0) &#x2192; (x,y)</span> 的折线路径：<br>
+            <span class="math-tex">u(x, y) = &#x222b;<sub>0</sub><sup>x</sup> 3t<sup>2</sup> &#xb7; 0 dt + &#x222b;<sub>0</sub><sup>y</sup> (x<sup>3</sup> + 3xs<sup>2</sup>) ds = x<sup>3</sup>y + xy<sup>3</sup> + C</span>。
+        </div>
+
+        <h3>例题 3：挖奇点法</h3>
+        <div class="example-box">
+            计算 <span class="math-tex">I = &#x222e;<sub>C</sub> [x dy &#x2212; y dx] / (x<sup>2</sup> + y<sup>2</sup>)</span>，其中 <span class="math-tex">C</span> 为任意不经过原点的正向闭曲线。<br>
+            <strong>分析：</strong>计算 <span class="math-tex">&#x2202;P/&#x2202;y</span> 和 <span class="math-tex">&#x2202;Q/&#x2202;x</span>：<br>
+            <span class="math-tex">P = &#x2212;y/(x<sup>2</sup>+y<sup>2</sup>), Q = x/(x<sup>2</sup>+y<sup>2</sup>)</span><br>
+            <span class="math-tex">&#x2202;P/&#x2202;y = (y<sup>2</sup> &#x2212; x<sup>2</sup>)/(x<sup>2</sup>+y<sup>2</sup>)<sup>2</sup>, &#x2202;Q/&#x2202;x = (y<sup>2</sup> &#x2212; x<sup>2</sup>)/(x<sup>2</sup>+y<sup>2</sup>)<sup>2</sup></span><br>
+            所以 <span class="math-tex">&#x2202;Q/&#x2202;x &#x2212; &#x2202;P/&#x2202;y = 0</span> 在除原点外处处成立。<br>
+            ① 若原点不在 <span class="math-tex">C</span> 内部，则 <span class="math-tex">I = 0</span>（由格林公式直接得到）。<br>
+            ② 若原点在 <span class="math-tex">C</span> 内部，则挖去原点作小圆，计算结果为 <span class="math-tex">I = 2&#x3c0;</span>。<br>
+            综合可得：<span class="math-tex">I = 0</span>（原点在外）或 <span class="math-tex">I = 2&#x3c0;</span>（原点在内）。
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>九、常见误区与易错点</h2>
+        <div class="warning-box">
+            <ul>
+                <li><strong>方向错误：</strong>未注意曲线的正向取法。格林公式要求边界取正向（逆时针），若为顺时针需在结果前加负号。</li>
+                <li><strong>偏导顺序混淆：</strong>被积函数是 <span class="math-tex">&#x2202;Q/&#x2202;x &#x2212; &#x2202;P/&#x2202;y</span>，而非 <span class="math-tex">&#x2202;P/&#x2202;y &#x2212; &#x2202;Q/&#x2202;x</span>。</li>
+                <li><strong>忽视奇点：</strong>区域内存在偏导数不连续的点时直接套用格林公式，导致结果错误。</li>
+                <li><strong>多连通区域处理不当：</strong>未正确处理内外边界的方向关系，或遗漏了内边界上的积分。</li>
+                <li><strong>条件遗漏：</strong>格林公式要求函数具有一阶连续偏导数，若仅存在偏导数但不连续，公式不一定成立。</li>
+                <li><strong>混淆充要条件：</strong>曲线积分与路径无关等价于 <span class="math-tex">&#x2202;P/&#x2202;y = &#x2202;Q/&#x2202;x</span>，这个结论只在<strong>单连通区域</strong>上成立。</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>十、总结与解题模板</h2>
+        <p>应用格林公式解题的一般步骤：</p>
+        <ol>
+            <li><strong>Step 1 — 确认条件：</strong>检查区域 <span class="math-tex">D</span> 是否为有界闭区域，边界是否光滑或逐段光滑，<span class="math-tex">P, Q</span> 是否具有一阶连续偏导数。</li>
+            <li><strong>Step 2 — 检查奇点：</strong>若 <span class="math-tex">D</span> 内有奇点（偏导数不连续的点），则需作辅助曲线挖去奇点。</li>
+            <li><strong>Step 3 — 检查连通性：</strong>若为多连通区域，需分割为单连通区域，或使用复连通格林公式。</li>
+            <li><strong>Step 4 — 确定边界方向：</strong>确保所有边界取正向（区域始终在左侧）。</li>
+            <li><strong>Step 5 — 计算偏导差：</strong>计算 <span class="math-tex">&#x2202;Q/&#x2202;x &#x2212; &#x2202;P/&#x2202;y</span>，代入格林公式。</li>
+            <li><strong>Step 6 — 计算二重积分：</strong>将曲线积分转化为二重积分进行计算。</li>
+            <li><strong>Step 7 — 处理辅助曲线：</strong>若作了辅助曲线挖洞，需要单独计算辅助曲线上的积分并作为修正值。</li>
+        </ol>
+
+        <div class="note-box">
+            <strong>核心要诀：</strong>"看条件、判奇点、定方向、算偏导、化重积"——五步法熟练掌握格林公式的各类应用。
+        </div>
+    </div>
+
+    <div class="footer-note">
+        格林公式知识点总结 | 高等数学II-2 知识点
+    </div>
+</body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>复合函数偏导数的链式法则核心知识点 — 高等数学II-2</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; line-height: 1.8; color: #333; background: #f4f6f8; padding: 20px; max-width: 880px; margin: 0 auto; }
+        .header { text-align: center; padding-bottom: 20px; border-bottom: 2px solid #e0e0e0; margin-bottom: 30px; }
+        .header h1 { color: #2c3e50; margin-bottom: 5px; font-size: 1.6em; }
+        .header .subtitle { color: #7f8c8d; font-size: 0.9em; }
+        .download-link { display: inline-flex; align-items: center; gap: 8px; background: #3498db; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; margin: 15px 0; transition: background 0.2s; }
+        .download-link:hover { background: #2980b9; }
+        .nav-back { display: inline-flex; align-items: center; gap: 6px; color: #555; text-decoration: none; font-size: 0.9em; margin-bottom: 15px; }
+        .nav-back:hover { color: #3498db; }
+        .section { background: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 20px 25px; margin-bottom: 20px; border-left: 4px solid #3498db; }
+        .section h2 { color: #2980b9; margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 8px; font-size: 1.2em; }
+        .section h3 { color: #2c3e50; font-size: 1.05em; margin: 15px 0 8px; }
+        .math-tex { font-family: "Times New Roman", Times, serif; font-style: italic; background: #f9f9f9; padding: 2px 6px; border-radius: 3px; }
+        .formula-box { background: #f0f4ff; border: 1px solid #d0d8f0; border-radius: 6px; padding: 12px 16px; margin: 10px 0; text-align: center; font-size: 1.1em; }
+        .example-box { background: #f8f9fa; border-left: 3px solid #27ae60; padding: 10px 15px; margin: 10px 0; border-radius: 0 4px 4px 0; }
+        .note-box { background: #fff8e1; border-left: 3px solid #ffc107; padding: 10px 15px; margin: 10px 0; border-radius: 0 4px 4px 0; }
+        .chain-diagram { background: #f0f4ff; border: 1px solid #d0d8f0; border-radius: 6px; padding: 15px; margin: 12px 0; text-align: center; font-family: "Courier New", monospace; line-height: 1.8; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+        th { background: #f0f4ff; font-weight: bold; }
+        ul, ol { padding-left: 20px; }
+        li { margin-bottom: 6px; }
+        .footer-note { text-align: center; color: #95a5a6; font-size: 0.85em; margin-top: 40px; border-top: 1px solid #e0e0e0; padding-top: 20px; }
+    </style>
+</head>
+<body>
+    <a href="../main.html" class="nav-back">&#x2B05; 返回考点大纲</a>
+    <div class="header">
+        <h1>复合函数偏导数的链式法则核心知识点</h1>
+        <p class="subtitle">多元函数微分学</p>
+    </div>
+    <a href="复合函数偏导数的链式法则核心知识点.pdf" class="download-link" download>&#x1F4E5; 下载 PDF 原文</a>
+
+    <div class="section">
+        <h2>一、概述</h2>
+        <p><strong>链式法则（Chain Rule）</strong>是多元函数微分学中最重要的计算工具之一。在一元函数中，链式法则的形式简洁明了：若 <span class="math-tex">y = f(u)</span>，<span class="math-tex">u = g(x)</span>，则 <span class="math-tex">dy/dx = f'(u) &#x2022; g'(x)</span>。在多元函数中，链式法则需要根据复合的结构（中间变量的个数、自变量的个数）灵活应用，形式更加多样。</p>
+        <p>正确理解和掌握多元复合函数的链式法则，是处理偏微分方程、优化问题、物理建模等更深层次问题的基础。</p>
+    </div>
+
+    <div class="section">
+        <h2>二、链式法则的基本形式</h2>
+
+        <h3>情形1：一元函数与多元函数复合（单变量中间变量）</h3>
+        <p>设 <span class="math-tex">z = f(x, y)</span>，而 <span class="math-tex">x = x(t)</span>，<span class="math-tex">y = y(t)</span> 均为 <span class="math-tex">t</span> 的一元函数。则 <span class="math-tex">z = f(x(t), y(t))</span> 是 <span class="math-tex">t</span> 的一元复合函数，其全导数为：</p>
+        <div class="formula-box">
+            <span class="math-tex">dz/dt = (&#x2202;f/&#x2202;x) &#x2022; (dx/dt) + (&#x2202;f/&#x2202;y) &#x2022; (dy/dt)</span>
+        </div>
+        <p>这是最基础的形式，其中 <span class="math-tex">&#x2202;f/&#x2202;x</span> 和 <span class="math-tex">&#x2202;f/&#x2202;y</span> 来自外层函数对中间变量的偏导，<span class="math-tex">dx/dt</span> 和 <span class="math-tex">dy/dt</span> 来自内层函数。</p>
+
+        <div class="chain-diagram">
+            z<br>
+            &#9585;&#9473;&#9473;&#9473;+<br>
+            x &nbsp;&nbsp;&nbsp; y<br>
+            | &nbsp;&nbsp;&nbsp;&nbsp; |<br>
+            t &nbsp;&nbsp;&nbsp; t<br>
+            <span style="font-size:0.9em; color:#7f8c8d;">（z 通过 x, y 最终依赖 t，共两条路径）</span>
+        </div>
+
+        <h3>情形2：多元函数与多元函数复合（多变量中间变量）</h3>
+        <p>设 <span class="math-tex">z = f(u, v)</span>，而 <span class="math-tex">u = u(x, y)</span>，<span class="math-tex">v = v(x, y)</span>。则 <span class="math-tex">z = f(u(x,y), v(x,y))</span> 是 <span class="math-tex">x, y</span> 的二元复合函数，其偏导数为：</p>
+        <div class="formula-box">
+            <span class="math-tex">&#x2202;z/&#x2202;x = (&#x2202;f/&#x2202;u) &#x2022; (&#x2202;u/&#x2202;x) + (&#x2202;f/&#x2202;v) &#x2022; (&#x2202;v/&#x2202;x)</span>
+            <br><span class="math-tex">&#x2202;z/&#x2202;y = (&#x2202;f/&#x2202;u) &#x2022; (&#x2202;u/&#x2202;y) + (&#x2202;f/&#x2202;v) &#x2022; (&#x2202;v/&#x2202;y)</span>
+        </div>
+
+        <div class="chain-diagram">
+            &nbsp;&nbsp;&nbsp;&nbsp;z<br>
+            &nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;\<br>
+            u&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v<br>
+            /&nbsp;\&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;\<br>
+            x y&nbsp;&nbsp;x y<br>
+            <span style="font-size:0.9em; color:#7f8c8d;">（z &#x2192; x：经过 u 和 v 两条路径；z &#x2192; y 同理）</span>
+        </div>
+
+        <h3>情形3：多种变量混合复合</h3>
+        <p>设 <span class="math-tex">z = f(u, v, w)</span>，其中 <span class="math-tex">u = u(x, y)</span>，<span class="math-tex">v = v(x, y)</span>，<span class="math-tex">w = w(x, y)</span>，则</p>
+        <div class="formula-box">
+            <span class="math-tex">&#x2202;z/&#x2202;x = (&#x2202;f/&#x2202;u)(&#x2202;u/&#x2202;x) + (&#x2202;f/&#x2202;v)(&#x2202;v/&#x2202;x) + (&#x2202;f/&#x2202;w)(&#x2202;w/&#x2202;x)</span>
+            <br><span class="math-tex">&#x2202;z/&#x2202;y = (&#x2202;f/&#x2202;u)(&#x2202;u/&#x2202;y) + (&#x2202;f/&#x2202;v)(&#x2202;v/&#x2202;y) + (&#x2202;f/&#x2202;w)(&#x2202;w/&#x2202;y)</span>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>三、链式法则的通式规则</h2>
+        <p>对于一般的多元复合函数，链式法则遵循一个统一的模式：</p>
+        <div class="formula-box">
+            <span class="math-tex">&#x2202;z/&#x2202;x<sub>i</sub> = &#x2211;<sub>j</sub> (&#x2202;f/&#x2202;u<sub>j</sub>) &#x2022; (&#x2202;u<sub>j</sub>/&#x2202;x<sub>i</sub>)</span>
+        </div>
+        <p>其中 <span class="math-tex">u<sub>j</sub></span> 是所有中间变量，<span class="math-tex">x<sub>i</sub></span> 是最终自变量。求和是对所有从 <span class="math-tex">z</span> 到 <span class="math-tex">x<sub>i</sub></span> 的<strong>路径</strong>进行的，每条路径贡献一个"偏导乘积"项。</p>
+
+        <h3>"路径和"规则（记忆口诀）</h3>
+        <div class="note-box">
+            <p><strong>"连线相乘，分线相加"</strong></p>
+            <ul>
+                <li><strong>连线相乘：</strong>从因变量到自变量的一条路径上，依次对每个中间变量求偏导，将各偏导相乘。</li>
+                <li><strong>分线相加：</strong>把所有不同路径的乘积项相加，得到最终的偏导数。</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>四、特殊情形的链式法则</h2>
+
+        <h3>1. 函数依赖路径存在"重合"</h3>
+        <p>设 <span class="math-tex">z = f(x, y)</span> 且 <span class="math-tex">y = y(x)</span>，则 <span class="math-tex">z = f(x, y(x))</span> 是仅关于 <span class="math-tex">x</span> 的一元函数（但 <span class="math-tex">f</span> 显式依赖于 <span class="math-tex">x</span> 和 <span class="math-tex">y</span>）：</p>
+        <div class="formula-box">
+            <span class="math-tex">dz/dx = &#x2202;f/&#x2202;x + (&#x2202;f/&#x2202;y) &#x2022; (dy/dx)</span>
+        </div>
+        <p>注意：<span class="math-tex">dz/dx</span>（全导数）与 <span class="math-tex">&#x2202;f/&#x2202;x</span>（偏导数）是不同的——前者包括了通过 <span class="math-tex">y</span> 的间接路径。</p>
+
+        <h3>2. 隐函数的偏导数（链式法则的逆向应用）</h3>
+        <p>若方程 <span class="math-tex">F(x, y, z) = 0</span> 确定了隐函数 <span class="math-tex">z = z(x, y)</span>，两边对 <span class="math-tex">x</span> 求偏导得：</p>
+        <div class="formula-box">
+            <span class="math-tex">&#x2202;F/&#x2202;x + (&#x2202;F/&#x2202;z) &#x2022; (&#x2202;z/&#x2202;x) = 0</span>
+            <br><span class="math-tex">&#x21D2; &#x2202;z/&#x2202;x = &#x2212; F<sub>x</sub> / F<sub>z</sub> &nbsp; (F<sub>z</sub> &#x2260; 0)</span>
+        </div>
+        <p>完全类似可得 <span class="math-tex">&#x2202;z/&#x2202;y = &#x2212; F<sub>y</sub> / F<sub>z</sub></span>。这是链式法则应用于隐函数求导的重要结论。</p>
+    </div>
+
+    <div class="section">
+        <h2>五、高阶偏导的链式法则</h2>
+        <p>对复合函数求高阶偏导时，需要<strong>多次应用</strong>链式法则，且注意偏导函数本身仍然是复合函数。</p>
+
+        <h3>举例：求二阶偏导</h3>
+        <p>设 <span class="math-tex">z = f(u, v)</span>，<span class="math-tex">u = u(x, y)</span>，<span class="math-tex">v = v(x, y)</span>。已求得：</p>
+        <div class="formula-box">
+            <span class="math-tex">&#x2202;z/&#x2202;x = (&#x2202;f/&#x2202;u)(&#x2202;u/&#x2202;x) + (&#x2202;f/&#x2202;v)(&#x2202;v/&#x2202;x)</span>
+        </div>
+        <p>若要继续对 <span class="math-tex">x</span> 求偏导：</p>
+        <div class="formula-box">
+            <span class="math-tex">&#x2202;<sup>2</sup>z/&#x2202;x<sup>2</sup> = (&#x2202;/&#x2202;x)[(&#x2202;f/&#x2202;u)(&#x2202;u/&#x2202;x) + (&#x2202;f/&#x2202;v)(&#x2202;v/&#x2202;x)]</span>
+        </div>
+        <p>其中 <span class="math-tex">&#x2202;f/&#x2202;u</span> 和 <span class="math-tex">&#x2202;f/&#x2202;v</span> 仍然是 <span class="math-tex">(u, v)</span> 的函数（即需对它们再应用链式法则），而 <span class="math-tex">&#x2202;u/&#x2202;x</span> 和 <span class="math-tex">&#x2202;v/&#x2202;x</span> 可能是 <span class="math-tex">(x, y)</span> 的函数。因此最终表达式会涉及 <span class="math-tex">f</span> 的二阶偏导。</p>
+
+        <div class="example-box">
+            <p><strong>简记形式：</strong>若记 <span class="math-tex">f<sub>u</sub> = &#x2202;f/&#x2202;u</span>，<span class="math-tex">f<sub>v</sub> = &#x2202;f/&#x2202;v</span>，则</p>
+            <p style="text-align:center;"><span class="math-tex">&#x2202;<sup>2</sup>z/&#x2202;x<sup>2</sup> = [f<sub>uu</sub>(&#x2202;u/&#x2202;x)<sup>2</sup> + 2f<sub>uv</sub>(&#x2202;u/&#x2202;x)(&#x2202;v/&#x2202;x) + f<sub>vv</sub>(&#x2202;v/&#x2202;x)<sup>2</sup>] + f<sub>u</sub>(&#x2202;<sup>2</sup>u/&#x2202;x<sup>2</sup>) + f<sub>v</sub>(&#x2202;<sup>2</sup>v/&#x2202;x<sup>2</sup>)</span></p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>六、典型例题</h2>
+
+        <h3>例题1：基础链式法则</h3>
+        <div class="example-box">
+            <p><strong>题目：</strong>设 <span class="math-tex">z = u<sup>2</sup> + uv</span>，其中 <span class="math-tex">u = x + y</span>，<span class="math-tex">v = x &#x2212; y</span>。求 <span class="math-tex">&#x2202;z/&#x2202;x</span> 和 <span class="math-tex">&#x2202;z/&#x2202;y</span>。</p>
+            <p><strong>解：</strong>由链式法则：</p>
+            <p><span class="math-tex">&#x2202;z/&#x2202;x = (&#x2202;z/&#x2202;u)(&#x2202;u/&#x2202;x) + (&#x2202;z/&#x2202;v)(&#x2202;v/&#x2202;x)</span></p>
+            <p><span class="math-tex">&#x2202;z/&#x2202;u = 2u + v</span>，<span class="math-tex">&#x2202;z/&#x2202;v = u</span></p>
+            <p><span class="math-tex">&#x2202;u/&#x2202;x = 1</span>，<span class="math-tex">&#x2202;v/&#x2202;x = 1</span></p>
+            <p><span class="math-tex">&#x21D2; &#x2202;z/&#x2202;x = (2u + v) &#x2022; 1 + u &#x2022; 1 = 3u + v = 3(x + y) + (x &#x2212; y) = 4x + 2y</span></p>
+            <p>同理 <span class="math-tex">&#x2202;z/&#x2202;y = (2u + v) &#x2022; 1 + u &#x2022; (&#x2212;1) = u + v = (x + y) + (x &#x2212; y) = 2x</span></p>
+            <p><strong>验算：</strong>直接代入 <span class="math-tex">z = (x+y)<sup>2</sup> + (x+y)(x&#x2212;y) = 2x<sup>2</sup> + 2xy</span>，验证结果正确。</p>
+        </div>
+
+        <h3>例题2：二阶偏导的链式法则</h3>
+        <div class="example-box">
+            <p><strong>题目：</strong>设 <span class="math-tex">z = f(xy, x/y)</span>，<span class="math-tex">f</span> 具有二阶连续偏导。求 <span class="math-tex">&#x2202;z/&#x2202;x</span>，<span class="math-tex">&#x2202;z/&#x2202;y</span> 和 <span class="math-tex">&#x2202;<sup>2</sup>z/&#x2202;x&#x2202;y</span>。</p>
+            <p><strong>解：</strong>令 <span class="math-tex">u = xy</span>，<span class="math-tex">v = x/y</span>，则 <span class="math-tex">z = f(u, v)</span>。</p>
+            <p><span class="math-tex">&#x2202;z/&#x2202;x = f<sub>u</sub> &#x2022; (&#x2202;u/&#x2202;x) + f<sub>v</sub> &#x2022; (&#x2202;v/&#x2202;x) = f<sub>u</sub> &#x2022; y + f<sub>v</sub> &#x2022; (1/y)</span></p>
+            <p><span class="math-tex">&#x2202;z/&#x2202;y = f<sub>u</sub> &#x2022; (&#x2202;u/&#x2202;y) + f<sub>v</sub> &#x2022; (&#x2202;v/&#x2202;y) = f<sub>u</sub> &#x2022; x + f<sub>v</sub> &#x2022; (&#x2212;x/y<sup>2</sup>)</span></p>
+            <p>然后求混合偏导：</p>
+            <p><span class="math-tex">&#x2202;<sup>2</sup>z/&#x2202;x&#x2202;y = &#x2202;/&#x2202;y [f<sub>u</sub> &#x2022; y + f<sub>v</sub> &#x2022; (1/y)]</span></p>
+            <p><span class="math-tex">= [f<sub>uu</sub>&#x2022;x + f<sub>uv</sub>&#x2022;(&#x2212;x/y<sup>2</sup>)]&#x2022;y + f<sub>u</sub>&#x2022;1 + [f<sub>vu</sub>&#x2022;x + f<sub>vv</sub>&#x2022;(&#x2212;x/y<sup>2</sup>)]&#x2022;(1/y) + f<sub>v</sub>&#x2022;(&#x2212;1/y<sup>2</sup>)</span></p>
+            <p>利用 <span class="math-tex">f<sub>uv</sub> = f<sub>vu</sub></span>（二阶连续偏导下混合偏导相等），整理得：</p>
+            <p><span class="math-tex">= xyf<sub>uu</sub> &#x2212; (x/y)f<sub>uv</sub> + f<sub>u</sub> + (x/y)f<sub>vu</sub> &#x2212; (x/y<sup>3</sup>)f<sub>vv</sub> &#x2212; (1/y<sup>2</sup>)f<sub>v</sub></span></p>
+            <p><span class="math-tex">= xyf<sub>uu</sub> + f<sub>u</sub> &#x2212; (x/y<sup>3</sup>)f<sub>vv</sub> &#x2212; (1/y<sup>2</sup>)f<sub>v</sub></span></p>
+        </div>
+
+        <h3>例题3：隐函数与链式法则</h3>
+        <div class="example-box">
+            <p><strong>题目：</strong>设 <span class="math-tex">F(x + y + z, x<sup>2</sup> + y<sup>2</sup> + z<sup>2</sup>) = 0</span> 确定了隐函数 <span class="math-tex">z = z(x, y)</span>，求 <span class="math-tex">&#x2202;z/&#x2202;x</span>。</p>
+            <p><strong>解：</strong>令 <span class="math-tex">u = x + y + z</span>，<span class="math-tex">v = x<sup>2</sup> + y<sup>2</sup> + z<sup>2</sup></span>，则 <span class="math-tex">F(u, v) = 0</span>。</p>
+            <p>两边对 <span class="math-tex">x</span> 求偏导（注意 <span class="math-tex">u</span> 和 <span class="math-tex">v</span> 均依赖于 <span class="math-tex">x</span> 和 <span class="math-tex">z</span>，而 <span class="math-tex">z</span> 又是 <span class="math-tex">x, y</span> 的函数）：</p>
+            <p><span class="math-tex">F<sub>u</sub> &#x2022; (1 + &#x2202;z/&#x2202;x) + F<sub>v</sub> &#x2022; (2x + 2z &#x2022; &#x2202;z/&#x2202;x) = 0</span></p>
+            <p>整理出 <span class="math-tex">&#x2202;z/&#x2202;x</span>：</p>
+            <p><span class="math-tex">&#x21D2; (F<sub>u</sub> + 2zF<sub>v</sub>) &#x2022; (&#x2202;z/&#x2202;x) = &#x2212; F<sub>u</sub> &#x2212; 2xF<sub>v</sub></span></p>
+            <p><span class="math-tex">&#x21D2; &#x2202;z/&#x2202;x = &#x2212; (F<sub>u</sub> + 2xF<sub>v</sub>) / (F<sub>u</sub> + 2zF<sub>v</sub>)</span></p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>七、链式法则表格速查</h2>
+        <table>
+            <tr>
+                <th>复合类型</th>
+                <th>因变量</th>
+                <th>中间变量</th>
+                <th>自变量</th>
+                <th>链式法则公式</th>
+            </tr>
+            <tr>
+                <td>一元&rArr;一元</td>
+                <td><span class="math-tex">y = f(u)</span></td>
+                <td><span class="math-tex">u = g(x)</span></td>
+                <td><span class="math-tex">x</span></td>
+                <td><span class="math-tex">dy/dx = f'(u) g'(x)</span></td>
+            </tr>
+            <tr>
+                <td>二元&rArr;一元</td>
+                <td><span class="math-tex">z = f(x, y)</span></td>
+                <td><span class="math-tex">x=x(t), y=y(t)</span></td>
+                <td><span class="math-tex">t</span></td>
+                <td><span class="math-tex">dz/dt = f<sub>x</sub>&#x2022;x' + f<sub>y</sub>&#x2022;y'</span></td>
+            </tr>
+            <tr>
+                <td>二元&rArr;二元</td>
+                <td><span class="math-tex">z = f(u, v)</span></td>
+                <td><span class="math-tex">u=u(x,y), v=v(x,y)</span></td>
+                <td><span class="math-tex">x, y</span></td>
+                <td><span class="math-tex">z<sub>x</sub> = f<sub>u</sub>u<sub>x</sub> + f<sub>v</sub>v<sub>x</sub></span></td>
+            </tr>
+            <tr>
+                <td>三元&rArr;二元</td>
+                <td><span class="math-tex">w = f(u, v, t)</span></td>
+                <td><span class="math-tex">u=u(x,y), v=v(x,y), t=t(x,y)</span></td>
+                <td><span class="math-tex">x, y</span></td>
+                <td><span class="math-tex">w<sub>x</sub> = f<sub>u</sub>u<sub>x</sub> + f<sub>v</sub>v<sub>x</sub> + f<sub>t</sub>t<sub>x</sub></span></td>
+            </tr>
+            <tr>
+                <td>显+隐混合</td>
+                <td><span class="math-tex">z = f(x, y(x))</span></td>
+                <td><span class="math-tex">直接依赖 x 和间接通过 y</span></td>
+                <td><span class="math-tex">x</span></td>
+                <td><span class="math-tex">dz/dx = f<sub>x</sub> + f<sub>y</sub> &#x2022; dy/dx</span></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>八、链式法则的标准解题步骤</h2>
+        <ol>
+            <li><strong>画依赖关系图：</strong>确定因变量、中间变量和自变量，用树状图表示依赖路径。</li>
+            <li><strong>确定需要求的偏导：</strong>明确是对哪个自变量求偏导。</li>
+            <li><strong>找出所有路径：</strong>从因变量到目标自变量之间的每一条依赖路径。</li>
+            <li><strong>每条路径上的偏导相乘：</strong>路径上每"跳"一次乘上对应的偏导因子。</li>
+            <li><strong>所有路径求和：</strong>将所有路径的乘积项加起来。</li>
+            <li><strong>化简代入：</strong>必要时将中间变量代回为自变量的表达式。</li>
+        </ol>
+        <div class="note-box">
+            <p><strong>关键提醒：</strong></p>
+            <ul>
+                <li>求偏导时<strong>分清层次</strong>——外层偏导 <span class="math-tex">&#x2202;f/&#x2202;u</span> 是对中间变量而言，中间变量仍是 <span class="math-tex">(u, v)</span> 的函数。</li>
+                <li>求<strong>全导数</strong>时 <span class="math-tex">dz/dt</span> 要考虑所有依赖路径；而偏导 <span class="math-tex">&#x2202;z/&#x2202;x</span> 则固定其他自变量。</li>
+                <li>高阶求导时，<span class="math-tex">f<sub>u</sub></span>、<span class="math-tex">f<sub>v</sub></span> 与 <span class="math-tex">f</span> 具有相同的复合结构，再次应用链式法则时不能忘记这一点。</li>
+                <li>记法：用下标表示偏导，如 <span class="math-tex">f<sub>u</sub></span>、<span class="math-tex">f<sub>uv</sub></span> 可使表达式简洁清晰。</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>九、偏导数记号中的链式法则含义</h2>
+        <p>链式法则可以帮助理解偏导数的不同记号的含义差异。考虑 <span class="math-tex">z = f(x, y)</span>，其中 <span class="math-tex">y = y(x)</span>：</p>
+        <table>
+            <tr>
+                <th>记号</th>
+                <th>含义</th>
+                <th>与链式法则的关系</th>
+            </tr>
+            <tr>
+                <td><span class="math-tex">&#x2202;f/&#x2202;x</span></td>
+                <td>固定 <span class="math-tex">y</span>，只看 <span class="math-tex">f</span> 对 <span class="math-tex">x</span> 的显式依赖</td>
+                <td>仅考虑直接路径</td>
+            </tr>
+            <tr>
+                <td><span class="math-tex">dz/dx</span></td>
+                <td><span class="math-tex">z</span> 对 <span class="math-tex">x</span> 的全导数</td>
+                <td>同时考虑直接和间接路径</td>
+            </tr>
+            <tr>
+                <td><span class="math-tex">&#x2202;F/&#x2202;x</span>（在 <span class="math-tex">F(x, y, z)=0</span> 中）</td>
+                <td>固定 <span class="math-tex">y, z</span>，只看 <span class="math-tex">F</span> 对 <span class="math-tex">x</span> 的显式依赖</td>
+                <td>隐函数求导时两边同时应用链式法则</td>
+            </tr>
+        </table>
+        <p>链式法则使得这些不同的"变化率"概念可以相互转化和精确计算。</p>
+    </div>
+
+    <div class="section">
+        <h2>十、常见错误与注意事项</h2>
+        <div class="note-box">
+            <ul>
+                <li><strong>错误一：</strong>遗漏路径。该有两条路径时只写了一条，或反之多写了不存在的路径。</li>
+                <li><strong>错误二：</strong>混淆全导与偏导。在混合复合中，<span class="math-tex">&#x2202;z/&#x2202;x</span> 与 <span class="math-tex">&#x2202;f/&#x2202;x</span> 含义不同，不能等同。</li>
+                <li><strong>错误三：</strong>高阶求导时，对 <span class="math-tex">f<sub>u</sub></span> 再次求偏导时忘记应用链式法则——<span class="math-tex">f<sub>u</sub></span> 仍是 <span class="math-tex">(u, v)</span> 的函数，而 <span class="math-tex">(u, v)</span> 又依赖于 <span class="math-tex">(x, y)</span>。</li>
+                <li><strong>错误四：</strong>符号混淆——注意 <span class="math-tex">f<sub>u</sub></span> 也可以记为 <span class="math-tex">&#x2202;f/&#x2202;u</span>，求值时是在 <span class="math-tex">(u(x,y), v(x,y))</span> 处取值。</li>
+                <li><strong>注意事项：</strong>画依赖关系图是避免出错最有效的方法。先画图、再列式、后计算。</li>
+                <li><strong>注意事项：</strong>题中若说"<span class="math-tex">f</span> 具有二阶连续偏导数"，意味着 <span class="math-tex">f<sub>uv</sub> = f<sub>vu</sub></span>，可合并同类项简化结果。</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        CQU 高等数学II-2 知识点 | 复合函数偏导数的链式法则核心知识点
+    </div>
+</body>
+</html>

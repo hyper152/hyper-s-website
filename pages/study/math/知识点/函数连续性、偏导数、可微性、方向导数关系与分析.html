@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>函数连续性、偏导数、可微性、方向导数关系与分析 — 高等数学II-2</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; line-height: 1.8; color: #333; background: #f4f6f8; padding: 20px; max-width: 880px; margin: 0 auto; }
+        .header { text-align: center; padding-bottom: 20px; border-bottom: 2px solid #e0e0e0; margin-bottom: 30px; }
+        .header h1 { color: #2c3e50; margin-bottom: 5px; font-size: 1.6em; }
+        .header .subtitle { color: #7f8c8d; font-size: 0.9em; }
+        .download-link { display: inline-flex; align-items: center; gap: 8px; background: #3498db; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; margin: 15px 0; transition: background 0.2s; }
+        .download-link:hover { background: #2980b9; }
+        .nav-back { display: inline-flex; align-items: center; gap: 6px; color: #555; text-decoration: none; font-size: 0.9em; margin-bottom: 15px; }
+        .nav-back:hover { color: #3498db; }
+        .section { background: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 20px 25px; margin-bottom: 20px; border-left: 4px solid #3498db; }
+        .section h2 { color: #2980b9; margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 8px; font-size: 1.2em; }
+        .section h3 { color: #2c3e50; font-size: 1.05em; margin: 15px 0 8px; }
+        .math-tex { font-family: "Times New Roman", Times, serif; font-style: italic; background: #f9f9f9; padding: 2px 6px; border-radius: 3px; }
+        .formula-box { background: #f0f4ff; border: 1px solid #d0d8f0; border-radius: 6px; padding: 12px 16px; margin: 10px 0; text-align: center; font-size: 1.1em; }
+        .example-box { background: #f8f9fa; border-left: 3px solid #27ae60; padding: 10px 15px; margin: 10px 0; border-radius: 0 4px 4px 0; }
+        .note-box { background: #fff8e1; border-left: 3px solid #ffc107; padding: 10px 15px; margin: 10px 0; border-radius: 0 4px 4px 0; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+        th { background: #f0f4ff; font-weight: bold; }
+        ul, ol { padding-left: 20px; }
+        li { margin-bottom: 6px; }
+        .footer-note { text-align: center; color: #95a5a6; font-size: 0.85em; margin-top: 40px; border-top: 1px solid #e0e0e0; padding-top: 20px; }
+        .relation-arrow { font-size: 1.3em; color: #e74c3c; }
+    </style>
+</head>
+<body>
+    <a href="../main.html" class="nav-back">&#x2B05; 返回考点大纲</a>
+    <div class="header">
+        <h1>函数连续性、偏导数、可微性、方向导数关系与分析</h1>
+        <p class="subtitle">多元函数微分学</p>
+    </div>
+    <a href="函数连续性、偏导数、可微性、方向导数关系与分析.pdf" class="download-link" download>&#x1F4E5; 下载 PDF 原文</a>
+
+    <div class="section">
+        <h2>一、概述</h2>
+        <p>在多元函数微分学中，<strong>连续性（Continuity）</strong>、<strong>偏导数（Partial Derivatives）</strong>、<strong>可微性（Differentiability）</strong>和<strong>方向导数（Directional Derivatives）</strong>是四个核心概念。它们之间既有紧密的联系，又存在本质的区别。理清这一组概念的逻辑关系，是掌握多元函数微分学的关键，也是各类考试中的高频考点。</p>
+        <p>核心结论：在多元函数中，<strong>可微是最强的条件</strong>，它蕴含了连续性、偏导数的存在性以及任意方向的方向导数存在性。然而，连续的函数未必可微，且偏导数存在也未必连续。</p>
+    </div>
+
+    <div class="section">
+        <h2>二、各概念精确定义</h2>
+
+        <h3>1. 连续性</h3>
+        <p>设 <span class="math-tex">z = f(x, y)</span> 在点 <span class="math-tex">P<sub>0</sub>(x<sub>0</sub>, y<sub>0</sub>)</span> 的某邻域内有定义。若</p>
+        <div class="formula-box">
+            <span class="math-tex">lim<sub>(x,y)&#x2192;(x<sub>0</sub>,y<sub>0</sub>)</sub> f(x, y) = f(x<sub>0</sub>, y<sub>0</sub>)</span>
+        </div>
+        <p>则称 <span class="math-tex">f(x, y)</span> 在 <span class="math-tex">P<sub>0</sub></span> 处<strong>连续</strong>。直观上，自变量发生微小变化时，函数值也仅发生微小变化，即没有"跳跃"或"断裂"。</p>
+
+        <h3>2. 偏导数</h3>
+        <p>设 <span class="math-tex">z = f(x, y)</span> 在 <span class="math-tex">(x<sub>0</sub>, y<sub>0</sub>)</span> 的某邻域内有定义。固定 <span class="math-tex">y = y<sub>0</sub></span>，若</p>
+        <div class="formula-box">
+            <span class="math-tex">f<sub>x</sub>(x<sub>0</sub>, y<sub>0</sub>) = <span style="font-size:0.9em;">&#x2202;f/&#x2202;x</span><sub>(x<sub>0</sub>,y<sub>0</sub>)</sub> = lim<sub>&#x394;x&#x2192;0</sub> [f(x<sub>0</sub>+&#x394;x, y<sub>0</sub>) &#x2212; f(x<sub>0</sub>, y<sub>0</sub>)] / &#x394;x</span>
+        </div>
+        <p>存在，则称该极限值为 <span class="math-tex">f</span> 在 <span class="math-tex">(x<sub>0</sub>, y<sub>0</sub>)</span> 处对 <span class="math-tex">x</span> 的<strong>偏导数</strong>。类似定义 <span class="math-tex">f<sub>y</sub>(x<sub>0</sub>, y<sub>0</sub>)</span>。</p>
+        <p>偏导数的本质是"将多元函数视为单元函数"来求导——即沿坐标轴方向的瞬时变化率。</p>
+
+        <h3>3. 可微性</h3>
+        <p>设 <span class="math-tex">z = f(x, y)</span> 在 <span class="math-tex">(x<sub>0</sub>, y<sub>0</sub>)</span> 的某邻域内有定义。若函数值的增量可以表示为</p>
+        <div class="formula-box">
+            <span class="math-tex">&#x394;z = f(x<sub>0</sub>+&#x394;x, y<sub>0</sub>+&#x394;y) &#x2212; f(x<sub>0</sub>, y<sub>0</sub>) = A&#x394;x + B&#x394;y + o(&#x3C1;)</span>
+            <br><span class="math-tex">（其中 &#x3C1; = &#x221A;[(&#x394;x)<sup>2</sup> + (&#x394;y)<sup>2</sup>]，o(&#x3C1;) 为 &#x3C1; &#x2192; 0 时的高阶无穷小）</span>
+        </div>
+        <p>则称 <span class="math-tex">f</span> 在 <span class="math-tex">(x<sub>0</sub>, y<sub>0</sub>)</span> 处<strong>可微</strong>，且 <span class="math-tex">A = f<sub>x</sub>(x<sub>0</sub>, y<sub>0</sub>)</span>，<span class="math-tex">B = f<sub>y</sub>(x<sub>0</sub>, y<sub>0</sub>)</span>，全微分为</p>
+        <div class="formula-box">
+            <span class="math-tex">df = f<sub>x</sub>(x<sub>0</sub>, y<sub>0</sub>) dx + f<sub>y</sub>(x<sub>0</sub>, y<sub>0</sub>) dy</span>
+        </div>
+        <p>可微的直观含义：函数在一点附近可以用平面（切平面）很好地近似，误差是比距离高阶的无穷小。</p>
+
+        <h3>4. 方向导数</h3>
+        <p>设 <span class="math-tex">z = f(x, y)</span> 在 <span class="math-tex">(x<sub>0</sub>, y<sub>0</sub>)</span> 的某邻域内有定义。<span class="math-tex">l</span> 为从 <span class="math-tex">(x<sub>0</sub>, y<sub>0</sub>)</span> 出发的射线，方向向量为 <span class="math-tex">(cos&#x3B1;, cos&#x3B2;)</span>。若</p>
+        <div class="formula-box">
+            <span class="math-tex">&#x2202;f / &#x2202;l = lim<sub>t&#x2192;0<sup>+</sup></sub> [f(x<sub>0</sub>+t cos&#x3B1;, y<sub>0</sub>+t cos&#x3B2;) &#x2212; f(x<sub>0</sub>, y<sub>0</sub>)] / t</span>
+        </div>
+        <p>存在，则称该极限为 <span class="math-tex">f</span> 在 <span class="math-tex">(x<sub>0</sub>, y<sub>0</sub>)</span> 沿方向 <span class="math-tex">l</span> 的<strong>方向导数</strong>。方向导数刻画了函数沿任意方向（不限于坐标轴方向）的变化率。</p>
+    </div>
+
+    <div class="section">
+        <h2>三、核心逻辑关系总图</h2>
+        <div class="formula-box" style="text-align: left; line-height: 2.2;">
+            <p style="text-align:center; font-weight:bold; margin-top:0;">多元函数在一点处的概念层次（<span class="math-tex">f(x, y)</span> 在 <span class="math-tex">(x<sub>0</sub>, y<sub>0</sub>)</span>）</p>
+            <hr style="border: 0.5px solid #d0d8f0;">
+            <p><span class="relation-arrow">&#x2714;</span> <strong style="color:#2980b9;">可微</strong> <span style="color:#e74c3c; font-weight:bold;">&#x21D2;</span> 连续</p>
+            <p><span class="relation-arrow">&#x2714;</span> <strong style="color:#2980b9;">可微</strong> <span style="color:#e74c3c; font-weight:bold;">&#x21D2;</span> 偏导数存在</p>
+            <p><span class="relation-arrow">&#x2714;</span> <strong style="color:#2980b9;">可微</strong> <span style="color:#e74c3c; font-weight:bold;">&#x21D2;</span> 任意方向的方向导数存在</p>
+            <p><span class="relation-arrow">&#x2714;</span> 偏导数存在且偏导函数连续 <span style="color:#e74c3c; font-weight:bold;">&#x21D2;</span> <strong style="color:#2980b9;">可微</strong></p>
+            <p><span class="relation-arrow">&#x2716;</span> 偏导数存在 <span style="color:#7f8c8d; font-weight:bold;">&#x21D4;</span> 连续（不一定！）</p>
+            <p><span class="relation-arrow">&#x2716;</span> 连续 <span style="color:#7f8c8d; font-weight:bold;">&#x21D4;</span> 偏导数存在（不一定！）</p>
+            <p><span class="relation-arrow">&#x2716;</span> 方向导数存在（每个方向） <span style="color:#7f8c8d; font-weight:bold;">&#x21D2;</span> 可微（不一定！）</p>
+        </div>
+
+        <h3>重要解读</h3>
+        <ul>
+            <li><strong>可微 &rArr; 连续：</strong>若 <span class="math-tex">f</span> 可微，则 <span class="math-tex">&#x394;z &#x2192; 0</span> 当 <span class="math-tex">&#x3C1; &#x2192; 0</span>，故连续成立。</li>
+            <li><strong>可微 &rArr; 偏导数存在：</strong>可微时，取 <span class="math-tex">&#x394;y = 0</span> 便得偏导数存在且为系数。</li>
+            <li><strong>可微 &rArr; 方向导数存在：</strong>可微时，沿任意方向 <span class="math-tex">l</span> 的方向导数为 <span class="math-tex">&#x2207;f &#x2022; (cos&#x3B1;, cos&#x3B2;)</span>。</li>
+            <li><strong>偏导连续 &rArr; 可微：</strong>这是可微的<strong>充分条件</strong>（而非必要条件）。</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>四、典型反例分析</h2>
+
+        <h3>反例1：偏导存在但不连续</h3>
+        <div class="example-box">
+            <p><strong>函数：</strong></p>
+            <p style="text-align:center;"><span class="math-tex">f(x, y) = </span></p>
+            <table>
+                <tr><td><span class="math-tex">(xy) / (x<sup>2</sup> + y<sup>2</sup>)</span></td><td><span class="math-tex">(x, y) &#x2260; (0, 0)</span></td></tr>
+                <tr><td><span class="math-tex">0</span></td><td><span class="math-tex">(x, y) = (0, 0)</span></td></tr>
+            </table>
+            <p><strong>分析：</strong>在 <span class="math-tex">(0, 0)</span> 处，沿 <span class="math-tex">y = kx</span> 路径：<span class="math-tex">f(x, kx) = k / (1 + k<sup>2</sup>)</span>，极限依赖于 <span class="math-tex">k</span>，故极限不存在，函数不连续。</p>
+            <p>但偏导数：<span class="math-tex">f<sub>x</sub>(0, 0) = lim<sub>&#x394;x&#x2192;0</sub> [f(&#x394;x, 0) &#x2212; 0] / &#x394;x = 0</span>；同理 <span class="math-tex">f<sub>y</sub>(0, 0) = 0</span>。偏导数存在，函数却不连续。</p>
+            <p><strong>结论：</strong>偏导存在 <span class="relation-arrow" style="text-decoration: line-through;">&rArr;</span> 连续。</p>
+        </div>
+
+        <h3>反例2：连续但偏导不存在</h3>
+        <div class="example-box">
+            <p><strong>函数：</strong><span class="math-tex">f(x, y) = |x| + |y|</span></p>
+            <p><strong>分析：</strong>此函数在 <span class="math-tex">(0, 0)</span> 处显然连续。但沿 <span class="math-tex">x</span> 轴方向：<span class="math-tex">f(x, 0) = |x|</span> 在 <span class="math-tex">x = 0</span> 处不可导，故 <span class="math-tex">f<sub>x</sub>(0, 0)</span> 不存在。</p>
+            <p><strong>结论：</strong>连续 <span class="relation-arrow" style="text-decoration: line-through;">&rArr;</span> 偏导存在。</p>
+        </div>
+
+        <h3>反例3：可微的偏导不连续</h3>
+        <div class="example-box">
+            <p><strong>函数：</strong></p>
+            <p style="text-align:center;"><span class="math-tex">f(x, y) = </span></p>
+            <table>
+                <tr><td><span class="math-tex">(x<sup>2</sup> + y<sup>2</sup>) sin[1 / (x<sup>2</sup> + y<sup>2</sup>)]</span></td><td><span class="math-tex">(x, y) &#x2260; (0, 0)</span></td></tr>
+                <tr><td><span class="math-tex">0</span></td><td><span class="math-tex">(x, y) = (0, 0)</span></td></tr>
+            </table>
+            <p><strong>分析：</strong>在 <span class="math-tex">(0, 0)</span> 处，<span class="math-tex">f</span> 可微（利用有界震荡函数乘以高阶无穷小）。但偏导函数 <span class="math-tex">f<sub>x</sub>(x, y)</span> 在 <span class="math-tex">(0, 0)</span> 附近震荡，不连续。</p>
+            <p><strong>结论：</strong>"偏导函数连续"是<strong>充分而非必要</strong>条件。</p>
+        </div>
+
+        <h3>反例4：所有方向导数存在但不可微</h3>
+        <div class="example-box">
+            <p><strong>函数：</strong></p>
+            <p style="text-align:center;"><span class="math-tex">f(x, y) = </span></p>
+            <table>
+                <tr><td><span class="math-tex">x<sup>3</sup> / (x<sup>2</sup> + y<sup>2</sup>)</span></td><td><span class="math-tex">(x, y) &#x2260; (0, 0)</span></td></tr>
+                <tr><td><span class="math-tex">0</span></td><td><span class="math-tex">(x, y) = (0, 0)</span></td></tr>
+            </table>
+            <p><strong>分析：</strong>在 <span class="math-tex">(0, 0)</span> 处沿任意方向的方向导数均存在（且为0）。但函数不连续（沿路径 <span class="math-tex">y = x</span> 无极限），故不可微。</p>
+            <p><strong>结论：</strong>方向导数（全部方向）存在 <span class="relation-arrow" style="text-decoration: line-through;">&rArr;</span> 可微。</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>五、可微的充分条件与必要条件总结</h2>
+        <table>
+            <tr>
+                <th>条件类型</th>
+                <th>条件内容</th>
+                <th>说明</th>
+            </tr>
+            <tr>
+                <td><strong>必要条件</strong></td>
+                <td>可微 &rArr; 连续</td>
+                <td>函数值增量是 <span class="math-tex">o(&#x3C1;)</span> 量级，必然连续</td>
+            </tr>
+            <tr>
+                <td><strong>必要条件</strong></td>
+                <td>可微 &rArr; 偏导存在</td>
+                <td>沿坐标轴增量分解即得</td>
+            </tr>
+            <tr>
+                <td><strong>充分条件</strong></td>
+                <td>偏导存在且连续 &rArr; 可微</td>
+                <td>经典充分条件，非必要</td>
+            </tr>
+            <tr>
+                <td><strong>充要条件（n=2）</strong></td>
+                <td>偏导存在且 <span class="math-tex">&#x394;z &#x2212; (f<sub>x</sub>&#x394;x + f<sub>y</sub>&#x394;y) = o(&#x3C1;)</span></td>
+                <td>直接按定义验证</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>六、方向导数与梯度</h2>
+        <p>若 <span class="math-tex">f(x, y)</span> 在 <span class="math-tex">(x<sub>0</sub>, y<sub>0</sub>)</span> 处可微，则沿任一方向 <span class="math-tex">l</span>（方向余弦 <span class="math-tex">(cos&#x3B1;, cos&#x3B2;)</span>）的方向导数可通过<strong>梯度</strong>计算：</p>
+        <div class="formula-box">
+            <span class="math-tex">&#x2202;f / &#x2202;l = &#x2207;f(x<sub>0</sub>, y<sub>0</sub>) &#x2022; (cos&#x3B1;, cos&#x3B2;)</span>
+            <br><span class="math-tex">= f<sub>x</sub>(x<sub>0</sub>, y<sub>0</sub>) cos&#x3B1; + f<sub>y</sub>(x<sub>0</sub>, y<sub>0</sub>) cos&#x3B2;</span>
+        </div>
+
+        <p>梯度 <span class="math-tex">&#x2207;f = (f<sub>x</sub>, f<sub>y</sub>)</span> 的方向是函数值增长最快的方向，其模长即为方向导数的最大值：</p>
+        <div class="formula-box">
+            <span class="math-tex">max |&#x2202;f / &#x2202;l| = ||&#x2207;f|| = &#x221A;(f<sub>x</sub><sup>2</sup> + f<sub>y</sub><sup>2</sup>)</span>
+        </div>
+        <p>梯度方向与等值线的法方向一致，是函数变化最剧烈的方向。</p>
+    </div>
+
+    <div class="section">
+        <h2>七、关系速查表</h2>
+        <table>
+            <tr>
+                <th>条件</th>
+                <th>连续</th>
+                <th>偏导存在</th>
+                <th>方向导数存在</th>
+                <th>可微</th>
+            </tr>
+            <tr>
+                <td>连续</td>
+                <td style="text-align:center; background:#e8f5e9;">&#x2714;</td>
+                <td style="text-align:center; background:#ffebee;">不一定</td>
+                <td style="text-align:center; background:#ffebee;">不一定</td>
+                <td style="text-align:center; background:#ffebee;">不一定</td>
+            </tr>
+            <tr>
+                <td>偏导存在</td>
+                <td style="text-align:center; background:#ffebee;">不一定</td>
+                <td style="text-align:center; background:#e8f5e9;">&#x2714;</td>
+                <td style="text-align:center; background:#fff8e1;">沿坐标轴存在</td>
+                <td style="text-align:center; background:#ffebee;">不一定</td>
+            </tr>
+            <tr>
+                <td>方向导数存在（所有方向）</td>
+                <td style="text-align:center; background:#ffebee;">不一定</td>
+                <td style="text-align:center; background:#ffebee;">不一定</td>
+                <td style="text-align:center; background:#e8f5e9;">&#x2714;</td>
+                <td style="text-align:center; background:#ffebee;">不一定</td>
+            </tr>
+            <tr>
+                <td>可微</td>
+                <td style="text-align:center; background:#e8f5e9;">&#x2714;</td>
+                <td style="text-align:center; background:#e8f5e9;">&#x2714;</td>
+                <td style="text-align:center; background:#e8f5e9;">&#x2714;</td>
+                <td style="text-align:center; background:#e8f5e9;">&#x2714;</td>
+            </tr>
+            <tr>
+                <td>偏导连续</td>
+                <td style="text-align:center; background:#e8f5e9;">&#x2714;</td>
+                <td style="text-align:center; background:#e8f5e9;">&#x2714;</td>
+                <td style="text-align:center; background:#e8f5e9;">&#x2714;</td>
+                <td style="text-align:center; background:#e8f5e9;">&#x2714;</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>八、解题方法与常见题型</h2>
+
+        <h3>题型1：判断可微性</h3>
+        <p><strong>步骤：</strong></p>
+        <ol>
+            <li>检查函数是否连续（若不连续则直接判定不可微）。</li>
+            <li>计算偏导数 <span class="math-tex">f<sub>x</sub>(x<sub>0</sub>, y<sub>0</sub>)</span> 和 <span class="math-tex">f<sub>y</sub>(x<sub>0</sub>, y<sub>0</sub>)</span> 是否都存在（若某个不存在则不可微）。</li>
+            <li>利用定义验证 <span class="math-tex">&#x394;z &#x2212; (f<sub>x</sub>&#x394;x + f<sub>y</sub>&#x394;y) = o(&#x3C1;)</span>，关键计算极限</li>
+        </ol>
+        <div class="formula-box">
+            <span class="math-tex">lim<sub>(&#x394;x, &#x394;y)&#x2192;(0,0)</sub> |f(x<sub>0</sub>+&#x394;x, y<sub>0</sub>+&#x394;y) &#x2212; f(x<sub>0</sub>, y<sub>0</sub>) &#x2212; f<sub>x</sub>&#x394;x &#x2212; f<sub>y</sub>&#x394;y| / &#x221A;[(&#x394;x)<sup>2</sup> + (&#x394;y)<sup>2</sup>] = 0</span>
+        </div>
+        <p>若极限为0则可微，否则不可微。</p>
+
+        <h3>题型2：判断偏导数连续性</h3>
+        <p>先求出 <span class="math-tex">f<sub>x</sub>(x, y)</span> 和 <span class="math-tex">f<sub>y</sub>(x, y)</span> 的表达式（在非零点用求导公式，在分界点用定义），再检验偏导函数在分界点处是否连续——即</p>
+        <div class="formula-box">
+            <span class="math-tex">lim<sub>(x,y)&#x2192;(x<sub>0</sub>,y<sub>0</sub>)</sub> f<sub>x</sub>(x, y) = f<sub>x</sub>(x<sub>0</sub>, y<sub>0</sub>)</span>
+        </div>
+
+        <h3>题型3：计算方向导数与梯度</h3>
+        <p><strong>步骤：</strong></p>
+        <ol>
+            <li>判断函数在目标点是否可微（只有可微才能用梯度公式）。</li>
+            <li>若可微，计算梯度 <span class="math-tex">&#x2207;f</span>。</li>
+            <li>写出方向余弦 <span class="math-tex">(cos&#x3B1;, cos&#x3B2;)</span>，代入点乘得到方向导数。</li>
+            <li>若要找最大增长方向——即梯度方向；最大增长率为梯度模长。</li>
+        </ol>
+    </div>
+
+    <div class="section">
+        <h2>九、常见错误与注意事项</h2>
+        <div class="note-box">
+            <ul>
+                <li><strong>误区一：</strong>误以为"偏导存在则连续"。实际上偏导存在仅保证沿坐标轴方向的变化率存在，并非所有路径。</li>
+                <li><strong>误区二：</strong>误以为"连续则偏导存在"。连续仅保证用"直线逼近"时无跳跃，但沿坐标轴可能有尖点。</li>
+                <li><strong>误区三：</strong>方向导数全存在不保证可微。反例见上面例4。</li>
+                <li><strong>误区四：</strong>混淆"偏导函数连续"与"偏导存在"。前者是更强的条件。</li>
+                <li><strong>注意事项：</strong>判断可微性时，优先检查——若不连续或偏导不全存在，直接否定。否则用定义严格验证。</li>
+                <li><strong>注意事项：</strong>方向导数的方向余弦必须满足 <span class="math-tex">cos<sup>2</sup>&#x3B1; + cos<sup>2</sup>&#x3B2; = 1</span>。</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>十、关系层次图（逻辑阶梯）</h2>
+        <div class="formula-box" style="text-align: center; line-height: 2.5; font-size: 1.1em;">
+            <p style="margin:5px 0;"><strong style="color:#8e44ad;">最强</strong> &#x2192; 偏导函数连续（C<sup>1</sup>类）</p>
+            <p style="margin:5px 0; color:#2980b9;">&#x21D3;</p>
+            <p style="margin:5px 0;"><strong style="color:#2980b9;">可微</strong>（全微分存在，切平面良好逼近）</p>
+            <p style="margin:5px 0; color:#e67e22;">&#x21D3; &#x21D2;</p>
+            <p style="margin:5px 0;">连续 &nbsp;&nbsp;&nbsp;&nbsp; 偏导数存在</p>
+            <p style="margin:5px 0; color:#e67e22;">&#x21D3; &#x21D2;</p>
+            <p style="margin:5px 0;">任意方向导数存在</p>
+            <p style="margin:5px 0; color:#7f8c8d;">（底层是沿每条路径的一致逼近性质）</p>
+        </div>
+        <p>理解这一逻辑阶梯，可以帮助你清晰地判断一个给定的多元函数在特定点是否具有各类微积分性质，是学好多元函数微分学的基石。</p>
+    </div>
+
+    <div class="footer-note">
+        CQU 高等数学II-2 知识点 | 函数连续性、偏导数、可微性、方向导数关系与分析
+    </div>
+</body>
+</html>
