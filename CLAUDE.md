@@ -88,6 +88,8 @@ All persistent data is in `data/` (gitignored):
 - `talk/ai-chat.html` — Ollama AI chat interface
 - `resume/index.html` — personal resume
 - `pages/` — content pages organized by category (devlog, diy, games, travel, YY往事)
+- `pages/study/` — course study pages (数据结构与算法, 思法, etc.)
+- `pages/study/math/` — 高等数学复习资料（从 `.hyper/study/高等数学下/试卷/` 提取整理的期末分类精选题）
 - `HappyNewYear/` — special NYE page
 
 ### Network / Proxy Setup
