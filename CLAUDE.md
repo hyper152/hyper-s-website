@@ -82,7 +82,7 @@ All persistent data is in `data/` (gitignored):
 
 ### Frontend Pages
 
-- `home/index.html` — landing/home page
+- `home/index.html` — landing/home page. **Section order:** 开发日志 → 旅游记录 → 学习 → 装机记录 → 游戏栏 → YY往事. Category cards follow same order plus 留言板.
 - `login/index.html` + `login/register.html` — login/register forms
 - `talk/comment.html` — message board
 - `talk/ai-chat.html` — Ollama AI chat interface
