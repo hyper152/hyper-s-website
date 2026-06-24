@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大学物理 · 考点大纲</title>
+    <style>
+        :root {
+            --bg: #f5f0eb;
+            --card-bg: #ffffff;
+            --text: #2c2416;
+            --text-secondary: #5c5347;
+            --accent: #8b5e3c;
+            --accent-light: #c9a87c;
+            --border: #e0d5c7;
+            --radius: 12px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            padding: 2rem 2.5rem;
+        }
+
+        /* ── Navigation ── */
+        .nav-bar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+            justify-content: center;
+        }
+        .nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 8px 18px;
+            border-radius: 20px;
+            background: var(--bg);
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+        .nav-btn:hover {
+            background: var(--accent-light);
+            color: #fff;
+        }
+
+        /* ── Quick Links ── */
+        .quick-links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .quick-link {
+            flex: 1;
+            min-width: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: #fff;
+            text-decoration: none;
+            padding: 20px 28px;
+            border-radius: var(--radius);
+            font-size: 1.1rem;
+            font-weight: 700;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .quick-link:hover {
+            transform: translateY(-3px);
+        }
+        .quick-link.concept {
+            background: linear-gradient(135deg, #8b5e3c, #c9a87c);
+            box-shadow: 0 4px 15px rgba(139,94,60,0.4);
+        }
+        .quick-link.concept:hover {
+            box-shadow: 0 6px 20px rgba(139,94,60,0.6);
+        }
+        .quick-link.summary {
+            background: linear-gradient(135deg, #5a3e2b, #8b7355);
+            box-shadow: 0 4px 15px rgba(90,62,43,0.4);
+        }
+        .quick-link.summary:hover {
+            box-shadow: 0 6px 20px rgba(90,62,43,0.6);
+        }
+
+        /* ── Header ── */
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--accent-light);
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: var(--accent);
+            font-size: 1.8rem;
+            margin-bottom: 6px;
+        }
+        .header p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* ── Section Cards ── */
+        .section-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            margin-bottom: 22px;
+            padding: 18px 22px;
+            border-left: 5px solid var(--accent);
+            border: 1px solid var(--border);
+            border-left-width: 5px;
+        }
+        .section-card h2 {
+            color: var(--accent);
+            margin-top: 0;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+            margin-bottom: 14px;
+            font-size: 1.15rem;
+        }
+        .section-card ul {
+            padding-left: 20px;
+            margin: 0;
+        }
+        .section-card ul li {
+            margin-bottom: 7px;
+            color: var(--text);
+        }
+        .section-card ul ul {
+            margin-top: 4px;
+            margin-bottom: 4px;
+        }
+        .sub-list {
+            color: var(--text-secondary);
+            font-size: 0.95em;
+        }
+
+        .tag-hs {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #1a6b3c;
+            background: #e8f5e9;
+            padding: 1px 8px;
+            border-radius: 10px;
+            margin-left: 4px;
+        }
+        .tag-univ {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #b91c1c;
+            background: #fdecea;
+            padding: 1px 8px;
+            border-radius: 10px;
+            margin-left: 4px;
+        }
+        .tag-key {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #1a0dab;
+            background: #e8f0fe;
+            padding: 1px 8px;
+            border-radius: 10px;
+            margin-left: 4px;
+        }
+
+        .footer-note {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-top: 36px;
+            border-top: 1px solid var(--border);
+            padding-top: 18px;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- ── Navigation ── -->
+    <div class="nav-bar">
+        <a href="javascript:history.back()" class="nav-btn">⬅ 返回上一页</a>
+        <a href="/home/index.html" class="nav-btn">🏠 返回主页</a>
+    </div>
+
+    <!-- ── Quick Links ── -->
+    <div class="quick-links">
+        <a href="concept-questions.html" class="quick-link concept">
+            📝 概念题交互自测
+        </a>
+        <a href="comprehensive-summary.html" class="quick-link summary">
+            📖 全面总结 &amp; 难度分层
+        </a>
+    </div>
+
+    <!-- ── Header ── -->
+    <div class="header">
+        <h1>大学物理（上册）考点大纲</h1>
+        <p>基于教材：大学物理学（第四版）曾代敏 · 高等教育出版社</p>
+    </div>
+
+    <!-- ── 一、质点运动学 ── -->
+    <div class="section-card">
+        <h2>一、质点运动学</h2>
+        <ul>
+            <li><strong>1.</strong> 位置矢量、位移、速度、加速度 <span class="tag-hs">[高中]</span></li>
+            <li><strong>2.</strong> 自然坐标系：切向加速度、法向加速度 <span class="tag-univ">[大学]</span></li>
+            <li><strong>3.</strong> 相对运动 &amp; 速度合成 <span class="tag-univ">[大学]</span></li>
+            <li><strong>4.</strong> 运动学的两类问题（微分法 &amp; 积分法）</li>
+        </ul>
+    </div>
+
+    <!-- ── 二、牛顿运动定律 ── -->
+    <div class="section-card">
+        <h2>二、牛顿运动定律</h2>
+        <ul>
+            <li><strong>1.</strong> 牛顿三定律 <span class="tag-hs">[高中]</span></li>
+            <li><strong>2.</strong> 常见的力：重力、弹力、摩擦力、万有引力 <span class="tag-hs">[高中]</span></li>
+            <li><strong>3.</strong> 非惯性系 &amp; 惯性力 <span class="tag-univ">[大学]</span></li>
+        </ul>
+    </div>
+
+    <!-- ── 三、动量与能量 ── -->
+    <div class="section-card">
+        <h2>三、动量与能量</h2>
+        <ul>
+            <li><strong>1.</strong> 动量 &amp; 冲量、动量定理 <span class="tag-hs">[高中]</span></li>
+            <li><strong>2.</strong> 动能 &amp; 动能定理 <span class="tag-hs">[高中]</span></li>
+            <li><strong>3.</strong> 保守力 &amp; 势能（重力势能、弹性势能、万有引力势能）</li>
+            <li><strong>4.</strong> 功能原理 &amp; 机械能守恒定律</li>
+            <li><strong>5.</strong> 动量守恒定律 <span class="tag-key">[重要]</span></li>
+            <li><strong>6.</strong> 质心运动定理 <span class="tag-univ">[大学]</span></li>
+            <li><strong>7.</strong> 碰撞问题（完全弹性、完全非弹性）</li>
+        </ul>
+    </div>
+
+    <!-- ── 四、刚体定轴转动 ── -->
+    <div class="section-card">
+        <h2>四、刚体定轴转动 <span class="tag-univ">[大学]</span></h2>
+        <ul>
+            <li><strong>1.</strong> 角位移、角速度、角加速度</li>
+            <li><strong>2.</strong> 转动惯量 <span class="tag-key">[核心]</span>
+                <ul class="sub-list">
+                    <li>常见刚体的转动惯量（圆环、圆盘、细棒、球壳、球体）</li>
+                    <li>平行轴定理</li>
+                </ul>
+            </li>
+            <li><strong>3.</strong> 转动定律 M = Iα <span class="tag-key">[核心]</span></li>
+            <li><strong>4.</strong> 刚体角动量 &amp; 角动量守恒 <span class="tag-key">[重要]</span></li>
+            <li><strong>5.</strong> 转动动能 &amp; 力矩的功</li>
+            <li><strong>6.</strong> 纯滚动条件</li>
+            <li><strong>7.</strong> 打击中心</li>
+        </ul>
+    </div>
+
+    <!-- ── 五、静电场 ── -->
+    <div class="section-card">
+        <h2>五、静电场</h2>
+        <ul>
+            <li><strong>1.</strong> 电荷守恒、库仑定律 <span class="tag-hs">[高中]</span></li>
+            <li><strong>2.</strong> 电场强度 &amp; 电场叠加原理（矢量积分）</li>
+            <li><strong>3.</strong> 高斯定理 <span class="tag-univ">[大学]</span> <span class="tag-key">[核心]</span>
+                <ul class="sub-list">
+                    <li>球对称、轴对称、面对称电场的求解</li>
+                </ul>
+            </li>
+            <li><strong>4.</strong> 静电场的环路定理（保守场）</li>
+            <li><strong>5.</strong> 电势 &amp; 电势叠加原理</li>
+            <li><strong>6.</strong> 电场与电势梯度 E = −∇V</li>
+            <li><strong>7.</strong> 电偶极子</li>
+            <li><strong>8.</strong> 静电场能量 &amp; 能量密度</li>
+        </ul>
+    </div>
+
+    <!-- ── 六、导体与电介质 ── -->
+    <div class="section-card">
+        <h2>六、导体与电介质 <span class="tag-univ">[大学]</span></h2>
+        <ul>
+            <li><strong>1.</strong> 静电平衡条件 &amp; 导体空腔</li>
+            <li><strong>2.</strong> 电介质极化 &amp; 电位移矢量 D</li>
+            <li><strong>3.</strong> 介质中的高斯定理</li>
+            <li><strong>4.</strong> 电容器 &amp; 电容（平行板、圆柱、球形）</li>
+        </ul>
+    </div>
+
+    <!-- ── 七、恒定磁场 ── -->
+    <div class="section-card">
+        <h2>七、恒定磁场</h2>
+        <ul>
+            <li><strong>1.</strong> 磁场、磁感线、安培定则 <span class="tag-hs">[高中]</span></li>
+            <li><strong>2.</strong> 毕奥-萨伐尔定律 <span class="tag-univ">[大学]</span> <span class="tag-key">[核心]</span>
+                <ul class="sub-list">
+                    <li>直导线、圆环、螺线管的磁场</li>
+                </ul>
+            </li>
+            <li><strong>3.</strong> 磁场的高斯定理（无源场）</li>
+            <li><strong>4.</strong> 安培环路定理 <span class="tag-key">[核心]</span></li>
+            <li><strong>5.</strong> 安培力（矢量积分形式）</li>
+            <li><strong>6.</strong> 洛伦兹力 &amp; 带电粒子在磁场中的运动</li>
+            <li><strong>7.</strong> 磁矩 &amp; 磁力矩 <span class="tag-univ">[大学]</span></li>
+            <li><strong>8.</strong> 磁介质 &amp; H 的安培环路定理 <span class="tag-univ">[大学]</span></li>
+        </ul>
+    </div>
+
+    <!-- ── 八、电磁感应 ── -->
+    <div class="section-card">
+        <h2>八、电磁感应</h2>
+        <ul>
+            <li><strong>1.</strong> 法拉第电磁感应定律 <span class="tag-hs">[高中]</span></li>
+            <li><strong>2.</strong> 楞次定律 <span class="tag-hs">[高中]</span></li>
+            <li><strong>3.</strong> 动生电动势</li>
+            <li><strong>4.</strong> 感生电动势 &amp; 涡旋电场 <span class="tag-univ">[大学]</span> <span class="tag-key">[新概念]</span></li>
+            <li><strong>5.</strong> 自感 &amp; 互感</li>
+            <li><strong>6.</strong> RL 电路 &amp; 时间常数</li>
+            <li><strong>7.</strong> 磁场能量 &amp; 能量密度</li>
+        </ul>
+    </div>
+
+    <!-- ── 九、麦克斯韦方程组 ── -->
+    <div class="section-card">
+        <h2>九、麦克斯韦方程组 <span class="tag-univ">[大学]</span> <span class="tag-key">[最高峰]</span></h2>
+        <ul>
+            <li><strong>1.</strong> 位移电流 <span class="tag-key">[核心贡献]</span>
+                <ul class="sub-list">
+                    <li>变化的电场 → 磁场</li>
+                </ul>
+            </li>
+            <li><strong>2.</strong> 积分形式 &amp; 微分形式</li>
+            <li><strong>3.</strong> 各方程的物理意义</li>
+            <li><strong>4.</strong> 电磁波 &amp; 坡印廷矢量</li>
+        </ul>
+    </div>
+
+    <!-- ── Footer ── -->
+    <div class="footer-note">
+        整理自课后习题 &amp; 历年试卷（2019–2025）· 重庆大学
+    </div>
+
+</div>
+</body>
+</html>
