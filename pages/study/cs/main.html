@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据结构与算法 · 课程主页</title>
+    <style>
+        :root {
+            --bg: #f5f0eb;
+            --card-bg: #ffffff;
+            --text: #2c2416;
+            --text-secondary: #5c5347;
+            --accent: #8b5e3c;
+            --accent-light: #c9a87c;
+            --border: #e0d5c7;
+            --radius: 12px;
+            --gh-bg: #f6f8fa;
+            --gh-border: #d0d7de;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            padding: 2rem 2.5rem;
+        }
+
+        /* ── Navigation ── */
+        .nav-bar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+        .nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 8px 18px;
+            border-radius: 20px;
+            background: var(--bg);
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+        .nav-btn:hover {
+            background: var(--accent-light);
+            color: #fff;
+        }
+
+        /* ── Header ── */
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--accent-light);
+            margin-bottom: 24px;
+        }
+        .header h1 {
+            color: var(--accent);
+            font-size: 1.8rem;
+            margin-bottom: 6px;
+        }
+        .header p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* ── GitHub Repo Card ── */
+        .gh-repo {
+            border: 1px solid var(--gh-border);
+            border-radius: 8px;
+            padding: 20px 24px;
+            margin-bottom: 28px;
+            background: var(--gh-bg);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 16px;
+            text-decoration: none;
+            color: inherit;
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+        .gh-repo:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            transform: translateY(-2px);
+        }
+        .gh-icon {
+            width: 56px;
+            height: 56px;
+            background: #24292f;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: #fff;
+            flex-shrink: 0;
+        }
+        .gh-info { flex: 1; min-width: 200px; }
+        .gh-info h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #1a0dab;
+            margin-bottom: 2px;
+        }
+        .gh-info h3:hover { text-decoration: underline; }
+        .gh-info p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+        .gh-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        .gh-meta span {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .gh-meta .lang-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .gh-stars { color: #1a0dab; }
+
+        /* ── Quick Links ── */
+        .quick-links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+        .quick-link {
+            flex: 1;
+            min-width: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: #fff;
+            text-decoration: none;
+            padding: 20px 28px;
+            border-radius: var(--radius);
+            font-size: 1.1rem;
+            font-weight: 700;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+        .quick-link:hover { transform: translateY(-3px); }
+        .quick-link.quiz {
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
+            box-shadow: 0 4px 15px rgba(79,70,229,0.4);
+        }
+        .quick-link.quiz:hover { box-shadow: 0 6px 20px rgba(79,70,229,0.6); }
+
+        /* ── Section Cards ── */
+        .section-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            margin-bottom: 20px;
+            padding: 18px 22px;
+            border: 1px solid var(--border);
+            border-left: 5px solid var(--accent);
+        }
+        .section-card h2 {
+            color: var(--accent);
+            margin-top: 0;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+            margin-bottom: 12px;
+            font-size: 1.15rem;
+        }
+        .section-card ul {
+            padding-left: 20px;
+            margin: 0;
+        }
+        .section-card ul li {
+            margin-bottom: 6px;
+            color: var(--text);
+        }
+        .section-card ul ul {
+            margin-top: 3px;
+            margin-bottom: 3px;
+        }
+        .sub-list {
+            color: var(--text-secondary);
+            font-size: 0.95em;
+        }
+        .tag-q {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #fff;
+            background: var(--accent);
+            padding: 1px 8px;
+            border-radius: 10px;
+            margin-left: 4px;
+        }
+
+        .footer-note {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-top: 36px;
+            border-top: 1px solid var(--border);
+            padding-top: 18px;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- ── Navigation ── -->
+    <div class="nav-bar">
+        <a href="javascript:history.back()" class="nav-btn">⬅ 返回上一页</a>
+        <a href="/home/index.html" class="nav-btn">🏠 返回主页</a>
+        <a href="/pages/study/index.html" class="nav-btn">📖 学习主页</a>
+    </div>
+
+    <!-- ── Header ── -->
+    <div class="header">
+        <h1>📚 数据结构与算法</h1>
+        <p>CQU 2025级 · 选择题练习 &amp; 课程资源</p>
+    </div>
+
+    <!-- ── GitHub 仓库 ── -->
+    <a class="gh-repo" href="https://github.com/hyper152/CQU-DataStructure-Algorithm_Course_Resources" target="_blank" rel="noopener">
+        <div class="gh-icon">
+            <svg viewBox="0 0 16 16" width="28" height="28" fill="white"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        </div>
+        <div class="gh-info">
+            <h3>hyper152/CQU-DataStructure-Algorithm_Course_Resources</h3>
+            <p>📘 CQU 数据结构与算法课程资源 · 作业答案 &amp; 笔记整理</p>
+            <div class="gh-meta">
+                <span><span class="lang-dot" style="background:#f18e33;"></span> C++</span>
+                <span class="gh-stars">★ 课程资源</span>
+                <span>📄 作业 &amp; 实验</span>
+                <span>🔗 GitHub</span>
+            </div>
+        </div>
+    </a>
+
+    <!-- ── Quick Links ── -->
+    <div class="quick-links">
+        <a href="2026CQU_DataStructure-Algorithm_Course.html" class="quick-link quiz">
+            📝 选择题练习（进入刷题）
+        </a>
+    </div>
+
+    <!-- ── 一、基本概念 ── -->
+    <div class="section-card">
+        <h2>一、基本概念</h2>
+        <ul>
+            <li><strong>1.</strong> 数据结构三要素：逻辑结构、存储结构、数据运算</li>
+            <li><strong>2.</strong> 逻辑结构分类：线性结构（一对一）、树形结构（一对多）、图形结构（多对多）</li>
+            <li><strong>3.</strong> 存储结构：顺序存储、链式存储、索引存储、散列存储</li>
+            <li><strong>4.</strong> 算法复杂度
+                <ul class="sub-list">
+                    <li>时间复杂度：O(1) &lt; O(log n) &lt; O(n) &lt; O(n log n) &lt; O(n²) &lt; O(2ⁿ) &lt; O(n!)</li>
+                    <li>空间复杂度：算法运行所需的额外存储空间</li>
+                    <li>最好/最坏/平均情况复杂度</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <!-- ── 二、线性表 ── -->
+    <div class="section-card">
+        <h2>二、线性表</h2>
+        <ul>
+            <li><strong>1.</strong> 顺序表（数组实现）—— 随机访问 O(1)，插入/删除 O(n)</li>
+            <li><strong>2.</strong> 链表
+                <ul class="sub-list">
+                    <li>单链表、双向链表、循环链表</li>
+                    <li>头结点 vs 头指针</li>
+                    <li>插入/删除 O(1)（已知位置），查找 O(n)</li>
+                </ul>
+            </li>
+            <li><strong>3.</strong> 顺序表与链表的对比（空间、时间、适用场景）</li>
+        </ul>
+    </div>
+
+    <!-- ── 三、栈与队列 ── -->
+    <div class="section-card">
+        <h2>三、栈与队列</h2>
+        <ul>
+            <li><strong>1.</strong> 栈（Stack）—— 后进先出（LIFO）
+                <ul class="sub-list">
+                    <li>顺序栈 &amp; 链栈</li>
+                    <li>入栈、出栈、栈顶操作</li>
+                </ul>
+            </li>
+            <li><strong>2.</strong> 队列（Queue）—— 先进先出（FIFO）
+                <ul class="sub-list">
+                    <li>循环队列（解决假溢出问题）</li>
+                    <li>链队列</li>
+                </ul>
+            </li>
+            <li><strong>3.</strong> 应用：表达式求值、括号匹配、层次遍历</li>
+        </ul>
+    </div>
+
+    <!-- ── 四、树与二叉树 ── -->
+    <div class="section-card">
+        <h2>四、树与二叉树</h2>
+        <ul>
+            <li><strong>1.</strong> 二叉树的性质
+                <ul class="sub-list">
+                    <li>第 i 层最多 2ⁱ⁻¹ 个结点，深度 h 最多 2ʰ⁻¹ 个结点</li>
+                    <li>n₀ = n₂ + 1（叶子结点数 = 度为2的结点数 + 1）</li>
+                </ul>
+            </li>
+            <li><strong>2.</strong> 遍历方式
+                <ul class="sub-list">
+                    <li>前序 / 中序 / 后序 / 层次遍历</li>
+                    <li>已知两种遍历序列可唯一确定二叉树</li>
+                </ul>
+            </li>
+            <li><strong>3.</strong> 树与森林
+                <ul class="sub-list">
+                    <li>双亲表示法、孩子表示法、孩子兄弟表示法</li>
+                    <li>树、森林与二叉树的转换</li>
+                </ul>
+            </li>
+            <li><strong>4.</strong> 哈夫曼树 &amp; 哈夫曼编码
+                <ul class="sub-list">
+                    <li>带权路径长度 WPL 最小</li>
+                    <li>构造算法：每次合并权值最小的两棵二叉树</li>
+                </ul>
+            </li>
+            <li><strong>5.</strong> 二叉搜索树（BST）
+                <ul class="sub-list">
+                    <li>左子树 &lt; 根 &lt; 右子树</li>
+                    <li>查找 / 插入 / 删除 O(h)</li>
+                </ul>
+            </li>
+            <li><strong>6.</strong> 平衡二叉树（AVL）
+                <ul class="sub-list">
+                    <li>平衡因子：左右子树高度差 ≤ 1</li>
+                    <li>四种旋转调整：LL / RR / LR / RL</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <!-- ── 五、图 ── -->
+    <div class="section-card">
+        <h2>五、图</h2>
+        <ul>
+            <li><strong>1.</strong> 存储结构
+                <ul class="sub-list">
+                    <li>邻接矩阵（稠密图）、邻接表（稀疏图）</li>
+                    <li>十字链表、邻接多重表</li>
+                </ul>
+            </li>
+            <li><strong>2.</strong> 遍历
+                <ul class="sub-list">
+                    <li>深度优先搜索（DFS）—— 栈/递归</li>
+                    <li>广度优先搜索（BFS）—— 队列</li>
+                </ul>
+            </li>
+            <li><strong>3.</strong> 最小生成树
+                <ul class="sub-list">
+                    <li>Prim 算法（顶点扩展）O(V²)</li>
+                    <li>Kruskal 算法（边选）O(E log E)</li>
+                </ul>
+            </li>
+            <li><strong>4.</strong> 最短路径
+                <ul class="sub-list">
+                    <li>Dijkstra 算法（单源，非负权）</li>
+                    <li>Floyd 算法（多源）O(V³)</li>
+                </ul>
+            </li>
+            <li><strong>5.</strong> 拓扑排序 &amp; 关键路径（AOV / AOE 网）</li>
+        </ul>
+    </div>
+
+    <!-- ── 六、查找 ── -->
+    <div class="section-card">
+        <h2>六、查找</h2>
+        <ul>
+            <li><strong>1.</strong> 顺序查找 O(n)</li>
+            <li><strong>2.</strong> 折半查找（二分查找）O(log n) —— 仅适用于有序顺序表</li>
+            <li><strong>3.</strong> 分块查找（索引顺序查找）</li>
+            <li><strong>4.</strong> 散列（Hash）查找
+                <ul class="sub-list">
+                    <li>常见 Hash 函数：直接定址、除留余数、数字分析</li>
+                    <li>冲突处理：开放定址法（线性探测/平方探测/双散列）、链地址法</li>
+                    <li>装填因子 α = 记录数 / 表长</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <!-- ── 七、排序 ── -->
+    <div class="section-card">
+        <h2>七、排序</h2>
+        <ul>
+            <li><strong>1.</strong> 插入排序 O(n²)、希尔排序 O(n log n)~O(n²)</li>
+            <li><strong>2.</strong> 冒泡排序 O(n²)、快速排序 O(n log n) <span class="tag-q">重点</span></li>
+            <li><strong>3.</strong> 选择排序 O(n²)、堆排序 O(n log n) <span class="tag-q">重点</span></li>
+            <li><strong>4.</strong> 归并排序 O(n log n)</li>
+            <li><strong>5.</strong> 基数排序 O(d·n)，d 为位数</li>
+            <li><strong>6.</strong> 排序算法对比
+                <ul class="sub-list">
+                    <li>稳定性：冒泡 ✓ 插入 ✓ 归并 ✓ | 选择 ✗ 快排 ✗ 堆排 ✗ 希尔 ✗</li>
+                    <li>时间复杂度、空间复杂度、适用场景</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <!-- ── Footer ── -->
+    <div class="footer-note">
+        CQU 2025级 数据结构与算法 · 课程知识点整理
+    </div>
+
+</div>
+</body>
+</html>
