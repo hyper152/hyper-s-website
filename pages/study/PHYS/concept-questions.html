@@ -1,0 +1,2039 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大学物理概念题 - 交互式选择题自测</title>
+    <style>
+        :root {
+            --bg: #f5f0eb;
+            --card-bg: #ffffff;
+            --text: #2c2416;
+            --text-secondary: #5c5347;
+            --accent: #8b5e3c;
+            --accent-light: #c9a87c;
+            --correct: #3a7d44;
+            --correct-bg: #e8f5e9;
+            --incorrect: #c0392b;
+            --incorrect-bg: #fdecea;
+            --border: #e0d5c7;
+            --shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            --shadow-hover: 0 6px 24px rgba(0, 0, 0, 0.10);
+            --radius: 12px;
+            --transition: 0.2s ease;
+            --font-main: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', system-ui, sans-serif;
+            --font-mono: 'SF Mono', 'Cascadia Code', 'Consolas', 'PingFang SC', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 100vh;
+            font-size: 17px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #3e2d1f 0%, #5a3e2b 40%, #6b4c34 100%);
+            color: #f5e6d3;
+            padding: 28px 20px 24px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.25);
+        }
+        .header h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            margin-bottom: 4px;
+        }
+        .header .subtitle {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            font-weight: 400;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+            padding: 14px 20px;
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 92px;
+            z-index: 99;
+            box-shadow: var(--shadow);
+            font-size: 0.9rem;
+        }
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            background: #faf7f2;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        .stat-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .stat-dot.total {
+            background: #6b4c34;
+        }
+        .stat-dot.done {
+            background: #3a7d44;
+        }
+        .stat-dot.correct {
+            background: #27ae60;
+        }
+        .stat-dot.incorrect {
+            background: #e74c3c;
+        }
+        .stat-dot.remaining {
+            background: #ccc;
+        }
+        .btn {
+            padding: 8px 18px;
+            border-radius: 20px;
+            border: 1.5px solid var(--accent);
+            background: #fff;
+            color: var(--accent);
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all var(--transition);
+            white-space: nowrap;
+            font-family: var(--font-main);
+        }
+        .btn:hover {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(139, 94, 60, 0.3);
+        }
+        .btn.active-filter {
+            background: var(--accent);
+            color: #fff;
+        }
+        .btn.reset-btn {
+            background: #fdecea;
+            border-color: #c0392b;
+            color: #c0392b;
+        }
+        .btn.reset-btn:hover {
+            background: #c0392b;
+            color: #fff;
+        }
+
+        /* Filter Row */
+        .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            padding: 10px 20px;
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 144px;
+            z-index: 98;
+            box-shadow: var(--shadow);
+        }
+        .filter-btn {
+            padding: 6px 14px;
+            border-radius: 16px;
+            border: 1.5px solid #d5c9b8;
+            background: #fdfaf6;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all var(--transition);
+            font-family: var(--font-main);
+            color: #5c5347;
+        }
+        .filter-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: #fdf5ec;
+        }
+        .filter-btn.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            font-weight: 700;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px 16px 40px;
+        }
+        .file-section {
+            margin-bottom: 28px;
+        }
+        .file-section-header {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #3e2d1f;
+            padding: 10px 16px;
+            background: #f0e8db;
+            border-radius: 8px;
+            margin-bottom: 14px;
+            letter-spacing: 0.02em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .file-section-header .icon {
+            font-size: 1.2rem;
+        }
+        .file-section-header .count {
+            font-weight: 400;
+            font-size: 0.8rem;
+            color: #6b5d4a;
+            margin-left: auto;
+        }
+
+        /* Question Card */
+        .question-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 18px 20px;
+            margin-bottom: 12px;
+            box-shadow: var(--shadow);
+            transition: all var(--transition);
+            position: relative;
+            scroll-margin-top: 200px;
+        }
+        .question-card:hover {
+            box-shadow: var(--shadow-hover);
+            border-color: #ccc0ad;
+        }
+        .question-card.answered-correct {
+            border-left: 4px solid var(--correct);
+            background: #fafff9;
+        }
+        .question-card.answered-incorrect {
+            border-left: 4px solid var(--incorrect);
+            background: #fffdfb;
+        }
+        .q-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+        }
+        .q-tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.72rem;
+            letter-spacing: 0.02em;
+        }
+        .q-tag.single {
+            background: #e8f0fe;
+            color: #1a56b8;
+        }
+        .q-tag.judge {
+            background: #fef3e0;
+            color: #b85c1a;
+        }
+        .q-tag.multi {
+            background: #f0e6f6;
+            color: #6b2d8b;
+        }
+        .q-source {
+            font-family: var(--font-mono);
+            font-size: 0.73rem;
+            background: #f5f0eb;
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: #6b5d4a;
+        }
+        .q-concept {
+            font-size: 0.73rem;
+            color: #8b7355;
+            font-style: italic;
+        }
+        .q-text {
+            font-size: 1.05rem;
+            font-weight: 500;
+            margin-bottom: 12px;
+            color: #1a1a1a;
+            line-height: 1.65;
+        }
+        .options-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+        .option-item {
+            padding: 10px 14px;
+            border: 1.5px solid #e8e0d5;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all var(--transition);
+            font-size: 0.97rem;
+            position: relative;
+            background: #fdfcf9;
+            user-select: none;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .option-item:hover {
+            border-color: #b8956e;
+            background: #fdf7ef;
+            transform: translateX(2px);
+        }
+        .option-item:active {
+            transform: scale(0.985);
+        }
+        .option-item.selected {
+            border-color: #6b4c34;
+            background: #f5ede0;
+            font-weight: 600;
+        }
+        .option-item.show-correct {
+            border-color: var(--correct) !important;
+            background: var(--correct-bg) !important;
+            font-weight: 700 !important;
+            animation: pulse-green 0.5s ease;
+        }
+        .option-item.show-incorrect {
+            border-color: var(--incorrect) !important;
+            background: var(--incorrect-bg) !important;
+            animation: shake 0.4s ease;
+        }
+        .option-item.show-correct-dim {
+            border-color: #a3d4a8 !important;
+            background: #f4faf5 !important;
+            opacity: 0.85;
+        }
+        .option-letter {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #e8e0d5;
+            font-weight: 700;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+            color: #5c4a30;
+        }
+        .option-item.show-correct .option-letter {
+            background: #27ae60;
+            color: #fff;
+        }
+        .option-item.show-incorrect .option-letter {
+            background: #e74c3c;
+            color: #fff;
+        }
+        .feedback-msg {
+            margin-top: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 8px 12px;
+            border-radius: 6px;
+            display: none;
+        }
+        .feedback-msg.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        .feedback-msg.correct-fb {
+            background: #e8f5e9;
+            color: #1b5e20;
+        }
+        .feedback-msg.incorrect-fb {
+            background: #fdecea;
+            color: #b71c1c;
+        }
+        .locked-overlay {
+            position: absolute;
+            inset: 0;
+            background: transparent;
+            pointer-events: none;
+            border-radius: var(--radius);
+        }
+        .question-card.answered .locked-overlay {
+            pointer-events: all;
+        }
+
+        @keyframes pulse-green {
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 0 10px rgba(39, 174, 96, 0);
+            }
+        }
+        @keyframes shake {
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+            20% {
+                transform: translateX(-6px);
+            }
+            40% {
+                transform: translateX(6px);
+            }
+            60% {
+                transform: translateX(-4px);
+            }
+            80% {
+                transform: translateX(4px);
+            }
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-4px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Scroll to top */
+        .scroll-top-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 1.3rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+            z-index: 200;
+            transition: all var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .scroll-top-btn:hover {
+            background: #6b3e1f;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Responsive */
+        /* Math rendering — vectors & fractions */
+        .vec {
+            display: inline-block;
+            position: relative;
+        }
+        .vec::after {
+            content: '→';
+            position: absolute;
+            left: 50%;
+            top: -0.7em;
+            transform: translateX(-50%);
+            font-size: 0.72em;
+            line-height: 1;
+            font-weight: normal;
+            pointer-events: none;
+        }
+        .frac {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            vertical-align: middle;
+            margin: 0 2px;
+        }
+        .frac .num {
+            padding: 0 0.3em 1px;
+            border-bottom: 1.5px solid var(--text);
+        }
+        .frac .den {
+            padding: 1px 0.3em 0;
+        }
+
+        @media (max-width: 640px) {
+            .header h1 {
+                font-size: 1.3rem;
+            }
+            .stats-bar {
+                gap: 6px;
+                padding: 10px 8px;
+                font-size: 0.78rem;
+            }
+            .stat-item {
+                padding: 4px 10px;
+                font-size: 0.75rem;
+            }
+            .btn {
+                padding: 6px 12px;
+                font-size: 0.75rem;
+            }
+            .filter-row {
+                gap: 5px;
+                padding: 8px;
+                top: 136px;
+            }
+            .filter-btn {
+                padding: 4px 10px;
+                font-size: 0.7rem;
+            }
+            .question-card {
+                padding: 14px;
+            }
+            .q-text {
+                font-size: 0.88rem;
+            }
+            .option-item {
+                padding: 8px 10px;
+                font-size: 0.82rem;
+                gap: 6px;
+            }
+            .option-letter {
+                width: 24px;
+                height: 24px;
+                font-size: 0.75rem;
+            }
+            .stats-bar {
+                top: 80px;
+            }
+            .filter-row {
+                top: 128px;
+            }
+            .question-card {
+                scroll-margin-top: 180px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>📚 大学物理概念题 · 交互自测</h1>
+        <p class="subtitle">覆盖6份资料 · 选择题 & 判断题 · 点击选项即时反馈</p>
+    </div>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar" id="statsBar">
+        <span class="stat-item"><span class="stat-dot total"></span> 总计：<strong id="totalCount">0</strong></span>
+        <span class="stat-item"><span class="stat-dot done"></span> 已答：<strong id="answeredCount">0</strong></span>
+        <span class="stat-item"><span class="stat-dot correct"></span> 正确：<strong id="correctCount">0</strong></span>
+        <span class="stat-item"><span class="stat-dot incorrect"></span> 错误：<strong id="incorrectCount">0</strong></span>
+        <span class="stat-item"><span class="stat-dot remaining"></span> 剩余：<strong id="remainingCount">0</strong></span>
+        <button class="btn reset-btn" onclick="resetAll()" title="清除所有答案重新开始">🔄 全部重置</button>
+    </div>
+
+    <!-- Filter Row -->
+    <div class="filter-row" id="filterRow">
+        <button class="filter-btn active" data-filter="all">📋 全部题目</button>
+        <button class="filter-btn" data-filter="file1">📄 PHYS10016-2022春-A</button>
+        <button class="filter-btn" data-filter="file2">📄 PHYS10016-2023春-A</button>
+        <button class="filter-btn" data-filter="file3">📄 PHYS10031-2025春-A</button>
+        <button class="filter-btn" data-filter="file4">📄 PHYS10013-2019春-A</button>
+        <button class="filter-btn" data-filter="file5">📄 PHYS10013-2024春-A</button>
+        <button class="filter-btn" data-filter="file6">📄 课后习题</button>
+        <button class="filter-btn" data-filter="unanswered">⏳ 未答题</button>
+        <button class="filter-btn" data-filter="wrong">❌ 错题</button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Questions will be rendered here dynamically -->
+    </div>
+
+    <button class="scroll-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="回到顶部">⬆</button>
+
+    <script>
+        // ==================== QUESTION DATABASE ====================
+        // type: 'single' | 'judge' | 'multi'
+        // For 'judge', options are always ['正确', '错误'] and answer is 0 (正确) or 1 (错误)
+        // answer: index of correct option (0-based), for multi: array of indices
+
+        const allQuestions = [];
+
+        // ---- PHYS10016-2022春-A (试卷 答案) ----
+        const file1Questions = [{
+            id: 'f1-q1',
+            file: 'PHYS10016-2022春-A',
+            fileKey: 'file1',
+            source: 'PHYS10016-2022春-A 第1题',
+            concept: '瞬时速度、速率、加速度的定义',
+            type: 'single',
+            text: '描述质点的运动，以下关系中正确的是（ ）。',
+            options: [
+                'A. v = |Δr⃗/Δt|',
+                'B. v = |dr⃗/dt|',
+                'C. a = |Δv/Δt|',
+                'D. a = |dv/dt|'
+            ],
+            answer: 1
+        }, {
+            id: 'f1-q2',
+            file: 'PHYS10016-2022春-A',
+            fileKey: 'file1',
+            source: 'PHYS10016-2022春-A 第3题',
+            concept: '万有引力、角动量守恒条件、动能变化',
+            type: 'single',
+            text: '人造卫星绕地球作椭圆轨道运动，地球在椭圆的一个焦点上，则（ ）。',
+            options: [
+                'A. 卫星的动量守恒，动能守恒',
+                'B. 卫星的动量守恒，动能不守恒',
+                'C. 卫星对地球的角动量守恒，卫星的动能守恒',
+                'D. 卫星对地球的角动量守恒，卫星的动能不守恒'
+            ],
+            answer: 3
+        }, {
+            id: 'f1-q3',
+            file: 'PHYS10016-2022春-A',
+            fileKey: 'file1',
+            source: 'PHYS10016-2022春-A 第4题',
+            concept: '角动量定理、外力矩与内力矩',
+            type: 'single',
+            text: '质点系受到外力矩和内力矩的共同作用，下列说法正确的是（ ）。',
+            options: [
+                'A. 外力矩不可以改变质点系的总角动量',
+                'B. 外力矩不可以改变质点系中各质点的角动量',
+                'C. 内力矩不可以改变质点系的总角动量',
+                'D. 内力矩不可以改变质点系中各质点的角动量'
+            ],
+            answer: 2
+        }, {
+            id: 'f1-q4',
+            file: 'PHYS10016-2022春-A',
+            fileKey: 'file1',
+            source: 'PHYS10016-2022春-A 第5题',
+            concept: '保守力的功与势能的关系、环路定理',
+            type: 'single',
+            text: '关于保守力和势能，下列说法正确的是（ ）。',
+            options: [
+                'A. 保守力做正功时，系统的势能增加',
+                'B. 沿一闭合路径，保守力做的功一定为零',
+                'C. 保守力在某个方向的分量等于势能在该方向的变化率',
+                'D. 空间某点的势能等于保守力由势能零点到该点所做的功'
+            ],
+            answer: 1
+        }, {
+            id: 'f1-q5',
+            file: 'PHYS10016-2022春-A',
+            fileKey: 'file1',
+            source: 'PHYS10016-2022春-A 第6题',
+            concept: '角动量守恒、动量守恒、机械能守恒条件',
+            type: 'single',
+            text: '一匀质细杆自由悬挂于通过其上端的光滑水平轴上。现有一子弹以水平速度v击入杆的中点，并嵌入其中开始上摆，则（ ）。',
+            options: [
+                'A. 子弹击入杆的过程中，系统的角动量守恒，动量守恒',
+                'B. 子弹击入杆的过程中，系统的角动量不守恒，机械能守恒',
+                'C. 杆上摆的过程中，系统的角动量守恒，动量守恒',
+                'D. 杆上摆的过程中，系统的角动量不守恒，机械能守恒'
+            ],
+            answer: 3
+        }, {
+            id: 'f1-q6',
+            file: 'PHYS10016-2022春-A',
+            fileKey: 'file1',
+            source: 'PHYS10016-2022春-A 第8题',
+            concept: '高斯定理的理解',
+            type: 'single',
+            text: '关于静电场的高斯定理，下列说法正确的是（ ）。',
+            options: [
+                'A. 闭合曲面上各点场强都为零时，曲面内电荷的代数和一定为零',
+                'B. 闭合曲面上各点场强不为零时，曲面内电荷的代数和一定不为零',
+                'C. 通过闭合曲面的电场强度通量为零时，曲面上各点的场强一定为零',
+                'D. 通过闭合曲面的电场强度通量不为零时，曲面上各点的场强一定不为零'
+            ],
+            answer: 0
+        }, {
+            id: 'f1-q7',
+            file: 'PHYS10016-2022春-A',
+            fileKey: 'file1',
+            source: 'PHYS10016-2022春-A 第9题',
+            concept: '静电场的环路定理与场的性质',
+            type: 'single',
+            text: '静电场的环路定理表明静电场是（ ）。',
+            options: ['A. 无源场', 'B. 有源场', 'C. 无旋场', 'D. 有旋场'],
+            answer: 2
+        }, {
+            id: 'f1-q8',
+            file: 'PHYS10016-2022春-A',
+            fileKey: 'file1',
+            source: 'PHYS10016-2022春-A 第10题',
+            concept: '电场强度与电势梯度的关系',
+            type: 'single',
+            text: '下面关于电场强度和电势的关系，说法正确的是（ ）。',
+            options: [
+                'A. 电场强度的方向是电势减小最快的方向',
+                'B. 电场强度的方向是电势增大最快的方向',
+                'C. 电场强度的方向是电势减小最慢的方向',
+                'D. 电场强度的方向是电势增大最慢的方向'
+            ],
+            answer: 0
+        }, {
+            id: 'f1-q9',
+            file: 'PHYS10016-2022春-A',
+            fileKey: 'file1',
+            source: 'PHYS10016-2022春-A 第18题',
+            concept: '麦克斯韦-安培定律（位移电流）',
+            type: 'single',
+            text: '在没有自由电荷，没有传导电流的情况下，以下四个方程正确反映变化的电场产生磁场的是（ ）。',
+            options: [
+                'A. ∮E⃗·dl⃗ = -∫(∂B⃗/∂t)·dS⃗',
+                'B. ∮E⃗·dl⃗ = ∫(∂B⃗/∂t)·dS⃗',
+                'C. ∮B⃗·dl⃗ = -μ₀ε₀∫(∂E⃗/∂t)·dS⃗',
+                'D. ∮B⃗·dl⃗ = μ₀ε₀∫(∂E⃗/∂t)·dS⃗'
+            ],
+            answer: 3
+        }, {
+            id: 'f1-q10',
+            file: 'PHYS10016-2022春-A',
+            fileKey: 'file1',
+            source: 'PHYS10016-2022春-A 第19题',
+            concept: '玻尔氢原子能级公式和能级跃迁',
+            type: 'single',
+            text: '用高速电子撞击氢原子的方法，激发氢原子使其发光。如果高速电子的能量为12.7eV，则基态氢原子可以被激发到的最高能级为（ ）。',
+            options: ['A. 4', 'B. 3', 'C. 2', 'D. 1'],
+            answer: 1
+        }, {
+            id: 'f1-q11',
+            file: 'PHYS10016-2022春-A',
+            fileKey: 'file1',
+            source: 'PHYS10016-2022春-A 第20题',
+            concept: '量子数mₗ的物理意义（空间量子化）',
+            type: 'single',
+            text: '根据量子力学理论，氢原子中的电子处于(n=3, l=2, mₗ=1, mₛ=-1/2)的量子态时，电子轨道角动量在z轴方向的投影为（ ）。',
+            options: ['A. 3ℏ', 'B. √6ℏ', 'C. ℏ', 'D. -ℏ/2'],
+            answer: 2
+        }];
+        allQuestions.push(...file1Questions);
+
+        // ---- PHYS10016-2023春-A (试卷 答案) ----
+        const file2Questions = [{
+            id: 'f2-q1',
+            file: 'PHYS10016-2023春-A',
+            fileKey: 'file2',
+            source: 'PHYS10016-2023春-A 第3题',
+            concept: '动量定理（冲量与动量变化）',
+            type: 'single',
+            text: '一质量为2kg的物体沿x轴运动，t=0时物体位于原点且速度为零。若物体在合力F=4+3t²作用下运动了2秒，物体的末速度v=（ ）m/s。',
+            options: ['A. 4', 'B. 8', 'C. 12', 'D. 16'],
+            answer: 1
+        }, {
+            id: 'f2-q2',
+            file: 'PHYS10016-2023春-A',
+            fileKey: 'file2',
+            source: 'PHYS10016-2023春-A 第4题',
+            concept: '角动量守恒、动量大小与轨道半径关系',
+            type: 'single',
+            text: '地球绕太阳沿椭圆轨道运动，若地球在远日点A和近日点B的角动量大小分别为Lₐ和L_B，动量大小分别为Pₐ和P_B。下列关系正确的是（ ）。',
+            options: [
+                'A. Lₐ=L_B，Pₐ<P_B',
+                'B. Lₐ=L_B，Pₐ>P_B',
+                'C. Lₐ>L_B，Pₐ>P_B',
+                'D. Lₐ>L_B，Pₐ<P_B'
+            ],
+            answer: 0
+        }, {
+            id: 'f2-q3',
+            file: 'PHYS10016-2023春-A',
+            fileKey: 'file2',
+            source: 'PHYS10016-2023春-A 第5题',
+            concept: '动量守恒条件、角动量守恒条件',
+            type: 'single',
+            text: '如图所示的圆锥摆，绳子一端固定在A点，另一端连接小球m，小球在水平面内以O为圆心做匀速圆周运动，则下列说法正确的是（ ）。',
+            options: [
+                'A. 小球的动量守恒',
+                'B. 小球对A点的角动量守恒',
+                'C. 小球对O点的角动量守恒',
+                'D. 小球对任意点的角动量都守恒'
+            ],
+            answer: 2
+        }, {
+            id: 'f2-q4',
+            file: 'PHYS10016-2023春-A',
+            fileKey: 'file2',
+            source: 'PHYS10016-2023春-A 第6题',
+            concept: '动量守恒、角动量守恒、动能定理、机械能守恒的条件',
+            type: 'single',
+            text: '若质点系的合外力为零，则下列说法正确的是（ ）。',
+            options: [
+                'A. 质点系的动量一定守恒',
+                'B. 质点系的角动量一定守恒',
+                'C. 质点系的动能一定守恒',
+                'D. 质点系的机械能一定守恒'
+            ],
+            answer: 0
+        }, {
+            id: 'f2-q5',
+            file: 'PHYS10016-2023春-A',
+            fileKey: 'file2',
+            source: 'PHYS10016-2023春-A 第7题',
+            concept: '保守力的定义和判断',
+            type: 'single',
+            text: '下列不属于保守力的是（ ）。',
+            options: ['A. 万有引力', 'B. 摩擦力', 'C. 重力', 'D. 库仑力'],
+            answer: 1
+        }, {
+            id: 'f2-q6',
+            file: 'PHYS10016-2023春-A',
+            fileKey: 'file2',
+            source: 'PHYS10016-2023春-A 第8题',
+            concept: '功的计算、作用力与反作用力做功、保守力环路定理',
+            type: 'single',
+            text: '关于功，下列说法正确的是（ ）。',
+            options: [
+                'A. 作用力与反作用力做功之和一定为零',
+                'B. 摩擦力一定做负功',
+                'C. 若保守力做正功，则系统的势能一定增加',
+                'D. 保守力沿一闭合路径做功一定为零'
+            ],
+            answer: 3
+        }, {
+            id: 'f2-q7',
+            file: 'PHYS10016-2023春-A',
+            fileKey: 'file2',
+            source: 'PHYS10016-2023春-A 第9题',
+            concept: '势能零点的选择对势能表达的影响',
+            type: 'single',
+            text: '两质量分别为m和M的质点间有万有引力作用，若选取两者距离为a处为势能零点，则两者距离为r处万有引力势能为（ ）。',
+            options: [
+                'A. GMm(1/a - 1/r)',
+                'B. GMm(1/r - 1/a)',
+                'C. -GMm/r',
+                'D. GMm/r'
+            ],
+            answer: 0
+        }, {
+            id: 'f2-q8',
+            file: 'PHYS10016-2023春-A',
+            fileKey: 'file2',
+            source: 'PHYS10016-2023春-A 第19题',
+            concept: '安培环路定理与磁场的旋性',
+            type: 'single',
+            text: '恒定磁场中的安培环路定理表明恒定磁场是（ ）。',
+            options: ['A. 有源场', 'B. 无源场', 'C. 有旋场', 'D. 无旋场'],
+            answer: 2
+        }, {
+            id: 'f2-q9',
+            file: 'PHYS10016-2023春-A',
+            fileKey: 'file2',
+            source: 'PHYS10016-2023春-A 第24题',
+            concept: '安培环路定理中∮H⃗·dl⃗的含义',
+            type: 'single',
+            text: '根据磁介质中的安培环路定理，下列说法正确的是（ ）。',
+            options: [
+                'A. 环路内的传导电流对磁场强度H的环流有贡献',
+                'B. 环路外的传导电流对磁场强度H的环流有贡献',
+                'C. 环路内的磁化电流对磁场强度H的环流有贡献',
+                'D. 环路外的磁化电流对磁场强度H的环流有贡献'
+            ],
+            answer: 0
+        }, {
+            id: 'f2-q10',
+            file: 'PHYS10016-2023春-A',
+            fileKey: 'file2',
+            source: 'PHYS10016-2023春-A 第27题',
+            concept: '位移电流的本质',
+            type: 'single',
+            text: '关于位移电流，下列说法正确的是（ ）。',
+            options: [
+                'A. 位移电流是变化的磁场',
+                'B. 位移电流满足焦耳-楞次定律',
+                'C. 位移电流是变化的电场',
+                'D. 位移电流不能在真空中存在'
+            ],
+            answer: 2
+        }, {
+            id: 'f2-q11',
+            file: 'PHYS10016-2023春-A',
+            fileKey: 'file2',
+            source: 'PHYS10016-2023春-A 第28题',
+            concept: '光速不变原理的准确表述',
+            type: 'single',
+            text: '关于狭义相对论的光速不变原理，下列说法正确的是（ ）。',
+            options: [
+                'A. 在一切参考系中，真空中的光速都具有相同的值c',
+                'B. 在一切惯性系中，真空中的光速都具有相同的值c',
+                'C. 在一切参考系中，光速都具有相同的值c',
+                'D. 在一切惯性系中，光速都具有相同的值c'
+            ],
+            answer: 1
+        }, {
+            id: 'f2-q12',
+            file: 'PHYS10016-2023春-A',
+            fileKey: 'file2',
+            source: 'PHYS10016-2023春-A 第29题',
+            concept: '长度收缩效应、本征长度与运动长度',
+            type: 'single',
+            text: '列车高速通过站台，在站台上两个相距为1m的机械手同时在车厢上刻上划痕，列车上的观察者测得两划痕的距离为l\'，则（ ）。',
+            options: [
+                'A. l\'为本征长度，且l\'>1m',
+                'B. l\'为本征长度，且l\'<1m',
+                'C. l\'为运动长度，且l\'>1m',
+                'D. l\'为运动长度，且l\'<1m'
+            ],
+            answer: 0
+        }, {
+            id: 'f2-q13',
+            file: 'PHYS10016-2023春-A',
+            fileKey: 'file2',
+            source: 'PHYS10016-2023春-A 第30题',
+            concept: '狭义相对论速度变换公式',
+            type: 'single',
+            text: '甲乙两飞船相对于地面沿x轴正方向同向飞行，甲飞船相对于地面的速度为0.5c。乙飞船相对于甲飞船的速度为0.5c，则乙飞船相对于地面的速度为（ ）。',
+            options: ['A. 0', 'B. 0.6c', 'C. 0.8c', 'D. c'],
+            answer: 2
+        }];
+        allQuestions.push(...file2Questions);
+
+        // ---- PHYS10031-2025春-A (试卷 答案) ----
+        const file3Questions = [
+            // 判断题 1-10
+            {
+                id: 'f3-j1',
+                file: 'PHYS10031-2025春-A',
+                fileKey: 'file3',
+                source: 'PHYS10031-2025春-A 第1题(判)',
+                concept: '惯性是物体的固有属性',
+                type: 'judge',
+                text: '物体只有作匀速直线运动和静止时才有惯性。',
+                options: ['正确', '错误'],
+                answer: 1
+            }, {
+                id: 'f3-j2',
+                file: 'PHYS10031-2025春-A',
+                fileKey: 'file3',
+                source: 'PHYS10031-2025春-A 第2题(判)',
+                concept: '动量守恒的条件',
+                type: 'judge',
+                text: '一沿水平速度v₁运动的子弹与倾角为θ的斜面上的静止木块发生完全非弹性碰撞，碰后它们以共同速度沿斜面向上运动，则水平方向上动量守恒。',
+                options: ['正确', '错误'],
+                answer: 1
+            }, {
+                id: 'f3-j3',
+                file: 'PHYS10031-2025春-A',
+                fileKey: 'file3',
+                source: 'PHYS10031-2025春-A 第3题(判)',
+                concept: '保守力做功等于势能增量的负值',
+                type: 'judge',
+                text: '保守力做正功时，系统相应的势能减少。',
+                options: ['正确', '错误'],
+                answer: 0
+            }, {
+                id: 'f3-j4',
+                file: 'PHYS10031-2025春-A',
+                fileKey: 'file3',
+                source: 'PHYS10031-2025春-A 第4题(判)',
+                concept: '合外力矩与合外力的关系（力偶）',
+                type: 'judge',
+                text: '刚体定轴转动中，如果合外力矩不为零，则合外力也不为零。',
+                options: ['正确', '错误'],
+                answer: 1
+            }, {
+                id: 'f3-j5',
+                file: 'PHYS10031-2025春-A',
+                fileKey: 'file3',
+                source: 'PHYS10031-2025春-A 第5题(判)',
+                concept: '高斯定理：通量为正只说明净电荷为正',
+                type: 'judge',
+                text: '由静电场的高斯定理可知：通过高斯面的电场强度通量为正时，高斯面内也可以有负电荷。',
+                options: ['正确', '错误'],
+                answer: 0
+            }, {
+                id: 'f3-j6',
+                file: 'PHYS10031-2025春-A',
+                fileKey: 'file3',
+                source: 'PHYS10031-2025春-A 第6题(判)',
+                concept: '静电场是保守场，积分与路径无关',
+                type: 'judge',
+                text: '静电场场强沿某一长度不为零的路径积分，若积分结果为零，则该路径一定是闭合路径。',
+                options: ['正确', '错误'],
+                answer: 1
+            }, {
+                id: 'f3-j7',
+                file: 'PHYS10031-2025春-A',
+                fileKey: 'file3',
+                source: 'PHYS10031-2025春-A 第7题(判)',
+                concept: '断电后Q不变，充介质后E减小，能量密度减小',
+                type: 'judge',
+                text: '真空平板电容器接在电源上充满电后切断电源，然后在电容器中充满均匀电介质，则极板间的电场能密度相对于充介质之前减小了。',
+                options: ['正确', '错误'],
+                answer: 0
+            }, {
+                id: 'f3-j8',
+                file: 'PHYS10031-2025春-A',
+                fileKey: 'file3',
+                source: 'PHYS10031-2025春-A 第8题(判)',
+                concept: 'εᵣ>1，但μᵣ可以小于1（抗磁质）',
+                type: 'judge',
+                text: '电介质的相对电容率εᵣ总是大于1，磁介质的相对磁导率μᵣ也总是大于1。',
+                options: ['正确', '错误'],
+                answer: 1
+            }, {
+                id: 'f3-j9',
+                file: 'PHYS10031-2025春-A',
+                fileKey: 'file3',
+                source: 'PHYS10031-2025春-A 第9题(判)',
+                concept: 'L是线圈的固有属性，与电流变化率无关',
+                type: 'judge',
+                text: '根据自感电动势的定义ε=-L dI/dt，可知通过线圈的电流随时间变化得越快，自感L就越小。',
+                options: ['正确', '错误'],
+                answer: 1
+            }, {
+                id: 'f3-j10',
+                file: 'PHYS10031-2025春-A',
+                fileKey: 'file3',
+                source: 'PHYS10031-2025春-A 第10题(判)',
+                concept: '全电流定律（麦克斯韦-安培定律）的形式',
+                type: 'judge',
+                text: '没有传导电流，只有变化的电场的全电流定律为∮H⃗·dl⃗=∫(∂D⃗/∂t)·dS⃗。',
+                options: ['正确', '错误'],
+                answer: 0
+            },
+            // 单选题
+            {
+                id: 'f3-q15',
+                file: 'PHYS10031-2025春-A',
+                fileKey: 'file3',
+                source: 'PHYS10031-2025春-A 第15题',
+                concept: '功依赖于位移（参考系）、一对摩擦力做功',
+                type: 'single',
+                text: '在光滑水平地面上放着一辆小车，车上左端放着一只木箱。用同样的水平恒力F拉木箱，使它由小车的左端到达右端，其中一次小车被固定，另一次小车没有固定。以地面为参考系，下列说法正确的是（ ）。',
+                options: [
+                    'A. 水平恒力F做的功相等',
+                    'B. 摩擦力对木箱做的功相等',
+                    'C. 木箱获得的动能相等',
+                    'D. 摩擦做的总功相等'
+                ],
+                answer: 3
+            }, {
+                id: 'f3-q16',
+                file: 'PHYS10031-2025春-A',
+                fileKey: 'file3',
+                source: 'PHYS10031-2025春-A 第16题',
+                concept: '角动量守恒条件、机械能守恒条件',
+                type: 'single',
+                text: '在光滑的水平桌面上有一轻弹簧，一端固定于O点，另一端连接一木块。一子弹以速度v₀击入木块并与之一起运动。下列说法错误的是（ ）。',
+                options: [
+                    'A. 子弹与木块碰撞过程中，系统的角动量守恒',
+                    'B. 子弹与木块碰撞过程中，系统的机械能守恒',
+                    'C. 子弹与木块共同运动过程中，系统的角动量守恒',
+                    'D. 子弹与木块共同运动过程中，系统的机械能守恒'
+                ],
+                answer: 1
+            }, {
+                id: 'f3-q17',
+                file: 'PHYS10031-2025春-A',
+                fileKey: 'file3',
+                source: 'PHYS10031-2025春-A 第17题',
+                concept: '保守力与势能的关系F=-dEₚ/dr',
+                type: 'single',
+                text: '两粒子相距为r时的势能Eₚ=-k/r²（k为正的常量），则两粒子间的作用力F=（ ）。',
+                options: ['A. k/r', 'B. -k/r', 'C. 2k/r³', 'D. -2k/r³'],
+                answer: 3
+            }, {
+                id: 'f3-q23',
+                file: 'PHYS10031-2025春-A',
+                fileKey: 'file3',
+                source: 'PHYS10031-2025春-A 第23题',
+                concept: '静电平衡下导体空腔内外表面电荷分布',
+                type: 'single',
+                text: '在不带电的导体球内有一球形空腔，在腔内O₁处放一点电荷q，下列说法中正确的是（ ）。',
+                options: [
+                    'A. 导体内、外表面的感应电荷都分布均匀',
+                    'B. 导体内表面感应电荷分布不均匀，外表面感应电荷分布均匀',
+                    'C. 导体内表面感应电荷分布均匀，外表面感应电荷分布不均匀',
+                    'D. 导体内、外表面感应电荷都分布不均匀'
+                ],
+                answer: 1
+            }, {
+                id: 'f3-q25',
+                file: 'PHYS10031-2025春-A',
+                fileKey: 'file3',
+                source: 'PHYS10031-2025春-A 第25题',
+                concept: '磁场是无源场（磁单极不存在）',
+                type: 'single',
+                text: '磁场的高斯定理∮B⃗·dS⃗=0是磁场（ ）的数学表示。',
+                options: ['A. 有源性', 'B. 有旋性', 'C. 无源性', 'D. 无旋性'],
+                answer: 2
+            }, {
+                id: 'f3-q30',
+                file: 'PHYS10031-2025春-A',
+                fileKey: 'file3',
+                source: 'PHYS10031-2025春-A 第30题',
+                concept: '感生电场的性质（由变化磁场激发，有旋无源）',
+                type: 'single',
+                text: '关于麦克斯韦的感生电场假设，下列描述正确的是（ ）。',
+                options: [
+                    'A. 磁场会在其周围空间激发感生电场',
+                    'B. 感生电场Eₖ与磁场变化率∂B⃗/∂t构成右手螺旋关系',
+                    'C. 感生电场是无源场',
+                    'D. 感生电场是保守场'
+                ],
+                answer: 2
+            }
+        ];
+        allQuestions.push(...file3Questions);
+
+        // ---- PHYS10013-2019春-A (试卷 答案) ----
+        const file4Questions = [{
+            id: 'f4-q1',
+            file: 'PHYS10013-2019春-A',
+            fileKey: 'file4',
+            source: 'PHYS10013-2019春-A 第1题',
+            concept: '平均速度与平均速率的区别、加速度分量',
+            type: 'single',
+            text: '质点沿曲线运动，下列描述正确的是（ ）。',
+            options: [
+                'A. 平均速度的大小等于平均速率的大小',
+                'B. 平均速度的方向沿轨道的切线方向',
+                'C. 法向加速度描述质点速度大小变化的快慢',
+                'D. 切向加速度描述质点速度大小变化的快慢'
+            ],
+            answer: 3
+        }, {
+            id: 'f4-q2',
+            file: 'PHYS10013-2019春-A',
+            fileKey: 'file4',
+            source: 'PHYS10013-2019春-A 第2题',
+            concept: '相对运动、速度合成',
+            type: 'single',
+            text: '某人骑自行车以速度v₁向西行驶，今有风以速度v₂(|v₂|<|v₁|)从东北方向吹来，试问人感受到的是什么风？（ ）',
+            options: ['A. 西北风', 'B. 东北风', 'C. 西南风', 'D. 东南风'],
+            answer: 0
+        }, {
+            id: 'f4-q3',
+            file: 'PHYS10013-2019春-A',
+            fileKey: 'file4',
+            source: 'PHYS10013-2019春-A 第3题',
+            concept: '保守力做功、一对内力做功、动能定理',
+            type: 'single',
+            text: '以下对功的几种说法正确的是：（ ）。',
+            options: [
+                'A. 保守力做正功时，系统内相应的势能增加',
+                'B. 质点运动经一闭合路径，保守力对质点做的功为零',
+                'C. 作用力和反作用力所做功的代数和一定为零',
+                'D. 合外力做功等于质点系动能的增量'
+            ],
+            answer: 1
+        }, {
+            id: 'f4-q4',
+            file: 'PHYS10013-2019春-A',
+            fileKey: 'file4',
+            source: 'PHYS10013-2019春-A 第4题',
+            concept: '高斯定理的理解',
+            type: 'single',
+            text: '关于高斯定理的理解有下面几种说法，其中正确的是（ ）。',
+            options: [
+                'A. 高斯面上各点的场强仅与高斯面内的电荷有关',
+                'B. 如果高斯面内无电荷，则高斯面上的场强处处为零',
+                'C. 通过高斯面的电通量仅与高斯面内的电荷有关',
+                'D. 如果通过高斯面的电通量为零，则该高斯面内必无电荷'
+            ],
+            answer: 2
+        }, {
+            id: 'f4-q5',
+            file: 'PHYS10013-2019春-A',
+            fileKey: 'file4',
+            source: 'PHYS10013-2019春-A 第5题',
+            concept: '静电平衡下导体空腔的性质',
+            type: 'single',
+            text: '对于腔内不带电的导体空腔，以下说法正确的是（ ）。',
+            options: [
+                'A. 腔内的场强必为零',
+                'B. 空腔的内表面和外表面都有电荷分布',
+                'C. 腔内的电势必为零',
+                'D. 将导体空腔接地，导体外表面电荷必为零'
+            ],
+            answer: 0
+        }, {
+            id: 'f4-q6',
+            file: 'PHYS10013-2019春-A',
+            fileKey: 'file4',
+            source: 'PHYS10013-2019春-A 第7题',
+            concept: '霍尔效应原理、洛伦兹力方向',
+            type: 'single',
+            text: '处在某匀强磁场中的载流金属导体块中出现霍耳效应，电流I沿x轴正向，测得上下底面M、N的电势差V_M-V_N>0，则图中所加匀强磁场的方向沿（ ）。',
+            options: ['A. y轴正向', 'B. y轴负向', 'C. z轴正向', 'D. z轴负向'],
+            answer: 1
+        }, {
+            id: 'f4-q7',
+            file: 'PHYS10013-2019春-A',
+            fileKey: 'file4',
+            source: 'PHYS10013-2019春-A 第8题',
+            concept: '自感电动势和互感电动势的表达式',
+            type: 'single',
+            text: '有两个相邻的线圈1和线圈2，自感系数分别为L₁和L₂，互感系数为M。两线圈分别通以变化的电流i₁和i₂，则线圈1中的电动势为（ ）。',
+            options: [
+                'A. ε₁=-L₁di₁/dt - M di₁/dt',
+                'B. ε₁=-L₁di₁/dt - M di₂/dt',
+                'C. ε₁=-L₁di₂/dt - M di₁/dt',
+                'D. ε₁=-L₁di₂/dt - M di₂/dt'
+            ],
+            answer: 1
+        }];
+        allQuestions.push(...file4Questions);
+
+        // ---- PHYS10013-2024春-A (试卷 答案) ----
+        const file5Questions = [
+            // 判断题 1-10
+            {
+                id: 'f5-j1',
+                file: 'PHYS10013-2024春-A',
+                fileKey: 'file5',
+                source: 'PHYS10013-2024春-A 第1题(判)',
+                concept: '牛顿第一定律（惯性定律）',
+                type: 'judge',
+                text: '力不是维持物体运动的原因，力是改变物体运动状态的原因。',
+                options: ['正确', '错误'],
+                answer: 0
+            }, {
+                id: 'f5-j2',
+                file: 'PHYS10013-2024春-A',
+                fileKey: 'file5',
+                source: 'PHYS10013-2024春-A 第2题(判)',
+                concept: '冲量的定义、动量定理',
+                type: 'judge',
+                text: '图示为圆锥摆，轻绳一端固定在A点，另一端连接小球m，小球在水平面内做匀速率圆周运动。当小球运动一周时，绳子拉力的冲量为零。',
+                options: ['正确', '错误'],
+                answer: 0
+            }, {
+                id: 'f5-j3',
+                file: 'PHYS10013-2024春-A',
+                fileKey: 'file5',
+                source: 'PHYS10013-2024春-A 第3题(判)',
+                concept: '势能定义Eₚ(r)=∫ᵣʳ⁰Fdr',
+                type: 'judge',
+                text: '两物体之间的斥力F=k/r²（k为正的常量），若取r=r₀处为势能零点，则两物体相距为r时的势能为k/r - k/r₀。',
+                options: ['正确', '错误'],
+                answer: 0
+            }, {
+                id: 'f5-j4',
+                file: 'PHYS10013-2024春-A',
+                fileKey: 'file5',
+                source: 'PHYS10013-2024春-A 第4题(判)',
+                concept: '动量守恒与角动量守恒条件',
+                type: 'judge',
+                text: '一匀质圆盘可绕通过其中心的固定竖直轴在水平面内自由转动，盘上站着一个人。当人在盘上随意走动时，系统的动量不守恒，但对轴的角动量守恒。',
+                options: ['正确', '错误'],
+                answer: 0
+            }, {
+                id: 'f5-j5',
+                file: 'PHYS10013-2024春-A',
+                fileKey: 'file5',
+                source: 'PHYS10013-2024春-A 第5题(判)',
+                concept: '静电屏蔽',
+                type: 'judge',
+                text: '在导体空腔内移动电荷，导体空腔外部的电场将随之改变。',
+                options: ['正确', '错误'],
+                answer: 1
+            }, {
+                id: 'f5-j6',
+                file: 'PHYS10013-2024春-A',
+                fileKey: 'file5',
+                source: 'PHYS10013-2024春-A 第6题(判)',
+                concept: 'D通量与E通量的关系（非均匀介质）',
+                type: 'judge',
+                text: '某高斯面S的D⃗通量∮D⃗·dS⃗=0，由于D⃗=εE⃗，则可以判断该高斯面的E⃗通量∮E⃗·dS⃗=0。',
+                options: ['正确', '错误'],
+                answer: 1
+            }, {
+                id: 'f5-j7',
+                file: 'PHYS10013-2024春-A',
+                fileKey: 'file5',
+                source: 'PHYS10013-2024春-A 第7题(判)',
+                concept: '霍尔系数R_H=1/(nq)，载流子密度大则霍尔效应弱',
+                type: 'judge',
+                text: '相对于半导体而言，导体的载流子数密度大，所以导体的霍尔效应较为明显。',
+                options: ['正确', '错误'],
+                answer: 1
+            }, {
+                id: 'f5-j8',
+                file: 'PHYS10013-2024春-A',
+                fileKey: 'file5',
+                source: 'PHYS10013-2024春-A 第8题(判)',
+                concept: '磁力矩公式M⃗=m⃗×B⃗',
+                type: 'judge',
+                text: '一矩形线圈位于Oxy平面内，通过逆时针方向的电流I，均匀磁场B⃗沿x轴负方向，线圈受到的磁力矩的方向沿y轴负向。',
+                options: ['正确', '错误'],
+                answer: 1
+            }, {
+                id: 'f5-j9',
+                file: 'PHYS10013-2024春-A',
+                fileKey: 'file5',
+                source: 'PHYS10013-2024春-A 第9题(判)',
+                concept: '自感电动势和互感电动势的叠加公式',
+                type: 'judge',
+                text: '有两个相邻的线圈1和线圈2，自感系数分别为L₁和L₂，互感系数为M。两线圈分别通以变化的电流i₁和i₂，则线圈1中的电动势ε=-L₁di₁/dt - M di₂/dt。',
+                options: ['正确', '错误'],
+                answer: 0
+            }, {
+                id: 'f5-j10',
+                file: 'PHYS10013-2024春-A',
+                fileKey: 'file5',
+                source: 'PHYS10013-2024春-A 第10题(判)',
+                concept: '全电流定律的符号（无负号）',
+                type: 'judge',
+                text: '若空间没有传导电流，只有变化的电场，则变化的电场激发磁场的关系为：∮H⃗·dl⃗=-∫(∂D⃗/∂t)·dS⃗。',
+                options: ['正确', '错误'],
+                answer: 1
+            },
+            // 单选题
+            {
+                id: 'f5-q11',
+                file: 'PHYS10013-2024春-A',
+                fileKey: 'file5',
+                source: 'PHYS10013-2024春-A 第11题',
+                concept: '切向加速度是速率对时间的变化率',
+                type: 'single',
+                text: '质点作曲线运动，下列表达式正确的是（ ）。',
+                options: [
+                    'A. aₜ=d²r/dt²',
+                    'B. aₜ=d²s/dt²',
+                    'C. aₜ=d²r⃗/dt²',
+                    'D. aₜ=d²s⃗/dt²'
+                ],
+                answer: 1
+            }, {
+                id: 'f5-q12',
+                file: 'PHYS10013-2024春-A',
+                fileKey: 'file5',
+                source: 'PHYS10013-2024春-A 第12题',
+                concept: '加速度定义a=dv/dt的微分方程求解',
+                type: 'single',
+                text: '质点作直线运动，其加速度a=-kv²t（k为常量）。当t=0时，速度为v₀，则质点速度与时间的关系为（ ）。',
+                options: [
+                    'A. v=v₀-kv²t²',
+                    'B. v=v₀-½kv²t²',
+                    'C. 1/v=1/v₀+kt²',
+                    'D. 1/v=1/v₀+½kt²'
+                ],
+                answer: 3
+            }, {
+                id: 'f5-q15',
+                file: 'PHYS10013-2024春-A',
+                fileKey: 'file5',
+                source: 'PHYS10013-2024春-A 第15题',
+                concept: '内力不影响总动量，但可改变总动能',
+                type: 'single',
+                text: '对质点系，下列说法正确的是（ ）。',
+                options: [
+                    'A. 质点系总动量的改变与内力的冲量无关',
+                    'B. 质点系总动能的改变与内力做功无关',
+                    'C. 质点系总势能的改变与非保守内力做功有关',
+                    'D. 质点系总角动量的改变与内力矩的冲量矩有关'
+                ],
+                answer: 0
+            }, {
+                id: 'f5-q16',
+                file: 'PHYS10013-2024春-A',
+                fileKey: 'file5',
+                source: 'PHYS10013-2024春-A 第16题',
+                concept: '保守力与势能的关系Fₓ=-∂Eₚ/∂x',
+                type: 'single',
+                text: '已知保守力的势函数Eₚ=(4/3)x³+4x²y+y³，则保守力在x方向上的分量Fₓ=（ ）。',
+                options: [
+                    'A. -4x²-8xy',
+                    'B. 4x²+8xy',
+                    'C. -4x²-3y²',
+                    'D. 4x²+3y²'
+                ],
+                answer: 0
+            }, {
+                id: 'f5-q17',
+                file: 'PHYS10013-2024春-A',
+                fileKey: 'file5',
+                source: 'PHYS10013-2024春-A 第17题',
+                concept: '动能定理与万有引力势能',
+                type: 'single',
+                text: '质量为m₁的宇宙飞船绕地球飞行。已知地球质量为m₂，当飞船与地球中心的距离从R₁变化到R₂时，飞船动能的增量Eₖ₂-Eₖ₁=（ ）。',
+                options: [
+                    'A. Gm₁m₂/(R₂-R₁)',
+                    'B. Gm₁m₂(1/R₁-1/R₂)',
+                    'C. Gm₁m₂/(R₁-R₂)',
+                    'D. Gm₁m₂(1/R₂-1/R₁)'
+                ],
+                answer: 1
+            }, {
+                id: 'f5-q18',
+                file: 'PHYS10013-2024春-A',
+                fileKey: 'file5',
+                source: 'PHYS10013-2024春-A 第18题',
+                concept: '角动量守恒和转动动能公式',
+                type: 'single',
+                text: '一质量为m、半径为R的圆环绕通过圆心的垂直轴匀速转动，转动惯量J=mR²。在内力作用下半径收缩为原来的一半，则其转动动能为（ ）。',
+                options: ['A. 2Eₖ', 'B. 4Eₖ', 'C. 8Eₖ', 'D. 16Eₖ'],
+                answer: 1
+            }, {
+                id: 'f5-q19',
+                file: 'PHYS10013-2024春-A',
+                fileKey: 'file5',
+                source: 'PHYS10013-2024春-A 第19题',
+                concept: '高斯定理的逆用',
+                type: 'single',
+                text: '下列说法正确的是（ ）。',
+                options: [
+                    'A. 闭合曲面上各点电场强度不为零时，曲面内电荷的代数和必不为零',
+                    'B. 闭合曲面上各点电场强度都为零时，曲面内电荷的代数和必定为零',
+                    'C. 闭合曲面的电场强度通量为零时，曲面上各点的电场强度必定为零',
+                    'D. 闭合曲面的电场强度通量不为零时，曲面上各点的电场强度都不为零'
+                ],
+                answer: 1
+            }, {
+                id: 'f5-q21',
+                file: 'PHYS10013-2024春-A',
+                fileKey: 'file5',
+                source: 'PHYS10013-2024春-A 第21题',
+                concept: '电场能量密度，球体内部也有电场',
+                type: 'single',
+                text: '真空中球面和球体都均匀带电，若两者的半径和总电荷量都相同，则带电球面的电场总能量W₁和带电球体的电场总能量W₂的关系为（ ）。',
+                options: ['A. W₁<W₂', 'B. W₁=W₂', 'C. W₁>W₂', 'D. 无法判断'],
+                answer: 0
+            }, {
+                id: 'f5-q22',
+                file: 'PHYS10013-2024春-A',
+                fileKey: 'file5',
+                source: 'PHYS10013-2024春-A 第22题',
+                concept: '毕奥-萨伐尔定律判断磁场方向',
+                type: 'single',
+                text: '两条无限长的平行导线，载有大小相同、方向相反的电流I，则两导线连线的中垂线上一点O的磁感应强度的方向沿（ ）。',
+                options: ['A. x轴正向', 'B. y轴正向', 'C. x轴负向', 'D. y轴负向'],
+                answer: 0
+            }, {
+                id: 'f5-q23',
+                file: 'PHYS10013-2024春-A',
+                fileKey: 'file5',
+                source: 'PHYS10013-2024春-A 第23题',
+                concept: '磁场的高斯定理表明磁场是无源场',
+                type: 'single',
+                text: '磁场的高斯定理∮B⃗·dS⃗=0是磁场（ ）的数学表示。',
+                options: ['A. 有源性', 'B. 有旋性', 'C. 无源性', 'D. 无旋性'],
+                answer: 2
+            }, {
+                id: 'f5-q24',
+                file: 'PHYS10013-2024春-A',
+                fileKey: 'file5',
+                source: 'PHYS10013-2024春-A 第24题',
+                concept: '安培环路定理，回路不包围电流则环流为零',
+                type: 'single',
+                text: '在一圆电流I的平面内，选取一个同心圆形闭合回路L，则（ ）。',
+                options: [
+                    'A. ∮B⃗·dl⃗=0，且环路上任意一点B⃗=0',
+                    'B. ∮B⃗·dl⃗=0，但环路上任意一点B⃗≠0',
+                    'C. ∮B⃗·dl⃗≠0，且环路上任意一点B⃗≠0',
+                    'D. ∮B⃗·dl⃗≠0，但环路上任意一点B⃗=0'
+                ],
+                answer: 1
+            }, {
+                id: 'f5-q25',
+                file: 'PHYS10013-2024春-A',
+                fileKey: 'file5',
+                source: 'PHYS10013-2024春-A 第25题',
+                concept: '磁介质中的B=μ₀μᵣH，顺磁质μᵣ>1',
+                type: 'single',
+                text: '将长直螺线管内充满相对磁导率μᵣ=1.004的磁介质，以B⃗₀和B⃗分别表示管内为真空和充满该介质时的磁感应强度，则B⃗（ ）B⃗₀。',
+                options: ['A. 大于', 'B. 小于', 'C. 等于', 'D. 无法判断'],
+                answer: 0
+            }, {
+                id: 'f5-q28',
+                file: 'PHYS10013-2024春-A',
+                fileKey: 'file5',
+                source: 'PHYS10013-2024春-A 第28题',
+                concept: '感生电场由变化磁场激发，是有旋场',
+                type: 'single',
+                text: '根据麦克斯韦假设，感生电场（ ）。',
+                options: [
+                    'A. 由电荷激发，是无旋场',
+                    'B. 由电荷激发，是有旋场',
+                    'C. 由变化的磁场激发，是无旋场',
+                    'D. 由变化的磁场激发，是有旋场'
+                ],
+                answer: 3
+            }, {
+                id: 'f5-q29',
+                file: 'PHYS10013-2024春-A',
+                fileKey: 'file5',
+                source: 'PHYS10013-2024春-A 第29题',
+                concept: '螺线管自感L=μ₀n²V，磁场能量W=½LI²',
+                type: 'single',
+                text: '一无铁芯的长直螺线管，保持其长度和匝数不变，把直径变成原来的2倍，电流I也变为原来的2倍，其磁场能量变为原来的（ ）倍。',
+                options: ['A. 2', 'B. 4', 'C. 8', 'D. 16'],
+                answer: 3
+            }, {
+                id: 'f5-q30',
+                file: 'PHYS10013-2024春-A',
+                fileKey: 'file5',
+                source: 'PHYS10013-2024春-A 第30题',
+                concept: '全电流定律中I为全电流',
+                type: 'single',
+                text: '根据麦克斯韦方程组，在一般电磁场中∮H⃗·dl⃗=I，其中I是（ ）。',
+                options: ['A. 全电流', 'B. 位移电流', 'C. 传导电流', 'D. 磁化电流'],
+                answer: 0
+            }
+        ];
+        allQuestions.push(...file5Questions);
+
+        // ---- 课后习题 (上册课后习题详解) ----
+        const file6Questions = [{
+            id: 'f6-q3_1',
+            file: '课后习题',
+            fileKey: 'file6',
+            source: '课后习题 3.1',
+            concept: '冲量的定义I=FΔt、动量定理',
+            type: 'single',
+            text: '恒力F⃗₁作用在质量为m₁的物体上持续了Δt₁时间，另有一同方向的恒力F⃗₂=5F⃗₁作用在质量为m₂=10m₁的物体上，持续了Δt₂=⅕Δt₁时间。下面的判断正确的是（ ）。',
+            options: [
+                'A. m₁与m₂发生了相同的动量变化',
+                'B. 物体m₂的质量更大，动量的变化也更大',
+                'C. 因为F⃗₂大于F⃗₁，F⃗₂的冲量大于F⃗₁的冲量',
+                'D. 因为F⃗₁的作用时间比F⃗₂的作用时间长，F⃗₁的冲量大于F⃗₂的冲量'
+            ],
+            answer: 0
+        }, {
+            id: 'f6-q3_23',
+            file: '课后习题',
+            fileKey: 'file6',
+            source: '课后习题 3.23',
+            concept: '角动量定理、内力矩的矢量和为零',
+            type: 'multi',
+            text: '一个质点系受到外力矩和内力矩的共同作用，下列哪些说法是正确的？（多选）',
+            options: [
+                'A. 外力矩改变质点系的总角动量，内力矩也改变质点系的总角动量',
+                'B. 外力矩改变质点系的总角动量，内力矩不改变质点系的总角动量',
+                'C. 外力矩可以改变质点系中各质点的角动量，内力矩也可以改变质点系中各质点的角动量',
+                'D. 外力矩可以改变质点系中各质点的角动量，内力矩不可以改变质点系中各质点的角动量'
+            ],
+            answer: [1, 2]
+        }, {
+            id: 'f6-q4_20',
+            file: '课后习题',
+            fileKey: 'file6',
+            source: '课后习题 4.20',
+            concept: '角动量守恒、机械能守恒、动量守恒条件',
+            type: 'multi',
+            text: '人造地球卫星绕地球作椭圆轨道运动，下面四个物理量中为守恒量的是（ ）。（多选）',
+            options: [
+                'A. 人造地球卫星对地心的角动量',
+                'B. 人造地球卫星的动量',
+                'C. 人造地球卫星的动能',
+                'D. 人造地球卫星与地球系统的机械能'
+            ],
+            answer: [0, 3]
+        }, {
+            id: 'f6-q6_4',
+            file: '课后习题',
+            fileKey: 'file6',
+            source: '课后习题 6.4',
+            concept: '热力学平衡态的定义',
+            type: 'judge',
+            text: '在封闭容器中盛有一定量的理想气体，若气体各部分温度相等，则该气体处于平衡态。',
+            options: ['正确', '错误'],
+            answer: 1
+        }, {
+            id: 'f6-q6_8_1',
+            file: '课后习题',
+            fileKey: 'file6',
+            source: '课后习题 6.8',
+            concept: '温度的微观本质（统计意义）',
+            type: 'judge',
+            text: '气体的温度表示每个分子的冷热程度。',
+            options: ['正确', '错误'],
+            answer: 1
+        }, {
+            id: 'f6-q6_8_2',
+            file: '课后习题',
+            fileKey: 'file6',
+            source: '课后习题 6.8',
+            concept: '温度是大量分子平均平动动能的量度',
+            type: 'judge',
+            text: '气体的温度是分子平均平动动能的量度，是大量气体分子热运动的集体表现，具有统计意义。',
+            options: ['正确', '错误'],
+            answer: 0
+        }, {
+            id: 'f6-q7_4',
+            file: '课后习题',
+            fileKey: 'file6',
+            source: '课后习题 7.4',
+            concept: '内能是状态函数，功和热量是过程量',
+            type: 'judge',
+            text: '理想气体经由两个不同的过程从状态a变化到另一状态b，两个过程气体的内能变化一定相同。',
+            options: ['正确', '错误'],
+            answer: 0
+        }, {
+            id: 'f6-q7_5',
+            file: '课后习题',
+            fileKey: 'file6',
+            source: '课后习题 7.5',
+            concept: '内能由pV决定，功和热是过程量',
+            type: 'judge',
+            text: '理想气体经由一个过程从状态a(p₀,V₀)变化到状态b(2p₀,2V₀)，该过程气体的内能一定增加。',
+            options: ['正确', '错误'],
+            answer: 0
+        }, {
+            id: 'f6-q7_40',
+            file: '课后习题',
+            fileKey: 'file6',
+            source: '课后习题 7.40',
+            concept: '热力学第一定律的表述',
+            type: 'single',
+            text: '热力学第一定律表明的是下列哪一种说法？（ ）',
+            options: [
+                'A. 系统对外所做的功不可能大于系统从外界吸收的热量',
+                'B. 系统内能的增量不可能大于系统从外界吸收的热量',
+                'C. 不可能存在这样的循环过程，在此循环过程中系统做的净功不等于系统与外界交换的热量',
+                'D. 热机的效率不可能等于1'
+            ],
+            answer: 2
+        }, {
+            id: 'f6-q7_42',
+            file: '课后习题',
+            fileKey: 'file6',
+            source: '课后习题 7.42',
+            concept: '热力学第二定律的开尔文表述',
+            type: 'single',
+            text: '热力学第二定律表明的是下列哪一种说法？（ ）',
+            options: [
+                'A. 不可能从单一热源吸收热量使之全部变为有用的功',
+                'B. 热机的效率不可能等于1',
+                'C. 任何过程总是沿着熵增加的方向进行',
+                'D. 热量不可能从温度低的物体传到温度高的物体',
+                'E. 功可以完全转化为热，而热不能完全转化为功'
+            ],
+            answer: 0
+        }, {
+            id: 'f6-q7_43',
+            file: '课后习题',
+            fileKey: 'file6',
+            source: '课后习题 7.43',
+            concept: '内能和熵是态函数',
+            type: 'judge',
+            text: '内能和熵都不是态函数。',
+            options: ['正确', '错误'],
+            answer: 1
+        }, {
+            id: 'f6-q7_44',
+            file: '课后习题',
+            fileKey: 'file6',
+            source: '课后习题 7.44',
+            concept: '可逆过程与不可逆过程',
+            type: 'judge',
+            text: '可逆过程一定是准静态过程。',
+            options: ['正确', '错误'],
+            answer: 0
+        }, {
+            id: 'f6-q7_46',
+            file: '课后习题',
+            fileKey: 'file6',
+            source: '课后习题 7.46',
+            concept: '绝热自由膨胀不是准静态过程，熵增加',
+            type: 'judge',
+            text: '绝热容器中理想气体经自由膨胀到达新的平衡态，因Q=0，气体在该过程中熵不变。',
+            options: ['正确', '错误'],
+            answer: 1
+        }];
+        allQuestions.push(...file6Questions);
+
+        // ==================== RENDER ENGINE ====================
+        let answeredMap = {}; // { questionId: { userAnswer, isCorrect } }
+
+        function getQuestionById(id) {
+            return allQuestions.find(q => q.id === id);
+        }
+
+        function renderMathHTML(text) {
+            // Replace \vec{X} with CSS styled vector
+            text = text.replace(/\\vec\{([^}]+)\}/g, '<span class="vec">$1</span>');
+            // Replace character + combining arrow (U+20D7) with CSS styled vector
+            text = text.replace(/([a-zA-Z])⃗/g, '<span class="vec">$1</span>');
+            // Replace LaTeX \frac{a}{b} with CSS fraction
+            text = text.replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '<span class="frac"><span class="num">$1</span><span class="den">$2</span></span>');
+            return text;
+        }
+
+        function renderAllQuestions(filterKey = 'all') {
+            const container = document.getElementById('mainContent');
+            container.innerHTML = '';
+
+            // Group by file
+            const fileOrder = ['PHYS10016-2022春-A', 'PHYS10016-2023春-A', 'PHYS10031-2025春-A', 'PHYS10013-2019春-A', 'PHYS10013-2024春-A', '课后习题'];
+            const grouped = {};
+            fileOrder.forEach(f => { grouped[f] = []; });
+
+            allQuestions.forEach(q => {
+                if (!grouped[q.file]) grouped[q.file] = [];
+                grouped[q.file].push(q);
+            });
+
+            let visibleCount = 0;
+            fileOrder.forEach(fileName => {
+                const questions = grouped[fileName];
+                if (!questions || questions.length === 0) return;
+
+                // Filter
+                let filteredQuestions = questions;
+                if (filterKey === 'unanswered') {
+                    filteredQuestions = questions.filter(q => !(q.id in answeredMap));
+                } else if (filterKey === 'wrong') {
+                    filteredQuestions = questions.filter(q => (q.id in answeredMap) && !answeredMap[q.id]
+                        .isCorrect);
+                } else if (filterKey.startsWith('file')) {
+                    const fk = filterKey; // 'file1','file2',...
+                    filteredQuestions = questions.filter(q => q.fileKey === fk);
+                }
+
+                if (filteredQuestions.length === 0) return;
+
+                const section = document.createElement('div');
+                section.className = 'file-section';
+                const fileIconMap = {
+                    'PHYS10016-2022春-A': '📘',
+                    'PHYS10016-2023春-A': '📙',
+                    'PHYS10031-2025春-A': '📗',
+                    'PHYS10013-2019春-A': '📕',
+                    'PHYS10013-2024春-A': '📓',
+                    '课后习题': '📝'
+                };
+                const icon = fileIconMap[fileName] || '📄';
+                section.innerHTML = `
+                    <div class="file-section-header">
+                        <span class="icon">${icon}</span> ${fileName}
+                        <span class="count">${filteredQuestions.length} 题</span>
+                    </div>
+                `;
+
+                filteredQuestions.forEach(q => {
+                    const card = createQuestionCard(q);
+                    section.appendChild(card);
+                    visibleCount++;
+                });
+
+                container.appendChild(section);
+            });
+
+            if (visibleCount === 0) {
+                container.innerHTML = `
+                    <div style="text-align:center;padding:60px 20px;color:#8b7355;">
+                        <p style="font-size:1.2rem;">🎉 没有匹配的题目</p>
+                        <p style="font-size:0.9rem;">请尝试其他筛选条件</p>
+                    </div>
+                `;
+            }
+
+            updateStats();
+        }
+
+        function createQuestionCard(q) {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.id = 'card-' + q.id;
+
+            // Tag
+            let tagHTML = '';
+            if (q.type === 'single') {
+                tagHTML = '<span class="q-tag single">单选题</span>';
+            } else if (q.type === 'judge') {
+                tagHTML = '<span class="q-tag judge">判断题</span>';
+            } else if (q.type === 'multi') {
+                tagHTML = '<span class="q-tag multi">多选题</span>';
+            }
+
+            card.innerHTML = `
+                <div class="q-meta">
+                    ${tagHTML}
+                    <span class="q-source">${q.source}</span>
+                    <span class="q-concept">📌 ${q.concept}</span>
+                </div>
+                <div class="q-text">${renderMathHTML(q.text)}</div>
+                <ul class="options-list">
+                    ${q.options.map((opt, idx) => {
+                        const letter = q.type === 'judge' ? (idx === 0 ? '✓' : '✗') : String.fromCharCode(65 + idx);
+                        return `
+                            <li class="option-item" data-qid="${q.id}" data-idx="${idx}">
+                                <span class="option-letter">${letter}</span>
+                                <span>${renderMathHTML(opt)}</span>
+                            </li>
+                        `;
+                    }).join('')}
+                </ul>
+                <div class="feedback-msg" id="fb-${q.id}"></div>
+                <div class="locked-overlay"></div>
+            `;
+
+            // Check if already answered
+            if (q.id in answeredMap) {
+                card.classList.add('answered');
+                const ua = answeredMap[q.id];
+                if (q.type === 'multi') {
+                    // Highlight all selected options
+                    const options = card.querySelectorAll('.option-item');
+                    options.forEach(opt => {
+                        const idx = parseInt(opt.dataset.idx);
+                        const isCorrectOption = q.answer.includes(idx);
+                        const wasSelected = ua.userAnswer.includes(idx);
+                        if (wasSelected && isCorrectOption) {
+                            opt.classList.add('show-correct');
+                        } else if (wasSelected && !isCorrectOption) {
+                            opt.classList.add('show-incorrect');
+                        } else if (!wasSelected && isCorrectOption) {
+                            opt.classList.add('show-correct-dim');
+                        }
+                    });
+                } else {
+                    const correctIdx = q.answer;
+                    const userIdx = ua.userAnswer;
+                    const options = card.querySelectorAll('.option-item');
+                    if (userIdx === correctIdx) {
+                        options[correctIdx].classList.add('show-correct');
+                    } else {
+                        options[userIdx].classList.add('show-incorrect');
+                        options[correctIdx].classList.add('show-correct');
+                    }
+                }
+                // Show feedback
+                const fb = card.querySelector('.feedback-msg');
+                if (ua.isCorrect) {
+                    fb.textContent = '✅ 回答正确！';
+                    fb.className = 'feedback-msg show correct-fb';
+                    card.classList.add('answered-correct');
+                } else {
+                    const correctStr = q.type === 'multi' ?
+                        q.answer.map(i => q.options[i].charAt(0)).join('、') :
+                        (q.type === 'judge' ? (q.answer === 0 ? '正确' : '错误') : q.options[q.answer].charAt(0));
+                    fb.textContent = '❌ 回答错误！正确答案是：' + correctStr;
+                    fb.className = 'feedback-msg show incorrect-fb';
+                    card.classList.add('answered-incorrect');
+                }
+            }
+
+            // Add click handlers
+            const optionItems = card.querySelectorAll('.option-item');
+            optionItems.forEach(opt => {
+                opt.addEventListener('click', function() {
+                    if (q.id in answeredMap) return; // Already answered
+                    const idx = parseInt(this.dataset.idx);
+                    handleAnswer(q, idx, card);
+                });
+            });
+
+            return card;
+        }
+
+        function handleAnswer(q, selectedIdx, card) {
+            if (q.id in answeredMap) return;
+
+            let userAnswer;
+            let isCorrect;
+
+            if (q.type === 'multi') {
+                // For multi-select, toggle selection and confirm on double-click or use a different approach
+                // Simplified: single click selects, clicking an already-selected option confirms
+                // Better approach for multi: let user toggle, then show a confirm button
+                // For simplicity, we'll treat multi as: click each correct option to toggle, then click a "确认" button
+                // Actually, let's use a simpler approach: first click selects, second click on same option confirms all selections
+                // Even simpler: just use checkboxes style - click to toggle highlight, then auto-confirm after a short delay or use a confirm button
+                // Let's implement: click toggles selection highlight, a small confirm button appears
+                handleMultiSelect(q, selectedIdx, card);
+                return;
+            } else {
+                userAnswer = selectedIdx;
+                isCorrect = (selectedIdx === q.answer);
+            }
+
+            // Record answer
+            answeredMap[q.id] = { userAnswer, isCorrect };
+            card.classList.add('answered');
+
+            // Show visual feedback
+            const options = card.querySelectorAll('.option-item');
+            const correctIdx = q.answer;
+
+            if (isCorrect) {
+                options[correctIdx].classList.add('show-correct');
+                card.classList.add('answered-correct');
+                const fb = card.querySelector('.feedback-msg');
+                fb.textContent = '✅ 回答正确！';
+                fb.className = 'feedback-msg show correct-fb';
+            } else {
+                options[userAnswer].classList.add('show-incorrect');
+                options[correctIdx].classList.add('show-correct');
+                card.classList.add('answered-incorrect');
+                const fb = card.querySelector('.feedback-msg');
+                const correctStr = q.type === 'judge' ? (q.answer === 0 ? '正确' : '错误') : q.options[q.answer]
+                    .charAt(0);
+                fb.textContent = '❌ 回答错误！正确答案是：' + correctStr;
+                fb.className = 'feedback-msg show incorrect-fb';
+            }
+
+            updateStats();
+            // Scroll to card smoothly
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function handleMultiSelect(q, selectedIdx, card) {
+            // Get current selections for this card
+            const selections = card._multiSelections || new Set();
+            if (selections.has(selectedIdx)) {
+                selections.delete(selectedIdx);
+            } else {
+                selections.add(selectedIdx);
+            }
+            card._multiSelections = selections;
+
+            // Update visual highlights
+            const options = card.querySelectorAll('.option-item');
+            options.forEach(opt => {
+                const idx = parseInt(opt.dataset.idx);
+                if (selections.has(idx)) {
+                    opt.classList.add('selected');
+                } else {
+                    opt.classList.remove('selected');
+                }
+            });
+
+            // Show or update confirm button
+            let confirmBtn = card.querySelector('.confirm-multi-btn');
+            if (!confirmBtn) {
+                confirmBtn = document.createElement('button');
+                confirmBtn.className = 'btn confirm-multi-btn';
+                confirmBtn.textContent = '✓ 确认提交';
+                confirmBtn.style.cssText = 'margin-top:10px;';
+                confirmBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    if (q.id in answeredMap) return;
+                    const finalSelections = card._multiSelections || new Set();
+                    if (finalSelections.size === 0) return; // Must select at least one
+                    const userAnswer = Array.from(finalSelections).sort((a, b) => a - b);
+                    const correctAnswer = [...q.answer].sort((a, b) => a - b);
+                    const isCorrect = JSON.stringify(userAnswer) === JSON.stringify(correctAnswer);
+
+                    answeredMap[q.id] = { userAnswer, isCorrect };
+                    card.classList.add('answered');
+
+                    // Clear selection highlights, show correct/incorrect
+                    const opts = card.querySelectorAll('.option-item');
+                    opts.forEach(opt => {
+                        opt.classList.remove('selected');
+                        const idx = parseInt(opt.dataset.idx);
+                        const isCorrectOption = q.answer.includes(idx);
+                        const wasSelected = userAnswer.includes(idx);
+                        if (wasSelected && isCorrectOption) {
+                            opt.classList.add('show-correct');
+                        } else if (wasSelected && !isCorrectOption) {
+                            opt.classList.add('show-incorrect');
+                        } else if (!wasSelected && isCorrectOption) {
+                            opt.classList.add('show-correct-dim');
+                        }
+                    });
+
+                    // Remove confirm button
+                    if (confirmBtn) confirmBtn.remove();
+
+                    const fb = card.querySelector('.feedback-msg');
+                    if (isCorrect) {
+                        fb.textContent = '✅ 回答正确！';
+                        fb.className = 'feedback-msg show correct-fb';
+                        card.classList.add('answered-correct');
+                    } else {
+                        const correctStr = q.answer.map(i => q.options[i].charAt(0)).join('、');
+                        fb.textContent = '❌ 回答错误！正确答案是：' + correctStr;
+                        fb.className = 'feedback-msg show incorrect-fb';
+                        card.classList.add('answered-incorrect');
+                    }
+                    updateStats();
+                    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                });
+                card.appendChild(confirmBtn);
+            }
+            confirmBtn.textContent = selections.size > 0 ? `✓ 确认提交 (已选${selections.size}项)` : '✓ 确认提交';
+        }
+
+        function updateStats() {
+            const total = allQuestions.length;
+            const answered = Object.keys(answeredMap).length;
+            let correct = 0;
+            let incorrect = 0;
+            Object.values(answeredMap).forEach(v => {
+                if (v.isCorrect) correct++;
+                else incorrect++;
+            });
+            const remaining = total - answered;
+
+            document.getElementById('totalCount').textContent = total;
+            document.getElementById('answeredCount').textContent = answered;
+            document.getElementById('correctCount').textContent = correct;
+            document.getElementById('incorrectCount').textContent = incorrect;
+            document.getElementById('remainingCount').textContent = remaining;
+        }
+
+        function resetAll() {
+            if (Object.keys(answeredMap).length > 0) {
+                if (!confirm('确定要清除所有答案并重新开始吗？此操作不可撤销。')) return;
+            }
+            answeredMap = {};
+            // Clear multi-selections stored on cards
+            document.querySelectorAll('.question-card').forEach(card => {
+                card._multiSelections = new Set();
+            });
+            const activeFilter = document.querySelector('.filter-btn.active');
+            const filterKey = activeFilter ? activeFilter.dataset.filter : 'all';
+            renderAllQuestions(filterKey);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ==================== FILTER HANDLING ====================
+        document.getElementById('filterRow').addEventListener('click', function(e) {
+            if (e.target.classList.contains('filter-btn')) {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                const filterKey = e.target.dataset.filter;
+                renderAllQuestions(filterKey);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+
+        // ==================== INIT ====================
+        function init() {
+            renderAllQuestions('all');
+            updateStats();
+        }
+
+        init();
+
+        console.log('📚 大学物理概念题交互自测已就绪');
+        console.log('  总计题目：' + allQuestions.length + ' 道');
+        console.log('  单选题：' + allQuestions.filter(q => q.type === 'single').length + ' 道');
+        console.log('  判断题：' + allQuestions.filter(q => q.type === 'judge').length + ' 道');
+        console.log('  多选题：' + allQuestions.filter(q => q.type === 'multi').length + ' 道');
+        console.log('  点击选项即可作答，绿色=正确，红色=错误');
+        console.log('  使用顶部筛选栏按文件来源或答题状态筛选');
+    </script>
+</body>
+</html>

@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>大学物理（上册）全面总结 — 难度分层</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<style>
+  :root {
+    --bg: #f5f0eb;
+    --card-bg: #ffffff;
+    --text: #2c2416;
+    --text-secondary: #5c5347;
+    --accent: #8b5e3c;
+    --accent-light: #c9a87c;
+    --border: #e0d5c7;
+    --shadow: 0 2px 12px rgba(0,0,0,0.06);
+    --shadow-hover: 0 6px 24px rgba(0,0,0,0.10);
+    --radius: 12px;
+    --font-main: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', system-ui, sans-serif;
+    --font-serif: 'Times New Roman', 'CMU Serif', 'Noto Serif CJK SC', serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: var(--font-main);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    padding: 1.5cm 2cm;
+    font-size: 1.3rem;
+  }
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 2rem 2.5rem;
+  }
+
+  /* ── Title ── */
+  .hero { margin-bottom: 1.5rem; }
+  .hero h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+    text-align: center;
+  }
+  .hero p {
+    margin-top: 0.3rem;
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    text-align: center;
+  }
+  .hero .tags {
+    margin-top: 0.5rem;
+    text-align: center;
+  }
+  .hero .tags span {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin: 0 0.2rem;
+  }
+
+  /* ── TOC ── */
+  .toc { margin-bottom: 1.5rem; }
+  .toc h2 { font-size: 1.2rem; color: var(--text); margin-bottom: 0.3rem; font-weight: 700; }
+  .toc ol {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 0.1rem 1rem;
+    padding-left: 1.2rem;
+  }
+  .toc li { font-size: 1.15rem; }
+  .toc a { color: #1a0dab; text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+  .toc .toc-hs { color: #1a6b3c; }
+  .toc .toc-univ { color: #b91c1c; }
+
+  /* ── Inline difficulty labels ── */
+  .label-hs { font-size: 0.9rem; font-weight: 700; color: #1a6b3c; }
+  .label-univ { font-size: 0.9rem; font-weight: 700; color: #b91c1c; }
+  .label-key { font-size: 0.9rem; font-weight: 700; color: #1a0dab; }
+
+  /* ── Section headings ── */
+  .section-h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin: 1.5rem 0 0.6rem;
+    padding-bottom: 0.2rem;
+    border-bottom: 2px solid var(--accent-light);
+  }
+  .section-h2 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 1.2rem 0 0.4rem;
+  }
+  .section-h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0.8rem 0 0.3rem;
+  }
+
+  /* ── Content sections ── */
+  .sec { margin-bottom: 1rem; }
+  .sec p, .sec li { font-size: 1.3rem; color: var(--text); line-height: 1.7; }
+  .sec ul, .sec ol { padding-left: 1.5rem; }
+  .sec li { margin-bottom: 0.1rem; }
+  .sec h2 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 1.2rem 0 0.4rem;
+  }
+  .sec h2 .sub { font-weight: 400; font-size: 0.9rem; color: var(--text-secondary); margin-left: 0.2rem; }
+  .sec h2 .emoji { font-size: 1.35rem; }
+  .sec h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0.8rem 0 0.3rem;
+  }
+  .sec h4 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0.6rem 0 0.2rem;
+  }
+
+  /* ── Auto-numbering for content sections ── */
+  .sec { counter-reset: eq; }
+  .formula { counter-increment: eq; position: relative; padding-right: 2.5rem; }
+  .formula::after {
+    content: "(" counter(eq) ")";
+    position: absolute;
+    right: 0;
+    top: 0.3rem;
+    color: #888;
+    font-size: 0.85rem;
+    font-family: 'Times New Roman', serif;
+  }
+
+  /* ── Formula blocks (like LaTeX align* with no background, no border) ── */
+  .formula {
+    padding: 0.3rem 0;
+    margin: 0.3rem 0;
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    overflow-x: auto;
+    color: var(--text);
+    text-align: center;
+  }
+  .formula .label {
+    float: right;
+    color: var(--text-secondary);
+    font-family: var(--font-serif);
+    font-size: 0.8rem;
+    font-style: italic;
+  }
+  .formula-inline {
+    font-family: var(--font-serif);
+    color: var(--text);
+  }
+
+  /* ── Stacked fractions ── */
+  .frac {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    vertical-align: middle;
+    margin: 0 0.1em;
+    line-height: 1.0;
+    font-size: 0.85em;
+  }
+  .frac .n {
+    padding: 0 0.3em 0.1em;
+    border-bottom: 1.5px solid var(--text);
+  }
+  .frac .d {
+    padding: 0.1em 0.3em 0;
+  }
+  .frac-sm { font-size: 0.7em; }
+
+  /* ── Tables (like LaTeX tabular with hline) ── */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1.1rem;
+    margin: 0.5rem 0;
+  }
+  .data-table th {
+    padding: 0.3rem 0.6rem;
+    text-align: left;
+    font-weight: 700;
+    color: var(--text);
+    border-bottom: 2px solid var(--accent);
+  }
+  .data-table td {
+    padding: 0.25rem 0.6rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.5rem 0;
+    font-size: 1.15rem;
+  }
+  .compare-table th, .compare-table td {
+    border: 1px solid var(--border);
+    padding: 0.35rem 0.6rem;
+    text-align: left;
+  }
+  .compare-table th {
+    font-weight: 700;
+    color: var(--text);
+    background: #f5f0eb;
+  }
+
+  /* ── Callout / Notes ── */
+  .callout {
+    margin: 0.6rem 0;
+    padding: 0.6rem 0.8rem;
+    font-size: 1.2rem;
+    color: var(--text);
+    border-left: 3px solid var(--accent-light);
+    background: #faf7f2;
+    border-radius: 0 6px 6px 0;
+  }
+  .callout-blue { border-left-color: #5b8dd9; }
+  .callout-green { border-left-color: #16a34a; }
+  .callout-yellow { border-left-color: #ca8a04; }
+  .callout-red { border-left-color: #dc2626; }
+
+  /* ── Exam problem box ── */
+  .exam-box {
+    margin: 0.6rem 0;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: #fdfcf9;
+  }
+  .exam-box .title {
+    font-weight: 700;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 0.1rem;
+  }
+  .exam-box .q-text { font-size: 1.2rem; margin: 0.2rem 0; color: var(--text); }
+  .exam-box .answer { font-size: 1.1rem; color: var(--accent); margin-top: 0.2rem; }
+  .exam-box .answer .frac .n { border-bottom-color: var(--accent); }
+
+  /* ── Maxwell grid ── */
+  .maxwell-grid, .maxwell-grid-4 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    margin: 0.5rem 0;
+  }
+  @media (max-width: 520px) { .maxwell-grid, .maxwell-grid-4 { grid-template-columns: 1fr; } }
+  .maxwell-grid .eq-box, .maxwell-grid-4 .eq-box {
+    padding: 0.5rem 0.8rem;
+    border-left: 3px solid var(--accent-light);
+    background: #faf7f2;
+    border-radius: 0 6px 6px 0;
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    color: var(--text);
+  }
+  .maxwell-grid .eq-box .name, .maxwell-grid-4 .eq-box .name {
+    font-family: var(--font-serif);
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    display: block;
+    margin-bottom: 0.1rem;
+  }
+
+  /* ── Two-col layout ── */
+  .col2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 520px) { .col2 { grid-template-columns: 1fr; } }
+  .col3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.8rem; }
+  @media (max-width: 600px) { .col3 { grid-template-columns: 1fr; } }
+
+  /* ── List dots ── */
+  .dot-list { list-style: none; padding-left: 0 !important; }
+  .dot-list li { padding-left: 1.3rem; position: relative; }
+  .dot-list li::before { content: '•'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+
+  /* ── Misc ── */
+  .btt { text-align: center; margin: 1.5rem 0 0.5rem; }
+  .btt a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.85rem;
+    padding: 6px 18px;
+    border: 1.5px solid var(--accent-light);
+    border-radius: 20px;
+    transition: all 0.2s ease;
+  }
+  .btt a:hover {
+    color: #fff;
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  footer {
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    opacity: 0.7;
+    padding: 1rem 0 0.3rem;
+    border-top: 1px solid var(--border);
+    margin-top: 1.5rem;
+  }
+
+  /* ── Print ── */
+  @media print {
+    body { background: #fff; padding: 0; }
+    .container { box-shadow: none; border-radius: 0; }
+    @page { margin: 2cm; }
+  }</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ═══════ Hero ═══════ -->
+  <div class="hero">
+    <h1>📘 大学物理（上册）全面总结</h1>
+    <p>基于教材：大学物理学（第四版）曾代敏 · 高等教育出版社<br>
+    按难度分层 · 高中复习 🔁 大学新内容 · 附历年真题</p>
+    <div class="tags">
+      <span>刚体</span><span>库伦定律</span><span>比奥-萨法尔</span>
+      <span>法拉第电磁感应</span><span>磁矩</span><span>麦氏方程</span><span>H 安环</span>
+      <span>静电场</span><span>高斯定理</span><span>安培环路</span><span>电磁波</span>
+    </div>
+  </div>
+
+  <!-- ═══════ TOC ═══════ -->
+  <div class="toc">
+    <h2>📑 目录</h2>
+    <ol>
+      <li class="toc-hs"><a href="#hs-mechanics">🔹 高中回顾 · 力学基础</a></li>
+      <li class="toc-univ"><a href="#rigid">⚙️ 刚体定轴转动 <span class="label-univ">[大学]</span></a></li>
+      <li class="toc-hs"><a href="#hs-em">🔸 高中回顾 · 静电基础</a></li>
+      <li class="toc-univ"><a href="#coulomb">⚡ 库伦定律 &amp; 电场 <span class="label-univ">[大学]</span></a></li>
+      <li class="toc-univ"><a href="#gauss">📐 高斯定理 <span class="label-univ">[大学]</span></a></li>
+      <li class="toc-univ"><a href="#potential">⚡ 电势 &amp; 静电场能量 <span class="label-univ">[大学]</span></a></li>
+      <li class="toc-univ"><a href="#conductor">🔌 导体与电介质 <span class="label-univ">[大学]</span></a></li>
+      <li class="toc-hs"><a href="#hs-mag">🔸 高中回顾 · 磁场基础</a></li>
+      <li class="toc-univ"><a href="#biot">🧲 比奥-萨法尔定律 <span class="label-univ">[大学]</span></a></li>
+      <li class="toc-univ"><a href="#ampere">🔄 安培环路定理 <span class="label-univ">[大学]</span></a></li>
+      <li class="toc-univ"><a href="#magnetic-force">🧲 磁场对电流的作用 <span class="label-univ">[大学]</span></a></li>
+      <li class="toc-univ"><a href="#moment">🧲 磁矩 <span class="label-univ">[大学]</span></a></li>
+      <li class="toc-univ"><a href="#mag-media">🧲 磁介质 &amp; H 安环 <span class="label-univ">[大学]</span></a></li>
+      <li class="toc-univ"><a href="#faraday">⚡ 法拉第电磁感应 <span class="label-univ">[大学]</span></a></li>
+      <li class="toc-univ"><a href="#maxwell">📐 麦克斯韦方程组 <span class="label-univ">[大学]</span></a></li>
+      <li class="toc-univ"><a href="#emwave">📡 电磁波 <span class="label-univ">[大学]</span></a></li>
+      <li><a href="#exam-problems">📝 历年真题精选</a></li>
+      <li><a href="#consts">📌 常用物理常量</a></li>
+    </ol>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!--  高中回顾 — 力学基础                                    -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <h2 class="section-h1">📖 高中回顾 · 力学基础</h2>
+
+  <div class="sec" id="hs-mechanics">
+    <h2><span class="emoji">📐</span> 运动学与牛顿力学 <span class="label-hs">[高中]</span></h2>
+    <p>以下内容为<strong>高中物理</strong>已学过的力学基础，大学物理在此基础上深化扩展。</p>
+
+    <h3>📌 质点运动学</h3>
+        <div class="formula">v = v₀ + at</div>
+    <div class="formula">x = x₀ + v₀t + <span class="frac"><span class="n">1</span><span class="d">2</span></span>at²</div>
+    <div class="formula">v² − v₀² = 2a(x−x₀)</div>
+
+    <h3>📌 牛顿三定律</h3>
+    <ul>
+      <li><strong>惯性定律：</strong> F = 0 ⇒ v = const</li>
+      <li><strong>F = ma</strong> （牛顿第二定律，力的瞬时作用）</li>
+      <li><strong>作用与反作用：</strong> F₁₂ = −F₂₁</li>
+    </ul>
+
+    <h3>📌 常见的力</h3>
+    <ul>
+      <li>万有引力：F = G m₁m₂/r², G = 6.67×10⁻¹¹ N·m²/kg²</li>
+      <li>重力：G = mg, g ≈ 9.8 m/s²</li>
+      <li>弹簧弹力（胡克定律）：F = −kx</li>
+      <li>摩擦力：fₘₐₓ = μₛN, fₖ = μₖN</li>
+    </ul>
+
+    <h3>📌 动量与冲量</h3>
+        <div class="formula">p = mv</div>
+    <div class="formula">I = ∫F dt = Δp = mv₂ − mv₁</div>
+    <p><strong>动量守恒：</strong>∑F<sub>外</sub> = 0 ⇒ p = const</p>
+
+    <h3>📌 功与能</h3>
+    <ul>
+      <li>动能 Eₖ = <span class="frac"><span class="n">1</span><span class="d">2</span></span>mv²，动能定理 W = ΔEₖ</li>
+      <li>重力势能 Eₚ = mgh，弹性势能 Eₚ = <span class="frac"><span class="n">1</span><span class="d">2</span></span>kx²</li>
+      <li>机械能守恒：只有保守力做功时，Eₖ + Eₚ = const</li>
+    </ul>
+
+    <div class="callout callout-green">
+      <strong>✅ 大学新视角：</strong> 中学学的 <strong>F = ma</strong> 是 <strong>F = <span class="frac"><span class="n">dp</span><span class="d">dt</span></span></strong> 在 m 为常量时的特例。
+      大学物理强调 <strong>F = <span class="frac"><span class="n">dp</span><span class="d">dt</span></span></strong> 的微分形式，并引入 <strong>质心运动定理</strong>：∑F<sub>外</sub> = Ma<sub>C</sub>。
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!--  刚体定轴转动 — 大学新内容                               -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <h2 class="section-h1">⚙️ 刚体定轴转动</h2>
+
+  <div class="sec" id="rigid">
+    <h2><span class="emoji">⚙️</span> 刚体定轴转动 <span class="label-univ">[大学]</span> <span class="sub">Rigid Body Rotation</span></h2>
+
+    <div class="callout callout-blue">
+      <strong>💡 刚体定义：</strong> 在外力作用下形状和大小保持不变的理想物体 —— 任意两质点间距离恒定。
+      这是大学物理引入的第一个<strong>理想模型</strong>，中学未系统学习。
+    </div>
+
+    <h3>📌 定轴转动的运动学</h3>
+        <div class="formula">ω = <span class="frac"><span class="n">dθ</span><span class="d">dt</span></span></div>
+    <div class="formula">α = <span class="frac"><span class="n">dω</span><span class="d">dt</span></span> = <span class="frac"><span class="n">d²θ</span><span class="d">dt²</span></span></div>
+        <div class="formula">s = Rθ</div>
+    <div class="formula">v = Rω</div>
+    <div class="formula">a<sub>τ</sub> = Rα</div>
+    <div class="formula">a<sub>n</sub> = Rω²</div>
+    <p>匀角加速转动：</p>
+        <div class="formula">ω = ω₀ + αt</div>
+    <div class="formula">θ = θ₀ + ω₀t + <span class="frac"><span class="n">1</span><span class="d">2</span></span>αt²</div>
+    <div class="formula">ω² − ω₀² = 2α(θ−θ₀)</div>
+
+    <h3>📌 转动惯量 <span class="label-key">[核心]</span></h3>
+    <p><strong>转动惯量 I</strong> 描述刚体转动惯性的大小，相当于平动中的质量。取决于 <strong>质量分布</strong> 和 <strong>转轴位置</strong>。</p>
+        <div class="formula">I = Σ mᵢ rᵢ²</div>
+    <div class="formula"> ⟹ I = ∫ r² dm</div>
+
+    <h4>常见刚体的转动惯量</h4>
+    <table class="data-table">
+      <tr><th>刚体类型</th><th>转轴位置</th><th>转动惯量</th></tr>
+      <tr><td>细圆环</td><td>过中心垂直轴</td><td>I = MR²</td></tr>
+      <tr><td>圆盘/圆柱</td><td>过中心轴</td><td>I = <span class="frac"><span class="n">1</span><span class="d">2</span></span>MR²</td></tr>
+      <tr><td>细棒</td><td>过中心垂直轴</td><td>I = <span class="frac"><span class="n">1</span><span class="d">12</span></span>ML²</td></tr>
+      <tr><td>细棒</td><td>过端点垂直轴</td><td>I = <span class="frac"><span class="n">1</span><span class="d">3</span></span>ML²</td></tr>
+      <tr><td>球壳</td><td>直径轴</td><td>I = <span class="frac"><span class="n">2</span><span class="d">3</span></span>MR²</td></tr>
+      <tr><td>球体</td><td>直径轴</td><td>I = <span class="frac"><span class="n">2</span><span class="d">5</span></span>MR²</td></tr>
+    </table>
+
+    <h4>平行轴定理</h4>
+    <div class="formula">I = I<sub>C</sub> + M d²</div>
+    <p>其中 I<sub>C</sub> 为过质心轴的转动惯量，d 为两平行轴间的距离。</p>
+    <div class="callout callout-yellow">
+      <strong>⚠️ 注意：</strong> 平行轴定理必须从 <strong>质心轴</strong> 出发！只能从质心轴 → 其他平行轴，不能反向。
+    </div>
+
+    <h3>📌 转动定律 <span class="label-key">[核心]</span></h3>
+    <div class="formula">M = Iα = I · (<span class="frac"><span class="n">dω</span><span class="d">dt</span></span>)</div>
+    <p><strong>转动定律</strong> 是牛顿第二定律在转动中的对应：合外力矩 ≠ 0 → 刚体获得角加速度。</p>
+    <p>力矩定义：M = r × F，方向由右手螺旋定则确定。</p>
+
+    <h3>📌 刚体角动量</h3>
+        <div class="formula">L = Iω</div>
+    <div class="formula"> → M = <span class="frac"><span class="n">dL</span><span class="d">dt</span></span></div>
+    <div class="formula"> → ∫M dt = ΔL = Iω₂ − Iω₁</div>
+
+    <h3>📌 角动量守恒定律 <span class="label-key">[重要]</span></h3>
+        <div class="formula">M<sub>外</sub> = 0 ⇒ L = Iω = const</div>
+    <div class="formula"> ⟹ I₁ω₁ = I₂ω₂</div>
+    <ul>
+      <li><strong>经典例子：</strong>花样滑冰运动员收臂加速旋转；转椅上的哑铃实验</li>
+      <li>猫在空中翻身、陀螺仪的定向性</li>
+    </ul>
+
+    <h3>📌 转动动能 &amp; 功</h3>
+        <div class="formula">Eₖ = <span class="frac"><span class="n">1</span><span class="d">2</span></span>Iω²</div>
+    <div class="formula">dW = M dθ</div>
+    <div class="formula">W = <span class="frac"><span class="n">1</span><span class="d">2</span></span>Iω₂² − <span class="frac"><span class="n">1</span><span class="d">2</span></span>Iω₁²</div>
+    <p>刚体 + 质点系统的机械能守恒（含重力势能 mgh<sub>C</sub>）。</p>
+
+    <h3>📌 纯滚动条件</h3>
+        <div class="formula">v<sub>C</sub> = Rω</div>
+    <div class="formula">a<sub>C</sub> = Rα</div>
+    <p>纯滚动 = 无滑滚动，接触点瞬时速度为零。</p>
+
+    <h3>📌 打击中心 (Center of Percussion)</h3>
+    <p>当外力作用于刚体上的特定位置时，转轴处不受冲击力，该位置称为打击中心（COP）。</p>
+    <div class="formula">d = <span class="frac"><span class="n">I<sub>C</sub></span><span class="d">M·h</span></span> + h</div>
+    <p>其中 h 为质心到转轴的距离。应用：棒球棒、门把手设计（安装在打击中心处手感最好）。</p>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!--  高中回顾 — 静电基础                                    -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <h2 class="section-h1">📖 高中回顾 · 静电基础</h2>
+
+  <div class="sec" id="hs-em">
+    <h2><span class="emoji">⚡</span> 静电学基础回顾 <span class="label-hs">[高中]</span></h2>
+
+    <h3>📌 电荷基本性质</h3>
+    <ul>
+      <li>电荷守恒定律：电荷既不能创造也不能消灭，只能转移</li>
+      <li>电荷量子化：Q = ne （n 为整数，e = 1.602×10⁻¹⁹ C）</li>
+      <li>同种电荷相斥，异种电荷相吸</li>
+    </ul>
+
+    <h3>📌 库仑定律（高中版）</h3>
+        <div class="formula">F = k · <span class="frac"><span class="n">q₁q₂</span><span class="d">r²</span></span></div>
+    <div class="formula">其中 k = 9.0×10⁹ N·m²/C²</div>
+    <p>适用于真空中的两个静止点电荷。</p>
+
+    <h3>📌 电场强度 E</h3>
+        <div class="formula">E = <span class="frac"><span class="n">F</span><span class="d">q₀</span></span></div>
+    <div class="formula">（场强的定义式）</div>
+        <div class="formula">E = <span class="frac"><span class="n">kQ</span><span class="d">r²</span></span></div>
+    <div class="formula">（点电荷的场强）</div>
+
+    <h3>📌 电场线与电势</h3>
+    <ul>
+      <li>电场线从正电荷出发，终止于负电荷</li>
+      <li>沿电场线方向电势降低</li>
+      <li>等势面与电场线处处垂直</li>
+    </ul>
+
+    <div class="callout callout-green">
+      <strong>✅ 大学新视角：</strong> 高中学习的是 <strong>点电荷</strong> 的简单情况；大学物理引入 <strong>连续带电体</strong> 的电场计算（积分法），以及 <strong>高斯定理</strong> 求对称性电场。<br>
+      高中 <strong>F = k<span class="frac"><span class="n">q₁q₂</span><span class="d">r²</span></span></strong> → 大学用 ε₀ 表示：<strong>F = q₁q₂/(4πε₀r²)</strong>，意义相同但形式更统一。
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!--  库伦定律 & 电场 — 大学新内容                            -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <h2 class="section-h1">⚡ 库伦定律与电场 · 大学深化</h2>
+
+  <div class="sec" id="coulomb">
+    <h2><span class="emoji">⚡</span> 库仑定律 <span class="label-univ">[大学]</span> <span class="sub">Coulomb's Law</span></h2>
+
+    <div class="formula">F₁₂ = <span class="frac"><span class="n">1</span><span class="d">4πε₀</span></span> · (<span class="frac"><span class="n">q₁q₂</span><span class="d">r²</span></span>) · r̂</div>
+    <p>ε₀ = 8.85×10⁻¹² C²/(N·m²) 为真空介电常数<br>
+    静电力常量 k = 1/(4πε₀) ≈ 9.0×10⁹ N·m²/C²</p>
+
+    <h3>📌 电场强度的深入定义</h3>
+        <div class="formula">E = <span class="frac"><span class="n">F</span><span class="d">q₀</span></span></div>
+    <div class="formula">（点电荷电场：E = <span class="frac"><span class="n">1</span><span class="d">4πε₀</span></span> · (q/r²) · r̂）</div>
+
+    <h3>📌 电场叠加原理（矢量积分）</h3>
+        <div class="formula">E = ΣEᵢ（离散电荷系）</div>
+    <div class="formula">E = ∫dE（连续电荷系）</div>
+
+    <h4>常见带电体的电场（大学要求计算）</h4>
+    <table class="data-table">
+      <tr><th>带电体</th><th>场点</th><th>电场强度</th></tr>
+      <tr><td>均匀带电直线（无限长）</td><td>距离 r 处</td><td>E = <span class="frac"><span class="n">λ</span><span class="d">2πε₀r</span></span></td></tr>
+      <tr><td>均匀带电平面（无限大）</td><td>任意距离</td><td>E = <span class="frac"><span class="n">σ</span><span class="d">2ε₀</span></span></td></tr>
+      <tr><td>均匀带电圆环</td><td>轴线上距离 x</td><td>E = qx/(4πε₀(R²+x²)^{3/2})</td></tr>
+      <tr><td>均匀带电圆盘</td><td>轴线上距离 x</td><td>E = <span class="frac"><span class="n">σ</span><span class="d">2ε₀</span></span> · (1 − x/√(R²+x²))</td></tr>
+    </table>
+
+    <h3>📌 电偶极子</h3>
+        <div class="formula">电偶极矩：p = ql</div>
+    <div class="formula">（方向由 −q 指向 +q）</div>
+    <div class="formula">中垂线上电场：E = −p/(4πε₀r³)</div>
+    <p>电偶极子在均匀电场中受到力矩 M = p × E，有转向电场方向的趋势。</p>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!--  高斯定理                                             -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="sec" id="gauss">
+    <h2><span class="emoji">📐</span> 高斯定理 <span class="label-univ">[大学]</span> <span class="sub">Gauss's Law</span></h2>
+
+    <div class="callout callout-blue">
+      <strong>💡 高斯定理是大学物理静电场部分的核心方法，高中完全没有涉及。</strong>
+      它建立了闭合曲面的电通量与面内电荷的直接关系。
+    </div>
+
+    <h3>📌 电通量</h3>
+    <div class="formula">Φ<sub>E</sub> = ∮<sub>S</sub> E · dS</div>
+
+    <h3>📌 高斯定理（积分形式）</h3>
+    <div class="formula">∮<sub>S</sub> E · dS = (1/ε₀) · Σq<sub>内</sub></div>
+
+    <h4>利用高斯定理求解电场的关键步骤：</h4>
+    <ol>
+      <li>分析电场的<strong>对称性</strong>（球对称、轴对称、面对称）</li>
+      <li>选取合适的<strong>高斯面</strong>（使 E 垂直于或平行于面的各部分）</li>
+      <li>计算电通量</li>
+      <li>计算高斯面内包围的电荷</li>
+    </ol>
+
+    <h4>典型应用结果</h4>
+    <table class="data-table">
+      <tr><th>电荷分布</th><th>r &lt; R (内部)</th><th>r &gt; R (外部)</th></tr>
+      <tr><td>均匀带电球面</td><td>E = 0</td><td>E = Q/(4πε₀r²)</td></tr>
+      <tr><td>均匀带电球体</td><td>E = Qr/(4πε₀R³)</td><td>E = Q/(4πε₀r²)</td></tr>
+      <tr><td>无限长均匀带电直线</td><td colspan="2">E = <span class="frac"><span class="n">λ</span><span class="d">2πε₀r</span></span></td></tr>
+      <tr><td>无限大均匀带电平面</td><td colspan="2">E = <span class="frac"><span class="n">σ</span><span class="d">2ε₀</span></span></td></tr>
+    </table>
+
+    <h3>📌 静电场环路定理</h3>
+    <div class="formula">∮<sub>L</sub> E · dl = 0</div>
+    <p>表明静电场是<strong>保守场</strong>（无旋场）—— 电场力做功与路径无关。</p>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!--  电势 & 静电场能量                                     -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="sec" id="potential">
+    <h2><span class="emoji">⚡</span> 电势与静电场能量 <span class="label-univ">[大学]</span></h2>
+
+    <h3>📌 电势能</h3>
+    <div class="formula">E<sub>p</sub> = q₀ ∫<sub>P</sub><sup>参考点</sup> E · dl</div>
+
+    <h3>📌 电势</h3>
+    <div class="formula">V<sub>P</sub> = E<sub>p</sub>/q₀ = ∫<sub>P</sub><sup>参考点</sup> E · dl</div>
+    <div class="formula">点电荷电势：V = q/(4πε₀r)（无穷远为零势点）</div>
+
+    <h3>📌 电势叠加原理</h3>
+        <div class="formula">V = ΣVᵢ（离散）</div>
+    <div class="formula">V = ∫dV（连续）</div>
+
+    <h3>📌 电场与电势梯度</h3>
+    <div class="formula">E = −∇V = −(∂V/∂x i + ∂V/∂y j + ∂V/∂z k)</div>
+    <p>电场指向电势下降最快的方向。</p>
+
+    <h3>📌 静电场能量</h3>
+    <div class="formula">电容器储能：W<sub>e</sub> = <span class="frac frac-sm"><span class="n">Q²</span><span class="d">2C</span></span> = <span class="frac"><span class="n">1</span><span class="d">2</span></span>QU = <span class="frac"><span class="n">1</span><span class="d">2</span></span>CU²</div>
+    <div class="formula">电场能量密度：w<sub>e</sub> = <span class="frac"><span class="n">1</span><span class="d">2</span></span>D·E = <span class="frac"><span class="n">1</span><span class="d">2</span></span>εE²</div>
+    <div class="formula">静电场总能量：W<sub>e</sub> = ∫ w<sub>e</sub> dV</div>
+
+    <div class="callout callout-green">
+      <strong>✅ 关键理解：</strong> 能量<strong>定域于场中</strong>（而非电荷上）—— 这是大学物理强调的场的观点。
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!--  导体与电介质                                          -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="sec" id="conductor">
+    <h2><span class="emoji">🔌</span> 静电场中的导体与电介质 <span class="label-univ">[大学]</span></h2>
+
+    <h3>📌 静电平衡条件</h3>
+    <ul>
+      <li>导体内 E = 0，表面 E ⟂ 表面</li>
+      <li>导体是等势体，表面是等势面</li>
+      <li>电荷分布在表面，孤立导体面电荷密度与曲率有关（尖端放电）</li>
+    </ul>
+
+    <h3>📌 电介质极化</h3>
+    <div class="formula">极化强度：P = ε₀χ<sub>e</sub>E</div>
+    <div class="formula">束缚电荷面密度：σ′ = P<sub>n</sub> = P·e<sub>n</sub></div>
+    <div class="formula">电位移矢量：D = ε₀E + P = ε₀ε<sub>r</sub>E = εE</div>
+
+    <h4>介质中的高斯定理</h4>
+    <div class="formula">∮<sub>S</sub> D · dS = Σq<sub>0内</sub>（自由电荷）</div>
+
+    <h3>📌 电容器</h3>
+    <table class="data-table">
+      <tr><th>类型</th><th>电容</th></tr>
+      <tr><td>平行板电容器</td><td>C = εS/d = ε₀ε<sub>r</sub>S/d</td></tr>
+      <tr><td>圆柱形电容器</td><td>C = 2πεL / ln(R₂/R₁)</td></tr>
+      <tr><td>球形电容器</td><td>C = 4πεR₁R₂ / (R₂−R₁)</td></tr>
+      <tr><td>串联</td><td>1/C = Σ(1/Cᵢ)</td></tr>
+      <tr><td>并联</td><td>C = ΣCᵢ</td></tr>
+    </table>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!--  高中回顾 — 磁场基础                                    -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <h2 class="section-h1">📖 高中回顾 · 磁场基础</h2>
+
+  <div class="sec" id="hs-mag">
+    <h2><span class="emoji">🧲</span> 磁场基础回顾 <span class="label-hs">[高中]</span></h2>
+
+    <h3>📌 磁场的产生</h3>
+    <ul>
+      <li>磁铁周围存在磁场</li>
+      <li>电流周围产生磁场（奥斯特实验）</li>
+      <li>通电螺线管相当于条形磁铁</li>
+    </ul>
+
+    <h3>📌 安培定则（右手螺旋定则）</h3>
+    <ul>
+      <li>通电直导线：右手拇指指向电流方向，四指弯曲方向为磁场方向</li>
+      <li>通电螺线管：四指顺电流方向，拇指指向 N 极</li>
+    </ul>
+
+    <h3>📌 安培力</h3>
+        <div class="formula">F = BIL sinθ</div>
+    <div class="formula">（高中版，仅适用于匀强磁场）</div>
+
+    <h3>📌 洛伦兹力</h3>
+        <div class="formula">f = qvB sinθ</div>
+    <div class="formula">方向：左手定则</div>
+    <ul>
+      <li>带电粒子在匀强磁场中做匀速圆周运动：r = mv/(qB)，T = 2πm/(qB)</li>
+    </ul>
+
+    <div class="callout callout-green">
+      <strong>✅ 大学新视角：</strong> 高中只学习<strong>匀强磁场</strong>中的简单情况；大学物理用
+      <strong>毕奥-萨伐尔定律</strong> 计算任意形状电流的磁场，用 <strong>安培环路定理</strong> 求解对称性磁场。<br>
+      安培力推广为矢量积分形式：<strong>F = ∫L Idl × B</strong>。
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!--  比奥-萨法尔定律                                       -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <h2 class="section-h1">🧲 比奥-萨法尔定律 &amp; 恒定磁场</h2>
+
+  <div class="sec" id="biot">
+    <h2><span class="emoji">🧲</span> 毕奥-萨伐尔定律 <span class="label-univ">[大学]</span> <span class="sub">Biot–Savart Law</span></h2>
+
+    <div class="callout callout-blue">
+      <strong>💡 毕奥-萨伐尔定律是大学物理计算电流磁场的基本方法，高中未涉及。</strong>
+      它给出了任意形状载流导线在空间产生磁场的计算方法。
+    </div>
+
+    <h3>📌 基本定律</h3>
+    <div class="formula">dB = (μ₀/4π) · (I dl × r̂) / r²</div>
+    <p>μ₀ = 4π×10⁻⁷ T·m/A 为真空磁导率，方向由右手螺旋定则判断。</p>
+
+    <h3>📌 常见电流构型的磁场</h3>
+    <table class="data-table">
+      <tr><th>电流构型</th><th>磁感应强度 B</th></tr>
+      <tr><td>无限长直导线</td><td>B = μ₀I/(2πr)</td></tr>
+      <tr><td>半无限长直导线端点</td><td>B = μ₀I/(4πr)</td></tr>
+      <tr><td>有限长直导线</td><td>B = (μ₀I)/(4πd)·(sinθ₂−sinθ₁)</td></tr>
+      <tr><td>圆形电流圆心</td><td>B = μ₀I/(2R)</td></tr>
+      <tr><td>圆环轴线（距离 x）</td><td>B = μ₀IR²/[2(R²+x²)^{3/2}]</td></tr>
+      <tr><td>长直螺线管内部</td><td>B = μ₀nI（n 为单位长度匝数）</td></tr>
+    </table>
+
+    <h3>📌 磁场的高斯定理</h3>
+    <div class="formula">∮<sub>S</sub> B · dS = 0</div>
+    <p>表明 <strong>磁场是无源场</strong>，不存在磁单极子，磁感线总是闭合的。</p>
+
+    <h3>📌 磁通量</h3>
+    <div class="formula">Φ<sub>B</sub> = ∫<sub>S</sub> B · dS</div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!--  安培环路定理                                          -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="sec" id="ampere">
+    <h2><span class="emoji">🔄</span> 安培环路定理 <span class="label-univ">[大学]</span> <span class="sub">Ampère's Circuital Law</span></h2>
+
+        <div class="formula">∮<sub>L</sub> B · dl = μ₀ ΣI<sub>内</sub></div>
+    <div class="formula">（真空中的安培环路定理）</div>
+    <p>磁场 B 沿任意闭合回路的环量 = μ₀ × 穿过回路所围曲面的<strong>电流代数和</strong>。</p>
+
+    <h3>📌 与高斯定理的对比</h3>
+    <table class="compare-table">
+      <tr><th>定理</th><th>积分形式</th><th>含义</th><th>适用对称性</th></tr>
+      <tr><td>电场高斯定理</td><td>∮ E·dS = Q/ε₀</td><td>电荷是电场的源</td><td>球、轴、面对称</td></tr>
+      <tr><td>磁场高斯定理</td><td>∮ B·dS = 0</td><td>无磁单极</td><td>—</td></tr>
+      <tr><td>静电场环路</td><td>∮ E·dl = 0</td><td>静电场保守</td><td>—</td></tr>
+      <tr><td>安培环路定理</td><td>∮ B·dl = μ₀I</td><td>电流是磁场的源</td><td>轴、面对称</td></tr>
+    </table>
+
+    <h4>典型应用</h4>
+    <ul>
+      <li>无限长直导线：B·2πr = μ₀I ⇒ B = μ₀I/(2πr)</li>
+      <li>长直螺线管：B = μ₀nI</li>
+      <li>环形螺线管：B = μ₀NI/(2πr)</li>
+    </ul>
+
+    <div class="callout callout-yellow">
+      <strong>⚠️ 使用安培环路定理的关键：</strong> 必须选择适当的安培环路，使 B 在回路上为常数或方向已知。
+      与高斯定理类似，只能处理对称性较高的问题。
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!--  磁场对电流的作用                                       -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="sec" id="magnetic-force">
+    <h2><span class="emoji">🧲</span> 磁场对电流的作用 <span class="label-univ">[大学]</span></h2>
+
+    <h3>📌 安培力（矢量积分形式）</h3>
+        <div class="formula">dF = I dl × B</div>
+    <div class="formula">F = ∫<sub>L</sub> I dl × B</div>
+
+    <h3>📌 平行载流导线间的作用力</h3>
+    <div class="formula">F/l = μ₀ I₁I₂/(2πd)</div>
+    <p>同向电流相互吸引，反向电流相互排斥。</p>
+
+    <h3>📌 洛伦兹力</h3>
+    <div class="formula">F = q(E + v × B)</div>
+    <p>这是<strong>完整的洛伦兹力公式</strong>，包含电场力和磁场力两部分，高中只学过磁场部分。</p>
+
+    <h4>带电粒子在匀强磁场中的运动</h4>
+    <table class="data-table">
+      <tr><th>速度方向</th><th>运动形式</th></tr>
+      <tr><td>v ∥ B</td><td>匀速直线运动</td></tr>
+      <tr><td>v ⟂ B</td><td>匀速圆周运动：r = mv/(qB)，T = 2πm/(qB)</td></tr>
+      <tr><td>v 与 B 成 θ 角</td><td>螺旋线运动（回旋半径 r = mvsinθ/(qB)，螺距 h = vcosθ·T）</td></tr>
+    </table>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!--  磁矩                                                 -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <h2 class="section-h1">🧲 磁矩</h2>
+
+  <div class="sec" id="moment">
+    <h2><span class="emoji">🧲</span> 磁矩 <span class="label-univ">[大学]</span> <span class="sub">Magnetic Moment</span></h2>
+
+    <div class="callout callout-blue">
+      <strong>💡 磁矩是大学物理引入的重要概念，高中未涉及。</strong>
+      载流线圈的磁性强弱由磁矩描述，这是理解磁介质和原子磁性的基础。
+    </div>
+
+    <h3>📌 载流线圈的磁矩</h3>
+        <div class="formula">m = I · S · n̂</div>
+    <div class="formula"> → |m| = I · S（面积）</div>
+    <p>方向：右手定则 — 四指顺电流方向，拇指指向磁矩方向（与线圈法向一致）。</p>
+
+    <h3>📌 磁力矩</h3>
+        <div class="formula">M = m × B</div>
+    <div class="formula"> → τ = mB sinθ</div>
+    <p>θ 为 m 与 B 的夹角。磁矩有转向外磁场方向的趋势：θ = 0 时稳定平衡，θ = π 时不稳定平衡。</p>
+
+    <h3>📌 磁势能</h3>
+    <div class="formula">U<sub>m</sub> = −m · B = −mB cosθ</div>
+    <p>磁矩与外磁场同向时势能最小（θ=0, U=−mB），反向时最大。</p>
+
+    <h3>📌 磁矩的三种来源</h3>
+    <table class="data-table">
+      <tr><th>来源</th><th>描述</th><th>公式</th></tr>
+      <tr><td>载流线圈</td><td>通电回路的宏观磁性</td><td>m = IS</td></tr>
+      <tr><td>运动电荷（圆周）</td><td>电荷做圆周运动产生</td><td>m = qvr/2 = qωr²/2</td></tr>
+      <tr><td>均匀磁化体</td><td>磁化强度 = 单位体积磁矩</td><td>M = <span class="frac"><span class="n">dm</span><span class="d">dV</span></span></td></tr>
+    </table>
+
+    <h3>📌 磁矩与角动量的关系</h3>
+        <div class="formula">m = (q/2m) · L</div>
+    <div class="formula">（对做圆周运动的带电粒子）</div>
+    <p>回磁比 γ = q/(2m)，这是原子物理的重要基础。</p>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!--  磁介质 & H 安环                                       -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <h2 class="section-h1">🔄 H 安环 &amp; 磁介质</h2>
+
+  <div class="sec" id="mag-media">
+    <h2><span class="emoji">🔄</span> 磁介质 &amp; H 的安培环路定理 <span class="label-univ">[大学]</span> <span class="sub">Magnetic Media &amp; H-field</span></h2>
+
+    <div class="callout callout-blue">
+      <strong>💡 磁介质是大学物理的全新内容，高中完全未涉及。</strong>
+      引入辅助场量 H 来简化磁介质中的磁场计算。
+    </div>
+
+    <h3>📌 磁化强度 M</h3>
+        <div class="formula">M = <span class="frac"><span class="n">dm</span><span class="d">dV</span></span></div>
+    <div class="formula">（单位体积的磁矩）</div>
+        <div class="formula">M = χ<sub>m</sub>H</div>
+    <div class="formula">（各向同性线性介质）</div>
+
+    <h3>📌 磁场强度 H</h3>
+        <div class="formula">H = B/μ₀ − M</div>
+    <div class="formula"> → B = μ₀(H + M) = μH</div>
+    <p>μ = μ₀μ<sub>r</sub> 为磁导率，μ<sub>r</sub> = 1 + χ<sub>m</sub> 为相对磁导率。</p>
+
+    <h3>📌 H 的安培环路定理 <span class="label-key">[核心]</span></h3>
+    <div class="formula" style="font-size:1.2rem; font-weight:600;">∮<sub>L</sub> H · dl = ΣI<sub>f</sub> &emsp;（仅计自由电流）</div>
+
+    <h4>B 安环 vs H 安环</h4>
+    <table class="compare-table">
+      <tr><th>对比项</th><th>B 的安培环路定理</th><th>H 的安培环路定理</th></tr>
+      <tr><td>表达式</td><td>∮B·dl = μ₀(I<sub>f</sub> + I<sub>m</sub>)</td><td>∮H·dl = I<sub>f</sub></td></tr>
+      <tr><td>包含的电流</td><td>自由电流 + 磁化电流</td><td>仅自由电流</td></tr>
+      <tr><td>实用便利性</td><td>需知道所有电流</td><td>只需知道自由电流</td></tr>
+      <tr><td>适用场景</td><td>真空中</td><td>磁介质中（更实用）</td></tr>
+    </table>
+
+    <h3>📌 三类磁介质</h3>
+    <table class="data-table">
+      <tr><th>类型</th><th>μ<sub>r</sub></th><th>χ<sub>m</sub></th><th>例子</th></tr>
+      <tr><td>顺磁质</td><td>μ<sub>r</sub> &gt; 1</td><td>χ<sub>m</sub> &gt; 0</td><td>Al, O₂, 稀土元素</td></tr>
+      <tr><td>抗磁质</td><td>μ<sub>r</sub> &lt; 1</td><td>χ<sub>m</sub> &lt; 0</td><td>Cu, Bi, 水</td></tr>
+      <tr><td>铁磁质</td><td>μ<sub>r</sub> ≫ 1</td><td>非线性</td><td>Fe, Ni, Co</td></tr>
+    </table>
+
+    <h3>📌 铁磁质的特点</h3>
+    <ul>
+      <li>μ<sub>r</sub> 远大于 1，非线性关系</li>
+      <li>存在<strong>磁滞回线</strong>（Hysteresis Loop）：剩磁 B<sub>r</sub>、矫顽力 H<sub>c</sub></li>
+      <li>软磁材料（磁滞回线窄）：易磁化也易退磁 → 电磁铁、变压器</li>
+      <li>硬磁材料（磁滞回线宽）：剩磁大 → 永磁体</li>
+    </ul>
+
+    <h3>📌 应用场景</h3>
+    <ul>
+      <li>无限长直导线在介质中：H = I/(2πr)，B = μ₀μ<sub>r</sub>I/(2πr)</li>
+      <li>螺绕环：H = NI/(2πr)，B = μH</li>
+      <li>电磁铁：软铁芯中 H ≈ NI/l，B = μH 远大于空心螺线管</li>
+    </ul>
+
+    <div class="callout callout-yellow">
+      <strong>⚠️ 注意：</strong> H 环路上的 I<sub>f</sub> 只计自由电流，介质磁化产生的磁化电流不计入。
+      求 B 时需知道 μ<sub>r</sub> 或介质的磁化状态。
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!--  法拉第电磁感应                                        -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <h2 class="section-h1">⚡ 法拉第电磁感应</h2>
+
+  <div class="sec" id="faraday">
+    <h2><span class="emoji">⚡</span> 法拉第电磁感应定律 <span class="label-univ">[大学]</span> <span class="sub">Faraday's Law</span></h2>
+
+    <p>虽然高中接触过电磁感应，但大学物理从<strong>磁通量变化</strong>的深刻视角统一理解，并引入<strong>涡旋电场</strong>概念。</p>
+
+    <div class="formula" style="font-size:1.2rem; font-weight:600;">ℰ = − <span class="frac"><span class="n">dΦ<sub>B</sub></span><span class="d">dt</span></span></div>
+    <p>其中 Φ<sub>B</sub> = ∫<sub>S</sub> B · dS 为磁通量。</p>
+
+    <h3>📌 楞次定律</h3>
+    <p>感应电流的方向总是<strong>阻碍引起感应的磁通量变化</strong>。负号即是楞次定律的数学体现。</p>
+    <ul>
+      <li>Φ 增大 → 感应磁场与原磁场反向</li>
+      <li>Φ 减小 → 感应磁场与原磁场同向</li>
+    </ul>
+
+    <h3>📌 动生电动势</h3>
+    <p>导体<strong>切割磁力线运动</strong>产生：</p>
+        <div class="formula">ℰ<sub>ab</sub> = ∫<sub>a</sub><sup>b</sup> (v × B) · dl</div>
+    <div class="formula"> ⟹ 直导线：ℰ = Blv</div>
+
+    <h3>📌 感生电动势 &amp; 涡旋电场 <span class="label-key">[新概念]</span></h3>
+    <div class="formula">ℰ = ∮<sub>L</sub> E<sub>感</sub> · dl = −∫<sub>S</sub> (<span class="frac"><span class="n">∂B</span><span class="d">∂t</span></span>) · dS</div>
+    <div class="callout callout-red">
+      <strong>🔑 涡旋电场</strong>（感生电场）不是由电荷产生的，其电场线闭合，与静电场本质不同。
+      静电场 E<sub>静</sub> 是有源无旋场，涡旋电场 E<sub>感</sub> 是有旋无源场。
+    </div>
+
+    <h4>静电场 vs 涡旋电场</h4>
+    <table class="compare-table">
+      <tr><th>对比项</th><th>静电场 E<sub>静</sub></th><th>涡旋电场 E<sub>感</sub></th></tr>
+      <tr><td>产生原因</td><td>电荷激发</td><td>变化磁场激发</td></tr>
+      <tr><td>电场线</td><td>不闭合（始于正电，止于负电）</td><td>闭合曲线</td></tr>
+      <tr><td>环路积分</td><td>∮ E·dl = 0（保守场）</td><td>∮ E·dl = −<span class="frac"><span class="n">dΦ</span><span class="d">dt</span></span> ≠ 0（非保守）</td></tr>
+      <tr><td>通量</td><td>∮ E·dS = Q/ε₀</td><td>∮ E·dS = 0？</td></tr>
+    </table>
+
+    <h3>📌 自感</h3>
+        <div class="formula">Φ = LI</div>
+    <div class="formula">ℰ<sub>L</sub> = −L · <span class="frac"><span class="n">dI</span><span class="d">dt</span></span></div>
+    <div class="formula">长直螺线管自感：L = μn²V = μn²Sl</div>
+
+    <h3>📌 互感</h3>
+        <div class="formula">Φ₁₂ = MI₁</div>
+    <div class="formula">ℰ₂ = −M · <span class="frac"><span class="n">dI₁</span><span class="d">dt</span></span></div>
+    <p>M = M₁₂ = M₂₁（互易性），耦合系数 k = M/√(L₁L₂)。</p>
+
+    <h3>📌 RL 电路</h3>
+        <div class="formula">电流增长：I(t) = (ℰ/R)(1 − e<sup>−t/τ</sup>)</div>
+    <div class="formula">τ = L/R（时间常数）</div>
+    <div class="formula">电流衰减：I(t) = I₀ · e<sup>−t/τ</sup></div>
+
+    <h3>📌 磁场能量</h3>
+    <div class="formula">自感储能：W<sub>m</sub> = <span class="frac"><span class="n">1</span><span class="d">2</span></span>LI²</div>
+    <div class="formula">磁场能量密度：w<sub>m</sub> = <span class="frac"><span class="n">1</span><span class="d">2</span></span>B·H = <span class="frac frac-sm"><span class="n">B²</span><span class="d">2μ</span></span></div>
+    <div class="formula">磁场总能量：W<sub>m</sub> = ∫w<sub>m</sub> dV</div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!--  麦克斯韦方程组                                        -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <h2 class="section-h1">📐 麦克斯韦方程组</h2>
+
+  <div class="sec" id="maxwell">
+    <h2><span class="emoji">📐</span> 麦克斯韦方程组 <span class="label-univ">[大学]</span> <span class="sub">Maxwell's Equations</span></h2>
+
+    <div class="callout callout-red">
+      <strong>🔥 电磁学的"宪法"</strong> — 四个方程完整描述了经典电磁场的所有规律。
+      这是大学物理电磁学的<strong>最高峰</strong>，高中完全不涉及。
+    </div>
+
+    <h3>📌 位移电流 <span class="label-key">[核心贡献]</span></h3>
+    <div class="formula">位移电流密度：j<sub>d</sub> = <span class="frac"><span class="n">∂D</span><span class="d">∂t</span></span></div>
+    <div class="formula">位移电流：I<sub>d</sub> = ∫ j<sub>d</sub>·dS = <span class="frac"><span class="n">dΦ<sub>D</sub></span><span class="d">dt</span></span></div>
+    <p>变化的电场也能产生磁场 —— 这是麦克斯韦在安培环路定理中加入的关键修正。</p>
+
+    <h3>📌 积分形式</h3>
+    <div class="maxwell-grid-4">
+      <div class="eq-box">
+        <span class="name">① 电场高斯定理</span>
+        ∮<sub>S</sub> D · dS = ∫<sub>V</sub> ρ dV = Q₀
+      </div>
+      <div class="eq-box">
+        <span class="name">② 磁场高斯定理</span>
+        ∮<sub>S</sub> B · dS = 0
+      </div>
+      <div class="eq-box">
+        <span class="name">③ 法拉第电磁感应</span>
+        ∮<sub>L</sub> E · dl = −∫<sub>S</sub> (<span class="frac"><span class="n">∂B</span><span class="d">∂t</span></span>) · dS
+      </div>
+      <div class="eq-box">
+        <span class="name">④ 安培-麦克斯韦环路</span>
+        ∮<sub>L</sub> H · dl = ∫<sub>S</sub> (j<sub>c</sub> + <span class="frac"><span class="n">∂D</span><span class="d">∂t</span></span>) · dS
+      </div>
+    </div>
+
+    <h3>📌 微分形式</h3>
+    <div class="maxwell-grid-4">
+      <div class="eq-box"><span class="name">① ∇·D = ρ</span> 电荷是电场的源</div>
+      <div class="eq-box"><span class="name">② ∇·B = 0</span> 无磁单极</div>
+      <div class="eq-box"><span class="name">③ ∇×E = −<span class="frac"><span class="n">∂B</span><span class="d">∂t</span></span></span> 变化磁场→电场</div>
+      <div class="eq-box"><span class="name">④ ∇×H = j<sub>c</sub> + <span class="frac"><span class="n">∂D</span><span class="d">∂t</span></span></span> 全电流</div>
+    </div>
+
+    <h3>📌 每个方程的物理意义</h3>
+    <ul class="dot-list">
+      <li><strong>① 电场高斯定理：</strong> 电荷是电场的源 — 电场线始于正电荷终于负电荷（有源场）</li>
+      <li><strong>② 磁场高斯定理：</strong> 磁单极不存在 — 磁感线总是闭合的（无源场）</li>
+      <li><strong>③ 法拉第定律：</strong> 变化的磁场激发涡旋电场（<strong>磁生电</strong>）</li>
+      <li><strong>④ 安培-麦克斯韦定律：</strong> 传导电流 <em>或</em> 变化的电场激发磁场（<strong>电生磁</strong> + 位移电流修正）</li>
+    </ul>
+
+    <h3>📌 方程组的对称性</h3>
+    <p>加上位移电流后，方程组在数学上完美对称：</p>
+    <ul>
+      <li>变化的磁场 → 电场（③）</li>
+      <li>变化的电场 → 磁场（④）</li>
+      <li>电磁交替激发 → 电磁波在空间传播</li>
+    </ul>
+
+    <div class="callout callout-blue">
+      <strong>💡 麦克斯韦的伟大贡献：</strong> 在安培环路定理中引入位移电流，使方程组自洽，并预言了电磁波的存在。
+      电磁波在真空中的速度 c = 1/√(ε₀μ₀) ≈ 3×10⁸ m/s，与光速相等 ⇒ <strong>光就是电磁波</strong>。
+    </div>
+
+    <h3>📌 介质中的本构关系</h3>
+        <div class="formula">D = εE</div>
+    <div class="formula">B = μH</div>
+    <div class="formula">j = σE</div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!--  电磁波                                               -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <h2 class="section-h1">📡 电磁波</h2>
+
+  <div class="sec" id="emwave">
+    <h2><span class="emoji">📡</span> 电磁波 <span class="label-univ">[大学]</span> <span class="sub">Electromagnetic Waves</span></h2>
+
+    <h3>📌 电磁波的速度</h3>
+    <div class="formula">真空中：c = 1/√(ε₀μ₀) = 2.998×10⁸ m/s</div>
+    <div class="formula">介质中：v = 1/√(εμ) = c/√(ε<sub>r</sub>μ<sub>r</sub>)</div>
+
+    <h3>📌 平面电磁波的性质</h3>
+    <ul class="dot-list">
+      <li>E 和 H <strong>同相位</strong>（同相变化）</li>
+      <li>E ⟂ H，且均垂直于传播方向 k（<strong>横波</strong>）</li>
+      <li>E × H 指向传播方向（右手关系）</li>
+      <li>√ε E = √μ H，等式：E = cB（真空中）</li>
+    </ul>
+
+    <h3>📌 电磁波的能量</h3>
+    <div class="formula">能量密度：w = <span class="frac"><span class="n">1</span><span class="d">2</span></span>εE² + <span class="frac"><span class="n">1</span><span class="d">2</span></span>μH²</div>
+    <div class="formula">坡印廷矢量（能流密度）：S = E × H</div>
+    <div class="formula">平均能流密度：S̄ = <span class="frac"><span class="n">1</span><span class="d">2</span></span>E₀H₀</div>
+
+    <h3>📌 电磁波谱</h3>
+    <p>γ射线 → X射线 → 紫外线 → 可见光 → 红外线 → 微波 → 无线电波</p>
+    <p>（频率递减，波长递增）</p>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!--  历年真题精选                                          -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <h2 class="section-h1">📝 历年真题精选</h2>
+
+  <div class="sec" id="exam-problems">
+    <h2><span class="emoji">📝</span> 历年真题精选 <span class="sub">2019–2025 · 含答案</span></h2>
+    <p>以下题目精选自重庆大学《大学物理》上册历年试卷（PHYS10013 / PHYS10016 / PHYS10031）。</p>
+
+    <h3>📌 一、判断题</h3>
+
+    <div class="exam-box">
+      <div class="title">📄 2025春 · PHYS10031</div>
+      <div class="q-text"><strong>1.</strong> 质点的加速度方向总是与速度方向垂直。（ &emsp; ）</div>
+      <div class="answer">✅ <strong>答案：</strong> ×。加速度方向与速度方向可以成任意角度。</div>
+    </div>
+
+    <div class="exam-box">
+      <div class="title">📄 2025春 · PHYS10031</div>
+      <div class="q-text"><strong>2.</strong> 质点系总动量的改变与内力无关。（ &emsp; ）</div>
+      <div class="answer">✅ <strong>答案：</strong> √。内力只改变各质点的动量分配，不改变总动量。</div>
+    </div>
+
+    <div class="exam-box">
+      <div class="title">📄 2025春 · PHYS10031</div>
+      <div class="q-text"><strong>3.</strong> 穿过闭合曲面的电通量为零时，曲面上各点的电场强度必为零。（ &emsp; ）</div>
+      <div class="answer">✅ <strong>答案：</strong> ×。电通量为零只能说明面内净电荷为零，各点场强不一定为零。</div>
+    </div>
+
+    <div class="exam-box">
+      <div class="title">📄 2025春 · PHYS10031</div>
+      <div class="q-text"><strong>4.</strong> 静电场中，电场强度越大的地方，电势也一定越高。（ &emsp; ）</div>
+      <div class="answer">✅ <strong>答案：</strong> ×。电势高低与场强大小无直接关系（例如负点电荷附近场强大但电势低）。</div>
+    </div>
+
+    <div class="exam-box">
+      <div class="title">📄 2025春 · PHYS10031</div>
+      <div class="q-text"><strong>5.</strong> 高斯面内不包围自由电荷，则面上各点电位移矢量 D 必为零。（ &emsp; ）</div>
+      <div class="answer">✅ <strong>答案：</strong> ×。∮D·dS = 0 说明净通量为零，但 D 不一定处处为零。</div>
+    </div>
+
+    <div class="exam-box">
+      <div class="title">📄 2025春 · PHYS10031</div>
+      <div class="q-text"><strong>6.</strong> 任何磁场都可以用安培环路定理求出磁感应强度 B。（ &emsp; ）</div>
+      <div class="answer">✅ <strong>答案：</strong> ×。安培环路定理只适用于高度对称的磁场分布。</div>
+    </div>
+
+    <div class="exam-box">
+      <div class="title">📄 2025春 · PHYS10031</div>
+      <div class="q-text"><strong>7.</strong> 电介质的相对电容率 ε<sub>r</sub> 总是大于 1，磁介质的相对磁导率 μ<sub>r</sub> 也总是大于 1。（ &emsp; ）</div>
+      <div class="answer">✅ <strong>答案：</strong> ×。ε<sub>r</sub> &gt; 1 正确，但 μ<sub>r</sub> 可大于1（顺磁）也可小于1（抗磁）。</div>
+    </div>
+
+    <div class="exam-box">
+      <div class="title">📄 2025春 · PHYS10031</div>
+      <div class="q-text"><strong>8.</strong> 根据自感电动势的定义 ℰ = −L·<span class="frac"><span class="n">dI</span><span class="d">dt</span></span>，可知通过线圈的电流随时间变化得越快，自感 L 就越小。（ &emsp; ）</div>
+      <div class="answer">✅ <strong>答案：</strong> ×。L 是线圈的固有属性，与 <span class="frac"><span class="n">dI</span><span class="d">dt</span></span> 快慢无关。</div>
+    </div>
+
+    <div class="exam-box">
+      <div class="title">📄 2025春 · PHYS10031</div>
+      <div class="q-text"><strong>9.</strong> 没有传导电流，只有变化的电场的全电流定律为 ∮H·dl = ∫(<span class="frac"><span class="n">∂D</span><span class="d">∂t</span></span>)·dS。（ &emsp; ）</div>
+      <div class="answer">✅ <strong>答案：</strong> √。这是位移电流产生磁场的直接体现。</div>
+    </div>
+
+    <h3>📌 二、选择题</h3>
+
+    <div class="exam-box">
+      <div class="title">📄 2025春 · PHYS10031</div>
+      <div class="q-text">
+        <strong>1.</strong> 一质量为 m 的质点沿半径为 r 的圆周做匀速圆周运动，角速度为 ω，
+        则质点对圆心的角动量大小为：<br>
+        A. mωr &emsp; B. mω²r &emsp; C. mωr² &emsp; D. mω²r²
+      </div>
+      <div class="answer">✅ <strong>答案：</strong> C。L = r × mv = r × m(ωr) = mωr²。</div>
+    </div>
+
+    <div class="exam-box">
+      <div class="title">📄 2025春 · PHYS10031</div>
+      <div class="q-text">
+        <strong>2.</strong> 两个完全相同的金属球带等量异号电荷，相距一定距离（远大于球半径）
+        相互作用力为 F。若用一个不带电的相同金属球与其中一个接触后移开，再与另一个接触后移开，
+        则剩下的两球间作用力变为：<br>
+        A. 0 &emsp; B. F/8 &emsp; C. F/4 &emsp; D. F/2
+      </div>
+      <div class="answer">✅ <strong>答案：</strong> A。第一次接触后各带电 Q/2，第二次接触正负抵消，两球均不带电 → 力为 0。</div>
+    </div>
+
+    <div class="exam-box">
+      <div class="title">📄 2025春 · PHYS10031</div>
+      <div class="q-text">
+        <strong>3.</strong> 在静电场中，下列说法正确的是：<br>
+        A. 电场强度沿电场线方向逐渐减小<br>
+        B. 电势沿电场线方向逐渐降低<br>
+        C. 电场强度为零的点，电势必为零<br>
+        D. 电势为零的点，电场强度必为零
+      </div>
+      <div class="answer">✅ <strong>答案：</strong> B。沿电场线方向电势一定降低。</div>
+    </div>
+
+    <div class="exam-box">
+      <div class="title">📄 2024春 · PHYS10013</div>
+      <div class="q-text">
+        <strong>4.</strong> 一均匀带电球面，总电量为 Q，半径为 R。在球面内部距离球心 r 处
+        的电场强度大小为：<br>
+        A. Q/(4πε₀r²) &emsp; B. Q/(4πε₀R²) &emsp; C. 0 &emsp; D. Qr/(4πε₀R³)
+      </div>
+      <div class="answer">✅ <strong>答案：</strong> C。均匀带电球面内部 E = 0（高斯定理）。</div>
+    </div>
+
+    <div class="exam-box">
+      <div class="title">📄 2024春 · PHYS10013</div>
+      <div class="q-text">
+        <strong>5.</strong> 一长直螺线管单位长度匝数为 n，通有电流 I，则管内磁感应强度大小为：<br>
+        A. μ₀nI/2 &emsp; B. μ₀nI &emsp; C. μ₀I/(2πr) &emsp; D. μ₀I/(2R)
+      </div>
+      <div class="answer">✅ <strong>答案：</strong> B。长直螺线管内部 B = μ₀nI。</div>
+    </div>
+
+    <div class="exam-box">
+      <div class="title">📄 2023春 · PHYS10016</div>
+      <div class="q-text">
+        <strong>6.</strong> 花样滑冰运动员旋转时，双臂伸开角速度为 ω₀，转动惯量为 I₀。
+        当收拢双臂后转动惯量变为 I₀/2，则角速度变为：<br>
+        A. ω₀/2 &emsp; B. ω₀ &emsp; C. 2ω₀ &emsp; D. 4ω₀
+      </div>
+      <div class="answer">✅ <strong>答案：</strong> C。角动量守恒：I₀ω₀ = (I₀/2)ω ⇒ ω = 2ω₀。</div>
+    </div>
+
+    <div class="exam-box">
+      <div class="title">📄 2023春 · PHYS10016</div>
+      <div class="q-text">
+        <strong>7.</strong> 载流线圈在均匀磁场中所受磁力矩的大小与下列哪个因素无关？<br>
+        A. 线圈面积 &emsp; B. 电流大小 &emsp; C. 磁感应强度 &emsp; D. 线圈形状
+      </div>
+      <div class="answer">✅ <strong>答案：</strong> D。M = m × B = ISBsinθ，与线圈形状无关。</div>
+    </div>
+
+    <div class="exam-box">
+      <div class="title">📄 2019春 · PHYS10013</div>
+      <div class="q-text">
+        <strong>8.</strong> 关于位移电流，下列说法正确的是：<br>
+        A. 位移电流是电荷的运动<br>
+        B. 位移电流只存在于导体中<br>
+        C. 位移电流的本质是变化的电场<br>
+        D. 位移电流也能产生焦耳热
+      </div>
+      <div class="answer">✅ <strong>答案：</strong> C。位移电流的本质是变化的电场 ⇒ 产生磁场。</div>
+    </div>
+
+    <h3>📌 三、计算题回顾（典型题型）</h3>
+
+    <div class="exam-box">
+      <div class="title">📄 典型题型 1 · 刚体转动</div>
+      <div class="q-text">
+        <strong>1. 转动惯量与角动量守恒：</strong> 一水平圆盘（质量 M，半径 R，I = <span class="frac"><span class="n">1</span><span class="d">2</span></span>MR²）可绕中心轴无摩擦转动。
+        一质量为 m 的小球以水平速度 v₀ 沿圆盘边缘切线方向撞击并粘在边缘上。求碰撞后系统的角速度。
+      </div>
+      <div class="answer">
+        ✅ <strong>解题思路：</strong> 角动量守恒（对转轴）<br>
+        碰前：L₁ = mv₀R（小球角动量）<br>
+        碰后：L₂ = (<span class="frac"><span class="n">1</span><span class="d">2</span></span>MR² + mR²)ω（盘 + 小球）<br>
+        mv₀R = (<span class="frac"><span class="n">1</span><span class="d">2</span></span>M + m)R²ω ⇒ ω = mv₀ / [(<span class="frac"><span class="n">1</span><span class="d">2</span></span>M + m)R]
+      </div>
+    </div>
+
+    <div class="exam-box">
+      <div class="title">📄 典型题型 2 · 高斯定理</div>
+      <div class="q-text">
+        <strong>2. 均匀带电球体电场：</strong> 一半径为 R、总电量为 Q 的均匀带电球体。
+        求 (1) 球体外 r &gt; R 处的电场强度； (2) 球体内 r &lt; R 处的电场强度。
+      </div>
+      <div class="answer">
+        ✅ <strong>解：</strong><br>
+        (1) r &gt; R：∮E·dS = Q/ε₀ ⇒ E·4πr² = Q/ε₀ ⇒ E = Q/(4πε₀r²)<br>
+        (2) r &lt; R：∮E·dS = ρ·(4/3πr³)/ε₀，其中 ρ = 3Q/(4πR³)<br>
+        E·4πr² = Qr³/(ε₀R³) ⇒ E = Qr/(4πε₀R³)
+      </div>
+    </div>
+
+    <div class="exam-box">
+      <div class="title">📄 典型题型 3 · 安培环路定理</div>
+      <div class="q-text">
+        <strong>3. 无限长载流圆柱体：</strong> 一半径为 R 的无限长圆柱导体，通有均匀分布的电流 I。
+        求 (1) 圆柱外 r &gt; R 的 B； (2) 圆柱内 r &lt; R 的 B。
+      </div>
+      <div class="answer">
+        ✅ <strong>解：</strong><br>
+        (1) r &gt; R：∮B·dl = μ₀I ⇒ B·2πr = μ₀I ⇒ B = μ₀I/(2πr)<br>
+        (2) r &lt; R：I<sub>enc</sub> = I·πr²/πR² = Ir²/R²<br>
+        B·2πr = μ₀Ir²/R² ⇒ B = μ₀Ir/(2πR²)
+      </div>
+    </div>
+
+    <div class="exam-box">
+      <div class="title">📄 典型题型 4 · 动生电动势</div>
+      <div class="q-text">
+        <strong>4. 导体棒在磁场中切割磁力线：</strong> 一长度为 L 的导体棒在垂直于均匀磁场 B 的平面内
+        以角速度 ω 绕其一端匀速转动。求棒两端的感应电动势。
+      </div>
+      <div class="answer">
+        ✅ <strong>解：</strong> 在距转轴 r 处取 dr，线速度 v = ωr<br>
+        dℰ = (v × B)·dr = vBdr = Bωr dr<br>
+        ℰ = ∫₀ᴸ Bωr dr = <span class="frac"><span class="n">1</span><span class="d">2</span></span>BωL²
+      </div>
+    </div>
+
+    <div class="exam-box">
+      <div class="title">📄 典型题型 5 · 电磁感应综合</div>
+      <div class="q-text">
+        <strong>5. 矩形线圈在磁场中运动：</strong> 一矩形线圈（宽 a，长 b，电阻 R）以速度 v
+        匀速进入均匀磁场 B 区域（磁场垂直于线圈平面）。求线圈进入过程中感应电流的大小和方向。
+      </div>
+      <div class="answer">
+        ✅ <strong>解：</strong> 进入时磁通量变化率：<span class="frac"><span class="n">dΦ</span><span class="d">dt</span></span> = Bav<br>
+        ℰ = Bav，I = Bav/R<br>
+        方向：由楞次定律，线圈进入时磁通量增加，感应电流产生的磁场阻碍增加 → 逆时针方向。
+      </div>
+    </div>
+
+    <div class="exam-box">
+      <div class="title">📄 典型题型 6 · 磁矩与磁力矩</div>
+      <div class="q-text">
+        <strong>6. 载流线圈在磁场中：</strong> 一圆形线圈（半径 r = 0.1 m，I = 5 A）置于匀强磁场
+        B = 0.2 T 中，线圈平面与磁场方向夹角为 30°。求线圈所受磁力矩的大小。
+      </div>
+      <div class="answer">
+        ✅ <strong>解：</strong> 线圈磁矩 m = I·πr² = 5 × π × 0.01 ≈ 0.157 A·m²<br>
+        线圈法线与 B 夹角 θ = 60°（线圈平面与 B 呈 30°）<br>
+        M = mB sinθ = 0.157 × 0.2 × sin60° ≈ 0.0272 N·m
+      </div>
+    </div>
+
+    <div class="exam-box">
+      <div class="title">📄 典型题型 7 · 自感与磁场能量</div>
+      <div class="q-text">
+        <strong>7. 螺线管自感与储能：</strong> 一长直螺线管（长度 l = 0.5 m，截面积 S = 10 cm²，
+        总匝数 N = 1000）通有电流 I = 2 A。求 (1) 自感系数 L； (2) 磁场储能 W<sub>m</sub>。
+      </div>
+      <div class="answer">
+        ✅ <strong>解：</strong> n = N/l = 2000 匝/m<br>
+        L = μ₀n²V = 4π×10⁻⁷ × (2000)² × (0.5 × 10×10⁻⁴)<br>
+        L ≈ 2.51×10⁻³ H = 2.51 mH<br>
+        W<sub>m</sub> = <span class="frac"><span class="n">1</span><span class="d">2</span></span>LI² = <span class="frac"><span class="n">1</span><span class="d">2</span></span> × 2.51×10⁻³ × 4 ≈ 5.02×10⁻³ J
+      </div>
+    </div>
+
+    <div class="exam-box">
+      <div class="title">📄 典型题型 8 · 比奥-萨伐尔定律</div>
+      <div class="q-text">
+        <strong>8. 圆环电流轴线磁场：</strong> 一半径为 R 的圆形载流线圈通有电流 I。
+        求圆环轴线上距离中心 x 处的磁感应强度。
+      </div>
+      <div class="answer">
+        ✅ <strong>解：</strong> 由对称性，dB 的垂直分量抵消，只有沿轴线分量<br>
+        dB<sub>∥</sub> = (μ₀/4π)(Idl/r²)sinα，其中 sinα = R/√(R²+x²)，r² = R²+x²<br>
+        B = ∫dB<sub>∥</sub> = (μ₀/4π)·IR/(R²+x²)^{3/2} · ∫dl<br>
+        = (μ₀/4π)·IR/(R²+x²)^{3/2} · 2πR<br>
+        = μ₀IR²/[2(R²+x²)^{3/2}]<br>
+        当 x = 0（圆心）：B = μ₀I/(2R)
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!--  常用物理常量                                          -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="sec" id="consts">
+    <h2><span class="emoji">📌</span> 常用物理常量 <span class="sub">考试必备</span></h2>
+    <table class="data-table">
+      <tr><th>物理量</th><th>符号与数值</th></tr>
+      <tr><td>真空光速</td><td>c = 2.998×10⁸ m/s</td></tr>
+      <tr><td>引力常量</td><td>G = 6.674×10⁻¹¹ N·m²/kg²</td></tr>
+      <tr><td>元电荷</td><td>e = 1.602×10⁻¹⁹ C</td></tr>
+      <tr><td>电子质量</td><td>mₑ = 9.109×10⁻³¹ kg</td></tr>
+      <tr><td>真空介电常量</td><td>ε₀ = 8.854×10⁻¹² F/m</td></tr>
+      <tr><td>真空磁导率</td><td>μ₀ = 4π×10⁻⁷ H/m</td></tr>
+      <tr><td>静电力常量</td><td>k = 1/(4πε₀) ≈ 9.0×10⁹ N·m²/C²</td></tr>
+      <tr><td>阿伏伽德罗常量</td><td>N<sub>A</sub> = 6.022×10²³ mol⁻¹</td></tr>
+      <tr><td>玻耳兹曼常量</td><td>k = 1.381×10⁻²³ J/K</td></tr>
+      <tr><td>标准大气压</td><td>1 atm = 1.013×10⁵ Pa</td></tr>
+      <tr><td>重力加速度</td><td>g = 9.8 m/s²</td></tr>
+    </table>
+  </div>
+
+  <!-- ═══ 返回顶部 ═══ -->
+  <div class="btt">
+    <a href="#">⬆ 返回顶部</a>
+  </div>
+
+  <footer>
+    📖 大学物理（上册）全面总结 · 难度分层版<br>
+    参考教材：大学物理学（第四版）曾代敏 · 高等教育出版社<br>
+    数据来源：知识点汇总 · 历年试卷（2019–2025）· 公式汇总<br>
+    重庆大学 &ensp;|&ensp; 2025年6月
+  </footer>
+
+</div>
+</body>
+</html>
