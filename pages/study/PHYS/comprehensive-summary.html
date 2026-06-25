@@ -81,6 +81,7 @@
   .label-hs { font-size: 0.9rem; font-weight: 700; color: #1a6b3c; }
   .label-univ { font-size: 0.9rem; font-weight: 700; color: #b91c1c; }
   .label-key { font-size: 0.9rem; font-weight: 700; color: #1a0dab; }
+  .label-hard { font-size: 0.82rem; font-weight: 700; color: #c0392b; background: #fde8e8; padding: 2px 10px; border-radius: 20px; margin-left: 8px; vertical-align: middle; white-space: nowrap; }
 
   /* ── Section headings ── */
   .section-h1 {
@@ -408,6 +409,17 @@
       <li>动能 Eₖ = <span class="frac"><span class="n">1</span><span class="d">2</span></span>mv²，动能定理 W = ΔEₖ</li>
       <li>重力势能 Eₚ = mgh，弹性势能 Eₚ = <span class="frac"><span class="n">1</span><span class="d">2</span></span>kx²</li>
       <li>机械能守恒：只有保守力做功时，Eₖ + Eₚ = const</li>
+	    </ul>
+
+	    <div class="callout callout-red">
+	      <strong>🌟 难点：保守力与势能的关系</strong><br>
+	      保守力等于势能函数对距离 r 的<strong>负导数</strong>（一维）或<strong>负梯度</strong>（三维）：<br>
+	      <strong>F = −dE<sub>p</sub>/dr</strong>（一维） ⟹ <strong>F = −∇E<sub>p</sub></strong>（三维）<br>
+	      推导：保守力做功 W = ∫F·dr = −ΔE<sub>p</sub> ⇒ F·dr = −dE<sub>p</sub> ⇒ F = −dE<sub>p</sub>/dr<br>
+	      <strong>经典例子：</strong><br>
+	      • 弹簧弹力：F = −kx = −d(½kx²)/dx ← 弹性势能 ½kx² 的负导数<br>
+	      • 万有引力：F = −GMm/r² = −d(−GMm/r)/dr ← 引力势能 −GMm/r 的负导数<br>
+	      • 重力：F = −mg = −d(mgh)/dh ← 重力势能 mgh 的负导数（一维近似）
     </ul>
 
     <div class="callout callout-green">
@@ -660,7 +672,7 @@
     <h3>📌 电介质极化</h3>
     <div class="formula">极化强度：P = ε₀χ<sub>e</sub>E</div>
     <div class="formula">束缚电荷面密度：σ′ = P<sub>n</sub> = P·e<sub>n</sub></div>
-    <div class="formula">电位移矢量：D = ε₀E + P = ε₀ε<sub>r</sub>E = εE</div>
+    <div class="formula">电位移矢量：D = ε₀E + P = ε₀ε<sub>r</sub>E = εE <span class="label-hard">🌟 难点</span></div>
 
     <h4>介质中的高斯定理</h4>
     <div class="formula">∮<sub>S</sub> D · dS = Σq<sub>0内</sub>（自由电荷）</div>
@@ -674,6 +686,17 @@
       <tr><td>串联</td><td>1/C = Σ(1/Cᵢ)</td></tr>
       <tr><td>并联</td><td>C = ΣCᵢ</td></tr>
     </table>
+    <div class="callout callout-red">
+      <strong>🌟 难点：断开电源后插入电介质</strong><br>
+      电容器充电后断开电源，两极板间<strong>电荷 Q 保持不变</strong>（Q 不变）。<br>
+      插入电介质（ε<sub>r</sub> &gt; 1）后的变化：<br>
+      • <strong>电容</strong> C = ε<sub>r</sub>C₀ <strong style="color:#c0392b;">增大</strong>（ε 增大，C ∝ ε）<br>
+      • <strong>场强</strong> E = Q/(εS) <strong style="color:#2980b9;">减小</strong>（ε 增大，E 减小）<br>
+      • <strong>电位移</strong> D = σ = Q/S <strong style="color:#27ae60;">不变</strong>（D 只由自由电荷面密度决定）<br>
+      • <strong>能量</strong> W = Q²/(2C) <strong style="color:#2980b9;">减小</strong>（C 增大，W 减小）<br>
+      <br><strong>📌 对比：不断电源的情况</strong>（电压 U 不变）：C ↑、E ↑、D ↑、W ↑（全部增大）<br>
+      <strong>💡 记忆口诀：断电 Q 不变，D 不变，E/C/W 看 ε；不断电 U 不变，全增大。</strong>
+    </div>
   </div>
 
   <!-- ══════════════════════════════════════════════════════ -->
@@ -828,7 +851,7 @@
     <div class="formula"> → |m| = I · S（面积）</div>
     <p>方向：右手定则 — 四指顺电流方向，拇指指向磁矩方向（与线圈法向一致）。</p>
 
-    <h3>📌 磁力矩</h3>
+    <h3>📌 磁力矩 <span class="label-hard">🌟 难点</span></h3>
         <div class="formula">M = m × B</div>
     <div class="formula"> → τ = mB sinθ</div>
     <p>θ 为 m 与 B 的夹角。磁矩有转向外磁场方向的趋势：θ = 0 时稳定平衡，θ = π 时不稳定平衡。</p>
@@ -875,8 +898,16 @@
     <div class="formula"> → B = μ₀(H + M) = μH</div>
     <p>μ = μ₀μ<sub>r</sub> 为磁导率，μ<sub>r</sub> = 1 + χ<sub>m</sub> 为相对磁导率。</p>
 
-    <h3>📌 H 的安培环路定理 <span class="label-key">[核心]</span></h3>
+    <h3>📌 H 的安培环路定理 <span class="label-key">[核心]</span> <span class="label-hard">🌟 难点</span></h3>
     <div class="formula" style="font-size:1.2rem; font-weight:600;">∮<sub>L</sub> H · dl = ΣI<sub>f</sub> &emsp;（仅计自由电流）</div>
+    <div class="callout callout-yellow">
+      <strong>⚠️ 关键区别：环流定义 &amp; 两类电流</strong><br>
+      • <strong>环流（Circulation）：</strong> 矢量场沿闭合回路的线积分 ∮A·dl，描述场的有旋性<br>
+      • H 的环流 = <strong>自由电流 I<sub>f</sub></strong>；B 的环流 = μ₀(I<sub>f</sub> + I<sub>m</sub>)（含磁化电流）<br>
+      • <strong>传导电流 I<sub>c</sub>：</strong> 自由电荷在导体中的定向运动，产生焦耳热<br>
+      • <strong>磁化电流 I<sub>m</sub>：</strong> 介质磁化产生的等效束缚电流，不产生焦耳热<br>
+      • 使用 H 安环的优势：<strong>只需知道自由电流</strong>，磁化电流已隐含在 B = μH 中
+    </div>
 
     <h4>B 安环 vs H 安环</h4>
     <table class="compare-table">
@@ -962,7 +993,7 @@
     <div class="formula">ℰ<sub>L</sub> = −L · <span class="frac"><span class="n">dI</span><span class="d">dt</span></span></div>
     <div class="formula">长直螺线管自感：L = μn²V = μn²Sl</div>
 
-    <h3>📌 互感</h3>
+    <h3>📌 互感 <span class="label-hard">🌟 难点</span></h3>
         <div class="formula">Φ₁₂ = MI₁</div>
     <div class="formula">ℰ₂ = −M · <span class="frac"><span class="n">dI₁</span><span class="d">dt</span></span></div>
     <p>M = M₁₂ = M₂₁（互易性），耦合系数 k = M/√(L₁L₂)。</p>
@@ -991,7 +1022,7 @@
       这是大学物理电磁学的<strong>最高峰</strong>，高中完全不涉及。
     </div>
 
-    <h3>📌 位移电流 <span class="label-key">[核心贡献]</span></h3>
+    <h3>📌 位移电流 <span class="label-key">[核心贡献]</span> <span class="label-hard">🌟 难点</span></h3>
     <div class="formula">位移电流密度：j<sub>d</sub> = <span class="frac"><span class="n">∂D</span><span class="d">∂t</span></span></div>
     <div class="formula">位移电流：I<sub>d</sub> = ∫ j<sub>d</sub>·dS = <span class="frac"><span class="n">dΦ<sub>D</sub></span><span class="d">dt</span></span></div>
     <p>变化的电场也能产生磁场 —— 这是麦克斯韦在安培环路定理中加入的关键修正。</p>
@@ -1025,6 +1056,19 @@
     </div>
 
     <h3>📌 每个方程的物理意义</h3>
+    <div class="callout callout-red">
+      <strong>🌟 难点：四个基本矢量场的性质（有源/无源 &amp; 有旋/无旋）</strong><br>
+      从麦克斯韦方程组理解四个场的"源"与"旋"特性：<br><br>
+      <strong>① 电场 E：有源无旋场</strong><br>
+      ∮<sub>S</sub> E·dS = Q/ε₀（有源：电荷是源） ∮<sub>L</sub> E·dl = 0（无旋：静电场保守）<br><br>
+      <strong>② 磁场 B：无源有旋场</strong><br>
+      ∮<sub>S</sub> B·dS = 0（无源：无磁单极） ∮<sub>L</sub> B·dl = μ₀I（有旋：电流是涡旋源）<br><br>
+      <strong>③ 电位移 D：有源无旋场</strong><br>
+      ∮<sub>S</sub> D·dS = Q₀（有源：自由电荷是源） 在静场中 ∮<sub>L</sub> D·dl = 0（无旋）<br><br>
+      <strong>④ 磁场强度 H：无源有旋场</strong><br>
+      ∮<sub>S</sub> H·dS = 0（无源） ∮<sub>L</sub> H·dl = I<sub>f</sub>（有旋：自由电流是涡旋源）<br><br>
+      <strong>📌 注意：变化情况下（电磁感应），E 变得有旋（涡旋电场），D 的变化产生位移电流。</strong>
+    </div>
     <ul class="dot-list">
       <li><strong>① 电场高斯定理：</strong> 电荷是电场的源 — 电场线始于正电荷终于负电荷（有源场）</li>
       <li><strong>② 磁场高斯定理：</strong> 磁单极不存在 — 磁感线总是闭合的（无源场）</li>
