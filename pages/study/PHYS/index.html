@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大学物理 · 题目列表</title>
+    <style>
+        :root {
+            --bg: #f5f0eb;
+            --card-bg: #ffffff;
+            --text: #2c2416;
+            --text-secondary: #5c5347;
+            --accent: #8b5e3c;
+            --accent-light: #c9a87c;
+            --border: #e0d5c7;
+            --radius: 12px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            padding: 2rem 2.5rem;
+        }
+
+        /* ── Navigation ── */
+        .nav-bar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+        .nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 8px 18px;
+            border-radius: 20px;
+            background: var(--bg);
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+        .nav-btn:hover {
+            background: var(--accent-light);
+            color: #fff;
+        }
+
+        /* ── Header ── */
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--accent-light);
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: var(--accent);
+            font-size: 1.8rem;
+            margin-bottom: 6px;
+        }
+        .header p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* ── Question Type Cards ── */
+        .card-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .card-full {
+            grid-column: 1 / -1;
+        }
+        .type-card {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px 22px;
+            text-decoration: none;
+            color: var(--text);
+            transition: transform 0.2s, box-shadow 0.2s;
+            background: var(--card-bg);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        }
+        .type-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+            border-color: var(--accent-light);
+        }
+        .type-card .icon {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        .type-card .card-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 6px;
+        }
+        .type-card .card-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            flex: 1;
+        }
+        .type-card .card-meta {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 1px solid var(--border);
+            opacity: 0.8;
+        }
+        .type-card.concept {
+            border-left: 5px solid #8b5e3c;
+        }
+        .type-card.summary {
+            border-left: 5px solid #5a3e2b;
+        }
+        .type-card.big-q {
+            border-left: 5px solid #1a3e6f;
+        }
+
+        /* ── Footer ── */
+        .footer-note {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-top: 30px;
+            border-top: 1px solid var(--border);
+            padding-top: 18px;
+            opacity: 0.7;
+        }
+
+        @media (max-width: 600px) {
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 1.2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- ── Navigation ── -->
+    <div class="nav-bar">
+        <a href="javascript:history.back()" class="nav-btn">⬅ 返回上一页</a>
+        <a href="/home/index.html" class="nav-btn">🏠 返回主页</a>
+        <a href="main.html" class="nav-btn">📖 考点大纲</a>
+    </div>
+
+    <!-- ── Header ── -->
+    <div class="header">
+        <h1>📚 大学物理 · 题目列表</h1>
+        <p>选择你要练习的题型 · 基于教材：大学物理学（第四版）曾代敏 · 高等教育出版社</p>
+    </div>
+
+    <!-- ── Card Grid ── -->
+    <div class="card-grid">
+
+        <!-- 概念题 -->
+        <a href="questions/concept-quiz.html" class="type-card concept">
+            <div class="icon">📝</div>
+            <div class="card-title">概念题 · 交互自测</div>
+            <div class="card-desc">
+                选择题 &amp; 判断题，覆盖 7 份历年试卷 &amp; 课后习题。
+                点击选项即时反馈，附详细解析，适合快速巩固核心概念。
+            </div>
+            <div class="card-meta">📄 7 份资料 · 单选 · 判断 · 多选</div>
+        </a>
+
+        <!-- 全面总结 -->
+        <a href="questions/comprehensive-summary.html" class="type-card summary">
+            <div class="icon">📖</div>
+            <div class="card-title">知识点全面总结</div>
+            <div class="card-desc">
+                按难度分层：高中回顾 → 大学深化 → 历年真题。
+                涵盖力学、刚体、电磁学、麦克斯韦方程组、狭义相对论等全部章节。
+            </div>
+            <div class="card-meta">📄 完整笔记 · 公式 · 图表 · 真题</div>
+        </a>
+
+        <!-- 大题 -->
+        <a href="questions/amperes-law-problem.html" class="type-card big-q card-full">
+            <div class="icon">⚡</div>
+            <div class="card-title">计算大题 · 专项训练</div>
+            <div class="card-desc">
+                H 安培环路定理 · 螺线环磁场 · 磁介质中的磁场计算。
+                综合题，含完整解题步骤与拓展思考。
+            </div>
+            <div class="card-meta">📄 14 分综合题 · 磁路 · 已更新</div>
+        </a>
+
+    </div>
+
+    <!-- ── Footer ── -->
+    <div class="footer-note">
+        整理自课后习题 &amp; 历年试卷（2019–2025）· 重庆大学
+    </div>
+
+</div>
+</body>
+</html>

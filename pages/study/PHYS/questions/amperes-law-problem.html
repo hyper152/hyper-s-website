@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>安培环路定理（H形式）· 螺线环磁场 · 大学物理大题</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: #f5f7fb;
+            font-family: 'Times New Roman', '宋体', 'SimSun', serif;
+            padding: 30px 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .paper {
+            max-width: 1000px;
+            width: 100%;
+            background: #ffffff;
+            padding: 45px 50px 50px 50px;
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.10);
+            border-radius: 8px;
+            border-left: 6px solid #1a3e6f;
+            position: relative;
+        }
+        /* 校徽装饰 */
+        .paper::before {
+            content: "⚛";
+            position: absolute;
+            right: 40px;
+            top: 20px;
+            font-size: 42px;
+            opacity: 0.08;
+            font-weight: 400;
+            transform: rotate(10deg);
+        }
+        .header {
+            border-bottom: 2px solid #1a3e6f;
+            padding-bottom: 16px;
+            margin-bottom: 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-wrap: wrap;
+        }
+        .header .title-main {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0b2545;
+            letter-spacing: 1px;
+            font-family: 'Times New Roman', '宋体', serif;
+        }
+        .header .title-sub {
+            font-size: 16px;
+            color: #2a4a7f;
+            font-weight: 500;
+            margin-top: 4px;
+            font-family: 'Times New Roman', '宋体', serif;
+        }
+        .header .badge {
+            background: #1a3e6f;
+            color: white;
+            padding: 6px 18px;
+            border-radius: 30px;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            font-family: 'Times New Roman', '宋体', serif;
+            white-space: nowrap;
+        }
+        .exam-meta {
+            background: #f0f4fc;
+            padding: 12px 20px;
+            border-radius: 6px;
+            margin-bottom: 28px;
+            font-size: 15px;
+            color: #1e3a5f;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            border-left: 4px solid #1a3e6f;
+            font-family: 'Times New Roman', '宋体', serif;
+        }
+        .exam-meta span {
+            margin-right: 20px;
+        }
+        .exam-meta .highlight {
+            font-weight: 600;
+            color: #0b2545;
+        }
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0b2545;
+            margin: 30px 0 12px 0;
+            padding-left: 14px;
+            border-left: 6px solid #b31b1b;
+            font-family: 'Times New Roman', '宋体', serif;
+        }
+        .section-title-sm {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a3e6f;
+            margin: 22px 0 10px 0;
+            font-family: 'Times New Roman', '宋体', serif;
+        }
+        .question-text {
+            background: #fafcff;
+            padding: 20px 24px;
+            border-radius: 8px;
+            border: 1px solid #dce3ef;
+            margin: 10px 0 20px 0;
+            font-size: 16.5px;
+            line-height: 1.9;
+            font-family: 'Times New Roman', '宋体', serif;
+        }
+        .question-text p {
+            margin-bottom: 10px;
+        }
+        .question-text .sub-q {
+            margin-top: 10px;
+            padding-left: 20px;
+            font-weight: 500;
+            color: #0b2545;
+        }
+        .figure-box {
+            background: #f8faff;
+            border: 1px dashed #8aa3c9;
+            border-radius: 10px;
+            padding: 20px 20px 12px 20px;
+            margin: 16px 0 22px 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 30px 50px;
+        }
+        .figure-box svg {
+            max-width: 100%;
+            height: auto;
+        }
+        .fig-caption {
+            text-align: center;
+            font-size: 14px;
+            color: #2d4a78;
+            margin-top: 4px;
+            font-weight: 500;
+            font-family: 'Times New Roman', '宋体', serif;
+        }
+        .solution-box {
+            background: #f5f9f0;
+            border-left: 6px solid #2a7f4b;
+            padding: 18px 24px 20px 24px;
+            border-radius: 6px;
+            margin: 20px 0 16px 0;
+            font-family: 'Times New Roman', '宋体', serif;
+        }
+        .solution-box .step {
+            margin: 12px 0 8px 0;
+            font-weight: 600;
+            color: #1a4d2b;
+            font-size: 17px;
+        }
+        .solution-box .formula-block {
+            background: #ffffff;
+            padding: 12px 18px;
+            border-radius: 6px;
+            margin: 8px 0 12px 0;
+            font-size: 17px;
+            text-align: center;
+            border: 1px solid #d0e0d0;
+            font-family: 'Times New Roman', 'Times', serif;
+            overflow-x: auto;
+        }
+        .solution-box .formula-block .math {
+            font-style: italic;
+        }
+        .solution-box ul,
+        .solution-box ol {
+            padding-left: 26px;
+            margin: 8px 0 12px 0;
+            line-height: 1.9;
+            font-size: 16px;
+        }
+        .solution-box li {
+            margin-bottom: 4px;
+        }
+        .highlight-box {
+            background: #e7edf9;
+            padding: 12px 20px;
+            border-radius: 6px;
+            border-left: 6px solid #b31b1b;
+            margin: 16px 0;
+            font-size: 16px;
+            font-family: 'Times New Roman', '宋体', serif;
+        }
+        .highlight-box strong {
+            color: #a01515;
+        }
+        .answer-final {
+            background: #fef9e7;
+            border: 2px solid #d4a843;
+            border-radius: 8px;
+            padding: 16px 22px;
+            margin: 18px 0 10px 0;
+            font-size: 17px;
+            font-family: 'Times New Roman', '宋体', serif;
+        }
+        .answer-final .label {
+            font-weight: 700;
+            color: #8a6d1b;
+        }
+        .tag {
+            display: inline-block;
+            background: #1a3e6f;
+            color: white;
+            font-size: 13px;
+            padding: 2px 14px;
+            border-radius: 20px;
+            margin-right: 8px;
+            font-weight: 500;
+            font-family: 'Times New Roman', '宋体', serif;
+        }
+        .tag.green {
+            background: #2a7f4b;
+        }
+        .tag.orange {
+            background: #b36b1b;
+        }
+        .note {
+            font-size: 15px;
+            color: #3d4f6a;
+            border-top: 1px solid #dce3ef;
+            padding-top: 16px;
+            margin-top: 20px;
+            font-family: 'Times New Roman', '宋体', serif;
+        }
+        .note .small {
+            font-size: 14px;
+            color: #5d6f8a;
+        }
+        @media (max-width: 700px) {
+            .paper {
+                padding: 20px 16px;
+            }
+            .header .title-main {
+                font-size: 22px;
+            }
+            .question-text {
+                font-size: 15px;
+                padding: 14px 16px;
+            }
+            .figure-box {
+                flex-direction: column;
+                gap: 12px;
+                padding: 12px;
+            }
+            .exam-meta {
+                font-size: 13px;
+                flex-direction: column;
+                gap: 4px;
+            }
+            .solution-box {
+                padding: 14px 16px;
+            }
+        }
+        /* 数学样式 */
+        .math {
+            font-family: 'Times New Roman', 'CMU Serif', serif;
+            font-style: italic;
+        }
+        .math-bold {
+            font-family: 'Times New Roman', 'CMU Serif', serif;
+            font-weight: 700;
+            font-style: italic;
+        }
+        .math-sym {
+            font-family: 'Times New Roman', serif;
+            font-weight: 400;
+        }
+        .frac {
+            display: inline-block;
+            vertical-align: middle;
+            text-align: center;
+        }
+        .frac .num {
+            display: block;
+            padding: 0 4px;
+            border-bottom: 1px solid #222;
+        }
+        .frac .den {
+            display: block;
+            padding: 0 4px;
+        }
+        .vec {
+            font-weight: 700;
+            font-style: italic;
+        }
+        .arrow {
+            font-weight: 400;
+        }
+        .bold {
+            font-weight: 700;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .mt-10 {
+            margin-top: 10px;
+        }
+        .mb-10 {
+            margin-bottom: 10px;
+        }
+        .inline-block {
+            display: inline-block;
+        }
+        .gap-8 {
+            gap: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="paper">
+
+        <!-- 导航 -->
+        <div style="display:flex; gap:12px; margin-bottom:16px; font-size:0.9rem; justify-content:center; font-family:'Times New Roman','宋体',serif; flex-wrap:wrap;">
+            <a href="javascript:history.back()" style="display:inline-flex; align-items:center; gap:4px; color:#3d5a7a; text-decoration:none; padding:6px 16px; border-radius:20px; background:#f0f4fc; transition:background 0.2s;" onmouseover="this.style.background='#c9a87c';this.style.color='#fff'" onmouseout="this.style.background='#f0f4fc';this.style.color='#3d5a7a'">⬅ 返回上一页</a>
+            <a href="/home/index.html" style="display:inline-flex; align-items:center; gap:4px; color:#3d5a7a; text-decoration:none; padding:6px 16px; border-radius:20px; background:#f0f4fc; transition:background 0.2s;" onmouseover="this.style.background='#c9a87c';this.style.color='#fff'" onmouseout="this.style.background='#f0f4fc';this.style.color='#3d5a7a'">🏠 返回主页</a>
+            <a href="../main.html" style="display:inline-flex; align-items:center; gap:4px; color:#3d5a7a; text-decoration:none; padding:6px 16px; border-radius:20px; background:#f0f4fc; transition:background 0.2s;" onmouseover="this.style.background='#c9a87c';this.style.color='#fff'" onmouseout="this.style.background='#f0f4fc';this.style.color='#3d5a7a'">📖 大纲</a>
+            <a href="../" style="display:inline-flex; align-items:center; gap:4px; color:#3d5a7a; text-decoration:none; padding:6px 16px; border-radius:20px; background:#f0f4fc; transition:background 0.2s;" onmouseover="this.style.background='#c9a87c';this.style.color='#fff'" onmouseout="this.style.background='#f0f4fc';this.style.color='#3d5a7a'">📚 题目列表</a>
+        </div>
+
+        <!-- 头部 -->
+        <div class="header">
+            <div>
+                <div class="title-main">⚡ 安培环路定理 · 螺线环磁场</div>
+                <div class="title-sub">H 形式的安培环路定理 · 磁介质中的磁场</div>
+            </div>
+            <div class="badge">综合题 · 14分</div>
+        </div>
+
+        <!-- 考试信息 -->
+        <div class="exam-meta">
+            <span><span class="highlight">📘 来源：</span>重庆大学 · 大学物理III (PHYS10016) · 2025春 A卷 改编</span>
+            <span><span class="highlight">📌 考点：</span>H 安培环路定理 · 磁介质 · 磁通量</span>
+            <span><span class="highlight">⏱ 建议用时：</span>15 分钟</span>
+        </div>
+
+        <!-- ========== 题目 ========== -->
+        <div class="section-title">📝 题目</div>
+
+        <div class="question-text">
+            <p><strong>如图所示</strong>，一个密绕螺线环（环形螺线管）内充满磁导率为 <span class="math">μ</span> 的均匀磁介质。
+                螺线环上绕有 <span class="math-bold">N</span> 匝线圈，通有恒定电流 <span class="math-bold">I</span>。
+            环的截面为圆形，半径为 <span class="math">a</span>（<span class="math">a</span> 远小于环的平均半径 <span class="math">R</span>，即 <span class="math">R ≫ a</span>）。</p>
+
+            <p>取环内与环共轴的半径为 <span class="math">r</span> 的圆形闭合回路 <span class="math">L</span>（<span class="math">a &lt; r &lt; R - a</span>），绕行方向为逆时针（如图）。</p>
+
+            <div class="figure-box">
+                <!-- SVG 图：螺线环剖面 -->
+                <svg width="260" height="210" viewBox="0 0 260 210" xmlns="http://www.w3.org/2000/svg">
+                    <!-- 背景 -->
+                    <rect width="260" height="210" fill="#fafcff" rx="6" ry="6" />
+                    <!-- 外环 -->
+                    <circle cx="130" cy="105" r="90" fill="none" stroke="#1a3e6f" stroke-width="2.5" stroke-dasharray="6 4" />
+                    <!-- 内环 -->
+                    <circle cx="130" cy="105" r="48" fill="none" stroke="#1a3e6f" stroke-width="2.5" stroke-dasharray="6 4" />
+                    <!-- 磁介质区域填充 (浅色) -->
+                    <circle cx="130" cy="105" r="90" fill="none" stroke="none" />
+                    <circle cx="130" cy="105" r="48" fill="none" stroke="none" />
+                    <path d="M 130 15 A 90 90 0 1 1 129.5 15" fill="none" />
+                    <!-- 用两个圆环之间的区域表示磁介质 -->
+                    <circle cx="130" cy="105" r="69" fill="rgba(200, 220, 240, 0.3)" stroke="none" />
+                    <circle cx="130" cy="105" r="69" fill="none" stroke="#3a6a9f" stroke-width="1.2" stroke-dasharray="4 3" />
+                    <!-- 线圈示意 (截面) -->
+                    <circle cx="130" cy="28" r="5" fill="#b31b1b" stroke="#7a1a1a" stroke-width="1" />
+                    <text x="130" y="22" font-size="11" fill="#b31b1b" font-weight="600" text-anchor="middle" font-family="Times New Roman, serif">N</text>
+                    <!-- 电流方向箭头 (I) -->
+                    <text x="130" y="190" font-size="13" fill="#1a3e6f" font-weight="600" text-anchor="middle" font-family="Times New Roman, serif">I (逆时针)</text>
+                    <!-- 安培环路 L (逆时针) -->
+                    <circle cx="130" cy="105" r="30" fill="none" stroke="#d4a843" stroke-width="2.5" stroke-dasharray="4 3" />
+                    <text x="130" y="100" font-size="12" fill="#8a6d1b" font-weight="600" text-anchor="middle" font-family="Times New Roman, serif">L</text>
+                    <!-- 箭头 (逆时针) 用小三角 -->
+                    <polygon points="158,105 152,100 152,110" fill="#d4a843" />
+                    <!-- 半径 r 标注 -->
+                    <line x1="130" y1="105" x2="160" y2="105" stroke="#2a4a7f" stroke-width="1.2" stroke-dasharray="2 2" />
+                    <text x="145" y="100" font-size="11" fill="#2a4a7f" font-family="Times New Roman, serif">r</text>
+                    <!-- 磁介质标注 -->
+                    <text x="130" y="82" font-size="11" fill="#1a3e6f" font-weight="500" text-anchor="middle" font-family="Times New Roman, serif">μ</text>
+                    <!-- 截面半径 a 标注 (示意) -->
+                    <line x1="175" y1="70" x2="185" y2="85" stroke="#2a4a7f" stroke-width="1" stroke-dasharray="2 2" />
+                    <text x="186" y="82" font-size="11" fill="#2a4a7f" font-family="Times New Roman, serif">a</text>
+                    <!-- 平均半径 R 标注 -->
+                    <line x1="130" y1="105" x2="210" y2="105" stroke="#2a4a7f" stroke-width="1" stroke-dasharray="2 2" />
+                    <text x="170" y="120" font-size="11" fill="#2a4a7f" font-family="Times New Roman, serif">R (平均)</text>
+                </svg>
+
+                <div style="display:flex; flex-direction:column; gap:6px;">
+                    <svg width="180" height="160" viewBox="0 0 180 160" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="180" height="160" fill="#fafcff" rx="6" ry="6" />
+                        <!-- 螺线环立体示意 (透视) -->
+                        <ellipse cx="90" cy="80" rx="70" ry="45" fill="none" stroke="#1a3e6f" stroke-width="2" />
+                        <ellipse cx="90" cy="80" rx="30" ry="19" fill="none" stroke="#1a3e6f" stroke-width="2" stroke-dasharray="4 3" />
+                        <!-- 线圈示意 -->
+                        <path d="M 25 80 Q 40 50 70 50 Q 100 50 120 55 Q 140 60 155 80" fill="none" stroke="#b31b1b" stroke-width="2" stroke-dasharray="3 2" />
+                        <path d="M 25 80 Q 40 110 70 110 Q 100 110 120 105 Q 140 100 155 80" fill="none" stroke="#b31b1b" stroke-width="2" stroke-dasharray="3 2" />
+                        <!-- 电流方向 -->
+                        <text x="40" y="45" font-size="12" fill="#b31b1b" font-weight="600" font-family="Times New Roman, serif">I</text>
+                        <!-- 磁介质填充 -->
+                        <ellipse cx="90" cy="80" rx="70" ry="45" fill="rgba(200, 220, 240, 0.25)" stroke="none" />
+                        <text x="90" y="80" font-size="13" fill="#1a3e6f" font-weight="600" text-anchor="middle" font-family="Times New Roman, serif">μ</text>
+                        <!-- 标注 -->
+                        <text x="90" y="135" font-size="12" fill="#2a4a7f" text-anchor="middle" font-family="Times New Roman, serif">螺线环截面</text>
+                    </svg>
+                    <div class="fig-caption">图：螺线环剖面及安培环路 <span class="math">L</span>（左） / 立体示意（右）</div>
+                </div>
+            </div>
+
+            <p class="sub-q"><strong>(1)</strong> 写出 <span style="color:#a01515; font-weight:700;">H 的安培环路定理</span> 的表达式，并说明式中各物理量的含义。</p>
+            <p class="sub-q"><strong>(2)</strong> 利用 H 的安培环路定理，求环内磁介质中的磁场强度 <span class="math-bold">H</span> 的分布（大小与方向）。</p>
+            <p class="sub-q"><strong>(3)</strong> 求环内磁介质中的磁感应强度 <span class="math-bold">B</span> 的分布（大小与方向）。</p>
+            <p class="sub-q"><strong>(4)</strong> 求穿过螺线环圆形截面的磁通量 <span class="math">Φ<sub>m</sub></span>。</p>
+
+            <div style="margin-top:12px; font-size:15px; color:#3d5a7a;">
+                <span class="tag">已知</span> 真空磁导率 <span class="math">μ<sub>0</sub></span>，磁介质相对磁导率 <span class="math">μ<sub>r</sub> = μ / μ<sub>0</sub></span>。
+            </div>
+        </div>
+
+        <!-- ========== 解题过程 ========== -->
+        <div class="section-title">📐 解题过程</div>
+
+        <div class="solution-box">
+            <div class="step">(1) H 的安培环路定理</div>
+            <p style="font-size:16px; line-height:1.9; margin-bottom:10px;">
+                在稳恒磁场中，磁场强度 <span class="math-bold">H</span> 沿任意闭合路径 <span class="math">L</span> 的线积分，等于该闭合路径所包围的 <strong>传导电流</strong> 的代数和：
+            </p>
+            <div class="formula-block">
+                <span style="font-size:20px; font-weight:600;">∮<sub>L</sub> <span class="math-bold">H</span> · d<span class="math-bold">l</span> = Σ I<sub>传</sub></span>
+            </div>
+            <ul>
+                <li><span class="math-bold">H</span>：磁场强度 (A/m)，由传导电流和磁化电流共同决定，但环流只与传导电流有关；</li>
+                <li>d<span class="math-bold">l</span>：闭合路径 <span class="math">L</span> 上的线元矢量，方向与路径绕行方向一致；</li>
+                <li>Σ I<sub>传</sub>：闭合路径 <span class="math">L</span> 所包围的 <strong>传导电流</strong> 的代数和（按右手螺旋定则确定正负）。</li>
+            </ul>
+            <div class="highlight-box">
+                <strong>💡 说明：</strong> H 的安培环路定理与 B 的安培环路定理 (<span class="math">∮<sub>L</sub> B · dl = μ<sub>0</sub> Σ I</span>) 本质等价，但 H 形式将磁介质的贡献吸收到 <span class="math">μ</span> 中，使表达式更简洁。
+            </div>
+
+            <div class="step" style="margin-top:24px;">(2) 求磁场强度 <span class="math-bold">H</span> 分布</div>
+            <p style="font-size:16px; line-height:1.9;">
+                取环内半径为 <span class="math">r</span> 的圆形闭合路径 <span class="math">L</span>，绕行方向为逆时针（与电流方向一致）。
+                由于螺线环的对称性，环内 <span class="math-bold">H</span> 的大小在半径为 <span class="math">r</span> 的圆周上处处相等，方向沿圆周切线方向（逆时针）。
+            </p>
+            <p style="font-size:16px; line-height:1.9;">
+                路径 <span class="math">L</span> 包围的传导电流为 <span class="math">N I</span>（所有匝线圈的电流均穿过该路径所围面积）。
+                由 H 的安培环路定理：
+            </p>
+            <div class="formula-block">
+                ∮<sub>L</sub> <span class="math-bold">H</span> · d<span class="math-bold">l</span> = H · 2π r = N I
+            </div>
+            <p style="font-size:16px; line-height:1.9;">
+                因此，环内磁介质中的磁场强度大小为：
+            </p>
+            <div class="formula-block" style="background:#f0f7ee; border-color:#2a7f4b;">
+                <span style="font-size:22px; font-weight:700;">H = <span class="frac"><span class="num">N I</span><span class="den">2π r</span></span></span>
+                <span style="margin-left:16px; font-size:16px;">（方向：沿圆周逆时针切线方向）</span>
+            </div>
+            <p style="font-size:15px; color:#2a4a7f; margin-top:6px;">
+                ⚠️ <span class="math">H</span> 与 <span class="math">r</span> 成反比，在环内不同半径处 <span class="math">H</span> 的大小不同（但 <span class="math">R ≫ a</span> 时近似均匀）。
+            </p>
+
+            <div class="step" style="margin-top:24px;">(3) 求磁感应强度 <span class="math-bold">B</span> 分布</div>
+            <p style="font-size:16px; line-height:1.9;">
+                在各向同性均匀磁介质中，<span class="math-bold">B</span> = <span class="math">μ</span> <span class="math-bold">H</span>，其中 <span class="math">μ = μ<sub>0</sub> μ<sub>r</sub></span>。
+                因此环内磁介质中的磁感应强度大小为：
+            </p>
+            <div class="formula-block" style="background:#f0f7ee; border-color:#2a7f4b;">
+                <span style="font-size:22px; font-weight:700;">B = μ H = <span class="frac"><span class="num">μ N I</span><span class="den">2π r</span></span></span>
+                <span style="margin-left:16px; font-size:16px;">（方向：沿圆周逆时针切线方向）</span>
+            </div>
+            <p style="font-size:15px; color:#2a4a7f; margin-top:6px;">
+                🔄 若环内为真空（<span class="math">μ<sub>r</sub> = 1</span>），则 <span class="math">B<sub>0</sub> = μ<sub>0</sub> N I / (2π r)</span>。
+            </p>
+
+            <div class="step" style="margin-top:24px;">(4) 求穿过截面的磁通量 <span class="math">Φ<sub>m</sub></span></div>
+            <p style="font-size:16px; line-height:1.9;">
+                由于 <span class="math">R ≫ a</span>，可近似认为环内 <span class="math">B</span> 在截面上均匀，取 <span class="math">r ≈ R</span>（平均半径处）。
+                穿过截面的磁通量：
+            </p>
+            <div class="formula-block" style="background:#f0f7ee; border-color:#2a7f4b;">
+                <span style="font-size:22px; font-weight:700;">Φ<sub>m</sub> = B · S = <span class="frac"><span class="num">μ N I</span><span class="den">2π R</span></span> · (π a<sup>2</sup>) = <span class="frac"><span class="num">μ N I a<sup>2</sup></span><span class="den">2 R</span></span></span>
+            </div>
+            <p style="font-size:15px; color:#2a4a7f; margin-top:6px;">
+                📌 若考虑 <span class="math">B</span> 随 <span class="math">r</span> 的变化，严格积分：<span class="math">Φ<sub>m</sub> = ∫<sub>S</sub> B · dS = ∫<sub>R-a</sub><sup>R+a</sup> <span class="frac"><span class="num">μ N I</span><span class="den">2π r</span></span> · (2√(a<sup>2</sup> - (r-R)<sup>2</sup>)) dr</span>，在 <span class="math">a ≪ R</span> 时近似为上式。
+            </p>
+        </div>
+
+        <!-- ========== 答案 ========== -->
+        <div class="section-title">✅ 答案</div>
+
+        <div class="answer-final">
+            <p><span class="label">(1)</span> <strong>H 的安培环路定理：</strong> <span style="font-size:18px; font-weight:600;">∮<sub>L</sub> <span class="math-bold">H</span> · d<span class="math-bold">l</span> = Σ I<sub>传</sub></span></p>
+            <p><span class="label">(2)</span> <strong>H 分布：</strong> <span style="font-size:18px; font-weight:600;">H = N I / (2π r)</span>，方向沿逆时针切线方向。</p>
+            <p><span class="label">(3)</span> <strong>B 分布：</strong> <span style="font-size:18px; font-weight:600;">B = μ N I / (2π r)</span>，方向沿逆时针切线方向。</p>
+            <p><span class="label">(4)</span> <strong>磁通量：</strong> <span style="font-size:18px; font-weight:600;">Φ<sub>m</sub> = μ N I a<sup>2</sup> / (2 R)</span>（近似）</p>
+        </div>
+
+        <!-- ========== 拓展与注记 ========== -->
+        <div class="note">
+            <div style="display:flex; flex-wrap:wrap; gap:8px 20px; margin-bottom:8px;">
+                <span class="tag green">核心考点</span>
+                <span class="tag orange">H 安培环路定理</span>
+                <span class="tag" style="background:#6a4a7f;">磁介质</span>
+                <span class="tag" style="background:#b36b1b;">磁通量</span>
+            </div>
+            <p style="font-size:15px; line-height:1.8;">
+                <strong>📖 拓展思考：</strong>
+                ① 若螺线环内为 <strong>铁磁质</strong>（<span class="math">μ<sub>r</sub></span> 非常大且非线性），则 <span class="math">B</span> 与 <span class="math">H</span> 的关系为 <span class="math">B = μ(H) H</span>，需使用磁化曲线（B-H 曲线）求解。
+                ② 本题中 <span class="math">H</span> 的环流 <strong>仅与传导电流</strong> <span class="math">N I</span> 有关，与磁介质无关，这正是 H 安培环路定理的优越性。
+            </p>
+            <p style="font-size:14px; color:#5d6f8a; margin-top:6px;">
+                <span class="small">改编自重庆大学《大学物理III》2025春 A卷 第28题 · 解析由 AI 辅助生成</span>
+            </p>
+        </div>
+
+        <!-- 底部分隔 -->
+        <div style="border-top:2px solid #dce3ef; margin-top:26px; padding-top:14px; text-align:center; font-size:14px; color:#6a7f9a; font-family:'Times New Roman','宋体',serif;">
+            ⚛ 大学物理 · 电磁学 · 安培环路定理
+        </div>
+
+    </div>
+</body>
+</html>
