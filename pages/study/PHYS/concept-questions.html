@@ -562,11 +562,11 @@
     <!-- Filter Row -->
     <div class="filter-row" id="filterRow">
         <button class="filter-btn active" data-filter="all">📋 全部题目</button>
-        <button class="filter-btn" data-filter="file1">📄 PHYS10016-2022春-A</button>
-        <button class="filter-btn" data-filter="file2">📄 PHYS10016-2023春-A</button>
         <button class="filter-btn" data-filter="file3">📄 PHYS10031-2025春-A</button>
-        <button class="filter-btn" data-filter="file4">📄 PHYS10013-2019春-A</button>
         <button class="filter-btn" data-filter="file5">📄 PHYS10013-2024春-A</button>
+        <button class="filter-btn" data-filter="file2">📄 PHYS10016-2023春-A</button>
+        <button class="filter-btn" data-filter="file1">📄 PHYS10016-2022春-A</button>
+        <button class="filter-btn" data-filter="file4">📄 PHYS10013-2019春-A</button>
         <button class="filter-btn" data-filter="file6">📄 课后习题</button>
         <button class="filter-btn" data-filter="file7">🧠 概念精练</button>
         <button class="filter-btn" data-filter="unanswered">⏳ 未答题</button>
@@ -2401,7 +2401,7 @@
             container.innerHTML = '';
 
             // Group by file
-            const fileOrder = ['PHYS10016-2022春-A', 'PHYS10016-2023春-A', 'PHYS10031-2025春-A', 'PHYS10013-2019春-A', 'PHYS10013-2024春-A', '课后习题', '物理概念精练'];
+            const fileOrder = ['PHYS10031-2025春-A', 'PHYS10013-2024春-A', 'PHYS10016-2023春-A', 'PHYS10016-2022春-A', 'PHYS10013-2019春-A', '课后习题', '物理概念精练'];
             const grouped = {};
             fileOrder.forEach(f => { grouped[f] = []; });
 
