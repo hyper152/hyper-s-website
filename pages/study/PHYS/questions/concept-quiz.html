@@ -2543,6 +2543,8 @@
         ];
         allQuestions.push(...conceptQuestions);
 
+        // Auto-assign IDs to questions missing one
+        allQuestions.forEach((q, idx) => { if (!q.id) q.id = "q-auto-" + idx; });
         // ==================== RENDER ENGINE ====================
         let answeredMap = {}; // { questionId: { userAnswer, isCorrect } }
 
