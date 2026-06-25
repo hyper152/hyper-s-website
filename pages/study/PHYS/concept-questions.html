@@ -546,7 +546,7 @@
 
     <div class="header">
         <h1>📚 大学物理概念题 · 交互自测</h1>
-        <p class="subtitle">覆盖6份资料 · 选择题 & 判断题 · 点击选项即时反馈</p>
+        <p class="subtitle">覆盖7份资料 · 选择题 & 判断题 · 点击选项即时反馈</p>
     </div>
 
     <!-- Stats Bar -->
@@ -568,6 +568,7 @@
         <button class="filter-btn" data-filter="file4">📄 PHYS10013-2019春-A</button>
         <button class="filter-btn" data-filter="file5">📄 PHYS10013-2024春-A</button>
         <button class="filter-btn" data-filter="file6">📄 课后习题</button>
+        <button class="filter-btn" data-filter="file7">🧠 概念精练</button>
         <button class="filter-btn" data-filter="unanswered">⏳ 未答题</button>
         <button class="filter-btn" data-filter="wrong">❌ 错题</button>
     </div>
@@ -1667,6 +1668,717 @@
         }];
         allQuestions.push(...file6Questions);
 
+        // ---- 物理概念精练 (专项概念题) ----
+        const conceptQuestions = [
+            // ==================== 运动学 ====================
+            {
+                id: 'con-q1',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 运动学',
+                concept: '位移与路程的区别',
+                type: 'single',
+                text: '质点沿半径为R的圆周运动一周，其位移和路程的大小分别为（ ）。',
+                options: ['A. 0, 0', 'B. 2πR, 0', 'C. 0, 2πR', 'D. 2πR, 2πR'],
+                answer: 2
+            }, {
+                id: 'con-q2',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 运动学',
+                concept: '加速度的物理意义',
+                type: 'single',
+                text: '关于加速度，下列说法正确的是（ ）。',
+                options: [
+                    'A. 加速度越大，物体的速度越大',
+                    'B. 加速度越大，物体的速度变化越大',
+                    'C. 加速度越大，物体的速度变化越快',
+                    'D. 加速度的方向总是与速度方向相同'
+                ],
+                answer: 2
+            }, {
+                id: 'con-q3',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 运动学',
+                concept: '切向加速度与法向加速度',
+                type: 'single',
+                text: '质点做曲线运动时，下列说法正确的是（ ）。',
+                options: [
+                    'A. 切向加速度描述速度方向的变化快慢',
+                    'B. 法向加速度描述速度大小的变化快慢',
+                    'C. 切向加速度描述速度大小的变化快慢',
+                    'D. 匀速圆周运动只有切向加速度'
+                ],
+                answer: 2
+            }, {
+                id: 'con-q4',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 运动学',
+                concept: '平均速度与平均速率的区别',
+                type: 'judge',
+                text: '质点沿曲线运动，在一段时间内其平均速度的大小一定等于平均速率。',
+                options: ['正确', '错误'],
+                answer: 1
+            }, {
+                id: 'con-q5',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 运动学',
+                concept: '运动描述的相对性',
+                type: 'single',
+                text: '关于运动的描述，下列说法正确的是（ ）。',
+                options: [
+                    'A. 同一物体的运动，在不同参考系中描述的结果一定相同',
+                    'B. 只有选择静止的物体作为参考系，运动描述才是正确的',
+                    'C. 运动具有相对性，描述运动必须指明参考系',
+                    'D. 参考系只能选择地面'
+                ],
+                answer: 2
+            }, {
+                id: 'con-q6',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 运动学',
+                concept: '加速度与速度方向关系',
+                type: 'judge',
+                text: '质点做直线运动时，若加速度为负值，则质点一定做减速运动。',
+                options: ['正确', '错误'],
+                answer: 1
+            }, {
+                id: 'con-q7',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 运动学',
+                concept: '自然坐标系',
+                type: 'single',
+                text: '质点做匀速率圆周运动时，其加速度（ ）。',
+                options: [
+                    'A. 等于零',
+                    'B. 大小不变，方向始终指向圆心',
+                    'C. 大小不变，方向始终沿切线方向',
+                    'D. 大小不变，方向始终与速度方向相反'
+                ],
+                answer: 1
+            },
+            // ==================== 质点动力学 ====================
+            {
+                id: 'con-q8',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 动力学',
+                concept: '牛顿第二定律的微分形式',
+                type: 'single',
+                text: '牛顿第二定律的普遍形式为（ ）。',
+                options: [
+                    'A. F = ma',
+                    'B. F = dp/dt',
+                    'C. F = mdv/dt',
+                    'D. F = mv²/r'
+                ],
+                answer: 1
+            }, {
+                id: 'con-q9',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 动力学',
+                concept: '动量守恒的条件',
+                type: 'single',
+                text: '质点系动量守恒的条件是（ ）。',
+                options: [
+                    'A. 系统不受外力',
+                    'B. 系统所受合外力为零',
+                    'C. 系统所受外力远小于内力',
+                    'D. 系统所受合外力为零或外力远小于内力'
+                ],
+                answer: 3
+            }, {
+                id: 'con-q10',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 动力学',
+                concept: '保守力的定义',
+                type: 'single',
+                text: '下列判断一力是否为保守力的方法中，不正确的是（ ）。',
+                options: [
+                    'A. 该力所做的功与路径无关',
+                    'B. 该力沿任意闭合路径做功为零',
+                    'C. 该力可以表示为某个势能函数的负梯度',
+                    'D. 该力的大小与物体的运动速度有关'
+                ],
+                answer: 3
+            }, {
+                id: 'con-q11',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 动力学',
+                concept: '势能与保守力的关系',
+                type: 'single',
+                text: '一维保守力F(x)与势能函数Eₚ(x)的关系是（ ）。',
+                options: [
+                    'A. F = dEₚ/dx',
+                    'B. F = -dEₚ/dx',
+                    'C. F = d²Eₚ/dx²',
+                    'D. F = ∫Eₚ dx'
+                ],
+                answer: 1
+            }, {
+                id: 'con-q12',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 动力学',
+                concept: '内力与总动能变化的关系',
+                type: 'judge',
+                text: '一对内力做功的代数和可以不为零，从而改变质点系的总动能。',
+                options: ['正确', '错误'],
+                answer: 0
+            }, {
+                id: 'con-q13',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 动力学',
+                concept: '机械能守恒条件',
+                type: 'single',
+                text: '质点系的机械能守恒条件是（ ）。',
+                options: [
+                    'A. 合外力为零',
+                    'B. 合外力不做功',
+                    'C. 只有保守力做功',
+                    'D. 外力和非保守内力都不做功'
+                ],
+                answer: 2
+            },
+            // ==================== 刚体定轴转动 ====================
+            {
+                id: 'con-q14',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 刚体',
+                concept: '转动惯量的物理意义',
+                type: 'single',
+                text: '转动惯量是描述刚体（ ）的物理量。',
+                options: [
+                    'A. 转动快慢',
+                    'B. 转动惯性大小',
+                    'C. 受到外力矩的大小',
+                    'D. 质量的大小'
+                ],
+                answer: 1
+            }, {
+                id: 'con-q15',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 刚体',
+                concept: '转动定律的理解',
+                type: 'single',
+                text: '关于刚体定轴转动的转动定律 M = Iα，下列说法正确的是（ ）。',
+                options: [
+                    'A. 合外力矩为零时角加速度不一定为零',
+                    'B. 转动惯量I与外力矩M有关',
+                    'C. M、I、α都是对同一转轴而言的',
+                    'D. α的方向与M的方向无关'
+                ],
+                answer: 2
+            }, {
+                id: 'con-q16',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 刚体',
+                concept: '角动量守恒的适用条件',
+                type: 'single',
+                text: '刚体绕定轴转动时角动量守恒的条件是（ ）。',
+                options: [
+                    'A. 合外力为零',
+                    'B. 合外力矩为零',
+                    'C. 没有摩擦力',
+                    'D. 角速度不变'
+                ],
+                answer: 1
+            }, {
+                id: 'con-q17',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 刚体',
+                concept: '平行轴定理的理解',
+                type: 'judge',
+                text: '平行轴定理 I = I_C + Md² 中，d为两平行轴间的距离，I_C为过任意与质心轴平行轴的转动惯量。',
+                options: ['正确', '错误'],
+                answer: 1
+            }, {
+                id: 'con-q18',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 刚体',
+                concept: '纯滚动的条件',
+                type: 'single',
+                text: '刚体做纯滚动（无滑滚动）时，其接触点的瞬时速度（ ）。',
+                options: [
+                    'A. 等于质心速度',
+                    'B. 等于零',
+                    'C. 等于角速度乘以半径',
+                    'D. 方向与质心速度相反'
+                ],
+                answer: 1
+            }, {
+                id: 'con-q19',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 刚体',
+                concept: '转动动能与角动量',
+                type: 'single',
+                text: '一圆盘绕过圆心的垂直轴转动，角速度为ω。若将其转动惯量变为原来的2倍，角速度变为原来的一半，则转动动能变为原来的（ ）。',
+                options: ['A. 1/4倍', 'B. 1/2倍', 'C. 1倍', 'D. 2倍'],
+                answer: 1
+            },
+            // ==================== 静电场 ====================
+            {
+                id: 'con-q20',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 静电场',
+                concept: '库仑定律的适用条件',
+                type: 'single',
+                text: '库仑定律的适用条件是（ ）。',
+                options: [
+                    'A. 两个点电荷，真空或空气中',
+                    'B. 两个静止的点电荷，真空中',
+                    'C. 任意两个带电体，真空中',
+                    'D. 两个静止的带电小球，空气中'
+                ],
+                answer: 1
+            }, {
+                id: 'con-q21',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 静电场',
+                concept: '电场强度的叠加原理',
+                type: 'judge',
+                text: '点电荷系在某点产生的电场强度等于各个点电荷单独存在时在该点产生的电场强度的矢量和。',
+                options: ['正确', '错误'],
+                answer: 0
+            }, {
+                id: 'con-q22',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 静电场',
+                concept: '高斯定理的物理意义',
+                type: 'single',
+                text: '关于静电场的高斯定理，下面说法正确的是（ ）。',
+                options: [
+                    'A. 高斯面上的电场强度仅由高斯面内的电荷产生',
+                    'B. 通过高斯面的电通量仅由高斯面内的电荷决定',
+                    'C. 高斯面内无电荷，则高斯面上各点场强为零',
+                    'D. 高斯面内电荷代数和为零，则高斯面上各点场强为零'
+                ],
+                answer: 1
+            }, {
+                id: 'con-q23',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 静电场',
+                concept: '静电平衡下导体的性质',
+                type: 'single',
+                text: '处于静电平衡状态的导体，下列说法错误的是（ ）。',
+                options: [
+                    'A. 导体内部电场强度处处为零',
+                    'B. 导体是等势体，表面是等势面',
+                    'C. 电荷均匀分布在导体表面',
+                    'D. 导体表面附近场强垂直于表面'
+                ],
+                answer: 2
+            }, {
+                id: 'con-q24',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 静电场',
+                concept: '电场强度与电势梯度的关系',
+                type: 'judge',
+                text: '在静电场中，电势高的地方电场强度一定大。',
+                options: ['正确', '错误'],
+                answer: 1
+            }, {
+                id: 'con-q25',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 静电场',
+                concept: '电容器储能的决定因素',
+                type: 'single',
+                text: '一平行板电容器充电后，保持与电源连接。若将两极板间距增大，则电容器储能的变化为（ ）。',
+                options: [
+                    'A. 增大',
+                    'B. 减小',
+                    'C. 不变',
+                    'D. 无法确定'
+                ],
+                answer: 1
+            }, {
+                id: 'con-q26',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 静电场',
+                concept: '电介质极化的概念',
+                type: 'judge',
+                text: '在均匀电介质中，D = ε₀ε_r E，其中D是电位移矢量，其高斯定理∮D·dS只与自由电荷有关。',
+                options: ['正确', '错误'],
+                answer: 0
+            }, {
+                id: 'con-q27',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 静电场',
+                concept: '电场能量密度的概念',
+                type: 'single',
+                text: '静电场能量密度w_e的正确表达式为（ ）。',
+                options: [
+                    'A. w_e = ½εE',
+                    'B. w_e = ½εE²',
+                    'C. w_e = εE²',
+                    'D. w_e = ½E²/ε'
+                ],
+                answer: 1
+            },
+            // ==================== 恒定磁场 ====================
+            {
+                id: 'con-q28',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 磁场',
+                concept: '毕奥-萨伐尔定律',
+                type: 'single',
+                text: '毕奥-萨伐尔定律的数学表达式为（ ）。',
+                options: [
+                    'A. dB = (μ₀/4π)·(Idl × r̂)/r²',
+                    'B. dB = (μ₀/4π)·(Idl · r̂)/r²',
+                    'C. dB = (μ₀/4π)·(Idl × r̂)/r',
+                    'D. dB = (μ₀/4π)·(Idl)/r²'
+                ],
+                answer: 0
+            }, {
+                id: 'con-q29',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 磁场',
+                concept: '磁场的高斯定理的物理意义',
+                type: 'single',
+                text: '磁场的高斯定理 ∮B·dS = 0 表明（ ）。',
+                options: [
+                    'A. 磁场是保守场',
+                    'B. 磁场是无源场',
+                    'C. 磁场是有旋场',
+                    'D. 磁场是均匀场'
+                ],
+                answer: 1
+            }, {
+                id: 'con-q30',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 磁场',
+                concept: '安培环路定理的适用范围',
+                type: 'judge',
+                text: '安培环路定理 ∮B·dl = μ₀ΣI_内 适用于任何恒定磁场，可以用来求解任意电流分布的磁感应强度。',
+                options: ['正确', '错误'],
+                answer: 1
+            }, {
+                id: 'con-q31',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 磁场',
+                concept: '洛伦兹力的方向判断',
+                type: 'single',
+                text: '一带正电的粒子垂直进入匀强磁场，若粒子速度方向向右，磁场方向垂直纸面向里，则洛伦兹力的方向为（ ）。',
+                options: [
+                    'A. 向上',
+                    'B. 向下',
+                    'C. 向左',
+                    'D. 向右'
+                ],
+                answer: 0
+            }, {
+                id: 'con-q32',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 磁场',
+                concept: '磁矩的物理意义',
+                type: 'single',
+                text: '载流平面线圈的磁矩大小等于（ ）。',
+                options: [
+                    'A. I/S',
+                    'B. I·S',
+                    'C. I·S²',
+                    'D. I²·S'
+                ],
+                answer: 1
+            }, {
+                id: 'con-q33',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 磁场',
+                concept: '三类磁介质的区别',
+                type: 'single',
+                text: '关于磁介质，下列说法正确的是（ ）。',
+                options: [
+                    'A. 顺磁质的相对磁导率μ_r < 1',
+                    'B. 抗磁质的相对磁导率μ_r > 1',
+                    'C. 铁磁质的相对磁导率μ_r远大于1',
+                    'D. 所有磁介质的μ_r都大于1'
+                ],
+                answer: 2
+            }, {
+                id: 'con-q34',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 磁场',
+                concept: 'H与B的区别与联系',
+                type: 'single',
+                text: '在各向同性线性磁介质中，B、H、M之间的关系是（ ）。',
+                options: [
+                    'A. B = μ₀(H + M)',
+                    'B. B = μ₀H',
+                    'C. H = B + μ₀M',
+                    'D. M = μ₀H'
+                ],
+                answer: 0
+            },
+            // ==================== 电磁感应 ====================
+            {
+                id: 'con-q35',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 电磁感应',
+                concept: '法拉第定律的理解',
+                type: 'single',
+                text: '法拉第电磁感应定律 ℰ = -dΦ/dt 中的负号表示（ ）。',
+                options: [
+                    'A. 感应电动势的方向总是与磁通量变化的方向相反',
+                    'B. 感应电动势总是阻碍磁通量的变化',
+                    'C. 感应电动势总是与磁通量反方向',
+                    'D. 感应电动势总是小于零'
+                ],
+                answer: 1
+            }, {
+                id: 'con-q36',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 电磁感应',
+                concept: '楞次定律的本质',
+                type: 'judge',
+                text: '楞次定律表明，感应电流的效果总是反抗引起感应电流的原因。',
+                options: ['正确', '错误'],
+                answer: 0
+            }, {
+                id: 'con-q37',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 电磁感应',
+                concept: '动生与感生电动势的区别',
+                type: 'single',
+                text: '关于动生电动势和感生电动势，下列说法正确的是（ ）。',
+                options: [
+                    'A. 动生电动势是由变化的磁场产生的',
+                    'B. 感生电动势是由导体切割磁力线产生的',
+                    'C. 动生电动势对应的非静电力是洛伦兹力',
+                    'D. 两者本质上都是由于磁场变化产生的'
+                ],
+                answer: 2
+            }, {
+                id: 'con-q38',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 电磁感应',
+                concept: '涡旋电场的性质',
+                type: 'single',
+                text: '关于涡旋电场（感生电场），下列说法正确的是（ ）。',
+                options: [
+                    'A. 涡旋电场由静止电荷激发',
+                    'B. 涡旋电场是保守场',
+                    'C. 涡旋电场线是闭合曲线',
+                    'D. 涡旋电场的环流为零'
+                ],
+                answer: 2
+            }, {
+                id: 'con-q39',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 电磁感应',
+                concept: '自感系数的物理意义',
+                type: 'judge',
+                text: '线圈的自感系数L与线圈中的电流变化率dI/dt有关，电流变化越快，L越大。',
+                options: ['正确', '错误'],
+                answer: 1
+            }, {
+                id: 'con-q40',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 电磁感应',
+                concept: '磁场能量密度',
+                type: 'single',
+                text: '磁场能量密度w_m的正确表达式为（ ）。',
+                options: [
+                    'A. w_m = ½B²/μ',
+                    'B. w_m = ½μB²',
+                    'C. w_m = B²/(2μ²)',
+                    'D. w_m = ½B/μ'
+                ],
+                answer: 0
+            },
+            // ==================== 狭义相对论 ====================
+            {
+                id: 'con-q41',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 相对论',
+                concept: '光速不变原理',
+                type: 'single',
+                text: '狭义相对论中，光速不变原理指的是（ ）。',
+                options: [
+                    'A. 真空中的光速在任何参考系中都相同',
+                    'B. 真空中的光速在任何惯性系中都相同',
+                    'C. 光在任何介质中的速度都不变',
+                    'D. 光速是宇宙间最大的速度'
+                ],
+                answer: 1
+            }, {
+                id: 'con-q42',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 相对论',
+                concept: '同时性的相对性',
+                type: 'judge',
+                text: '在一惯性系中同时发生的两个事件，在另一惯性系中观察也一定同时发生。',
+                options: ['正确', '错误'],
+                answer: 1
+            }, {
+                id: 'con-q43',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 相对论',
+                concept: '长度收缩效应',
+                type: 'single',
+                text: '关于狭义相对论的长度收缩效应，下列说法正确的是（ ）。',
+                options: [
+                    'A. 物体在运动方向上长度收缩，在垂直方向上长度也收缩',
+                    'B. 长度收缩是物体本身发生了真实的形变',
+                    'C. 长度收缩只发生在运动方向上，物体本身没有变化',
+                    'D. 长度收缩效应当v << c时仍然显著'
+                ],
+                answer: 2
+            }, {
+                id: 'con-q44',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 相对论',
+                concept: '质能关系',
+                type: 'single',
+                text: '狭义相对论的质能关系式为（ ）。',
+                options: [
+                    'A. E = ½mv²',
+                    'B. E = mc²',
+                    'C. E = m₀c²',
+                    'D. E² = p²c² + m₀²c⁴'
+                ],
+                answer: 1
+            },
+            // ==================== 热力学基础 ====================
+            {
+                id: 'con-q45',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 热力学',
+                concept: '热力学平衡态的概念',
+                type: 'judge',
+                text: '封闭容器中的理想气体，当各部分温度相等时，该气体一定处于平衡态。',
+                options: ['正确', '错误'],
+                answer: 1
+            }, {
+                id: 'con-q46',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 热力学',
+                concept: '温度的微观本质',
+                type: 'single',
+                text: '温度是大量分子热运动的集体表现，其微观本质是（ ）。',
+                options: [
+                    'A. 分子平均动能的量度',
+                    'B. 分子平均平动动能的量度',
+                    'C. 分子平均势能的量度',
+                    'D. 分子平均速率的量度'
+                ],
+                answer: 1
+            }, {
+                id: 'con-q47',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 热力学',
+                concept: '理想气体的内能',
+                type: 'single',
+                text: '一定量的理想气体内能增加，则（ ）。',
+                options: [
+                    'A. 温度一定升高',
+                    'B. 压强一定增大',
+                    'C. 体积一定增大',
+                    'D. 温度可能不变'
+                ],
+                answer: 0
+            }, {
+                id: 'con-q48',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 热力学',
+                concept: '热力学第一定律的理解',
+                type: 'single',
+                text: '热力学第一定律的数学表达式 Q = ΔE + A 中，各量的正负号规则是（ ）。',
+                options: [
+                    'A. 系统吸热Q为正，系统对外做功A为正',
+                    'B. 系统放热Q为正，系统对外做功A为正',
+                    'C. 系统吸热Q为正，外界对系统做功A为正',
+                    'D. 以上都不对'
+                ],
+                answer: 0
+            }, {
+                id: 'con-q49',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 热力学',
+                concept: '热机效率与循环',
+                type: 'single',
+                text: '卡诺热机的效率只取决于（ ）。',
+                options: [
+                    'A. 工作物质',
+                    'B. 高温热源和低温热源的温度',
+                    'C. 热机的设计',
+                    'D. 循环时间'
+                ],
+                answer: 1
+            }, {
+                id: 'con-q50',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 热力学',
+                concept: '热力学第二定律的表述',
+                type: 'single',
+                text: '热力学第二定律的开尔文表述指出（ ）。',
+                options: [
+                    'A. 热量不能从低温物体传到高温物体',
+                    'B. 不可能从单一热源吸收热量使之完全变为有用功而不产生其他影响',
+                    'C. 功可以完全转化为热，热也可以完全转化为功',
+                    'D. 理想气体的内能只与温度有关'
+                ],
+                answer: 1
+            }, {
+                id: 'con-q51',
+                file: '物理概念精练',
+                fileKey: 'file7',
+                source: '概念精练 · 热力学',
+                concept: '熵的概念',
+                type: 'judge',
+                text: '在可逆过程中，系统的熵变等于系统吸收的热量与热源温度的比值；在不可逆过程中，系统的熵变大于该比值。',
+                options: ['正确', '错误'],
+                answer: 0
+            }
+        ];
+        allQuestions.push(...conceptQuestions);
+
         // ==================== RENDER ENGINE ====================
         let answeredMap = {}; // { questionId: { userAnswer, isCorrect } }
 
@@ -1689,7 +2401,7 @@
             container.innerHTML = '';
 
             // Group by file
-            const fileOrder = ['PHYS10016-2022春-A', 'PHYS10016-2023春-A', 'PHYS10031-2025春-A', 'PHYS10013-2019春-A', 'PHYS10013-2024春-A', '课后习题'];
+            const fileOrder = ['PHYS10016-2022春-A', 'PHYS10016-2023春-A', 'PHYS10031-2025春-A', 'PHYS10013-2019春-A', 'PHYS10013-2024春-A', '课后习题', '物理概念精练'];
             const grouped = {};
             fileOrder.forEach(f => { grouped[f] = []; });
 
@@ -1725,7 +2437,8 @@
                     'PHYS10031-2025春-A': '📗',
                     'PHYS10013-2019春-A': '📕',
                     'PHYS10013-2024春-A': '📓',
-                    '课后习题': '📝'
+                    '课后习题': '📝',
+                    '物理概念精练': '🧠'
                 };
                 const icon = fileIconMap[fileName] || '📄';
                 section.innerHTML = `

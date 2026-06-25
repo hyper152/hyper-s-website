@@ -350,6 +350,8 @@
     <h2>📑 目录</h2>
     <ol>
       <li class="toc-hs"><a href="#hs-mechanics">🔹 高中回顾 · 力学基础</a></li>
+	      <li class="toc-univ"><a href="#kinematics-deep">📐 质点运动学 · 大学深化</a></li>
+	      <li class="toc-univ"><a href="#dynamics-deep">⚡ 质点动力学 · 大学深化</a></li>
       <li class="toc-univ"><a href="#rigid">⚙️ 刚体定轴转动</a></li>
       <li class="toc-hs"><a href="#hs-em">🔸 高中回顾 · 静电基础</a></li>
       <li class="toc-univ"><a href="#coulomb">⚡ 库伦定律 &amp; 电场</a></li>
@@ -365,6 +367,8 @@
       <li class="toc-univ"><a href="#faraday">⚡ 法拉第电磁感应</a></li>
       <li class="toc-univ"><a href="#maxwell">📐 麦克斯韦方程组</a></li>
       <li class="toc-univ"><a href="#emwave">📡 电磁波</a></li>
+	      <li class="toc-univ"><a href="#relativity">⏳ 狭义相对论</a></li>
+	      <li class="toc-univ"><a href="#thermo">🔥 热力学基础</a></li>
       <li><a href="#exam-problems">📝 历年真题精选</a></li>
       <li><a href="#consts">📌 常用物理常量</a></li>
     </ol>
@@ -427,6 +431,110 @@
       大学物理强调 <strong>F = <span class="frac"><span class="n">dp</span><span class="d">dt</span></span></strong> 的微分形式，并引入 <strong>质心运动定理</strong>：∑F<sub>外</sub> = Ma<sub>C</sub>。
     </div>
   </div>
+
+	  <!-- ══════════════════════════════════════════════════════ -->
+	  <!--  质点运动学 — 大学深化                                 -->
+	  <!-- ══════════════════════════════════════════════════════ -->
+	  <h2 class="section-h1">📐 质点运动学 · 大学深化</h2>
+
+	  <div class="sec" id="kinematics-deep">
+	    <h2><span class="emoji">📐</span> 质点运动学的矢量描述 <span class="label-univ">[大学]</span> <span class="sub">Vector Description</span></h2>
+
+	    <div class="callout callout-blue">
+	      <strong>💡 大学运动学与高中的核心区别：</strong> 高中主要学习一维直线运动，大学引入 <strong>矢量描述</strong> 和 <strong>微积分</strong> 方法，
+	      以及 <strong>自然坐标系</strong> 处理曲线运动。
+	    </div>
+
+	    <h3>📌 位置矢量、位移、速度、加速度</h3>
+	    <div class="formula">位置矢量：r⃗ = x(t)î + y(t)ĵ + z(t)k̂</div>
+	    <div class="formula">位移：Δr⃗ = r⃗(t+Δt) − r⃗(t)</div>
+	    <div class="formula">瞬时速度：v⃗ = dr⃗/dt = (dx/dt)î + (dy/dt)ĵ + (dz/dt)k̂</div>
+	    <div class="formula">瞬时加速度：a⃗ = dv⃗/dt = d²r⃗/dt²</div>
+
+	    <div class="callout callout-yellow">
+	      <strong>⚠️ 注意区分：</strong>
+	      |Δr⃗| ≠ 路程 Δs（除直线单向运动外），|v⃗| = ds/dt（速率），而 |Δr⃗/Δt| 是平均速度大小。
+	    </div>
+
+	    <h3>📌 自然坐标系 <span class="label-key">[新概念]</span></h3>
+	    <p>以质点运动轨迹本身为坐标轴的坐标系。切向单位矢量 τ̂ 沿轨迹切线方向，法向单位矢量 n̂ 指向曲率中心。</p>
+	    <div class="formula">切向加速度：a<sub>τ</sub> = dv/dt · τ̂ （描述速率变化快慢）</div>
+	    <div class="formula">法向加速度：a<sub>n</sub> = v²/ρ · n̂ （描述速度方向变化快慢）</div>
+	    <div class="formula">总加速度：a⃗ = a<sub>τ</sub>τ̂ + a<sub>n</sub>n̂</div>
+	    <p>其中 ρ 为轨迹在该点的曲率半径。</p>
+
+	    <h4>各种运动的加速度特征</h4>
+	    <table class="data-table">
+	      <tr><th>运动类型</th><th>a<sub>τ</sub></th><th>a<sub>n</sub></th><th>总加速度</th></tr>
+	      <tr><td>匀速直线运动</td><td>0</td><td>0</td><td>a = 0</td></tr>
+	      <tr><td>匀变速直线运动</td><td>const</td><td>0</td><td>a = const</td></tr>
+	      <tr><td>匀速圆周运动</td><td>0</td><td>v²/R</td><td>a = v²/R, 指向圆心</td></tr>
+	      <tr><td>一般曲线运动</td><td>dv/dt</td><td>v²/ρ</td><td>a = √(a<sub>τ</sub>² + a<sub>n</sub>²)</td></tr>
+	    </table>
+
+	    <h3>📌 圆周运动的角量描述</h3>
+	    <div class="formula">角位置 θ(t)，角速度 ω = dθ/dt</div>
+	    <div class="formula">角加速度 α = dω/dt = d²θ/dt²</div>
+	    <div class="formula">线量与角量的关系：v = Rω，a<sub>τ</sub> = Rα，a<sub>n</sub> = Rω²</div>
+
+	    <h3>📌 相对运动</h3>
+	    <div class="formula">v⃗<sub>AC</sub> = v⃗<sub>AB</sub> + v⃗<sub>BC</sub>  （绝对 = 相对 + 牵连）</div>
+	    <div class="formula">a⃗<sub>AC</sub> = a⃗<sub>AB</sub> + a⃗<sub>BC</sub></div>
+	    <p>当 B 相对于 C 做匀速直线运动时，a⃗<sub>BC</sub> = 0，则 a⃗<sub>AC</sub> = a⃗<sub>AB</sub> —— 即 <strong>加速度在不同惯性系中相同</strong>（伽利略变换不变性）。</p>
+	  </div>
+
+	  <!-- ══════════════════════════════════════════════════════ -->
+	  <!--  质点动力学 — 大学深化                                 -->
+	  <!-- ══════════════════════════════════════════════════════ -->
+	  <h2 class="section-h1">⚡ 质点动力学 · 大学深化</h2>
+
+	  <div class="sec" id="dynamics-deep">
+	    <h2><span class="emoji">⚡</span> 质点动力学深化 <span class="label-univ">[大学]</span> <span class="sub">Dynamics</span></h2>
+
+	    <h3>📌 牛顿定律的微分形式</h3>
+	    <div class="formula">F⃗ = dp⃗/dt = d(mv⃗)/dt</div>
+	    <p>当 m 为常量时退化为 F⃗ = ma⃗。大学物理强调微分形式，便于处理变质量问题（如火箭）。</p>
+
+	    <h3>📌 惯性系与非惯性系 <span class="label-key">[新概念]</span></h3>
+	    <ul>
+	      <li><strong>惯性系：</strong>牛顿定律成立的参考系。相对惯性系做匀速直线运动的参考系也是惯性系。</li>
+	      <li><strong>非惯性系：</strong>相对惯性系有加速度的参考系。在非惯性系中需引入 <strong>惯性力</strong> 才能使用牛顿定律形式。</li>
+	    </ul>
+	    <div class="formula">平动非惯性系中的惯性力：F⃗<sub>惯</sub> = −ma⃗<sub>0</sub></div>
+	    <div class="formula">转动非惯性系中的惯性力：F⃗<sub>离心</sub> = mω²r⃗，F⃗<sub>科里奥利</sub> = 2mv⃗′ × ω⃗</div>
+
+	    <h3>📌 动量定理与动量守恒</h3>
+	    <div class="formula">冲量：I⃗ = ∫<sub>t₁</sub><sup>t₂</sup> F⃗ dt = Δp⃗ = p⃗₂ − p⃗₁</div>
+	    <div class="formula">动量守恒：∑F⃗<sub>外</sub> = 0 ⇒ Σmᵢv⃗ᵢ = const</div>
+	    <p>动量守恒是 <strong>空间平移对称性</strong> 的体现 —— 这是分析力学的深刻观点。</p>
+
+	    <h3>📌 质心与质心运动定理</h3>
+	    <div class="formula">质心位置：r⃗<sub>C</sub> = (Σmᵢr⃗ᵢ)/M</div>
+	    <div class="formula">质心运动定理：∑F⃗<sub>外</sub> = Ma⃗<sub>C</sub></div>
+	    <p>质心的运动只由合外力决定，内力不影响质心运动。<strong>质点系的总动量</strong> 等于总质量乘以质心速度：P⃗ = Mv⃗<sub>C</sub>。</p>
+
+	    <h3>📌 功与能 — 大学深化</h3>
+	    <div class="formula">变力做功：W = ∫<sub>L</sub> F⃗ · dr⃗ = ∫<sub>x₁</sub><sup>x₂</sup> F<sub>x</sub> dx + ∫<sub>y₁</sub><sup>y₂</sup> F<sub>y</sub> dy + ∫<sub>z₁</sub><sup>z₂</sup> F<sub>z</sub> dz</div>
+	    <div class="formula">动能定理：W<sub>合</sub> = ΔE<sub>k</sub> = ½mv₂² − ½mv₁²</div>
+	    <div class="formula">功能原理：W<sub>外</sub> + W<sub>非保内</sub> = ΔE = Δ(E<sub>k</sub> + E<sub>p</sub>)</div>
+
+	    <h3>📌 势能曲线与平衡 <span class="label-key">[新概念]</span></h3>
+	    <div class="formula">一维势能曲线：F(x) = −dE<sub>p</sub>/dx</div>
+	    <ul>
+	      <li><strong>稳定平衡：</strong>势能曲线有极小值，F(x)=0，偏离时力指向平衡点（如弹簧振子）</li>
+	      <li><strong>不稳定平衡：</strong>势能曲线有极大值，F(x)=0，偏离时力背离平衡点</li>
+	      <li><strong>随遇平衡：</strong>势能曲线平坦，F(x)=0</li>
+	    </ul>
+
+	    <h3>📌 碰撞问题</h3>
+	    <table class="data-table">
+	      <tr><th>类型</th><th>动量</th><th>动能</th><th>恢复系数 e</th></tr>
+	      <tr><td>完全弹性碰撞</td><td>守恒</td><td>守恒</td><td>e = 1</td></tr>
+	      <tr><td>完全非弹性碰撞</td><td>守恒</td><td>不守恒（损失最大）</td><td>e = 0</td></tr>
+	      <tr><td>非完全弹性碰撞</td><td>守恒</td><td>不守恒（部分损失）</td><td>0 &lt; e &lt; 1</td></tr>
+	    </table>
+	    <div class="formula">一维对心碰撞：v₂ − v₁ = e(u₁ − u₂) （碰后相对速度 = e × 碰前相对速度）</div>
+	  </div>
 
   <!-- ══════════════════════════════════════════════════════ -->
   <!--  刚体定轴转动 — 大学新内容                               -->
@@ -1124,6 +1232,176 @@
     <p>γ射线 → X射线 → 紫外线 → 可见光 → 红外线 → 微波 → 无线电波</p>
     <p>（频率递减，波长递增）</p>
   </div>
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!--  狭义相对论                                             -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <h2 class="section-h1">⏳ 狭义相对论</h2>
+
+  <div class="sec" id="relativity">
+    <h2><span class="emoji">⏳</span> 狭义相对论 <span class="label-univ">[大学]</span> <span class="sub">Special Relativity</span></h2>
+
+    <div class="callout callout-red">
+      <strong>🔥 狭义相对论完全颠覆了经典时空观</strong> — 高中未涉及，是大学物理最具革命性的内容。
+      核心思想：物理规律在所有惯性系中形式相同，且真空光速不变。
+    </div>
+
+    <h3>📌 牛顿的绝对时空观（伽利略变换）</h3>
+    <div class="formula">x′ = x − ut，y′ = y，z′ = z，t′ = t</div>
+    <div class="formula">v′ = v − u，a′ = a</div>
+    <p>伽利略变换下：长度、时间间隔不变 —— 绝对时空观。</p>
+
+    <h3>📌 狭义相对论的两条基本假设</h3>
+    <ol>
+      <li><strong>相对性原理：</strong>物理定律在所有惯性系中具有相同的数学形式</li>
+      <li><strong>光速不变原理：</strong>在一切惯性系中，真空中的光速都具有相同的值 c</li>
+    </ol>
+
+    <h3>📌 洛伦兹变换 <span class="label-key">[核心]</span></h3>
+    <div class="formula">x′ = γ(x − ut)，y′ = y，z′ = z</div>
+    <div class="formula">t′ = γ(t − ux/c²)</div>
+    <div class="formula">其中 γ = 1/√(1 − u²/c²) （洛伦兹因子）</div>
+
+    <h4>洛伦兹变换 vs 伽利略变换</h4>
+    <table class="compare-table">
+      <tr><th>对比项</th><th>伽利略变换</th><th>洛伦兹变换</th></tr>
+      <tr><td>时空观</td><td>绝对时空</td><td>相对时空（时空关联）</td></tr>
+      <tr><td>光速</td><td>可变（服从速度叠加）</td><td>不变（恒为 c）</td></tr>
+      <tr><td>适用条件</td><td>v &lt;&lt; c（低速近似）</td><td>v ≤ c（普遍）</td></tr>
+      <tr><td>时间</td><td>t′ = t（与参考系无关）</td><td>t′ = γ(t − ux/c²)（与空间有关）</td></tr>
+    </table>
+
+    <h3>📌 狭义相对论的三个重要效应</h3>
+
+    <h4>① 同时性的相对性 <span class="label-key">[颠覆常识]</span></h4>
+    <p>在一个惯性系中同时发生在不同地点的事件，在另一个惯性系中观察 <strong>不同时</strong>。</p>
+    <div class="formula">Δt′ = γ(Δt − uΔx/c²)</div>
+    <p>当 Δt = 0（原系同时），若 Δx ≠ 0，则 Δt′ ≠ 0（另一系不同时）。</p>
+
+    <h4>② 时间膨胀（动钟变慢）</h4>
+    <div class="formula">τ = γτ₀ = τ₀/√(1 − u²/c²) > τ₀</div>
+    <p>τ₀ 为 <strong>固有时</strong>（在相对事件静止的参考系中测得的时间间隔）。运动时钟走得更慢。</p>
+    <div class="callout callout-green">
+      <strong>✅ 经典例子：</strong> μ 子寿命延长实验 —— 高速 μ 子在大气层中的寿命比静止时更长，从而能到达地面。
+    </div>
+
+    <h4>③ 长度收缩（动尺变短）</h4>
+    <div class="formula">L = L₀/γ = L₀√(1 − u²/c²) &lt; L₀</div>
+    <p>L₀ 为 <strong>固有长度</strong>（在相对物体静止的参考系中测得的长度）。运动方向上的长度收缩，垂直方向不变。</p>
+    <div class="callout callout-yellow">
+      <strong>⚠️ 注意：</strong> 长度收缩只发生在 <strong>运动方向上</strong>。物体本身没有发生形变，只是不同惯性系的测量结果不同。
+    </div>
+
+    <h3>📌 相对论速度变换</h3>
+    <div class="formula">v<sub>x</sub>′ = (v<sub>x</sub> − u)/(1 − uv<sub>x</sub>/c²)</div>
+    <div class="formula">v<sub>y</sub>′ = v<sub>y</sub>/(γ(1 − uv<sub>x</sub>/c²))</div>
+    <p>当 u, v &lt;&lt; c 时，退化为伽利略速度变换 v′ = v − u。</p>
+
+    <h3>📌 相对论质量、动量与能量 <span class="label-key">[重要]</span></h3>
+    <div class="formula">相对论质量：m = γm₀ = m₀/√(1 − v²/c²)</div>
+    <div class="formula">相对论动量：p = mv = γm₀v</div>
+    <div class="formula">静能：E₀ = m₀c²</div>
+    <div class="formula" style="font-size:1.2rem; font-weight:600;">总能量：E = mc² = γm₀c²</div>
+    <div class="formula">动能：E<sub>k</sub> = mc² − m₀c² = (γ − 1)m₀c²</div>
+    <div class="formula">能量-动量关系：E² = p²c² + m₀²c⁴</div>
+
+    <div class="callout callout-red">
+      <strong>🌟 难点：质能关系 E = mc²</strong><br>
+      质量与能量的等价关系 —— 质量可以转化为能量，能量也可以转化为质量。<br>
+      <strong>应用：</strong>核裂变、核聚变、正反物质湮灭、太阳的能量来源。
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!--  热力学基础                                             -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <h2 class="section-h1">🔥 热力学基础</h2>
+
+  <div class="sec" id="thermo">
+    <h2><span class="emoji">🔥</span> 气体动理论与热力学基础 <span class="label-univ">[大学]</span> <span class="sub">Thermodynamics</span></h2>
+
+    <div class="callout callout-blue">
+      <strong>💡 热力学是大学物理的又一全新领域。</strong> 从宏观（热力学定律）和微观（气体动理论）两个角度研究热现象的规律。
+    </div>
+
+    <h3>📌 气体动理论的基本概念</h3>
+    <div class="formula">理想气体状态方程：pV = νRT = NkT</div>
+    <p>其中 ν 为物质的量，R = 8.314 J/(mol·K) 为普适气体常量，k = R/N<sub>A</sub> = 1.38×10⁻²³ J/K 为玻耳兹曼常量。</p>
+
+    <h4>平衡态</h4>
+    <p>在不受外界影响的条件下，系统宏观性质不随时间变化的状态。平衡态是 <strong>动态平衡</strong>（微观粒子仍在运动）。</p>
+    <ul>
+      <li>平衡态要求各处 <strong>温度相等</strong>、<strong>压强相等</strong>、<strong>化学组成均匀</strong></li>
+      <li>仅温度相等 ≠ 平衡态（如绝热容器中气体各处温度相同但密度不同）</li>
+    </ul>
+
+    <h3>📌 温度的微观本质 <span class="label-key">[核心概念]</span></h3>
+    <div class="formula">分子平均平动动能：‾ε<sub>t</sub> = ½m‾v² = (3/2)kT</div>
+    <div class="formula">⟹ T = (2/3k) · ‾ε<sub>t</sub></div>
+    <p><strong>温度是大量分子热运动的集体表现</strong>，是分子平均平动动能的量度，具有统计意义。单个分子没有温度的概念。</p>
+
+    <h3>📌 内能</h3>
+    <div class="formula">理想气体的内能（仅与温度有关）：E = ν · (i/2)RT</div>
+    <p>其中 i 为自由度：单原子 i=3，双原子 i=5，多原子 i=6。</p>
+    <table class="data-table">
+      <tr><th>分子类型</th><th>举例</th><th>自由度 i</th><th>定容摩尔热容 C<sub>V</sub></th><th>定压摩尔热容 C<sub>p</sub></th></tr>
+      <tr><td>单原子</td><td>He, Ne, Ar</td><td>3</td><td>3R/2</td><td>5R/2</td></tr>
+      <tr><td>双原子（刚性）</td><td>H₂, O₂, N₂</td><td>5</td><td>5R/2</td><td>7R/2</td></tr>
+      <tr><td>多原子（刚性）</td><td>CO₂, H₂O</td><td>6</td><td>3R</td><td>4R</td></tr>
+    </table>
+    <div class="formula">比热容比：γ = C<sub>p</sub>/C<sub>V</sub> = (i+2)/i</div>
+
+    <h3>📌 热力学第一定律</h3>
+    <div class="formula" style="font-size:1.2rem; font-weight:600;">Q = ΔE + A</div>
+    <p><strong>符号规则：</strong>系统吸热 Q &gt; 0，放热 Q &lt; 0；系统对外做功 A &gt; 0，外界对系统做功 A &lt; 0。</p>
+
+    <h4>理想气体的四个典型过程</h4>
+    <table class="data-table">
+      <tr><th>过程</th><th>特征</th><th>ΔE</th><th>A</th><th>Q</th><th>过程方程</th></tr>
+      <tr><td>等容</td><td>V = const</td><td>νC<sub>V</sub>ΔT</td><td>0</td><td>ΔE</td><td>p/T = const</td></tr>
+      <tr><td>等压</td><td>p = const</td><td>νC<sub>V</sub>ΔT</td><td>pΔV</td><td>νC<sub>p</sub>ΔT</td><td>V/T = const</td></tr>
+      <tr><td>等温</td><td>T = const</td><td>0</td><td>νRT·ln(V₂/V₁)</td><td>A</td><td>pV = const</td></tr>
+      <tr><td>绝热</td><td>Q = 0</td><td>−A</td><td>−ΔE</td><td>0</td><td>pV<sup>γ</sup> = const</td></tr>
+    </table>
+
+    <div class="callout callout-yellow">
+      <strong>⚠️ 常见易错：</strong> 绝热自由膨胀中 Q = 0, A = 0, 因此 ΔE = 0, 温度不变。
+      但这不是准静态过程，不能使用 pV<sup>γ</sup> = const 公式！
+    </div>
+
+    <h3>📌 循环过程与热机效率</h3>
+    <div class="formula">热机效率：η = A/Q₁ = (Q₁ − Q₂)/Q₁ = 1 − Q₂/Q₁</div>
+    <div class="formula">致冷系数：ω = Q₂/A = Q₂/(Q₁ − Q₂)</div>
+    <div class="formula">卡诺热机效率：η<sub>c</sub> = 1 − T₂/T₁（只与高低温热源温度有关）</div>
+    <div class="callout callout-red">
+      <strong>🌟 卡诺定理：</strong> 所有工作在两个恒温热源之间的热机，可逆热机的效率最高。
+      卡诺热机的效率只取决于两个热源的温度，与工作物质无关。
+    </div>
+
+    <h3>📌 热力学第二定律 <span class="label-key">[核心]</span></h3>
+    <h4>两种等价表述</h4>
+    <ul>
+      <li><strong>开尔文表述：</strong>不可能从单一热源吸收热量使之完全变为有用功而不产生其他影响</li>
+      <li><strong>克劳修斯表述：</strong>热量不可能自发地从低温物体传到高温物体</li>
+    </ul>
+    <p>两种表述等价 —— 否定其中一种必然否定另一种。</p>
+
+    <h3>📌 熵与熵增原理 <span class="label-hard">🌟 难点</span></h3>
+    <div class="formula">熵的定义：dS = dQ<sub>可逆</sub>/T</div>
+    <div class="formula">熵变计算：ΔS = ∫ dQ<sub>可逆</sub>/T</div>
+    <div class="formula">熵增原理：对孤立系统，ΔS ≥ 0（等号在可逆过程中成立）</div>
+    <ul>
+      <li>熵是 <strong>状态函数</strong>，与路径无关</li>
+      <li>孤立系统的熵永不减少 —— 给出了热力学过程进行的方向</li>
+      <li>熵的微观意义：系统无序度的量度（玻耳兹曼公式 S = k ln Ω）</li>
+    </ul>
+
+    <div class="callout callout-green">
+      <strong>📌 第一定律 vs 第二定律：</strong><br>
+      第一定律：能量守恒 —— 告诉你"能不能做"（能量上是否可行）<br>
+      第二定律：方向性 —— 告诉你"能不能自发进行"（熵是否增加）<br>
+      两者共同构成了完整的热力学理论基础。
+    </div>
+  </div>
 
   <!-- ══════════════════════════════════════════════════════ -->
   <!--  历年真题精选                                          -->
@@ -1386,6 +1664,124 @@
         = μ₀IR²/[2(R²+x²)^{3/2}]<br>
         当 x = 0（圆心）：B = μ₀I/(2R)
       </div>
+    </div>
+    <h3>📌 四、狭义相对论</h3>
+
+    <div class="exam-box">
+      <div class="title">📄 2023春 · PHYS10016</div>
+      <div class="q-text">
+        <strong>1.</strong> 一高速列车以 0.6c 的速度相对地面行驶，列车上的观察者测得列车长度为 100 m。
+        地面上的观察者测得的列车长度为：<br>
+        A. 100 m &emsp; B. 80 m &emsp; C. 125 m &emsp; D. 60 m
+      </div>
+      <div class="answer">✅ <strong>答案：</strong> B。L = L₀√(1 − v²/c²) = 100 × √(1 − 0.36) = 100 × 0.8 = 80 m。</div>
+    </div>
+
+    <div class="exam-box">
+      <div class="title">📄 2023春 · PHYS10016</div>
+      <div class="q-text">
+        <strong>2.</strong> π⁺ 介子在静止时的平均寿命为 2.6×10⁻⁸ s，若它以 0.8c 的速度运动，
+        则地面实验室中测得的平均寿命约为：<br>
+        A. 2.6×10⁻⁸ s &emsp; B. 1.56×10⁻⁸ s &emsp; C. 4.33×10⁻⁸ s &emsp; D. 3.25×10⁻⁸ s
+      </div>
+      <div class="answer">✅ <strong>答案：</strong> C。τ = γτ₀，γ = 1/√(1−0.64) = 1/0.6 ≈ 1.667，τ ≈ 2.6×1.667 ≈ 4.33×10⁻⁸ s。</div>
+    </div>
+
+    <div class="exam-box">
+      <div class="title">📄 2022春 · PHYS10016</div>
+      <div class="q-text">
+        <strong>3.</strong> 根据狭义相对论，当物体以速度 v 运动时，其总能量 E 与动量 p 的关系为：<br>
+        A. E = pc &emsp; B. E² = p²c² + m₀²c⁴ &emsp; C. E = ½mv² &emsp; D. E = p²/(2m)
+      </div>
+      <div class="answer">✅ <strong>答案：</strong> B。质能-动量关系 E² = p²c² + m₀²c⁴，当 m₀ = 0 时退化为 E = pc。</div>
+    </div>
+
+    <div class="exam-box">
+      <div class="title">📄 2023春 · PHYS10016</div>
+      <div class="q-text">
+        <strong>4.</strong> 在惯性系 S 中，两个事件发生在同一地点，时间间隔为 4 s。在另一惯性系 S′ 中，
+        测得这两个事件的时间间隔为 5 s，则 S′ 相对于 S 的运动速度为：<br>
+        A. 0.6c &emsp; B. 0.8c &emsp; C. 0.4c &emsp; D. 0.5c
+      </div>
+      <div class="answer">✅ <strong>答案：</strong> A。时间膨胀：Δt = γΔt₀，5 = γ·4 ⇒ γ = 1.25 ⇒ v = c√(1−1/γ²) = c√(1−0.64) = 0.6c。</div>
+    </div>
+
+    <h3>📌 五、热力学</h3>
+
+    <div class="exam-box">
+      <div class="title">📄 课后习题改编</div>
+      <div class="q-text">
+        <strong>1.</strong> 一定量的理想气体从状态 a(p₀,V₀) 经等温过程膨胀到状态 b(p₀/2,2V₀)，
+        则气体的内能变化 ΔE 为：<br>
+        A. 增大 &emsp; B. 减小 &emsp; C. 不变 &emsp; D. 无法判断
+      </div>
+      <div class="answer">✅ <strong>答案：</strong> C。等温过程温度不变，理想气体内能只与温度有关，故 ΔE = 0。</div>
+    </div>
+
+    <div class="exam-box">
+      <div class="title">📄 典型题型</div>
+      <div class="q-text">
+        <strong>2.</strong> 一定量的理想气体经等压过程从 300 K 加热到 600 K，该气体为双原子分子，
+        则气体吸收的热量 Q 与对外做功 A 之比 Q:A 约为：<br>
+        A. 5:2 &emsp; B. 7:2 &emsp; C. 5:3 &emsp; D. 7:5
+      </div>
+      <div class="answer">✅ <strong>答案：</strong> B。双原子分子 C<sub>V</sub> = 5R/2，C<sub>p</sub> = 7R/2。
+        Q = νC<sub>p</sub>ΔT，ΔE = νC<sub>V</sub>ΔT，A = Q − ΔE = ν(C<sub>p</sub>−C<sub>V</sub>)ΔT = νRΔT。
+        Q:A = (7R/2):R = 7:2。</div>
+    </div>
+
+    <div class="exam-box">
+      <div class="title">📄 典型题型</div>
+      <div class="q-text">
+        <strong>3.</strong> 一卡诺热机工作在 127°C 和 27°C 两个热源之间，其效率为：<br>
+        A. 25% &emsp; B. 50% &emsp; C. 75% &emsp; D. 100%
+      </div>
+      <div class="answer">✅ <strong>答案：</strong> A。T₁ = 400 K，T₂ = 300 K，η = 1 − T₂/T₁ = 1 − 300/400 = 0.25 = 25%。</div>
+    </div>
+
+    <div class="exam-box">
+      <div class="title">📄 典型题型</div>
+      <div class="q-text">
+        <strong>4.</strong> 关于热力学第二定律，下列说法正确的是：<br>
+        A. 功可以全部转化为热，热也能全部转化为功<br>
+        B. 热量可以从低温物体传向高温物体而不引起其他变化<br>
+        C. 一切与热现象有关的实际宏观过程都是不可逆的<br>
+        D. 第二类永动机违反了热力学第一定律
+      </div>
+      <div class="answer">✅ <strong>答案：</strong> C。A 错：热不能全部转化为功而不产生其他影响；B 错：不能自发从低温到高温；
+        D 错：第二类永动机不违反第一定律，但违反第二定律。</div>
+    </div>
+
+    <div class="exam-box">
+      <div class="title">📄 典型题型 · 热力学综合</div>
+      <div class="q-text">
+        <strong>5.</strong> 一摩尔单原子理想气体经历 abcda 循环，ab 为等压膨胀，bc 为等容降压，
+        cd 为等压压缩，da 为等容升压，循环中气体对外做的净功为：<br>
+        A. (p₂−p₁)(V₂−V₁) &emsp; B. ½(p₂−p₁)(V₂−V₁) &emsp; C. 0 &emsp; D. p₂V₂−p₁V₁
+      </div>
+      <div class="answer">✅ <strong>答案：</strong> A。净功等于 p-V 图上循环曲线所围矩形面积：(p₂−p₁)(V₂−V₁)。</div>
+    </div>
+
+    <h3>📌 六、质点运动学与动力学</h3>
+
+    <div class="exam-box">
+      <div class="title">📄 典型题型</div>
+      <div class="q-text">
+        <strong>1.</strong> 质点沿 x 轴运动，加速度 a = 2t (SI)，t = 0 时 v₀ = 1 m/s，x₀ = 0。
+        则 t = 2 s 时质点的位置为：<br>
+        A. 4 m &emsp; B. 14/3 m &emsp; C. 8/3 m &emsp; D. 6 m
+      </div>
+      <div class="answer">✅ <strong>答案：</strong> B。v = ∫a dt = t² + 1，x = ∫v dt = t³/3 + t，x(2) = 8/3 + 2 = 14/3 m。</div>
+    </div>
+
+    <div class="exam-box">
+      <div class="title">📄 典型题型</div>
+      <div class="q-text">
+        <strong>2.</strong> 一质量为 m 的质点沿曲线运动，其位置矢量为 r⃗ = a cosωt î + b sinωt ĵ，
+        则质点对原点的角动量大小为：<br>
+        A. mωab &emsp; B. mω(a²+b²)/2 &emsp; C. 0 &emsp; D. mω√(a²+b²)
+      </div>
+      <div class="answer">✅ <strong>答案：</strong> A。v⃗ = −aω sinωt î + bω cosωt ĵ，L = r × mv = m(r × v) = mωab k̂，|L| = mωab。</div>
     </div>
   </div>
 
