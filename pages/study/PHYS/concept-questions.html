@@ -46,9 +46,6 @@
             color: #f5e6d3;
             padding: 28px 20px 24px;
             text-align: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
             box-shadow: 0 2px 20px rgba(0, 0, 0, 0.25);
         }
         .header h1 {
@@ -74,8 +71,8 @@
             background: #fff;
             border-bottom: 1px solid var(--border);
             position: sticky;
-            top: 92px;
-            z-index: 99;
+            top: 0;
+            z-index: 100;
             box-shadow: var(--shadow);
             font-size: 0.9rem;
         }
@@ -151,9 +148,6 @@
             padding: 10px 20px;
             background: #fff;
             border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 144px;
-            z-index: 98;
             box-shadow: var(--shadow);
         }
         .filter-btn {
@@ -222,7 +216,7 @@
             box-shadow: var(--shadow);
             transition: all var(--transition);
             position: relative;
-            scroll-margin-top: 200px;
+            scroll-margin-top: 80px;
         }
         .question-card:hover {
             box-shadow: var(--shadow-hover);
@@ -525,13 +519,10 @@
                 font-size: 0.75rem;
             }
             .stats-bar {
-                top: 80px;
-            }
-            .filter-row {
-                top: 128px;
+                top: 0;
             }
             .question-card {
-                scroll-margin-top: 180px;
+                scroll-margin-top: 80px;
             }
         }
     </style>
