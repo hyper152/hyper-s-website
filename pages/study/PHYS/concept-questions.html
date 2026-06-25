@@ -421,6 +421,34 @@
             pointer-events: all;
         }
 
+        /* Dont-Know Button */
+        .dontknow-btn {
+            padding: 10px 14px;
+            border: 1.5px dashed #c9a87c;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.88rem;
+            color: #8b7355;
+            background: #fdfaf6;
+            margin-top: 8px;
+            text-align: center;
+            transition: all var(--transition);
+            user-select: none;
+            font-family: var(--font-main);
+        }
+        .dontknow-btn:hover {
+            background: #f5ede0;
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        .dontknow-btn.answered-dk {
+            background: #fef8e7;
+            border-color: #d4a843;
+            color: #8d6e00;
+            cursor: default;
+            pointer-events: none;
+        }
+
         @keyframes pulse-green {
             0%,
             100% {
@@ -588,6 +616,7 @@
         <span class="stat-item"><span class="stat-dot correct"></span> 正确：<strong id="correctCount">0</strong></span>
         <span class="stat-item"><span class="stat-dot incorrect"></span> 错误：<strong id="incorrectCount">0</strong></span>
         <span class="stat-item"><span class="stat-dot remaining"></span> 剩余：<strong id="remainingCount">0</strong></span>
+        <span class="stat-item" style="background:#fef8e7;"><span style="width:10px;height:10px;border-radius:50%;display:inline-block;background:#d4a843;"></span> 跳过：<strong id="dontknowCount">0</strong></span>
         <button class="btn reset-btn" onclick="resetAll()" title="清除所有答案重新开始">🔄 全部重置</button>
     </div>
 
@@ -701,6 +730,9 @@
             ],
             answer: 3,
             explanation: '子弹击入杆的过程：系统对转轴不受外力矩（冲击力过轴）→ 角动量守恒。碰撞完全非弹性 → 机械能不守恒（部分动能转化为内能）。<br>杆上摆的过程：系统受重力矩作用 → 角动量不守恒。只有保守力（重力）做功，转轴处支持力不做功 → 机械能守恒。<br>因此 D 正确。'
+        }, {
+            id: 'f1-q6',
+            file: 'PHYS10016-2022春-A',
             fileKey: 'file1',
             source: 'PHYS10016-2022春-A 第8题',
             concept: '高斯定理的理解',
@@ -714,7 +746,8 @@
             ],
             answer: 0,
             explanation: '高斯定理 ∮E·dS = q/ε₀。<br><b>A 对：</b>若闭合曲面上各点 E = 0，则通量为零 → 曲面内电荷代数和必为零。<br><b>B 错：</b>曲面内电荷代数和可能为零而曲面上场强不为零（如偶极子）。<br><b>C 错：</b>通量为零时曲面上各点场强不一定为零。<br><b>D 错：</b>通量不为零时，曲面上某点场强也可能为零。'
-            }, {
+        }, {
+            id: 'f1-q7',
             file: 'PHYS10016-2022春-A',
             fileKey: 'file1',
             source: 'PHYS10016-2022春-A 第9题',
@@ -724,7 +757,8 @@
             options: ['A. 无源场', 'B. 有源场', 'C. 无旋场', 'D. 有旋场'],
             answer: 2,
             explanation: '静电场的环路定理 ∮E·dl = 0 表明静电场是<b>无旋场</b>（即保守场）。<br>无源场是指通量恒为零的场（如磁场 ∮B·dS = 0）。静电场是有源场（高斯定理 ∮E·dS = q/ε₀ ≠ 0），故不选 A、B。'
-            }, {
+        }, {
+            id: 'f1-q8',
             file: 'PHYS10016-2022春-A',
             fileKey: 'file1',
             source: 'PHYS10016-2022春-A 第10题',
@@ -1761,6 +1795,7 @@
                 answer: 2,
                 explanation: '位移是矢量（初位置指向末位置），大小 ≤ 路程。圆周运动一周，位移 = 0，路程 = 2πR。选 C。'
                 }, {
+            id: 'con-q7',
                 file: '物理概念精练',
                 fileKey: 'file7',
                 source: '概念精练 · 运动学',
@@ -1776,6 +1811,7 @@
                 answer: 2,
                 explanation: '加速度是速度的变化率，描述速度变化的快慢（不是大小）。a 越大 → 速度变化越快。A 错：a 大但可能初速小。B 错：a 大但时间短时速度变化不一定大。D 错：a 方向与速度方向无关（如减速时反向）。'
                 }, {
+            id: 'con-q7',
                 file: '物理概念精练',
                 fileKey: 'file7',
                 source: '概念精练 · 运动学',
@@ -1972,6 +2008,7 @@
                 answer: 2,
                 explanation: '转动定律 M = Iα 中，M、I、α 必须对<b>同一转轴</b>而言（C 对）。A 错：M = 0 → α = 0。B 错：I 与 M 无关，由刚体质量分布和转轴位置决定。D 错：α 方向与 M 方向相同。'
                 }, {
+            id: 'con-q19',
                 file: '物理概念精练',
                 fileKey: 'file7',
                 source: '概念精练 · 刚体',
@@ -1987,6 +2024,7 @@
                 answer: 1,
                 explanation: '角动量守恒条件：合外力矩为零。对定轴转动，当合外力矩为零时角动量守恒（Iω = 常数）。A 错：合外力为零不能保证角动量守恒。C、D 不是根本条件。'
                 }, {
+            id: 'con-q19',
                 file: '物理概念精练',
                 fileKey: 'file7',
                 source: '概念精练 · 刚体',
@@ -2069,6 +2107,7 @@
                 answer: 1,
                 explanation: '高斯定理：电通量 = q_内/ε₀。<br>A 错：场强由所有电荷决定。<br>B 对：电通量仅由面内电荷决定。<br>C 错：面内无电荷时通量为 0，但面上场强不一定为 0。<br>D 错：电荷代数和为零时通量为 0，但面上场强不一定为 0。'
                 }, {
+            id: 'con-q27',
                 file: '物理概念精练',
                 fileKey: 'file7',
                 source: '概念精练 · 静电场',
@@ -2231,6 +2270,7 @@
                 answer: 2,
                 explanation: '顺磁质 μᵣ > 1，抗磁质 μᵣ < 1，铁磁质 μᵣ >> 1。C 对：铁磁质 μᵣ 远大于 1。<br>A 错：顺磁质 μᵣ > 1。B 错：抗磁质 μᵣ < 1。D 错：抗磁质 μᵣ < 1。'
                 }, {
+            id: 'con-q33',
                 file: '物理概念精练',
                 fileKey: 'file7',
                 source: '概念精练 · 磁场',
@@ -2408,6 +2448,7 @@
                 answer: 1,
                 explanation: '平衡态需要力学平衡（压强相等）、热平衡（温度相等）和化学平衡。仅温度相等不够。说法错误。'
                 }, {
+            id: 'con-q51',
                 file: '物理概念精练',
                 fileKey: 'file7',
                 source: '概念精练 · 热力学',
@@ -2540,10 +2581,9 @@
                 // Filter
                 let filteredQuestions = questions;
                 if (filterKey === 'unanswered') {
-                    filteredQuestions = questions.filter(q => !(q.id in answeredMap));
+                    filteredQuestions = questions.filter(q => !(q.id in answeredMap) || answeredMap[q.id].isDontKnow);
                 } else if (filterKey === 'wrong') {
-                    filteredQuestions = questions.filter(q => (q.id in answeredMap) && !answeredMap[q.id]
-                        .isCorrect);
+                    filteredQuestions = questions.filter(q => (q.id in answeredMap) && !answeredMap[q.id].isCorrect && !answeredMap[q.id].isDontKnow);
                 } else if (filterKey.startsWith('file')) {
                     const fk = filterKey; // 'file1','file2',...
                     filteredQuestions = questions.filter(q => q.fileKey === fk);
@@ -2624,6 +2664,7 @@
                         `;
                     }).join('')}
                 </ul>
+                <div class="dontknow-btn" data-qid="${q.id}">😅 不会 / 跳过（直接显示答案）</div>
                 <div class="feedback-msg" id="fb-${q.id}"></div>
                 <div class="explanation-box" id="exp-${q.id}"></div>
                 <div class="locked-overlay"></div>
@@ -2652,16 +2693,40 @@
                     const correctIdx = q.answer;
                     const userIdx = ua.userAnswer;
                     const options = card.querySelectorAll('.option-item');
-                    if (userIdx === correctIdx) {
+                    if (ua.isDontKnow) {
+                        // Dont-know: dim the correct answer without marking wrong
+                        if (options[correctIdx]) options[correctIdx].classList.add('show-correct-dim');
+                    } else if (userIdx === correctIdx) {
                         options[correctIdx].classList.add('show-correct');
                     } else {
-                        options[userIdx].classList.add('show-incorrect');
-                        options[correctIdx].classList.add('show-correct');
+                        if (options[userIdx]) options[userIdx].classList.add('show-incorrect');
+                        if (options[correctIdx]) options[correctIdx].classList.add('show-correct');
                     }
                 }
                 // Show feedback
                 const fb = card.querySelector('.feedback-msg');
-                if (ua.isCorrect) {
+                if (ua.isDontKnow) {
+                    // Dont-know state
+                    if (q.type === 'multi') {
+                        q.answer.forEach(idx => {
+                            const opts = card.querySelectorAll('.option-item');
+                            if (opts[idx]) opts[idx].classList.add('show-correct-dim');
+                        });
+                    } else {
+                        const opts = card.querySelectorAll('.option-item');
+                        if (opts[q.answer]) opts[q.answer].classList.add('show-correct-dim');
+                    }
+                    const dkBtn = card.querySelector('.dontknow-btn');
+                    if (dkBtn) dkBtn.classList.add('answered-dk');
+                    const answerStr = q.type === 'multi'
+                        ? q.answer.map(i => q.options[i]).join('、')
+                        : (q.type === 'judge' ? (q.answer === 0 ? '正确' : '错误') : q.options[q.answer]);
+                    fb.textContent = '💡 回答：' + answerStr;
+                    fb.className = 'feedback-msg show';
+                    fb.style.background = '#fef8e7';
+                    fb.style.color = '#8d6e00';
+                    showExplanation(q, false, card);
+                } else if (ua.isCorrect) {
                     fb.textContent = '✅ 回答正确！';
                     fb.className = 'feedback-msg show correct-fb';
                     card.classList.add('answered-correct');
@@ -2685,6 +2750,13 @@
                     const idx = parseInt(this.dataset.idx);
                     handleAnswer(q, idx, card);
                 });
+            });
+
+            // Dont-know button handler
+            const dkBtn = card.querySelector('.dontknow-btn');
+            dkBtn.addEventListener('click', function() {
+                if (q.id in answeredMap) return;
+                handleDontKnow(q, card);
             });
 
             return card;
@@ -2747,6 +2819,39 @@
 
             updateStats();
             // Scroll to card smoothly
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function handleDontKnow(q, card) {
+            answeredMap[q.id] = { userAnswer: null, isCorrect: false, isDontKnow: true };
+            card.classList.add('answered');
+
+            // Show correct answer dimly highlighted
+            const options = card.querySelectorAll('.option-item');
+            if (q.type === 'multi') {
+                q.answer.forEach(idx => {
+                    if (options[idx]) options[idx].classList.add('show-correct-dim');
+                });
+            } else {
+                if (options[q.answer]) options[q.answer].classList.add('show-correct-dim');
+            }
+
+            // Style the dontknow button as answered
+            const dkBtn = card.querySelector('.dontknow-btn');
+            if (dkBtn) dkBtn.classList.add('answered-dk');
+
+            // Show feedback
+            const fb = card.querySelector('.feedback-msg');
+            const answerStr = q.type === 'multi'
+                ? q.answer.map(i => q.options[i]).join('、')
+                : (q.type === 'judge' ? (q.answer === 0 ? '正确' : '错误') : q.options[q.answer]);
+            fb.textContent = '💡 回答：' + answerStr;
+            fb.className = 'feedback-msg show';
+            fb.style.background = '#fef8e7';
+            fb.style.color = '#8d6e00';
+
+            showExplanation(q, false, card);
+            updateStats();
             card.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
@@ -2835,8 +2940,10 @@
             const answered = Object.keys(answeredMap).length;
             let correct = 0;
             let incorrect = 0;
+            let dontknow = 0;
             Object.values(answeredMap).forEach(v => {
-                if (v.isCorrect) correct++;
+                if (v.isDontKnow) dontknow++;
+                else if (v.isCorrect) correct++;
                 else incorrect++;
             });
             const remaining = total - answered;
@@ -2846,6 +2953,8 @@
             document.getElementById('correctCount').textContent = correct;
             document.getElementById('incorrectCount').textContent = incorrect;
             document.getElementById('remainingCount').textContent = remaining;
+            const dkEl = document.getElementById('dontknowCount');
+            if (dkEl) dkEl.textContent = dontknow;
         }
 
         function resetAll() {
