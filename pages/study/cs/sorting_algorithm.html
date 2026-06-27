@@ -309,6 +309,38 @@
         .code-cell .str   { color: #a6e3a1; }
         .code-cell .macro { color: #f38ba8; }
 
+        /* ── Back to Top ── */
+        .back-to-top {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            font-size: 1.3rem;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+            transition: opacity 0.3s, transform 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 999;
+        }
+        .back-to-top.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .back-to-top:hover {
+            transform: translateY(-3px);
+            background: #7a5234;
+        }
+
         .code-cell::-webkit-scrollbar { height: 4px; }
         .code-cell::-webkit-scrollbar-thumb { background: #45475a; border-radius: 4px; }
         .code-cell::-webkit-scrollbar-track { background: transparent; }
@@ -906,5 +938,14 @@
         </div>
 
     </div>
+    <!-- ── Back to Top ── -->
+    <a href="#" class="back-to-top" id="backToTop" title="回到顶部">↑</a>
+
+    <script>
+        const btn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            btn.classList.toggle('show', window.scrollY > 400);
+        });
+    </script>
 </body>
 </html>
