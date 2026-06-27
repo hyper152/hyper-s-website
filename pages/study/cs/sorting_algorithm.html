@@ -458,10 +458,13 @@
                         <td><span class="badge-stable">✅ 稳定</span></td>
                         <td>
                             <div class="code-cell"><span class="kw">void</span> <span class="fn">bubbleSort</span>(<span class="type">int</span> a[], <span class="type">int</span> n) {
+    <span class="cm">// 外层：每轮确定第 i 个位置的最小元素</span>
     <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i &lt; n<span class="num">-1</span>; ++i)
+        <span class="cm">// 内层：从 0 到 n-1-i，逐对比较，大数后移</span>
         <span class="kw">for</span> (<span class="type">int</span> j = <span class="num">0</span>; j &lt; n<span class="num">-1</span>-i; ++j)
+            <span class="cm">// 若前 > 后，交换（升序）</span>
             <span class="kw">if</span> (a[j] &gt; a[j<span class="num">+1</span>])
-                <span class="fn">swap</span>(a[j], a[j<span class="num">+1</span>]);
+                <span class="fn">swap</span>(a[j], a[j<span class="num">+1</span>]);  <span class="cm">// 相邻交换</span>
 }</div>
                         </td>
                         <td class="desc-cell">
