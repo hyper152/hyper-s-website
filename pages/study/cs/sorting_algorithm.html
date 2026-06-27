@@ -29,12 +29,12 @@
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1100px;
             margin: 0 auto;
             background: var(--card-bg);
             border-radius: var(--radius);
             box-shadow: var(--shadow);
-            padding: 2rem 2.2rem 2.5rem;
+            padding: 2rem 2.5rem 2.5rem;
         }
 
         /* ── Navigation ── */
@@ -53,7 +53,7 @@
             padding: 6px 16px;
             border-radius: 20px;
             background: var(--bg);
-            font-size: 0.88rem;
+            font-size: 0.95rem;
             transition: all 0.2s ease;
         }
         .nav-btn:hover {
@@ -72,7 +72,7 @@
             flex-wrap: wrap;
         }
         .header h1 {
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 700;
             color: var(--accent);
             letter-spacing: -0.3px;
@@ -80,7 +80,7 @@
         }
         .header .sub {
             color: var(--text-secondary);
-            font-size: 0.95rem;
+            font-size: 1rem;
             padding-bottom: 4px;
         }
         .header .sub i { margin-right: 4px; }
@@ -88,10 +88,10 @@
         /* ── Stats Bar ── */
         .stats-bar {
             display: flex;
-            gap: 20px;
+            gap: 24px;
             flex-wrap: wrap;
             margin-bottom: 24px;
-            padding: 16px 20px;
+            padding: 18px 22px;
             background: var(--bg);
             border-radius: 10px;
         }
@@ -99,17 +99,17 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 0.88rem;
+            font-size: 0.95rem;
             color: var(--text-secondary);
         }
         .stat-item i {
-            width: 28px;
-            height: 28px;
+            width: 30px;
+            height: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 8px;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: #fff;
         }
         .stat-item .icon-blue  { background: #4f7eb3; }
@@ -118,18 +118,18 @@
         .stat-item .icon-rose  { background: #b3585a; }
         .stat-item strong { color: var(--text); font-weight: 600; }
 
-        /* ── Quick Legend ── */
+        /* ── Legend ── */
         .legend-bar {
             display: flex;
             gap: 18px;
             flex-wrap: wrap;
-            margin-bottom: 20px;
-            padding: 10px 16px;
+            margin-bottom: 24px;
+            padding: 12px 18px;
             background: #faf8f5;
             border-radius: 8px;
             border: 1px solid var(--border);
             align-items: center;
-            font-size: 0.85rem;
+            font-size: 0.92rem;
         }
         .legend-item {
             display: inline-flex;
@@ -137,84 +137,15 @@
             gap: 6px;
         }
 
-        /* ── Table ── */
-        .table-wrap {
-            overflow-x: auto;
-            border-radius: 10px;
-            border: 1px solid var(--border);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.92rem;
-            min-width: 820px;
-        }
-
-        thead th {
-            background: #ede8e1;
-            color: var(--text);
-            font-weight: 600;
-            padding: 0.9rem 0.8rem;
-            text-align: left;
-            border-bottom: 2px solid var(--accent-light);
-            white-space: nowrap;
-            font-size: 0.88rem;
-            letter-spacing: 0.3px;
-        }
-
-        tbody tr {
-            transition: background 0.15s;
-        }
-        tbody tr:nth-child(even) {
-            background: #fcfaf8;
-        }
-        tbody tr:hover {
-            background: #f5efe8;
-        }
-
-        td {
-            padding: 0.9rem 0.8rem;
-            border-bottom: 1px solid var(--border);
-            vertical-align: middle;
-            line-height: 1.5;
-        }
-        tbody tr:last-child td {
-            border-bottom: none;
-        }
-
-        .algo-name {
-            font-weight: 600;
-            color: var(--text);
-            white-space: nowrap;
-        }
-        .algo-name i {
-            color: var(--accent);
-            margin-right: 6px;
-            width: 18px;
-            text-align: center;
-        }
-
-        .complexity {
-            font-family: 'Cascadia Code', 'JetBrains Mono', 'Fira Code', monospace;
-            font-size: 0.82rem;
-            background: var(--bg);
-            padding: 0.2rem 0.8rem;
-            border-radius: 20px;
-            display: inline-block;
-            white-space: nowrap;
-            color: var(--text);
-        }
-
-        /* ── Badges ── */
+        /* ── Badges (shared) ── */
         .badge-stable {
             display: inline-block;
             background: #e6f3e6;
             color: #3d6b3d;
-            padding: 0.15rem 0.9rem;
+            padding: 0.2rem 1rem;
             border-radius: 30px;
             font-weight: 600;
-            font-size: 0.75rem;
+            font-size: 0.82rem;
             border: 1px solid #b8d9b8;
             white-space: nowrap;
         }
@@ -222,32 +153,83 @@
             display: inline-block;
             background: #f5e4e4;
             color: #8f4040;
-            padding: 0.15rem 0.9rem;
+            padding: 0.2rem 1rem;
             border-radius: 30px;
             font-weight: 600;
-            font-size: 0.75rem;
+            font-size: 0.82rem;
             border: 1px solid #e0baba;
             white-space: nowrap;
         }
 
-        /* ── Complexity visual bar ── */
-        .complexity-bar {
+        /* ── Complexity tag ── */
+        .complexity {
+            font-family: 'Cascadia Code', 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 0.88rem;
+            background: var(--bg);
+            padding: 0.2rem 0.9rem;
+            border-radius: 20px;
+            display: inline-block;
+            white-space: nowrap;
+            color: var(--text);
+        }
+
+        /* ── Section Cards ── */
+        .algo-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            border-left: 5px solid var(--accent);
+            margin-bottom: 22px;
+            padding: 20px 24px;
+        }
+        .algo-card-title {
             display: flex;
             align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 6px;
+        }
+        .algo-card-title h2 {
+            font-size: 1.35rem;
+            color: var(--text);
+            font-weight: 700;
+        }
+        .algo-card-title h2 i {
+            color: var(--accent);
+            margin-right: 6px;
+        }
+        .algo-card .tags {
+            display: flex;
             gap: 8px;
-            margin-top: 3px;
+            flex-wrap: wrap;
+            align-items: center;
         }
-        .bar {
-            height: 6px;
+        .algo-card .desc {
+            color: var(--text-secondary);
+            font-size: 1.02rem;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+        .algo-card .desc .key {
+            font-weight: 600;
+            color: var(--accent);
+        }
+        .algo-card .speed-bar {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-left: 4px;
+        }
+        .algo-card .speed-bar .bar {
+            height: 7px;
             border-radius: 4px;
-            background: var(--accent-light);
-            opacity: 0.6;
+            display: inline-block;
         }
-        .bar-slow  { width: 48px; background: #c9907a; }
-        .bar-mid   { width: 32px; background: #c9a87c; }
-        .bar-fast  { width: 20px; background: #8faa7a; }
-        .bar-label {
-            font-size: 0.7rem;
+        .algo-card .speed-bar .bar-slow { width: 50px; background: #c9907a; }
+        .algo-card .speed-bar .bar-mid  { width: 34px; background: #c9a87c; }
+        .algo-card .speed-bar .bar-fast { width: 22px; background: #8faa7a; }
+        .algo-card .speed-bar .label {
+            font-size: 0.78rem;
             color: var(--text-secondary);
             font-family: monospace;
         }
@@ -255,17 +237,17 @@
         /* ── Code Cell ── */
         .code-cell {
             font-family: 'Cascadia Code', 'JetBrains Mono', 'Fira Code', monospace;
-            font-size: 0.78rem;
+            font-size: 0.85rem;
             background: #1e1e2e;
             color: #cdd6f4;
-            padding: 0.7rem 1rem;
+            padding: 0.9rem 1.2rem;
             border-radius: 10px;
             overflow-x: auto;
             white-space: pre;
-            line-height: 1.6;
+            line-height: 1.65;
             tab-size: 4;
-            max-width: 440px;
             border: 1px solid #313244;
+            margin-top: 10px;
         }
         .code-cell .kw    { color: #cba6f7; }
         .code-cell .type  { color: #89b4fa; }
@@ -275,31 +257,22 @@
         .code-cell .str   { color: #a6e3a1; }
         .code-cell .macro { color: #f38ba8; }
 
-        /* ── Description cell ── */
-        .desc-cell {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-        .desc-cell .key-point {
-            display: block;
-            font-weight: 600;
-            color: var(--accent);
-            font-size: 0.82rem;
-            margin-bottom: 2px;
-        }
+        .code-cell::-webkit-scrollbar { height: 4px; }
+        .code-cell::-webkit-scrollbar-thumb { background: #45475a; border-radius: 4px; }
+        .code-cell::-webkit-scrollbar-track { background: transparent; }
 
         /* ── Comparison Section ── */
         .comparison-section {
             margin-top: 28px;
-            padding: 20px 24px;
+            padding: 22px 28px;
             background: var(--bg);
             border-radius: var(--radius);
             border: 1px solid var(--border);
         }
         .comparison-section h3 {
-            font-size: 1.05rem;
+            font-size: 1.15rem;
             color: var(--accent);
-            margin-bottom: 14px;
+            margin-bottom: 16px;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -307,29 +280,29 @@
 
         .compare-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 14px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
         }
         .compare-card {
             background: var(--card-bg);
             border-radius: 10px;
-            padding: 14px 16px;
+            padding: 16px 18px;
             border: 1px solid var(--border);
             border-left: 4px solid var(--accent-light);
         }
         .compare-card h4 {
-            font-size: 0.9rem;
+            font-size: 1rem;
             color: var(--text);
             margin-bottom: 6px;
         }
         .compare-card p {
-            font-size: 0.83rem;
+            font-size: 0.9rem;
             color: var(--text-secondary);
             line-height: 1.6;
         }
         .compare-card .tag {
             display: inline-block;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             font-weight: 600;
             padding: 0 8px;
             border-radius: 10px;
@@ -343,36 +316,29 @@
         .footer-note {
             text-align: center;
             color: var(--text-secondary);
-            font-size: 0.82rem;
-            margin-top: 30px;
+            font-size: 0.88rem;
+            margin-top: 32px;
             border-top: 1px solid var(--border);
             padding-top: 18px;
             opacity: 0.7;
         }
 
-        /* ── Responsive ── */
         @media (max-width: 760px) {
             body { padding: 12px; }
-            .container { padding: 1rem 0.8rem; }
-            .header h1 { font-size: 1.4rem; }
-            td, th { padding: 0.55rem 0.5rem; font-size: 0.82rem; }
+            .container { padding: 1rem 1rem; }
+            .header h1 { font-size: 1.5rem; }
+            .algo-card { padding: 14px 16px; }
+            .algo-card-title h2 { font-size: 1.15rem; }
             .code-cell {
-                font-size: 0.68rem;
-                max-width: 220px;
+                font-size: 0.72rem;
                 white-space: pre-wrap;
                 word-break: break-word;
+                padding: 0.7rem 0.8rem;
             }
-            .algo-name { font-size: 0.85rem; }
             .stats-bar { gap: 10px; padding: 12px 14px; }
-            .stat-item { font-size: 0.8rem; }
             .comparison-section { padding: 14px 16px; }
             .compare-grid { grid-template-columns: 1fr; }
         }
-
-        /* smooth scroll for code */
-        .code-cell::-webkit-scrollbar { height: 4px; }
-        .code-cell::-webkit-scrollbar-thumb { background: #45475a; border-radius: 4px; }
-        .code-cell::-webkit-scrollbar-track { background: transparent; }
     </style>
 </head>
 <body>
@@ -413,7 +379,7 @@
             </div>
             <div class="stat-item">
                 <i class="fas fa-cubes icon-rose"></i>
-                <span><strong>6</strong> 种比较排序 · <strong>3</strong> 种非比较排序</span>
+                <span><strong>6</strong> 种比较排序 · <strong>4</strong> 种非比较排序</span>
             </div>
         </div>
 
@@ -422,42 +388,60 @@
             <span class="legend-item"><span class="badge-stable">✅ 稳定</span></span>
             <span class="legend-item"><span class="badge-unstable">❌ 不稳定</span></span>
             <span class="legend-item"><i class="fas fa-code"></i> 代码基于 C++17</span>
-            <span class="legend-item" style="color:var(--text-secondary);font-size:0.82rem;">
-                <span class="bar bar-fast" style="display:inline-block;width:14px;vertical-align:middle;"></span> 快 &nbsp;
-                <span class="bar bar-mid" style="display:inline-block;width:24px;vertical-align:middle;"></span> 中 &nbsp;
-                <span class="bar bar-slow" style="display:inline-block;width:36px;vertical-align:middle;"></span> 慢
+            <span class="legend-item" style="color:var(--text-secondary);">
+                <span class="bar bar-fast" style="display:inline-block;width:16px;height:7px;border-radius:4px;background:#8faa7a;vertical-align:middle;"></span> 快 &nbsp;
+                <span class="bar bar-mid" style="display:inline-block;width:26px;height:7px;border-radius:4px;background:#c9a87c;vertical-align:middle;"></span> 中 &nbsp;
+                <span class="bar bar-slow" style="display:inline-block;width:40px;height:7px;border-radius:4px;background:#c9907a;vertical-align:middle;"></span> 慢
             </span>
-            <span class="legend-item" style="color:var(--text-secondary);font-size:0.82rem;">
+            <span class="legend-item" style="color:var(--text-secondary);">
                 <i class="far fa-sticky-note"></i> 桶排序稳定性取决于桶内算法
             </span>
         </div>
 
-        <!-- ── Table ── -->
-        <div class="table-wrap">
-            <table>
-                <thead>
-                    <tr>
-                        <th style="width:9%;">算法</th>
-                        <th style="width:11%;">时间复杂度</th>
-                        <th style="width:8%;">稳定性</th>
-                        <th style="width:52%;">核心 C++ 实现</th>
-                        <th style="width:20%;">说明</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- 1. 冒泡排序 -->
-                    <tr>
-                        <td class="algo-name"><i class="fas fa-water"></i> 冒泡</td>
-                        <td>
-                            <span class="complexity">O(n²)</span>
-                            <div class="complexity-bar">
-                                <span class="bar bar-slow"></span>
-                                <span class="bar-label">慢</span>
-                            </div>
-                        </td>
-                        <td><span class="badge-stable">✅ 稳定</span></td>
-                        <td>
-                            <div class="code-cell"><span class="kw">void</span> <span class="fn">bubbleSort</span>(<span class="type">int</span> a[], <span class="type">int</span> n) {
+        <!-- ── 1. 冒泡排序 ── -->
+        <div class="algo-card">
+            <div class="algo-card-title">
+                <h2><i class="fas fa-water"></i> 冒泡排序</h2>
+                <div class="tags">
+                    <span class="complexity">O(n²)</span>
+                    <span class="badge-stable">✅ 稳定</span>
+                    <span class="speed-bar">
+                        <span class="bar bar-slow"></span>
+                        <span class="label">慢</span>
+                    </span>
+                </div>
+            </div>
+            <div class="desc"><span class="key">相邻交换，大数后移</span> — 每轮将最大元素"冒泡"到末尾，可加 flag 优化提前结束。</div>
+            <div class="code-cell"><span class="cm">// 冒泡排序 —— 每轮把最大元素"冒泡"到末尾</span>
+<span class="kw">void</span> <span class="fn">bubbleSort</span>(<span class="type">int</span> a[], <span class="type">int</span> n) {
+    <span class="cm">// 外层：需要 n-1 轮冒泡（每轮确定一个最大元素的位置）</span>
+    <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i &lt; n<span class="num">-1</span>; ++i)
+        <span class="cm">// 内层：从 0 到 n-1-i，相邻元素两两比较</span>
+        <span class="cm">// 每轮结束后，最大的 i+1 个元素已就位，无需再比较</span>
+        <span class="kw">for</span> (<span class="type">int</span> j = <span class="num">0</span>; j &lt; n<span class="num">-1</span>-i; ++j)
+            <span class="cm">// 如果前一个比后一个大，则交换（升序排列）</span>
+            <span class="kw">if</span> (a[j] &gt; a[j<span class="num">+1</span>])
+                <span class="fn">swap</span>(a[j], a[j<span class="num">+1</span>]);  <span class="cm">// 交换相邻元素</span>
+    <span class="cm">// 优化：可加 flag 记录本轮是否有交换，若没有则提前结束</span>
+}</div>
+        </div>
+
+        <!-- ── 2. 选择排序 ── -->
+        <div class="algo-card">
+            <div class="algo-card-title">
+                <h2><i class="fas fa-hand-pointer"></i> 选择排序</h2>
+                <div class="tags">
+                    <span class="complexity">O(n²)</span>
+                    <span class="badge-unstable">❌ 不稳定</span>
+                    <span class="speed-bar">
+                        <span class="bar bar-slow"></span>
+                        <span class="label">慢</span>
+                    </span>
+                </div>
+            </div>
+            <div class="desc"><span class="key">每轮选最小交换</span> — 无论数据如何都跑满 O(n²)，不稳定源于远程交换。</div>
+            <div class="code-cell"><span class="cm">// 选择排序 —— 每轮从未排序区间选出最小元素，放到已排序区末尾</span>
+<span class="kw">void</span> <span class="fn">selectionSort</span>(<span class="type">int</span> a[], <span class="type">int</span> n) {
     <span class="cm">// 外层：每次确定一个位置（从头开始）</span>
     <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">0</span>; i &lt; n<span class="num">-1</span>; ++i) {
         <span class="type">int</span> minIdx = i;                              <span class="cm">// 假设当前 i 就是最小值的位置</span>
@@ -465,35 +449,26 @@
         <span class="kw">for</span> (<span class="type">int</span> j = i<span class="num">+1</span>; j &lt; n; ++j)
             <span class="kw">if</span> (a[j] &lt; a[minIdx]) minIdx = j;           <span class="cm">// 更新最小元素下标</span>
         <span class="fn">swap</span>(a[i], a[minIdx]);                          <span class="cm">// 将最小元素交换到 i 位置</span>
-    }</div>
-                        </td>
-                        <td class="desc-cell">
-                            <span class="key-point">每轮选最小交换</span>
-                            简单直观，但无论数据如何都跑满 O(n²)，不稳定源于远程交换。
-                        </td>
-                    </tr>
+    }
+    <span class="cm">// 特点：简单直观，但无论有序与否都是 O(n²)</span>
+}</div>
+        </div>
 
-                    <!-- 3. 插入排序 -->
-                        </td>
-                        <td class="desc-cell">
-                            <span class="key-point">每轮选最小交换</span>
-                            简单直观，但无论数据如何都跑满 O(n²)，不稳定源于远程交换。
-                        </td>
-                    </tr>
-
-                    <!-- 3. 插入排序 -->
-                    <tr>
-                        <td class="algo-name"><i class="fas fa-arrow-right"></i> 插入</td>
-                        <td>
-                            <span class="complexity">O(n²)</span>
-                            <div class="complexity-bar">
-                                <span class="bar bar-slow"></span>
-                                <span class="bar-label">慢</span>
-                            </div>
-                        </td>
-                        <td><span class="badge-stable">✅ 稳定</span></td>
-                        <td>
-                            <div class="code-cell"><span class="cm">// 插入排序 —— 把当前元素插入到左侧已排序区的正确位置</span>
+        <!-- ── 3. 插入排序 ── -->
+        <div class="algo-card">
+            <div class="algo-card-title">
+                <h2><i class="fas fa-arrow-right"></i> 插入排序</h2>
+                <div class="tags">
+                    <span class="complexity">O(n²)</span>
+                    <span class="badge-stable">✅ 稳定</span>
+                    <span class="speed-bar">
+                        <span class="bar bar-slow"></span>
+                        <span class="label">慢</span>
+                    </span>
+                </div>
+            </div>
+            <div class="desc"><span class="key">插入到已排序区</span> — 数据基本有序时接近 O(n)，在线排序，稳定且适应性好。</div>
+            <div class="code-cell"><span class="cm">// 插入排序 —— 把当前元素插入到左侧已排序区的正确位置</span>
 <span class="kw">void</span> <span class="fn">insertionSort</span>(<span class="type">int</span> a[], <span class="type">int</span> n) {
     <span class="cm">// 从第 1 个元素开始，左侧 [0, i-1] 已是有序区间</span>
     <span class="kw">for</span> (<span class="type">int</span> i = <span class="num">1</span>; i &lt; n; ++i) {
@@ -508,26 +483,23 @@
     }
     <span class="cm">// 特点：数据基本有序时接近 O(n)，在线排序，稳定</span>
 }</div>
-                        </td>
-                        <td class="desc-cell">
-                            <span class="key-point">插入到已排序区</span>
-                            数据基本有序时接近 O(n)。在线排序，稳定且适应性好。
-                        </td>
-                    </tr>
+        </div>
 
-                    <!-- 4. 希尔排序 -->
-                    <tr>
-                        <td class="algo-name"><i class="fas fa-layer-group"></i> 希尔</td>
-                        <td>
-                            <span class="complexity">O(n log n)~O(n²)</span>
-                            <div class="complexity-bar">
-                                <span class="bar bar-mid"></span>
-                                <span class="bar-label">中</span>
-                            </div>
-                        </td>
-                        <td><span class="badge-unstable">❌ 不稳定</span></td>
-                        <td>
-                            <div class="code-cell"><span class="cm">// 希尔排序 —— 改进的插入排序，跨越间隔分组进行插入排序</span>
+        <!-- ── 4. 希尔排序 ── -->
+        <div class="algo-card">
+            <div class="algo-card-title">
+                <h2><i class="fas fa-layer-group"></i> 希尔排序</h2>
+                <div class="tags">
+                    <span class="complexity">O(n log n)~O(n²)</span>
+                    <span class="badge-unstable">❌ 不稳定</span>
+                    <span class="speed-bar">
+                        <span class="bar bar-mid"></span>
+                        <span class="label">中</span>
+                    </span>
+                </div>
+            </div>
+            <div class="desc"><span class="key">分组插入排序</span> — 增量序列决定复杂度，跨越间隔的交换破坏了稳定性。</div>
+            <div class="code-cell"><span class="cm">// 希尔排序 —— 改进的插入排序，跨越间隔分组进行插入排序</span>
 <span class="kw">void</span> <span class="fn">shellSort</span>(<span class="type">int</span> a[], <span class="type">int</span> n) {
     <span class="cm">// 外层循环：不断缩小增量 gap（初始为 n/2，每轮减半）</span>
     <span class="kw">for</span> (<span class="type">int</span> gap = n/<span class="num">2</span>; gap &gt; <span class="num">0</span>; gap /= <span class="num">2</span>)
@@ -543,26 +515,23 @@
         }
     <span class="cm">// 特点：跨越间隔交换 → 不稳定；增量序列影响复杂度</span>
 }</div>
-                        </td>
-                        <td class="desc-cell">
-                            <span class="key-point">分组插入排序</span>
-                            增量序列决定复杂度。跨越间隔的交换破坏了稳定性。代码简洁高效。
-                        </td>
-                    </tr>
+        </div>
 
-                    <!-- 5. 归并排序 -->
-                    <tr>
-                        <td class="algo-name"><i class="fas fa-code-branch"></i> 归并</td>
-                        <td>
-                            <span class="complexity">O(n log n)</span>
-                            <div class="complexity-bar">
-                                <span class="bar bar-fast"></span>
-                                <span class="bar-label">快</span>
-                            </div>
-                        </td>
-                        <td><span class="badge-stable">✅ 稳定</span></td>
-                        <td>
-                            <div class="code-cell"><span class="cm">// 归并排序 —— 分治：将两个有序子数组合并为一个有序数组</span>
+        <!-- ── 5. 归并排序 ── -->
+        <div class="algo-card">
+            <div class="algo-card-title">
+                <h2><i class="fas fa-code-branch"></i> 归并排序</h2>
+                <div class="tags">
+                    <span class="complexity">O(n log n)</span>
+                    <span class="badge-stable">✅ 稳定</span>
+                    <span class="speed-bar">
+                        <span class="bar bar-fast"></span>
+                        <span class="label">快</span>
+                    </span>
+                </div>
+            </div>
+            <div class="desc"><span class="key">分治 · 合并有序序列</span> — O(n log n) 最坏保证，需 O(n) 辅助空间，外排序首选。</div>
+            <div class="code-cell"><span class="cm">// 归并排序 —— 分治：将两个有序子数组合并为一个有序数组</span>
 <span class="kw">void</span> <span class="fn">merge</span>(<span class="type">int</span> a[], <span class="type">int</span> l, <span class="type">int</span> m, <span class="type">int</span> r) {
     <span class="cm">// n1、n2：左右两个子数组的长度</span>
     <span class="type">int</span> n1 = m-l<span class="num">+1</span>, n2 = r-m;
@@ -586,26 +555,23 @@
     <span class="fn">merge</span>(a, l, m, r);                             <span class="cm">// 合并两个有序子数组</span>
     <span class="cm">// 特点：稳定，O(n log n) 最坏保证，需 O(n) 辅助空间</span>
 }</div>
-                        </td>
-                        <td class="desc-cell">
-                            <span class="key-point">分治 · 合并有序序列</span>
-                            稳定、O(n log n) 最坏保证。需 O(n) 辅助空间。外排序首选。
-                        </td>
-                    </tr>
+        </div>
 
-                    <!-- 6. 快速排序 -->
-                    <tr>
-                        <td class="algo-name"><i class="fas fa-bolt"></i> 快速</td>
-                        <td>
-                            <span class="complexity">O(n log n) 平均</span>
-                            <div class="complexity-bar">
-                                <span class="bar bar-fast"></span>
-                                <span class="bar-label">快</span>
-                            </div>
-                        </td>
-                        <td><span class="badge-unstable">❌ 不稳定</span></td>
-                        <td>
-                            <div class="code-cell"><span class="cm">// 快速排序 —— 分治，选取 pivot 分为小于和大于 pivot 的两部分</span>
+        <!-- ── 6. 快速排序 ── -->
+        <div class="algo-card">
+            <div class="algo-card-title">
+                <h2><i class="fas fa-bolt"></i> 快速排序</h2>
+                <div class="tags">
+                    <span class="complexity">O(n log n) 平均</span>
+                    <span class="badge-unstable">❌ 不稳定</span>
+                    <span class="speed-bar">
+                        <span class="bar bar-fast"></span>
+                        <span class="label">快</span>
+                    </span>
+                </div>
+            </div>
+            <div class="desc"><span class="key">分治 · 基准划分</span> — 实际最快通用排序，最坏 O(n²)，随机选 pivot 缓解。</div>
+            <div class="code-cell"><span class="cm">// 快速排序 —— 分治，选取 pivot 分为小于和大于 pivot 的两部分</span>
 <span class="type">int</span> <span class="fn">partition</span>(<span class="type">int</span> a[], <span class="type">int</span> lo, <span class="type">int</span> hi) {
     <span class="type">int</span> pivot = a[hi];                             <span class="cm">// 选最后一个元素作为基准 pivot</span>
     <span class="type">int</span> i = lo<span class="num">-1</span>;                                 <span class="cm">// i 指向"小于区"的最后一个元素</span>
@@ -621,27 +587,25 @@
         <span class="fn">quickSort</span>(a, lo, p<span class="num">-1</span>);                     <span class="cm">// 递归排序左半（小于 pivot）</span>
         <span class="fn">quickSort</span>(a, p<span class="num">+1</span>, hi);                     <span class="cm">// 递归排序右半（大于 pivot）</span>
     }
+    <span class="cm">// 特点：实际最快，O(n log n) 平均；最坏 O(n²)</span>
 }</div>
-                        </td>
-                        <td class="desc-cell">
-                            <span class="key-point">分治 · 基准划分</span>
-                            实际最快通用排序。最坏 O(n²)，随机选 pivot 缓解。不稳定，递归。
-                        </td>
-                    </tr>
+        </div>
 
-                    <!-- 7. 堆排序 -->
-                    <tr>
-                        <td class="algo-name"><i class="fas fa-cubes"></i> 堆</td>
-                        <td>
-                            <span class="complexity">O(n log n)</span>
-                            <div class="complexity-bar">
-                                <span class="bar bar-fast"></span>
-                                <span class="bar-label">快</span>
-                            </div>
-                        </td>
-                        <td><span class="badge-unstable">❌ 不稳定</span></td>
-                        <td>
-                            <div class="code-cell"><span class="cm">// 堆排序 —— 基于大根堆的原地排序</span>
+        <!-- ── 7. 堆排序 ── -->
+        <div class="algo-card">
+            <div class="algo-card-title">
+                <h2><i class="fas fa-cubes"></i> 堆排序</h2>
+                <div class="tags">
+                    <span class="complexity">O(n log n)</span>
+                    <span class="badge-unstable">❌ 不稳定</span>
+                    <span class="speed-bar">
+                        <span class="bar bar-fast"></span>
+                        <span class="label">快</span>
+                    </span>
+                </div>
+            </div>
+            <div class="desc"><span class="key">大根堆 + 交换</span> — O(n log n) 最坏保证，原地排序，适用于 Top-K 问题。</div>
+            <div class="code-cell"><span class="cm">// 堆排序 —— 基于大根堆的原地排序</span>
 <span class="cm">// 对以 i 为根的子树做堆化（下沉操作），保证父节点 ≥ 子节点</span>
 <span class="kw">void</span> <span class="fn">heapify</span>(<span class="type">int</span> a[], <span class="type">int</span> n, <span class="type">int</span> i) {
     <span class="type">int</span> largest = i;                              <span class="cm">// 假设当前节点 i 是最大值</span>
@@ -665,26 +629,23 @@
     }
     <span class="cm">// 特点：O(n log n) 最坏保证，原地排序，不稳定</span>
 }</div>
-                        </td>
-                        <td class="desc-cell">
-                            <span class="key-point">大根堆 + 交换</span>
-                            O(n log n) 最坏保证，原地排序。不稳定，常数较大。适用于 Top-K。
-                        </td>
-                    </tr>
+        </div>
 
-                    <!-- 8. 计数排序 -->
-                    <tr>
-                        <td class="algo-name"><i class="fas fa-calculator"></i> 计数</td>
-                        <td>
-                            <span class="complexity">O(n + k)</span>
-                            <div class="complexity-bar">
-                                <span class="bar bar-fast"></span>
-                                <span class="bar-label">快</span>
-                            </div>
-                        </td>
-                        <td><span class="badge-stable">✅ 稳定</span></td>
-                        <td>
-                            <div class="code-cell"><span class="cm">// 计数排序 —— 非比较排序，通过统计元素出现次数完成排序</span>
+        <!-- ── 8. 计数排序 ── -->
+        <div class="algo-card">
+            <div class="algo-card-title">
+                <h2><i class="fas fa-calculator"></i> 计数排序</h2>
+                <div class="tags">
+                    <span class="complexity">O(n + k)</span>
+                    <span class="badge-stable">✅ 稳定</span>
+                    <span class="speed-bar">
+                        <span class="bar bar-fast"></span>
+                        <span class="label">快</span>
+                    </span>
+                </div>
+            </div>
+            <div class="desc"><span class="key">非比较 · 频率统计</span> — k 为值域，适合值域不大的非负整数排序。</div>
+            <div class="code-cell"><span class="cm">// 计数排序 —— 非比较排序，通过统计元素出现次数完成排序</span>
 <span class="kw">void</span> <span class="fn">countingSort</span>(<span class="type">int</span> a[], <span class="type">int</span> n, <span class="type">int</span> k) {
     <span class="type">int</span> count[k<span class="num">+1</span>] = {<span class="num">0</span>};                    <span class="cm">// 初始化计数数组，大小 = 值域 k+1</span>
     <span class="kw">for</span> (<span class="type">int</span> i=<span class="num">0</span>; i&lt;n; ++i) count[a[i]]++;       <span class="cm">// 统计每个元素出现的频率</span>
@@ -694,26 +655,23 @@
     <span class="cm">// 注意：此版本是"不稳定"的简单版。稳定版需前缀和 + 逆序输出</span>
     <span class="cm">// 适用场景：值域 k 不大（如 0~10000），且元素是非负整数</span>
 }</div>
-                        </td>
-                        <td class="desc-cell">
-                            <span class="key-point">非比较 · 频率统计</span>
-                            整数排序利器。k 为值域，值域过大时不可用。稳定版需累加 + 逆序遍历。
-                        </td>
-                    </tr>
+        </div>
 
-                    <!-- 9. 桶排序 -->
-                    <tr>
-                        <td class="algo-name"><i class="fas fa-boxes"></i> 桶</td>
-                        <td>
-                            <span class="complexity">O(n + k) 平均</span>
-                            <div class="complexity-bar">
-                                <span class="bar bar-fast"></span>
-                                <span class="bar-label">快</span>
-                            </div>
-                        </td>
-                        <td><span class="badge-stable">✅ 稳定*</span></td>
-                        <td>
-                            <div class="code-cell"><span class="cm">// 桶排序 —— 将数据均匀分散到多个桶中，各桶独立排序</span>
+        <!-- ── 9. 桶排序 ── -->
+        <div class="algo-card">
+            <div class="algo-card-title">
+                <h2><i class="fas fa-boxes"></i> 桶排序</h2>
+                <div class="tags">
+                    <span class="complexity">O(n + k) 平均</span>
+                    <span class="badge-stable">✅ 稳定*</span>
+                    <span class="speed-bar">
+                        <span class="bar bar-fast"></span>
+                        <span class="label">快</span>
+                    </span>
+                </div>
+            </div>
+            <div class="desc"><span class="key">分散到桶 · 各自排序</span> — 数据分布均匀时 O(n)，桶内稳定则整体稳定，适合浮点数。</div>
+            <div class="code-cell"><span class="cm">// 桶排序 —— 将数据均匀分散到多个桶中，各桶独立排序</span>
 <span class="kw">void</span> <span class="fn">bucketSort</span>(<span class="type">float</span> a[], <span class="type">int</span> n) {
     <span class="cm">// 创建 n 个桶（每个桶是一个 vector）</span>
     vector&lt;vector&lt;<span class="type">float</span>&gt;&gt; buckets(n);
@@ -731,26 +689,23 @@
     <span class="cm">// 若桶内用稳定排序（如插入排序），则桶排序整体稳定</span>
     <span class="cm">// 适用：数据均匀分布的浮点数</span>
 }</div>
-                        </td>
-                        <td class="desc-cell">
-                            <span class="key-point">分散到桶 · 各自排序</span>
-                            数据分布均匀时 O(n)。桶内用稳定排序则整体稳定。适合浮点数。
-                        </td>
-                    </tr>
+        </div>
 
-                    <!-- 10. 基数排序 -->
-                    <tr>
-                        <td class="algo-name"><i class="fas fa-sort-numeric-up"></i> 基数</td>
-                        <td>
-                            <span class="complexity">O(d·(n+k))</span>
-                            <div class="complexity-bar">
-                                <span class="bar bar-fast"></span>
-                                <span class="bar-label">快</span>
-                            </div>
-                        </td>
-                        <td><span class="badge-stable">✅ 稳定</span></td>
-                        <td>
-                            <div class="code-cell"><span class="cm">// 基数排序 —— 按位（个/十/百位）进行稳定的计数排序</span>
+        <!-- ── 10. 基数排序 ── -->
+        <div class="algo-card">
+            <div class="algo-card-title">
+                <h2><i class="fas fa-sort-numeric-up"></i> 基数排序</h2>
+                <div class="tags">
+                    <span class="complexity">O(d·(n+k))</span>
+                    <span class="badge-stable">✅ 稳定</span>
+                    <span class="speed-bar">
+                        <span class="bar bar-fast"></span>
+                        <span class="label">快</span>
+                    </span>
+                </div>
+            </div>
+            <div class="desc"><span class="key">按位分配 · 逐位收集</span> — d 为位数，k 为基数（10），适合固定长度整数/字符串。</div>
+            <div class="code-cell"><span class="cm">// 基数排序 —— 按位（个/十/百位）进行稳定的计数排序</span>
 <span class="kw">void</span> <span class="fn">radixSort</span>(<span class="type">int</span> a[], <span class="type">int</span> n) {
     <span class="type">int</span> mx = *<span class="fn">max_element</span>(a, a+n);              <span class="cm">// 找到最大值，确定位数</span>
     <span class="cm">// 按个位、十位、百位……逐位排序（exp = 1, 10, 100, ...）</span>
@@ -772,14 +727,6 @@
     }
     <span class="cm">// 特点：稳定，O(d·(n+k))，适合固定长度整数/字符串</span>
 }</div>
-                        </td>
-                        <td class="desc-cell">
-                            <span class="key-point">按位分配 · 逐位收集</span>
-                            d 为位数，k 为基数（10）。稳定，适合固定长度整数/字符串。
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
 
         <!-- ── Comparison Summary ── -->
@@ -809,7 +756,7 @@
                     <h4>🧠 特性备忘</h4>
                     <p>• <span class="tag tag-inplace">原地</span> 冒泡 · 选择 · 插入 · 希尔 · 快排 · 堆排<br>
                     • <span class="tag tag-not-inplace">非原地</span> 归并 · 计数 · 桶 · 基数<br>
-                    • <span class="tag tag-recursive">递归</span> 快速 · 归并 · 堆 (递推)<br>
+                    • <span class="tag tag-recursive">递归</span> 快速 · 归并 · 堆（递推）<br>
                     • <span class="tag tag-adaptive">自适应</span> 插入 · 冒泡（数据友好时加速）</p>
                 </div>
             </div>
