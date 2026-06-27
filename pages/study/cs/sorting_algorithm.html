@@ -197,6 +197,10 @@
             border-bottom: 1px solid var(--border);
             vertical-align: middle;
         }
+        .summary-table tbody tr {
+            cursor: pointer;
+            transition: background 0.15s;
+        }
         .summary-table tbody tr:nth-child(even) {
             background: #fcfaf8;
         }
@@ -459,7 +463,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr onclick="location.href='#bubble'">
                     <td class="algo-cell"><i class="fas fa-water"></i> 冒泡</td>
                     <td class="complexity-cell">O(n²)</td>
                     <td class="complexity-cell">O(n²)</td>
@@ -467,7 +471,7 @@
                     <td><span class="badge-stable">✅ 稳定</span></td>
                     <td class="complexity-cell">O(1)</td>
                 </tr>
-                <tr>
+                <tr onclick="location.href='#selection'">
                     <td class="algo-cell"><i class="fas fa-hand-pointer"></i> 选择</td>
                     <td class="complexity-cell">O(n²)</td>
                     <td class="complexity-cell">O(n²)</td>
@@ -475,7 +479,7 @@
                     <td><span class="badge-unstable">❌ 不稳定</span></td>
                     <td class="complexity-cell">O(1)</td>
                 </tr>
-                <tr>
+                <tr onclick="location.href='#insertion'">
                     <td class="algo-cell"><i class="fas fa-arrow-right"></i> 插入</td>
                     <td class="complexity-cell">O(n²)</td>
                     <td class="complexity-cell">O(n²)</td>
@@ -483,7 +487,7 @@
                     <td><span class="badge-stable">✅ 稳定</span></td>
                     <td class="complexity-cell">O(1)</td>
                 </tr>
-                <tr>
+                <tr onclick="location.href='#shell'">
                     <td class="algo-cell"><i class="fas fa-layer-group"></i> 希尔</td>
                     <td class="complexity-cell">O(n log n)~O(n²)</td>
                     <td class="complexity-cell">O(n²)</td>
@@ -491,7 +495,7 @@
                     <td><span class="badge-unstable">❌ 不稳定</span></td>
                     <td class="complexity-cell">O(1)</td>
                 </tr>
-                <tr>
+                <tr onclick="location.href='#merge'">
                     <td class="algo-cell"><i class="fas fa-code-branch"></i> 归并</td>
                     <td class="complexity-cell">O(n log n)</td>
                     <td class="complexity-cell">O(n log n)</td>
@@ -499,7 +503,7 @@
                     <td><span class="badge-stable">✅ 稳定</span></td>
                     <td class="complexity-cell">O(n)</td>
                 </tr>
-                <tr>
+                <tr onclick="location.href='#quick'">
                     <td class="algo-cell"><i class="fas fa-bolt"></i> 快速</td>
                     <td class="complexity-cell">O(n log n)</td>
                     <td class="complexity-cell">O(n²)</td>
@@ -507,7 +511,7 @@
                     <td><span class="badge-unstable">❌ 不稳定</span></td>
                     <td class="complexity-cell">O(log n) 栈</td>
                 </tr>
-                <tr>
+                <tr onclick="location.href='#heap'">
                     <td class="algo-cell"><i class="fas fa-cubes"></i> 堆</td>
                     <td class="complexity-cell">O(n log n)</td>
                     <td class="complexity-cell">O(n log n)</td>
@@ -515,7 +519,7 @@
                     <td><span class="badge-unstable">❌ 不稳定</span></td>
                     <td class="complexity-cell">O(1)</td>
                 </tr>
-                <tr>
+                <tr onclick="location.href='#counting'">
                     <td class="algo-cell"><i class="fas fa-calculator"></i> 计数</td>
                     <td class="complexity-cell">O(n + k)</td>
                     <td class="complexity-cell">O(n + k)</td>
@@ -523,7 +527,7 @@
                     <td><span class="badge-stable">✅ 稳定</span></td>
                     <td class="complexity-cell">O(k)</td>
                 </tr>
-                <tr>
+                <tr onclick="location.href='#bucket'">
                     <td class="algo-cell"><i class="fas fa-boxes"></i> 桶</td>
                     <td class="complexity-cell">O(n + k)</td>
                     <td class="complexity-cell">O(n²)</td>
@@ -531,7 +535,7 @@
                     <td><span class="badge-stable">✅ 稳定*</span></td>
                     <td class="complexity-cell">O(n + k)</td>
                 </tr>
-                <tr>
+                <tr onclick="location.href='#radix'">
                     <td class="algo-cell"><i class="fas fa-sort-numeric-up"></i> 基数</td>
                     <td class="complexity-cell">O(d·(n+k))</td>
                     <td class="complexity-cell">O(d·(n+k))</td>
@@ -542,8 +546,7 @@
             </tbody>
         </table>
 
-        <!-- ── 1. 冒泡排序 ── -->
-        <div class="algo-card">
+        <div class="algo-card" id="bubble">
             <div class="algo-card-title">
                 <h2><i class="fas fa-water"></i> 冒泡排序</h2>
                 <div class="tags">
@@ -570,8 +573,7 @@
 }</div>
         </div>
 
-        <!-- ── 2. 选择排序 ── -->
-        <div class="algo-card">
+        <div class="algo-card" id="selection">
             <div class="algo-card-title">
                 <h2><i class="fas fa-hand-pointer"></i> 选择排序</h2>
                 <div class="tags">
@@ -598,8 +600,7 @@
 }</div>
         </div>
 
-        <!-- ── 3. 插入排序 ── -->
-        <div class="algo-card">
+        <div class="algo-card" id="insertion">
             <div class="algo-card-title">
                 <h2><i class="fas fa-arrow-right"></i> 插入排序</h2>
                 <div class="tags">
@@ -629,8 +630,7 @@
 }</div>
         </div>
 
-        <!-- ── 4. 希尔排序 ── -->
-        <div class="algo-card">
+        <div class="algo-card" id="shell">
             <div class="algo-card-title">
                 <h2><i class="fas fa-layer-group"></i> 希尔排序</h2>
                 <div class="tags">
@@ -661,8 +661,7 @@
 }</div>
         </div>
 
-        <!-- ── 5. 归并排序 ── -->
-        <div class="algo-card">
+        <div class="algo-card" id="merge">
             <div class="algo-card-title">
                 <h2><i class="fas fa-code-branch"></i> 归并排序</h2>
                 <div class="tags">
@@ -701,8 +700,7 @@
 }</div>
         </div>
 
-        <!-- ── 6. 快速排序 ── -->
-        <div class="algo-card">
+        <div class="algo-card" id="quick">
             <div class="algo-card-title">
                 <h2><i class="fas fa-bolt"></i> 快速排序</h2>
                 <div class="tags">
@@ -735,8 +733,7 @@
 }</div>
         </div>
 
-        <!-- ── 7. 堆排序 ── -->
-        <div class="algo-card">
+        <div class="algo-card" id="heap">
             <div class="algo-card-title">
                 <h2><i class="fas fa-cubes"></i> 堆排序</h2>
                 <div class="tags">
@@ -775,8 +772,7 @@
 }</div>
         </div>
 
-        <!-- ── 8. 计数排序 ── -->
-        <div class="algo-card">
+        <div class="algo-card" id="counting">
             <div class="algo-card-title">
                 <h2><i class="fas fa-calculator"></i> 计数排序</h2>
                 <div class="tags">
@@ -801,8 +797,7 @@
 }</div>
         </div>
 
-        <!-- ── 9. 桶排序 ── -->
-        <div class="algo-card">
+        <div class="algo-card" id="bucket">
             <div class="algo-card-title">
                 <h2><i class="fas fa-boxes"></i> 桶排序</h2>
                 <div class="tags">
@@ -835,8 +830,7 @@
 }</div>
         </div>
 
-        <!-- ── 10. 基数排序 ── -->
-        <div class="algo-card">
+        <div class="algo-card" id="radix">
             <div class="algo-card-title">
                 <h2><i class="fas fa-sort-numeric-up"></i> 基数排序</h2>
                 <div class="tags">
