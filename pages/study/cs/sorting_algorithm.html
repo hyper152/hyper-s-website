@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>排序算法全览 · C++ 示例 · 稳定性说明</title>
+    <!-- Font Awesome 图标库 (免费) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        /* ----- 全局重置 & 字体 ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+            background: #f6f9fc;
+            color: #1e293b;
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 1400px;
+            width: 100%;
+        }
+
+        /* ----- 页眉 ----- */
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        header h1 {
+            font-size: 2.6rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #0f172a, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            color: #475569;
+            margin-top: 0.4rem;
+            border-bottom: 2px dashed #d1d9e6;
+            padding-bottom: 0.8rem;
+        }
+
+        .badge-stable,
+        .badge-unstable {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            margin-left: 6px;
+            letter-spacing: 0.3px;
+        }
+
+        .badge-stable {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #86efac;
+        }
+
+        .badge-unstable {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }
+
+        /* ----- 网格卡片布局 ----- */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(370px, 1fr));
+            gap: 1.8rem;
+            margin-top: 0.5rem;
+        }
+
+        /* ----- 卡片样式 ----- */
+        .card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 1.4rem 1.6rem 1.8rem;
+            box-shadow: 0 10px 25px -8px rgba(0, 0, 0, 0.06), 0 4px 8px rgba(0, 0, 0, 0.02);
+            transition: transform 0.2s ease, box-shadow 0.25s ease;
+            border: 1px solid #e9edf4;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 35px -12px rgba(0, 20, 50, 0.12);
+            border-color: #cbd5e1;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .card-header h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-header h2 i {
+            color: #3b82f6;
+            font-size: 1.3rem;
+            width: 1.8rem;
+            text-align: center;
+        }
+
+        .complexity {
+            font-size: 0.85rem;
+            background: #eef2f6;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            color: #1e293b;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .desc {
+            font-size: 0.95rem;
+            color: #475569;
+            margin: 0.2rem 0 1rem 0;
+            padding-left: 2.4rem;
+            border-left: 3px solid #b9c7da;
+            padding-left: 1rem;
+        }
+
+        /* ----- 代码块 ----- */
+        .code-wrapper {
+            background: #0b1120;
+            border-radius: 14px;
+            padding: 1rem 1.2rem;
+            margin: 0.6rem 0 1rem 0;
+            overflow-x: auto;
+            flex: 1;
+        }
+
+        .code-wrapper pre {
+            font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+            font-size: 0.81rem;
+            line-height: 1.6;
+            color: #e2e8f0;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .code-wrapper .keyword {
+            color: #f472b6;
+        }
+        .code-wrapper .type {
+            color: #60a5fa;
+        }
+        .code-wrapper .func {
+            color: #34d399;
+        }
+        .code-wrapper .comment {
+            color: #6b7280;
+            font-style: italic;
+        }
+        .code-wrapper .string {
+            color: #fbbf24;
+        }
+        .code-wrapper .number {
+            color: #f97316;
+        }
+
+        /* ----- 底部稳定性标记 ----- */
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 0.5rem;
+            padding-top: 0.8rem;
+            border-top: 1px solid #edf2f7;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .stable-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .stable-tag i {
+            font-size: 0.95rem;
+        }
+
+        .stable-tag .fa-check-circle {
+            color: #16a34a;
+        }
+        .stable-tag .fa-times-circle {
+            color: #dc2626;
+        }
+
+        .footnote {
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        /* ----- 响应式微调 ----- */
+        @media (max-width: 600px) {
+            body {
+                padding: 1rem 0.8rem;
+            }
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            .card-header h2 {
+                font-size: 1.25rem;
+            }
+            .code-wrapper pre {
+                font-size: 0.73rem;
+            }
+        }
+
+        /* 打印优化 */
+        @media print {
+            .card {
+                break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid #ccc;
+            }
+            body {
+                background: #fff;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- ====== 页眉 ====== -->
+        <header>
+            <h1><i class="fas fa-code" style="background: none; -webkit-text-fill-color: #3b82f6; margin-right: 12px;"></i>排序算法 · 完全手册</h1>
+            <p>
+                <i class="fas fa-cubes" style="margin-right: 6px; color: #3b82f6;"></i>
+                10 种经典排序 · C++ 实现 · 稳定性一目了然
+            </p>
+        </header>
+
+        <!-- ====== 卡片网格 ====== -->
+        <div class="grid">
+
+            <!-- ============================================================ -->
+            <!-- 1. 冒泡排序 -->
+            <div class="card">
+                <div class="card-header">
+                    <h2><i class="fas fa-water"></i>冒泡排序</h2>
+                    <span class="complexity">O(n²)</span>
+                </div>
+                <div class="desc">相邻元素两两比较，大的逐渐“浮”到末尾。</div>
+                <div class="code-wrapper">
+                    <pre><span class="keyword">void</span> <span class="func">bubbleSort</span>(<span class="type">int</span> arr[], <span class="type">int</span> n) {
+        <span class="keyword">for</span> (<span class="type">int</span> i = 0; i &lt; n - 1; ++i)
+            <span class="keyword">for</span> (<span class="type">int</span> j = 0; j &lt; n - i - 1; ++j)
+                <span class="keyword">if</span> (arr[j] &gt; arr[j + 1])
+                    <span class="func">swap</span>(arr[j], arr[j + 1]);
+    }</pre>
+                </div>
+                <div class="card-footer">
+                    <span class="stable-tag"><i class="fas fa-check-circle"></i> 稳定</span>
+                    <span class="footnote">相邻交换 · 不改变相等元素相对顺序</span>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- 2. 选择排序 -->
+            <div class="card">
+                <div class="card-header">
+                    <h2><i class="fas fa-hand-pointer"></i>选择排序</h2>
+                    <span class="complexity">O(n²)</span>
+                </div>
+                <div class="desc">每轮选出最小元素，与当前边界交换。</div>
+                <div class="code-wrapper">
+                    <pre><span class="keyword">void</span> <span class="func">selectionSort</span>(<span class="type">int</span> arr[], <span class="type">int</span> n) {
+        <span class="keyword">for</span> (<span class="type">int</span> i = 0; i &lt; n - 1; ++i) {
+            <span class="type">int</span> minIdx = i;
+            <span class="keyword">for</span> (<span class="type">int</span> j = i + 1; j &lt; n; ++j)
+                <span class="keyword">if</span> (arr[j] &lt; arr[minIdx]) minIdx = j;
+            <span class="func">swap</span>(arr[i], arr[minIdx]);
+        }
+    }</pre>
+                </div>
+                <div class="card-footer">
+                    <span class="stable-tag"><i class="fas fa-times-circle"></i> 不稳定</span>
+                    <span class="footnote">跳跃交换 · 可能破坏相等元素顺序</span>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- 3. 插入排序 -->
+            <div class="card">
+                <div class="card-header">
+                    <h2><i class="fas fa-arrow-right"></i>插入排序</h2>
+                    <span class="complexity">O(n²)</span>
+                </div>
+                <div class="desc">将元素插入已排序部分的正确位置。</div>
+                <div class="code-wrapper">
+                    <pre><span class="keyword">void</span> <span class="func">insertionSort</span>(<span class="type">int</span> arr[], <span class="type">int</span> n) {
+        <span class="keyword">for</span> (<span class="type">int</span> i = 1; i &lt; n; ++i) {
+            <span class="type">int</span> key = arr[i], j = i - 1;
+            <span class="keyword">while</span> (j &gt;= 0 &amp;&amp; arr[j] &gt; key) {
+                arr[j + 1] = arr[j];
+                --j;
+            }
+            arr[j + 1] = key;
+        }
+    }</pre>
+                </div>
+                <div class="card-footer">
+                    <span class="stable-tag"><i class="fas fa-check-circle"></i> 稳定</span>
+                    <span class="footnote">局部移动 · 相等元素不交叉</span>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- 4. 希尔排序 -->
+            <div class="card">
+                <div class="card-header">
+                    <h2><i class="fas fa-layer-group"></i>希尔排序</h2>
+                    <span class="complexity">O(n log n) ~ O(n²)</span>
+                </div>
+                <div class="desc">插入排序的改进版，按增量分组排序。</div>
+                <div class="code-wrapper">
+                    <pre><span class="keyword">void</span> <span class="func">shellSort</span>(<span class="type">int</span> arr[], <span class="type">int</span> n) {
+        <span class="keyword">for</span> (<span class="type">int</span> gap = n / 2; gap &gt; 0; gap /= 2)
+            <span class="keyword">for</span> (<span class="type">int</span> i = gap; i &lt; n; ++i) {
+                <span class="type">int</span> tmp = arr[i], j = i;
+                <span class="keyword">while</span> (j &gt;= gap &amp;&amp; arr[j - gap] &gt; tmp) {
+                    arr[j] = arr[j - gap];
+                    j -= gap;
+                }
+                arr[j] = tmp;
+            }
+    }</pre>
+                </div>
+                <div class="card-footer">
+                    <span class="stable-tag"><i class="fas fa-times-circle"></i> 不稳定</span>
+                    <span class="footnote">分组跳跃 · 相同元素可能被分到不同组</span>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- 5. 归并排序 -->
+            <div class="card">
+                <div class="card-header">
+                    <h2><i class="fas fa-code-branch"></i>归并排序</h2>
+                    <span class="complexity">O(n log n)</span>
+                </div>
+                <div class="desc">分治思想，先递归拆分，再有序合并。</div>
+                <div class="code-wrapper">
+                    <pre><span class="keyword">void</span> <span class="func">merge</span>(<span class="type">int</span> arr[], <span class="type">int</span> l, <span class="type">int</span> m, <span class="type">int</span> r) {
+        <span class="type">int</span> n1 = m - l + 1, n2 = r - m;
+        <span class="type">int</span> L[n1], R[n2];
+        <span class="keyword">for</span> (<span class="type">int</span> i = 0; i &lt; n1; ++i) L[i] = arr[l + i];
+        <span class="keyword">for</span> (<span class="type">int</span> j = 0; j &lt; n2; ++j) R[j] = arr[m + 1 + j];
+        <span class="type">int</span> i = 0, j = 0, k = l;
+        <span class="keyword">while</span> (i &lt; n1 &amp;&amp; j &lt; n2)
+            arr[k++] = (L[i] &lt;= R[j]) ? L[i++] : R[j++];
+        <span class="keyword">while</span> (i &lt; n1) arr[k++] = L[i++];
+        <span class="keyword">while</span> (j &lt; n2) arr[k++] = R[j++];
+    }
+    <span class="keyword">void</span> <span class="func">mergeSort</span>(<span class="type">int</span> arr[], <span class="type">int</span> l, <span class="type">int</span> r) {
+        <span class="keyword">if</span> (l &gt;= r) <span class="keyword">return</span>;
+        <span class="type">int</span> m = l + (r - l) / 2;
+        <span class="func">mergeSort</span>(arr, l, m);
+        <span class="func">mergeSort</span>(arr, m + 1, r);
+        <span class="func">merge</span>(arr, l, m, r);
+    }</pre>
+                </div>
+                <div class="card-footer">
+                    <span class="stable-tag"><i class="fas fa-check-circle"></i> 稳定</span>
+                    <span class="footnote">合并时 ≤ 保证相等元素顺序</span>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- 6. 快速排序 -->
+            <div class="card">
+                <div class="card-header">
+                    <h2><i class="fas fa-bolt"></i>快速排序</h2>
+                    <span class="complexity">O(n log n) 平均</span>
+                </div>
+                <div class="desc">选基准 pivot，分割成左右两部分递归。</div>
+                <div class="code-wrapper">
+                    <pre><span class="type">int</span> <span class="func">partition</span>(<span class="type">int</span> arr[], <span class="type">int</span> low, <span class="type">int</span> high) {
+        <span class="type">int</span> pivot = arr[high];
+        <span class="type">int</span> i = low - 1;
+        <span class="keyword">for</span> (<span class="type">int</span> j = low; j &lt; high; ++j)
+            <span class="keyword">if</span> (arr[j] &lt; pivot) <span class="func">swap</span>(arr[++i], arr[j]);
+        <span class="func">swap</span>(arr[i + 1], arr[high]);
+        <span class="keyword">return</span> i + 1;
+    }
+    <span class="keyword">void</span> <span class="func">quickSort</span>(<span class="type">int</span> arr[], <span class="type">int</span> low, <span class="type">int</span> high) {
+        <span class="keyword">if</span> (low &lt; high) {
+            <span class="type">int</span> pi = <span class="func">partition</span>(arr, low, high);
+            <span class="func">quickSort</span>(arr, low, pi - 1);
+            <span class="func">quickSort</span>(arr, pi + 1, high);
+        }
+    }</pre>
+                </div>
+                <div class="card-footer">
+                    <span class="stable-tag"><i class="fas fa-times-circle"></i> 不稳定</span>
+                    <span class="footnote">分区时跳跃交换 · 相等元素可能乱序</span>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- 7. 堆排序 -->
+            <div class="card">
+                <div class="card-header">
+                    <h2><i class="fas fa-cubes"></i>堆排序</h2>
+                    <span class="complexity">O(n log n)</span>
+                </div>
+                <div class="desc">利用大根堆反复取最大值，就地排序。</div>
+                <div class="code-wrapper">
+                    <pre><span class="keyword">void</span> <span class="func">heapify</span>(<span class="type">int</span> arr[], <span class="type">int</span> n, <span class="type">int</span> i) {
+        <span class="type">int</span> largest = i, l = 2*i + 1, r = 2*i + 2;
+        <span class="keyword">if</span> (l &lt; n &amp;&amp; arr[l] &gt; arr[largest]) largest = l;
+        <span class="keyword">if</span> (r &lt; n &amp;&amp; arr[r] &gt; arr[largest]) largest = r;
+        <span class="keyword">if</span> (largest != i) {
+            <span class="func">swap</span>(arr[i], arr[largest]);
+            <span class="func">heapify</span>(arr, n, largest);
+        }
+    }
+    <span class="keyword">void</span> <span class="func">heapSort</span>(<span class="type">int</span> arr[], <span class="type">int</span> n) {
+        <span class="keyword">for</span> (<span class="type">int</span> i = n/2 - 1; i &gt;= 0; --i) <span class="func">heapify</span>(arr, n, i);
+        <span class="keyword">for</span> (<span class="type">int</span> i = n - 1; i &gt; 0; --i) {
+            <span class="func">swap</span>(arr[0], arr[i]);
+            <span class="func">heapify</span>(arr, i, 0);
+        }
+    }</pre>
+                </div>
+                <div class="card-footer">
+                    <span class="stable-tag"><i class="fas fa-times-circle"></i> 不稳定</span>
+                    <span class="footnote">堆调整时跳跃交换 · 相等元素无法保证顺序</span>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- 8. 计数排序 -->
+            <div class="card">
+                <div class="card-header">
+                    <h2><i class="fas fa-calculator"></i>计数排序</h2>
+                    <span class="complexity">O(n + k)</span>
+                </div>
+                <div class="desc">非比较排序，统计元素出现次数并回填。</div>
+                <div class="code-wrapper">
+                    <pre><span class="keyword">void</span> <span class="func">countingSort</span>(<span class="type">int</span> arr[], <span class="type">int</span> n, <span class="type">int</span> maxVal) {
+        <span class="type">int</span> count[maxVal + 1] = {0};
+        <span class="keyword">for</span> (<span class="type">int</span> i = 0; i &lt; n; ++i) count[arr[i]]++;
+        <span class="type">int</span> idx = 0;
+        <span class="keyword">for</span> (<span class="type">int</span> i = 0; i &lt;= maxVal; ++i)
+            <span class="keyword">while</span> (count[i]--) arr[idx++] = i;
+    }</pre>
+                </div>
+                <div class="card-footer">
+                    <span class="stable-tag"><i class="fas fa-check-circle"></i> 稳定</span>
+                    <span class="footnote">按顺序回填 · 相等元素保持原序（稳定版需额外数组）</span>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- 9. 桶排序 -->
+            <div class="card">
+                <div class="card-header">
+                    <h2><i class="fas fa-boxes"></i>桶排序</h2>
+                    <span class="complexity">O(n + k) 平均</span>
+                </div>
+                <div class="desc">将元素分散到有序桶中，桶内再排序。</div>
+                <div class="code-wrapper">
+                    <pre><span class="keyword">void</span> <span class="func">bucketSort</span>(<span class="type">float</span> arr[], <span class="type">int</span> n) {
+        <span class="comment">// 假设元素在 [0,1) 区间</span>
+        vector&lt;vector&lt;<span class="type">float</span>&gt;&gt; buckets(n);
+        <span class="keyword">for</span> (<span class="type">int</span> i = 0; i &lt; n; ++i)
+            buckets[<span class="type">int</span>(n * arr[i])].push_back(arr[i]);
+        <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;b : buckets) <span class="func">sort</span>(b.begin(), b.end());
+        <span class="type">int</span> idx = 0;
+        <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;b : buckets)
+            <span class="keyword">for</span> (<span class="type">float</span> v : b) arr[idx++] = v;
+    }</pre>
+                </div>
+                <div class="card-footer">
+                    <span class="stable-tag"><i class="fas fa-check-circle"></i> 稳定</span>
+                    <span class="footnote">若桶内用稳定排序（如插入排序）则整体稳定</span>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- 10. 基数排序 -->
+            <div class="card">
+                <div class="card-header">
+                    <h2><i class="fas fa-sort-numeric-up"></i>基数排序</h2>
+                    <span class="complexity">O(d · (n + k))</span>
+                </div>
+                <div class="desc">按位（个位、十位……）多次分配收集。</div>
+                <div class="code-wrapper">
+                    <pre><span class="keyword">void</span> <span class="func">radixSort</span>(<span class="type">int</span> arr[], <span class="type">int</span> n) {
+        <span class="type">int</span> maxVal = *<span class="func">max_element</span>(arr, arr + n);
+        <span class="keyword">for</span> (<span class="type">int</span> exp = 1; maxVal / exp &gt; 0; exp *= 10) {
+            <span class="type">int</span> output[n], count[10] = {0};
+            <span class="keyword">for</span> (<span class="type">int</span> i = 0; i &lt; n; ++i) count[(arr[i]/exp)%10]++;
+            <span class="keyword">for</span> (<span class="type">int</span> i = 1; i &lt; 10; ++i) count[i] += count[i-1];
+            <span class="keyword">for</span> (<span class="type">int</span> i = n - 1; i &gt;= 0; --i) {
+                output[count[(arr[i]/exp)%10] - 1] = arr[i];
+                count[(arr[i]/exp)%10]--;
+            }
+            <span class="keyword">for</span> (<span class="type">int</span> i = 0; i &lt; n; ++i) arr[i] = output[i];
+        }
+    }</pre>
+                </div>
+                <div class="card-footer">
+                    <span class="stable-tag"><i class="fas fa-check-circle"></i> 稳定</span>
+                    <span class="footnote">按位分配时使用稳定计数排序</span>
+                </div>
+            </div>
+
+        </div> <!-- /.grid -->
+
+        <!-- ====== 底部注脚 ====== -->
+        <footer style="margin-top: 3rem; text-align: center; color: #64748b; font-size: 0.9rem; border-top: 1px solid #dce2ec; padding-top: 1.8rem;">
+            <i class="fas fa-code" style="margin-right: 6px;"></i>
+            C++17 风格示例 · 稳定性说明基于经典定义
+            <br />
+            <span style="font-size: 0.8rem; opacity: 0.7;">
+                <i class="fas fa-check-circle" style="color: #16a34a;"></i> 稳定  &nbsp;|&nbsp;
+                <i class="fas fa-times-circle" style="color: #dc2626;"></i> 不稳定
+            </span>
+        </footer>
+
+    </div> <!-- /.container -->
+
+</body>
+</html>
