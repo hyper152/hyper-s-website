@@ -54,6 +54,39 @@
   .topic-btn.active { background: #4f46e5; color: #fff; border-color: #4f46e5; }
   .topic-btn.all-btn { background: #1a1a2e; color: #fff; border-color: #1a1a2e; }
 
+  /* Week filter bar */
+  .week-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+    margin-bottom: 12px;
+    padding: 10px 12px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 1px 6px rgba(0,0,0,.05);
+  }
+  .week-bar-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #666;
+    padding: 4px 8px;
+    align-self: center;
+  }
+  .week-btn {
+    padding: 4px 12px;
+    border: 1px solid #e0d5c7;
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    background: #fff;
+    color: #666;
+    transition: .15s;
+  }
+  .week-btn:hover { border-color: #8b5e3c; color: #8b5e3c; }
+  .week-btn.active { background: #8b5e3c; color: #fff; border-color: #8b5e3c; }
+  .week-btn.all-week-btn { background: #2c2416; color: #fff; border-color: #2c2416; }
+
   /* Question card */
   .q-card {
     background: #fff;
@@ -227,6 +260,7 @@
     <div class="stat-item"><div class="stat-num gray" id="accuracy">0%</div><div class="stat-label">正确率</div></div>
   </div>
 
+  <div class="week-bar" id="weekBar"></div>
   <div class="topic-bar" id="topicBar"></div>
   <div id="questionList"></div>
 </div>
@@ -648,6 +682,13 @@ const QUESTIONS = [
     options: ['正确', '错误'],
     answer: 1,
     explanation: '错误。归并排序的时间复杂度稳定在 O(N log N)，而简单插入排序在最好情况（有序）下为 O(N)。当数据量小或基本有序时，插入排序可能更快。此外归并排序需要 O(N) 额外空间。'
+  },
+  {
+    id: 'q511', topic: '排序', type: 'judge',
+    text: '在待排序数据基本有序的情况下，快速排序效果最好。',
+    options: ['正确', '错误'],
+    answer: 1,
+    explanation: '错误。当数据基本有序时，快速排序反而效率最差，时间复杂度退化为 O(n²)。因为每次选择的枢轴（通常为首元素）将序列划分为极不平衡的两部分，导致递归深度为 n，排序效果最差。'
   },
   {
     id: 'q52', topic: '排序', type: 'judge',
@@ -1442,7 +1483,7 @@ const weekMap = {
   q36:'第5周',q37:'第5周',q38:'第5周',q39:'第5周',q40:'第5周',
   q41:'第5周',q42:'第5周',q43:'第5周',q44:'第5周',q45:'第5周',
   q46:'第5周',q47:'第5周',q48:'第5周',
-  q49:'第6周',q50:'第6周',q51:'第6周',q52:'第6周',
+  q49:'第6周',q50:'第6周',q51:'第6周',q511:'第6周',q52:'第6周',
   q53:'第6周',q54:'第6周',q55:'第6周',q56:'第6周',q57:'第6周',
   q58:'第7周',q59:'第7周',q60:'第7周',q61:'第7周',q62:'第7周',q63:'第7周',
   q64:'第8周',q65:'第8周',q66:'第8周',q67:'第8周',q68:'第8周',q69:'第8周',q70:'第8周',
@@ -1465,19 +1506,46 @@ const topics = [...new Set(allQuestions.map(q => q.topic))];
 //  Render
 // ========================
 let correctCount = 0, wrongCount = 0, answeredCount = 0;
+let currentTopic = 'all', currentWeek = 'all';
+
+// Compute per-week question number ranges
+function computeWeekRanges() {
+  const weekOrder = ['第1周','第2周','第3周','第4周','第5周','第6周','第7周','第8周','第11周','第12周','第14周','第15周','第17周'];
+  const ranges = {};
+  allQuestions.forEach((q, i) => {
+    const w = weekMap[q.id];
+    if (w) {
+      if (!ranges[w]) ranges[w] = { first: i + 1, last: i + 1 };
+      else ranges[w].last = i + 1;
+    }
+  });
+  return weekOrder.filter(w => ranges[w]).map(w => ({ week: w, ...ranges[w] }));
+}
+const weekRanges = computeWeekRanges();
 
 function render() {
+  // Render week bar
+  const weekBar = document.getElementById('weekBar');
+  weekBar.innerHTML = '<span class="week-bar-label">📅 周次：</span>' +
+    '<button class="week-btn all-week-btn active" onclick="filterWeek(\'all\')">全部</button>' +
+    weekRanges.map(r =>
+      `<button class="week-btn" onclick="filterWeek('${r.week}')" title="题号 ${r.first}-${r.last}">${r.week}<span style="font-weight:400;color:#999;font-size:11px;margin-left:4px">${r.first}-${r.last}</span></button>`
+    ).join('');
+
+  // Render topic bar
   const topicBar = document.getElementById('topicBar');
   topicBar.innerHTML = '<button class="topic-btn all-btn active" onclick="filterTopic(\'all\')">全部</button>' +
     topics.map(t => `<button class="topic-btn" onclick="filterTopic('${t}')">${t}</button>`).join('');
 
   document.getElementById('totalQ').textContent = allQuestions.length;
-  renderQuestions('all');
+  renderQuestions();
 }
 
-function renderQuestions(topic) {
+function renderQuestions() {
   const list = document.getElementById('questionList');
-  const filtered = topic === 'all' ? allQuestions : allQuestions.filter(q => q.topic === topic);
+  let filtered = allQuestions;
+  if (currentTopic !== 'all') filtered = filtered.filter(q => q.topic === currentTopic);
+  if (currentWeek !== 'all') filtered = filtered.filter(q => weekMap[q.id] === currentWeek);
 
   list.innerHTML = filtered.map(q => {
     const labels = q.type === 'judge' ? ['T', 'F'] : ['A', 'B', 'C', 'D'];
@@ -1568,9 +1636,24 @@ function updateStats() {
 
 // Topic filter
 function filterTopic(topic) {
+  currentTopic = topic;
+  currentWeek = 'all';
   document.querySelectorAll('.topic-btn').forEach(b => b.classList.remove('active'));
   event.target.classList.add('active');
-  renderQuestions(topic);
+  document.querySelectorAll('.week-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.week-btn.all-week-btn')?.classList.add('active');
+  renderQuestions();
+}
+
+// Week filter
+function filterWeek(week) {
+  currentWeek = week;
+  currentTopic = 'all';
+  document.querySelectorAll('.week-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  document.querySelectorAll('.topic-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.topic-btn.all-btn')?.classList.add('active');
+  renderQuestions();
 }
 
 // Init
