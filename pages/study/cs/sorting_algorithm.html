@@ -173,6 +173,54 @@
             color: var(--text);
         }
 
+        /* ── Summary Table ── */
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1rem;
+            margin-bottom: 24px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+        .summary-table thead th {
+            background: #ede8e1;
+            color: var(--text);
+            font-weight: 600;
+            padding: 0.7rem 0.8rem;
+            text-align: left;
+            border-bottom: 2px solid var(--accent-light);
+            font-size: 0.92rem;
+        }
+        .summary-table tbody td {
+            padding: 0.65rem 0.8rem;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+        }
+        .summary-table tbody tr:nth-child(even) {
+            background: #fcfaf8;
+        }
+        .summary-table tbody tr:hover {
+            background: #f5efe8;
+        }
+        .summary-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+        .summary-table .algo-cell {
+            font-weight: 600;
+            color: var(--text);
+        }
+        .summary-table .algo-cell i {
+            color: var(--accent);
+            margin-right: 6px;
+            width: 16px;
+            text-align: center;
+        }
+        .summary-table .complexity-cell {
+            font-family: 'Cascadia Code', 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 0.88rem;
+        }
+
         /* ── Section Cards ── */
         .algo-card {
             background: var(--card-bg);
@@ -397,6 +445,102 @@
                 <i class="far fa-sticky-note"></i> 桶排序稳定性取决于桶内算法
             </span>
         </div>
+
+        <!-- ── 速查表格：复杂度 + 稳定性（无代码） ── -->
+        <table class="summary-table">
+            <thead>
+                <tr>
+                    <th style="width:14%;">算法</th>
+                    <th style="width:20%;">平均</th>
+                    <th style="width:18%;">最坏</th>
+                    <th style="width:18%;">最好</th>
+                    <th style="width:12%;">稳定性</th>
+                    <th style="width:18%;">空间</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="algo-cell"><i class="fas fa-water"></i> 冒泡</td>
+                    <td class="complexity-cell">O(n²)</td>
+                    <td class="complexity-cell">O(n²)</td>
+                    <td class="complexity-cell">O(n)</td>
+                    <td><span class="badge-stable">✅ 稳定</span></td>
+                    <td class="complexity-cell">O(1)</td>
+                </tr>
+                <tr>
+                    <td class="algo-cell"><i class="fas fa-hand-pointer"></i> 选择</td>
+                    <td class="complexity-cell">O(n²)</td>
+                    <td class="complexity-cell">O(n²)</td>
+                    <td class="complexity-cell">O(n²)</td>
+                    <td><span class="badge-unstable">❌ 不稳定</span></td>
+                    <td class="complexity-cell">O(1)</td>
+                </tr>
+                <tr>
+                    <td class="algo-cell"><i class="fas fa-arrow-right"></i> 插入</td>
+                    <td class="complexity-cell">O(n²)</td>
+                    <td class="complexity-cell">O(n²)</td>
+                    <td class="complexity-cell">O(n)</td>
+                    <td><span class="badge-stable">✅ 稳定</span></td>
+                    <td class="complexity-cell">O(1)</td>
+                </tr>
+                <tr>
+                    <td class="algo-cell"><i class="fas fa-layer-group"></i> 希尔</td>
+                    <td class="complexity-cell">O(n log n)~O(n²)</td>
+                    <td class="complexity-cell">O(n²)</td>
+                    <td class="complexity-cell">O(n log n)</td>
+                    <td><span class="badge-unstable">❌ 不稳定</span></td>
+                    <td class="complexity-cell">O(1)</td>
+                </tr>
+                <tr>
+                    <td class="algo-cell"><i class="fas fa-code-branch"></i> 归并</td>
+                    <td class="complexity-cell">O(n log n)</td>
+                    <td class="complexity-cell">O(n log n)</td>
+                    <td class="complexity-cell">O(n log n)</td>
+                    <td><span class="badge-stable">✅ 稳定</span></td>
+                    <td class="complexity-cell">O(n)</td>
+                </tr>
+                <tr>
+                    <td class="algo-cell"><i class="fas fa-bolt"></i> 快速</td>
+                    <td class="complexity-cell">O(n log n)</td>
+                    <td class="complexity-cell">O(n²)</td>
+                    <td class="complexity-cell">O(n log n)</td>
+                    <td><span class="badge-unstable">❌ 不稳定</span></td>
+                    <td class="complexity-cell">O(log n) 栈</td>
+                </tr>
+                <tr>
+                    <td class="algo-cell"><i class="fas fa-cubes"></i> 堆</td>
+                    <td class="complexity-cell">O(n log n)</td>
+                    <td class="complexity-cell">O(n log n)</td>
+                    <td class="complexity-cell">O(n log n)</td>
+                    <td><span class="badge-unstable">❌ 不稳定</span></td>
+                    <td class="complexity-cell">O(1)</td>
+                </tr>
+                <tr>
+                    <td class="algo-cell"><i class="fas fa-calculator"></i> 计数</td>
+                    <td class="complexity-cell">O(n + k)</td>
+                    <td class="complexity-cell">O(n + k)</td>
+                    <td class="complexity-cell">O(n + k)</td>
+                    <td><span class="badge-stable">✅ 稳定</span></td>
+                    <td class="complexity-cell">O(k)</td>
+                </tr>
+                <tr>
+                    <td class="algo-cell"><i class="fas fa-boxes"></i> 桶</td>
+                    <td class="complexity-cell">O(n + k)</td>
+                    <td class="complexity-cell">O(n²)</td>
+                    <td class="complexity-cell">O(n + k)</td>
+                    <td><span class="badge-stable">✅ 稳定*</span></td>
+                    <td class="complexity-cell">O(n + k)</td>
+                </tr>
+                <tr>
+                    <td class="algo-cell"><i class="fas fa-sort-numeric-up"></i> 基数</td>
+                    <td class="complexity-cell">O(d·(n+k))</td>
+                    <td class="complexity-cell">O(d·(n+k))</td>
+                    <td class="complexity-cell">O(d·(n+k))</td>
+                    <td><span class="badge-stable">✅ 稳定</span></td>
+                    <td class="complexity-cell">O(n + k)</td>
+                </tr>
+            </tbody>
+        </table>
 
         <!-- ── 1. 冒泡排序 ── -->
         <div class="algo-card">
