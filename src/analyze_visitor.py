@@ -228,8 +228,8 @@ def analyze_visitor_data(records):
 
 
 def print_by_region(ip_counter, ip_details):
-    """按地区分类输出 IP"""
-    regions = defaultdict(list)  # 地区名 → [(ip, count, user_str)]
+    """按地区分类输出 IP（紧凑多列）"""
+    regions = defaultdict(list)
     internal_ips = []
     failed = 0
 
@@ -262,15 +262,33 @@ def print_by_region(ip_counter, ip_details):
         ips = regions[region]
         total = sum(c for _, c, _ in ips)
         print(f"\n{region} ({len(ips)} IP, {total} 次请求):")
+
+        # 紧凑多列：每行塞尽量多的 IP
+        line = "   "
         for ip, count, users in ips:
-            tag = f" [{users}]" if users else ""
-            print(f"   {ip:<18} {count:>4} 次{tag}")
+            tag = f"[{users}]" if users else ""
+            entry = f"{ip}({count}){tag}  "
+            if len(line + entry) > 120:
+                print(line)
+                line = "   " + entry
+            else:
+                line += entry
+        if line.strip():
+            print(line)
 
     if internal_ips:
         total = sum(c for _, c in internal_ips)
         print(f"\n🏠 内网 ({len(internal_ips)} IP, {total} 次请求):")
+        line = "   "
         for ip, count in internal_ips:
-            print(f"   {ip:<18} {count:>4} 次")
+            entry = f"{ip}({count})  "
+            if len(line + entry) > 120:
+                print(line)
+                line = "   " + entry
+            else:
+                line += entry
+        if line.strip():
+            print(line)
 
     if failed:
         print(f"\n⚠️ {failed} 个 IP 查询失败")
