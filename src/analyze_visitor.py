@@ -60,7 +60,7 @@ def is_logged_in_user(user):
     return user_lower not in ('游客', 'guest')
 
 
-def query_ip_location(ip, retry_count=0):
+def query_ip_location(ip):
     """使用本地 ip2region.db 离线查询 IP (0.0x毫秒极速查询)"""
     if is_internal_ip(ip):
         return {"country": "本地网络", "region": "内网", "city": "本地", "isp": ""}
@@ -227,123 +227,53 @@ def analyze_visitor_data(records):
     return ip_counter, ip_details
 
 
-def analyze_locations_realtime(ip_counter, ip_details):
-    """查询并显示每个 IP 的地理位置"""
+def print_by_region(ip_counter, ip_details):
+    """按地区分类输出 IP"""
+    regions = defaultdict(list)  # 地区名 → [(ip, count, user_str)]
+    internal_ips = []
+    failed = 0
 
-    sorted_ips = sorted(ip_counter.items(), key=lambda x: x[1], reverse=True)
-
-    external_ips = [(ip, count) for ip, count in sorted_ips if not is_internal_ip(ip)]
-    internal_ips = [(ip, count) for ip, count in sorted_ips if is_internal_ip(ip)]
-
-    province_counter = Counter()
-    province_requests = defaultdict(int)
-    country_counter = Counter()
-
-    failed_ips = []
-
-    # 紧凑表格
-    print(f"\n{'IP':<18} {'请求':<5}  {'位置':<25}   {'用户':<10}")
-    print("-" * 70)
-
-    for ip, count in external_ips:
+    for ip, count in sorted(ip_counter.items(), key=lambda x: x[1], reverse=True):
+        if is_internal_ip(ip):
+            internal_ips.append((ip, count))
+            continue
         loc = query_ip_location(ip)
-
         country = loc.get('country', '未知')
         province = loc.get('region', '未知')
         city = loc.get('city', '未知')
+        users = ','.join(ip_details[ip]["usernames"]) if ip_details[ip]["usernames"] else ''
 
-        if country in ('查询失败', '查询出错'):
-            failed_ips.append(ip)
+        if country in ('查询失败', '查询出错', '未配置IP库'):
+            failed += 1
+            region = '⚠️ 查询失败'
+        elif country == '中国':
+            region = f"🇨🇳 {province}" if province != '未知' else '🇨🇳 中国'
+            if city and city != '未知':
+                region += f" · {city}"
+        else:
+            region = f"🌍 {country}"
 
-        country_counter[country] += 1
+        regions[region].append((ip, count, users))
 
-        if country == '中国':
-            province_counter[province] += 1
-            province_requests[province] += count
-        elif country not in ('查询失败', '查询出错', '本地网络'):
-            province_counter[f"国外-{country}"] += 1
-            province_requests[f"国外-{country}"] += count
-
-        users = ','.join(list(ip_details[ip]["usernames"])[:2]) if ip_details[ip]["usernames"] else '-'
-        location = f"{country}/{province}/{city}" if country == '中国' else country
-        status_mark = " ⚠️" if country in ('查询失败', '查询出错') else ""
-        print(f"{ip:<18} {count:<5}  {location:<25} {users:<10}{status_mark}")
+    # 输出
+    for region in sorted(regions.keys(), key=lambda r: (
+        0 if r.startswith('🇨🇳') else 1 if r.startswith('🌍') else 2, r
+    )):
+        ips = regions[region]
+        total = sum(c for _, c, _ in ips)
+        print(f"\n{region} ({len(ips)} IP, {total} 次请求):")
+        for ip, count, users in ips:
+            tag = f" [{users}]" if users else ""
+            print(f"   {ip:<18} {count:>4} 次{tag}")
 
     if internal_ips:
+        total = sum(c for _, c in internal_ips)
+        print(f"\n🏠 内网 ({len(internal_ips)} IP, {total} 次请求):")
         for ip, count in internal_ips:
-            users = ','.join(list(ip_details[ip]["usernames"])[:2]) if ip_details[ip]["usernames"] else '-'
-            print(f"{ip:<18} {count:<5}  {'本地网络/内网':<25} {users:<10}")
+            print(f"   {ip:<18} {count:>4} 次")
 
-    if failed_ips:
-        print(f"\n⚠️ {len(failed_ips)} 个 IP 查询失败")
-
-    return province_counter, province_requests, country_counter, failed_ips
-
-
-def print_summary(ip_counter, ip_details, province_counter, province_requests, country_counter, failed_ips, date_desc=""):
-    """打印汇总统计报告"""
-
-    total_ips = len(ip_counter)
-    total_requests = sum(ip_counter.values())
-    external_ips = [ip for ip in ip_counter if not is_internal_ip(ip)]
-    internal_ips = [ip for ip in ip_counter if is_internal_ip(ip)]
-    logged_in_ips = [ip for ip in ip_counter if ip_details[ip]["usernames"]]
-    visitor_ips = [ip for ip in ip_counter if not ip_details[ip]["usernames"]]
-
-    visitor_requests = sum(ip_counter[ip] for ip in visitor_ips)
-    logged_in_requests = sum(ip_counter[ip] for ip in logged_in_ips)
-
-    print("\n" + "=" * 70)
-    if date_desc:
-        print(f"📊 visitor.json IP 地址分析汇总报告 ({date_desc})")
-    else:
-        print("📊 visitor.json IP 地址分析汇总报告")
-    print("=" * 70)
-
-    print(f"\n📈 总体统计:")
-    print(f"   ├─ 独立 IP: {total_ips}（外网 {len(external_ips)}, 内网 {len(internal_ips)}）")
-    print(f"   ├─ 总请求: {total_requests}")
-    print(f"   ├─ 登录用户 IP: {len(logged_in_ips)} 个 ({logged_in_requests} 次)")
-    print(f"   └─ 游客 IP: {len(visitor_ips)} 个 ({visitor_requests} 次)")
-
-    if failed_ips:
-        print(f"\n⚠️ 查询失败: {len(failed_ips)} 个 IP")
-
-    # 国家分布
-    valid_countries = {k: v for k, v in country_counter.items() if k not in ('查询失败', '查询出错')}
-
-    if valid_countries:
-        print(f"\n🌏 国家/地区分布:")
-        total_valid = sum(valid_countries.values())
-        for country, count in sorted(valid_countries.items(), key=lambda x: x[1], reverse=True):
-            pct = count / total_valid * 100 if total_valid > 0 else 0
-            print(f"   {country}: {count} 个 ({pct:.1f}%)")
-
-    # 中国省份分布
-    china_provinces = {k: v for k, v in province_counter.items() if not k.startswith('国外-') and k != '未知'}
-
-    if china_provinces:
-        print(f"\n🇨🇳 中国省份分布 (共 {len(china_provinces)} 个):")
-        print(f"   {'省份':<10} {'IP':<5} {'请求':<6} {'占比':<6}")
-        print(f"   {'─' * 30}")
-
-        total_china_ips = sum(china_provinces.values())
-        total_china_requests = sum(province_requests[k] for k in china_provinces.keys())
-
-        for province, count in sorted(china_provinces.items(), key=lambda x: x[1], reverse=True):
-            requests = province_requests[province]
-            pct = count / total_china_ips * 100 if total_china_ips > 0 else 0
-            print(f"   {province:<10} {count:<5} {requests:<6} {pct:.1f}%")
-
-        print(f"   {'总计':<10} {total_china_ips:<5} {total_china_requests:<6} 100%")
-
-    # 国外 IP 汇总
-    foreign = [(k.replace('国外-', ''), v, province_requests[k])
-               for k, v in province_counter.items() if k.startswith('国外-')]
-    if foreign:
-        print(f"\n🌍 国外 ({len(foreign)} 个国家/地区):")
-        for country, count, requests in sorted(foreign, key=lambda x: x[1], reverse=True):
-            print(f"   {country}: {count} IP, {requests} 次请求")
+    if failed:
+        print(f"\n⚠️ {failed} 个 IP 查询失败")
 
 
 def query_single_ip(ip, records, date_desc=""):
@@ -481,18 +411,14 @@ def main():
         query_single_ip(ip_filter, ip_records, date_desc)
         return
 
-    # 完整分析
-    print("\n🔍 开始分析 visitor.json 中的 IP 地址...\n")
-
+    # 按地区分类输出
     ip_counter, ip_details = analyze_visitor_data(records)
 
     if not ip_counter:
         print("❌ 未找到有效的 IP 数据")
         return
 
-    # 地理位置查询 + 汇总报告
-    province_counter, province_requests, country_counter, failed_ips = analyze_locations_realtime(ip_counter, ip_details)
-    print_summary(ip_counter, ip_details, province_counter, province_requests, country_counter, failed_ips, date_desc)
+    print_by_region(ip_counter, ip_details)
 
 
 if __name__ == "__main__":
