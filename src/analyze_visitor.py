@@ -266,9 +266,9 @@ def print_by_region(ip_counter, ip_details):
         # 紧凑多列：每行塞尽量多的 IP
         line = "   "
         for ip, count, users in ips:
-            tag = f"[{users}]" if users else ""
-            entry = f"{ip}({count}){tag}  "
-            if len(line + entry) > 120:
+            tag = f"--{users}" if users else ""
+            entry = f"{ip}--{count}次{tag}  "
+            if len(line + entry) > 150:
                 print(line)
                 line = "   " + entry
             else:
@@ -281,8 +281,8 @@ def print_by_region(ip_counter, ip_details):
         print(f"\n🏠 内网 ({len(internal_ips)} IP, {total} 次请求):")
         line = "   "
         for ip, count in internal_ips:
-            entry = f"{ip}({count})  "
-            if len(line + entry) > 120:
+            entry = f"{ip}--{count}次  "
+            if len(line + entry) > 150:
                 print(line)
                 line = "   " + entry
             else:
