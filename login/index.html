@@ -261,7 +261,7 @@
         </div>
     </div>
 
-    <script src="/static/js/auth.js"></script>
+    <script src="../static/js/auth.js"></script>
     <script>
         // 获取元素
         const tabs = document.querySelectorAll('.tab-item');
@@ -308,7 +308,7 @@
                 sendCodeBtn.disabled = true;
                 sendCodeBtn.textContent = '发送中...';
                 
-                const res = await fetch('/api/login/send-code', {
+                const res = await fetch('../api/login/send-code', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email })
@@ -358,7 +358,7 @@
             }
 
             try {
-                const res = await fetch('/api/login/password', {
+                const res = await fetch('../api/login/password', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, password })
@@ -383,7 +383,7 @@
                     manualBtn.textContent = '点击进入首页';
                     manualBtn.className = 'manual-btn';
                     manualBtn.onclick = () => {
-                        const redirect = new URLSearchParams(window.location.search).get('redirect') || '/home/index.html';
+                        const redirect = new URLSearchParams(window.location.search).get('redirect') || '../home/index.html';
                         window.location.href = redirect;
                     };
                     
@@ -414,7 +414,7 @@
             }
 
             try {
-                const res = await fetch('/api/login/code', {
+                const res = await fetch('../api/login/code', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, code })
@@ -438,7 +438,7 @@
                     manualBtn.textContent = '点击进入首页';
                     manualBtn.className = 'manual-btn';
                     manualBtn.onclick = () => {
-                        const redirect = new URLSearchParams(window.location.search).get('redirect') || '/home/index.html';
+                        const redirect = new URLSearchParams(window.location.search).get('redirect') || '../home/index.html';
                         window.location.href = redirect;
                     };
                     

@@ -212,7 +212,7 @@
 
         /* ===== 原横幅样式 ===== */
         .hero {
-            background: linear-gradient(rgba(106, 90, 205, 0.85), rgba(255, 107, 107, 0.85)), url('/media/home/img/bg.png');
+            background: linear-gradient(rgba(106, 90, 205, 0.85), rgba(255, 107, 107, 0.85)), url('../media/home/img/bg.png');
             background-size: cover;
             background-position: center;
             color: var(--bilibili-white);
@@ -851,6 +851,128 @@
                 font-size: 1.2rem;
             }
         }
+
+        /* ===== 视觉微调：保留原有信息结构与布局 ===== */
+        :root {
+            --bilibili-light: #f7f8fa;
+            --bilibili-gray: #eef0f3;
+            --bilibili-text-gray: #69707a;
+            --light-gray: #eceef1;
+            --shadow-card: 0 4px 18px rgba(24, 25, 28, 0.06);
+            --shadow-hover: 0 12px 30px rgba(251, 114, 153, 0.14);
+        }
+
+        body {
+            background:
+                radial-gradient(circle at 8% 0%, rgba(35, 173, 229, 0.06), transparent 26rem),
+                radial-gradient(circle at 92% 12%, rgba(251, 114, 153, 0.07), transparent 24rem),
+                var(--bilibili-light);
+        }
+
+        .bili-header {
+            border-bottom: 1px solid rgba(24, 25, 28, 0.06);
+        }
+
+        .bili-logo span {
+            letter-spacing: -0.04em;
+        }
+
+        .bili-tab,
+        .bili-user-btn,
+        .hero-btn,
+        .carousel-btn,
+        .category-card,
+        .video-card,
+        .back-to-top {
+            will-change: transform;
+        }
+
+        .bili-tab:hover {
+            background: rgba(251, 114, 153, 0.08);
+        }
+
+        .hero {
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.42);
+            box-shadow: 0 18px 50px rgba(40, 38, 64, 0.14);
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: linear-gradient(120deg, rgba(255, 255, 255, 0.10), transparent 42%);
+        }
+
+        .hero-content {
+            z-index: 3;
+        }
+
+        .hero h1 {
+            letter-spacing: -0.035em;
+            text-wrap: balance;
+        }
+
+        .bili-carousel {
+            border-radius: 18px;
+            border: 1px solid rgba(24, 25, 28, 0.06);
+        }
+
+        .carousel-slide::before {
+            background: linear-gradient(90deg, rgba(10, 12, 18, 0.58) 0%, rgba(10, 12, 18, 0.12) 72%);
+        }
+
+        .category-card,
+        .video-card {
+            border: 1px solid rgba(24, 25, 28, 0.07);
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .video-cover img {
+            background: #eceef1;
+        }
+
+        .video-card:hover .video-cover img {
+            transform: scale(1.045);
+        }
+
+        .bili-section-title h2,
+        .category-section-title h3 {
+            letter-spacing: -0.025em;
+        }
+
+        .category-section-title {
+            border-bottom-width: 1px;
+        }
+
+        .bili-footer {
+            background: rgba(255, 255, 255, 0.78);
+            backdrop-filter: blur(16px);
+        }
+
+        a:focus-visible,
+        button:focus-visible,
+        .carousel-dot:focus-visible {
+            outline: 3px solid rgba(35, 173, 229, 0.42);
+            outline-offset: 3px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
     </style>
 </head>
 
@@ -869,7 +991,7 @@
                     <a href="#categories" class="bili-tab">分类</a>
                     <a href="#blog" class="bili-tab">博客</a>
                     <a href="#about" class="bili-tab">关于hyper</a>
-                    <a href="/resume/index.html" class="bili-tab resume-tab">
+                    <a href="../resume/index.html" class="bili-tab resume-tab">
                         <i class="fas fa-id-card"></i> 个人简介
                     </a>
                     <a href="#contact" class="bili-tab">联系我</a>
@@ -891,10 +1013,10 @@
                         <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="bili-dropdown" id="dropdownMenu">
-                        <a href="/login/index.html" class="bili-dropdown-item" id="loginItem">
+                        <a href="../login/index.html" class="bili-dropdown-item" id="loginItem">
                             <i class="fas fa-sign-in-alt"></i> 登录
                         </a>
-                        <a href="/login/register.html" class="bili-dropdown-item" id="registerItem">
+                        <a href="../login/register.html" class="bili-dropdown-item" id="registerItem">
                             <i class="fas fa-user-plus"></i> 注册
                         </a>
                         <a href="javascript:void(0)" class="bili-dropdown-item" id="logoutItem" onclick="handleLogout()"
@@ -925,78 +1047,78 @@
                 <div class="carousel-track" id="carouselTrack">
                     <!-- 轮播项1 - 我的世界 -->
                     <div class="carousel-slide">
-                        <img src="/media/pages/games/mc/2026.2.15.jpg" alt="我的世界重建计划"
+                        <img src="../media/pages/games/mc/2026.2.15.jpg" alt="我的世界重建计划"
                             onerror="this.src='https://via.placeholder.com/1300x400?text=MC重建计划'">
                         <div class="carousel-content">
                             <span class="carousel-tag"><i class="fas fa-gamepad"></i> 游戏栏</span>
                             <h2>温州育英 · 我的世界重建计划</h2>
                             <p>在方块中复刻高中记忆！服务器 mc.0o0hyper0o0.cyou 已开放，版本1.21.1-Fabric 0.16.10，欢迎加入共建。</p>
-                            <a href="/pages/games/mc/index.html" class="carousel-btn">
+                            <a href="../pages/games/mc/index.html" class="carousel-btn">
                                 立即加入 <i class="fas fa-arrow-right"></i>
                             </a>
                         </div>
                     </div>
                     <!-- 轮播项2 - 返校宣讲 -->
                     <div class="carousel-slide">
-                        <img src="/media/pages/YY往事/返校宣讲/录取榜.jpg" alt="返校宣讲"
+                        <img src="../media/pages/YY往事/返校宣讲/录取榜.jpg" alt="返校宣讲"
                             onerror="this.src='https://via.placeholder.com/1300x400?text=返校宣讲'">
                         <div class="carousel-content">
                             <span class="carousel-tag"><i class="fas fa-history"></i> YY往事</span>
                             <h2>重庆大学返校宣讲记</h2>
                             <p>2026年2月11日-13日，重返YY，三天两夜的青春回溯。警察拿外卖、贴纸传承、KTV嘶吼、凌晨电影……每一刻都值得铭记。</p>
-                            <a href="/pages/YY往事/返校宣讲/index.html" class="carousel-btn">
+                            <a href="../pages/YY往事/返校宣讲/index.html" class="carousel-btn">
                                 重温回忆 <i class="fas fa-arrow-right"></i>
                             </a>
                         </div>
                     </div>
                     <!-- 轮播项3 - 重庆武隆 -->
                     <div class="carousel-slide">
-                        <img src="/media/pages/travel/2026.5.16-%E9%87%8D%E5%BA%86%E6%AD%A6%E9%9A%86/IMG_20260515_164759-%E7%BB%BF%E7%9A%AE%E7%81%AB%E8%BD%A6.jpg" alt="重庆武隆"
+                        <img src="../media/pages/travel/2026.5.16-%E9%87%8D%E5%BA%86%E6%AD%A6%E9%9A%86/IMG_20260515_164759-%E7%BB%BF%E7%9A%AE%E7%81%AB%E8%BD%A6.jpg" alt="重庆武隆"
                             onerror="this.src='https://via.placeholder.com/1300x400?text=武隆'">
                         <div class="carousel-content">
                             <span class="carousel-tag"><i class="fas fa-map-marked-alt"></i> 旅行</span>
                             <h2>武隆 · 第一次绿皮火车之旅</h2>
                             <p>2026年5月15日至16日，第一次坐上绿皮火车摇摇晃晃去武隆！仙女山看云雾缭绕，喀斯特地貌惊叹天生三桥，大拇指打卡留念——人生中的每个第一次都值得记录。</p>
-                            <a href="/pages/travel/2026.5.16-%E9%87%8D%E5%BA%86%E6%AD%A6%E9%9A%86/index.html" class="carousel-btn">
+                            <a href="../pages/travel/2026.5.16-%E9%87%8D%E5%BA%86%E6%AD%A6%E9%9A%86/index.html" class="carousel-btn">
                                 探秘武隆 <i class="fas fa-arrow-right"></i>
                             </a>
                         </div>
                     </div>
                     <!-- 轮播项4 - 重庆 -->
                     <div class="carousel-slide">
-                        <img src="/media/pages/travel/2026.5.1-%E9%87%8D%E5%BA%86/IMG_20260501_213513-%E4%B8%B2%E4%B8%B2%E7%81%AB%E9%94%85.jpg" alt="重庆"
+                        <img src="../media/pages/travel/2026.5.1-%E9%87%8D%E5%BA%86/IMG_20260501_213513-%E4%B8%B2%E4%B8%B2%E7%81%AB%E9%94%85.jpg" alt="重庆"
                             onerror="this.src='https://via.placeholder.com/1300x400?text=重庆'">
                         <div class="carousel-content">
                             <span class="carousel-tag"><i class="fas fa-map-marked-alt"></i> 旅行</span>
                             <h2>重庆 · 五一山城漫游记</h2>
                             <p>2026年5月1日至3日，北站抵达、串串火锅开胃、网吧通宵激战、南山山顶烤肉看夜景、跨江大桥吹风、九宫格老火锅收官——三天两夜，山城巴适得板！</p>
-                            <a href="/pages/travel/2026.5.1-%E9%87%8D%E5%BA%86/index.html" class="carousel-btn">
+                            <a href="../pages/travel/2026.5.1-%E9%87%8D%E5%BA%86/index.html" class="carousel-btn">
                                 漫游山城 <i class="fas fa-arrow-right"></i>
                             </a>
                         </div>
                     </div>
                     <!-- 轮播项4 - 贵阳 -->
                     <div class="carousel-slide">
-                        <img src="/media/pages/travel/2026.2.2-贵阳/贵阳北站-1.jpg" alt="贵阳"
+                        <img src="../media/pages/travel/2026.2.2-贵阳/贵阳北站-1.jpg" alt="贵阳"
                             onerror="this.src='https://via.placeholder.com/1300x400?text=贵阳'">
                         <div class="carousel-content">
                             <span class="carousel-tag"><i class="fas fa-map-marked-alt"></i> 旅行</span>
                             <h2>贵阳半日漫游 · 从北站到双子塔</h2>
                             <p>2026年2月2日，中午抵筑，下午黔灵山看猴，民生路吃丝娃娃，夜探甲秀楼、白宫、双子塔——半日贵阳，尽收眼底。</p>
-                            <a href="/pages/travel/2026.2.2-贵阳/index.html" class="carousel-btn">
+                            <a href="../pages/travel/2026.2.2-贵阳/index.html" class="carousel-btn">
                                 漫游贵阳 <i class="fas fa-arrow-right"></i>
                             </a>
                         </div>
                     </div>
                     <!-- 轮播项4 - 雁荡山 -->
                     <div class="carousel-slide">
-                        <img src="/media/pages/travel/2025.8.17-雁荡山/山景1.jpg" alt="雁荡山"
+                        <img src="../media/pages/travel/2025.8.17-雁荡山/山景1.jpg" alt="雁荡山"
                             onerror="this.src='https://via.placeholder.com/1300x400?text=雁荡山'">
                         <div class="carousel-content">
                             <span class="carousel-tag"><i class="fas fa-mountain"></i> 旅行</span>
                             <h2>雁荡山旅游记 - 奇峰异石间的行走</h2>
                             <p>雁荡山的奇峰怪石、飞泉瀑布，每一处都充满了诗意，一步一景，流连忘返。</p>
-                            <a href="/pages/travel/2025.8.17-雁荡山/" class="carousel-btn">
+                            <a href="../pages/travel/2025.8.17-雁荡山/" class="carousel-btn">
                                 探秘雁荡 <i class="fas fa-arrow-right"></i>
                             </a>
                         </div>
@@ -1004,21 +1126,21 @@
                 </div>
 
                 <!-- 轮播箭头 -->
-                <button class="carousel-arrow left" id="carouselPrev">
+                <button class="carousel-arrow left" id="carouselPrev" aria-label="上一张">
                     <i class="fas fa-chevron-left"></i>
                 </button>
-                <button class="carousel-arrow right" id="carouselNext">
+                <button class="carousel-arrow right" id="carouselNext" aria-label="下一张">
                     <i class="fas fa-chevron-right"></i>
                 </button>
 
                 <!-- 轮播指示器 -->
                 <div class="carousel-dots" id="carouselDots">
-                    <span class="carousel-dot active"></span>
-                    <span class="carousel-dot"></span>
-                    <span class="carousel-dot"></span>
-                    <span class="carousel-dot"></span>
-                    <span class="carousel-dot"></span>
-                    <span class="carousel-dot"></span>
+                    <span class="carousel-dot active" role="button" tabindex="0" aria-label="切换到第 1 张"></span>
+                    <span class="carousel-dot" role="button" tabindex="0" aria-label="切换到第 2 张"></span>
+                    <span class="carousel-dot" role="button" tabindex="0" aria-label="切换到第 3 张"></span>
+                    <span class="carousel-dot" role="button" tabindex="0" aria-label="切换到第 4 张"></span>
+                    <span class="carousel-dot" role="button" tabindex="0" aria-label="切换到第 5 张"></span>
+                    <span class="carousel-dot" role="button" tabindex="0" aria-label="切换到第 6 张"></span>
                 </div>
             </div>
         </div>
@@ -1033,32 +1155,32 @@
         </div>
 
         <div class="category-grid">
-            <a href="/pages/devlog/" class="category-card">
+            <a href="../pages/devlog/" class="category-card">
                 <i class="fas fa-code"></i>
                 <h3>开发日志</h3>
                 <p>技术探索与网站搭建记录</p>
             </a>
-            <a href="/pages/travel/" class="category-card">
+            <a href="../pages/travel/" class="category-card">
                 <i class="fas fa-map-marked-alt"></i>
                 <h3>旅游记录</h3>
                 <p>走遍山河，记录美好</p>
             </a>
-            <a href="/pages/study/" class="category-card">
+            <a href="../pages/study/" class="category-card">
                 <i class="fas fa-graduation-cap"></i>
                 <h3>学习</h3>
                 <p>学习资料</p>
             </a>
-            <a href="/pages/diy/" class="category-card">
+            <a href="../pages/diy/" class="category-card">
                 <i class="fas fa-desktop"></i>
                 <h3>装机记录</h3>
                 <p>数码爱好者的装机分享</p>
             </a>
-            <a href="/pages/games/" class="category-card">
+            <a href="../pages/games/" class="category-card">
                 <i class="fas fa-gamepad"></i>
                 <h3>游戏栏</h3>
                 <p>游戏时光，快乐分享</p>
             </a>
-            <a href="/pages/YY往事/" class="category-card">
+            <a href="../pages/YY往事/" class="category-card">
                 <i class="fas fa-history"></i>
                 <h3>YY往事</h3>
                 <p>班级生活与成长感悟</p>
@@ -1072,7 +1194,7 @@
 
         <!-- AI 助手卡片 - 下一行居中，放大 -->
         <div style="display: flex; justify-content: center; margin-bottom: 40px;">
-            <a href="/talk/ai-chat.html" class="category-card"
+            <a href="../talk/ai-chat.html" class="category-card"
                style="margin:0; padding:28px 40px; border:2px solid transparent;
                       background: linear-gradient(white,white) padding-box,
                                   linear-gradient(135deg,#667eea,#764ba2) border-box;">
@@ -1110,10 +1232,10 @@
             </div>
             <div class="video-grid">
                 <!-- 电赛校赛 (2026.4) -->
-                <a href="/pages/devlog/电赛校赛/" class="video-card">
+                <a href="../pages/devlog/电赛校赛/" class="video-card">
                     <div class="video-cover">
                         <span class="video-badge" style="background: #165DFF;">硬件</span>
-                        <img src="/media/pages/devlog/电赛校赛/IMG_20260429_015756-调试现场.jpg" alt="电赛校赛" loading="lazy"
+                        <img src="../media/pages/devlog/电赛校赛/IMG_20260429_015756-调试现场.jpg" alt="电赛校赛" loading="lazy"
                             onerror="this.src='https://via.placeholder.com/400x225?text=电赛'">
                         <span class="video-duration">04.28-30</span>
                     </div>
@@ -1129,10 +1251,10 @@
                     </div>
                 </a>
                 <!-- Gsing战队 (2026.5.29 最新) -->
-                <a href="/pages/devlog/Gsing/" class="video-card">
+                <a href="../pages/devlog/Gsing/" class="video-card">
                     <div class="video-cover">
                         <span class="video-badge" style="background: #165DFF;">开发</span>
-                        <img src="/media/pages/devlog/Gsing/2026-03-20-雷达定位实物图.jpg" alt="Gsing战队" loading="lazy"
+                        <img src="../media/pages/devlog/Gsing/2026-03-20-雷达定位实物图.jpg" alt="Gsing战队" loading="lazy"
                             onerror="this.src='https://via.placeholder.com/400x225?text=Gsing'">
                         <span class="video-duration">05.29</span>
                     </div>
@@ -1148,10 +1270,10 @@
                 </a>
 
                 <!-- happy_run (步道乐跑) -->
-                <a href="/pages/devlog/happy_run/" class="video-card">
+                <a href="../pages/devlog/happy_run/" class="video-card">
                     <div class="video-cover">
                         <span class="video-badge" style="background: #165DFF;">开发</span>
-                        <img src="/media/pages/devlog/happy_run/happy_run.jpg" alt="步道乐跑" loading="lazy"
+                        <img src="../media/pages/devlog/happy_run/happy_run.jpg" alt="步道乐跑" loading="lazy"
                             onerror="this.src='https://via.placeholder.com/400x225?text=happy_run'">
                         <span class="video-duration">教程</span>
                     </div>
@@ -1167,10 +1289,10 @@
                 </a>
 
                 <!-- CQU-coursehelper (2025.12.29) -->
-                <a href="/pages/devlog/CQU-coursehelper/" class="video-card">
+                <a href="../pages/devlog/CQU-coursehelper/" class="video-card">
                     <div class="video-cover">
                         <span class="video-badge" style="background: #165DFF;">开发</span>
-                        <img src="/media/pages/devlog/CQU-coursehelper/CQU-coursehelper.png" alt="CQU课程助手" loading="lazy"
+                        <img src="../media/pages/devlog/CQU-coursehelper/CQU-coursehelper.png" alt="CQU课程助手" loading="lazy"
                             onerror="this.src='https://via.placeholder.com/400x225?text=CourseHelper'">
                         <span class="video-duration">12.29</span>
                     </div>
@@ -1186,10 +1308,10 @@
                 </a>
 
                 <!-- 声控开关灯 (2025.12.31) -->
-                <a href="/pages/devlog/声控开关灯/" class="video-card">
+                <a href="../pages/devlog/声控开关灯/" class="video-card">
                     <div class="video-cover">
                         <span class="video-badge" style="background: #165DFF;">硬件</span>
-                        <img src="/media/pages/devlog/声控开关灯/2025-12-31-声控开关灯.png" alt="声控开关灯" loading="lazy"
+                        <img src="../media/pages/devlog/声控开关灯/2025-12-31-声控开关灯.png" alt="声控开关灯" loading="lazy"
                             onerror="this.src='https://via.placeholder.com/400x225?text=声控开关灯'">
                         <span class="video-duration">12.31</span>
                     </div>
@@ -1205,10 +1327,10 @@
                 </a>
 
                 <!-- CRTC机器人比赛 (2025.11.9) -->
-                <a href="/pages/devlog/CQU-CRTC机器人比赛/" class="video-card">
+                <a href="../pages/devlog/CQU-CRTC机器人比赛/" class="video-card">
                     <div class="video-cover">
                         <span class="video-badge" style="background: #165DFF;">硬件</span>
-                        <img src="/media/pages/devlog/CQU-CRTC机器人比赛/2025-10-16-车3.0-不会用MG995.jpg" alt="CRTC机器人"
+                        <img src="../media/pages/devlog/CQU-CRTC机器人比赛/2025-10-16-车3.0-不会用MG995.jpg" alt="CRTC机器人"
                             loading="lazy" onerror="this.src='https://via.placeholder.com/400x225?text=CRTC'">
                         <span class="video-duration">11.09</span>
                     </div>
@@ -1224,10 +1346,10 @@
                 </a>
 
                 <!-- personal-blog (个人博客) -->
-                <a href="/pages/devlog/personal-blog/" class="video-card">
+                <a href="../pages/devlog/personal-blog/" class="video-card">
                     <div class="video-cover">
                         <span class="video-badge" style="background: #165DFF;">开发</span>
-                        <img src="/media/pages/devlog/personal-blog/2025-09-24-第二版网站封面.jpg" alt="个人博客" loading="lazy"
+                        <img src="../media/pages/devlog/personal-blog/2025-09-24-第二版网站封面.jpg" alt="个人博客" loading="lazy"
                             onerror="this.src='https://via.placeholder.com/400x225?text=博客'">
                         <span class="video-duration">v1.0</span>
                     </div>
@@ -1252,10 +1374,10 @@
             </div>
             <div class="video-grid">
                 <!-- 重庆武隆 (2026.5.16) -->
-                <a href="/pages/travel/2026.5.16-%E9%87%8D%E5%BA%86%E6%AD%A6%E9%9A%86/index.html" class="video-card">
+                <a href="../pages/travel/2026.5.16-%E9%87%8D%E5%BA%86%E6%AD%A6%E9%9A%86/index.html" class="video-card">
                     <div class="video-cover">
                         <span class="video-badge" style="background: #e67e22;">旅行</span>
-                        <img src="/media/pages/travel/2026.5.16-%E9%87%8D%E5%BA%86%E6%AD%A6%E9%9A%86/IMG_20260515_164759-%E7%BB%BF%E7%9A%AE%E7%81%AB%E8%BD%A6.jpg" alt="重庆武隆" loading="lazy"
+                        <img src="../media/pages/travel/2026.5.16-%E9%87%8D%E5%BA%86%E6%AD%A6%E9%9A%86/IMG_20260515_164759-%E7%BB%BF%E7%9A%AE%E7%81%AB%E8%BD%A6.jpg" alt="重庆武隆" loading="lazy"
                             onerror="this.src='https://via.placeholder.com/400x225?text=武隆'">
                         <span class="video-duration">05.15-16</span>
                     </div>
@@ -1271,10 +1393,10 @@
                     </div>
                 </a>
                 <!-- 重庆旅游 (2026.5.1) -->
-                <a href="/pages/travel/2026.5.1-%E9%87%8D%E5%BA%86/index.html" class="video-card">
+                <a href="../pages/travel/2026.5.1-%E9%87%8D%E5%BA%86/index.html" class="video-card">
                     <div class="video-cover">
                         <span class="video-badge" style="background: #e67e22;">旅行</span>
-                        <img src="/media/pages/travel/2026.5.1-%E9%87%8D%E5%BA%86/IMG_20260501_213513-%E4%B8%B2%E4%B8%B2%E7%81%AB%E9%94%85.jpg" alt="重庆旅游" loading="lazy"
+                        <img src="../media/pages/travel/2026.5.1-%E9%87%8D%E5%BA%86/IMG_20260501_213513-%E4%B8%B2%E4%B8%B2%E7%81%AB%E9%94%85.jpg" alt="重庆旅游" loading="lazy"
                             onerror="this.src='https://via.placeholder.com/400x225?text=重庆'">
                         <span class="video-duration">05.01-03</span>
                     </div>
@@ -1290,10 +1412,10 @@
                     </div>
                 </a>
                 <!-- 贵阳旅游 (2026.2.2) -->
-                <a href="/pages/travel/2026.2.2-贵阳/index.html" class="video-card">
+                <a href="../pages/travel/2026.2.2-贵阳/index.html" class="video-card">
                     <div class="video-cover">
                         <span class="video-badge" style="background: #e67e22;">旅行</span>
-                        <img src="/media/pages/travel/2026.2.2-贵阳/贵阳北站-1.jpg" alt="贵阳旅游" loading="lazy"
+                        <img src="../media/pages/travel/2026.2.2-贵阳/贵阳北站-1.jpg" alt="贵阳旅游" loading="lazy"
                             onerror="this.src='https://via.placeholder.com/400x225?text=贵阳'">
                         <span class="video-duration">02.02</span>
                     </div>
@@ -1310,10 +1432,10 @@
                 </a>
 
                 <!-- 雁荡山 (2025.8.17) -->
-                <a href="/pages/travel/2025.8.17-雁荡山/" class="video-card">
+                <a href="../pages/travel/2025.8.17-雁荡山/" class="video-card">
                     <div class="video-cover">
                         <span class="video-badge" style="background: #e67e22;">旅行</span>
-                        <img src="/media/pages/travel/2025.8.17-雁荡山/山洞里的地瓜.jpg" alt="雁荡山" loading="lazy">
+                        <img src="../media/pages/travel/2025.8.17-雁荡山/山洞里的地瓜.jpg" alt="雁荡山" loading="lazy">
                         <span class="video-duration">08.17</span>
                     </div>
                     <div class="video-info">
@@ -1329,10 +1451,10 @@
                 </a>
 
                 <!-- 百丈漈 (2025.7.24) -->
-                <a href="/pages/travel/2025.7.24-百丈漈/" class="video-card">
+                <a href="../pages/travel/2025.7.24-百丈漈/" class="video-card">
                     <div class="video-cover">
                         <span class="video-badge" style="background: #e67e22;">旅行</span>
-                        <img src="/media/pages/travel/2025.7.24-百丈漈/在百丈一漈的合影.jpg" alt="百丈漈" loading="lazy">
+                        <img src="../media/pages/travel/2025.7.24-百丈漈/在百丈一漈的合影.jpg" alt="百丈漈" loading="lazy">
                         <span class="video-duration">07.24</span>
                     </div>
                     <div class="video-info">
@@ -1348,10 +1470,10 @@
                 </a>
 
                 <!-- 上交面试记 (2025.6.16) -->
-                <a href="/pages/travel/2025.6.16-上海交通大学面试记-3days/" class="video-card">
+                <a href="../pages/travel/2025.6.16-上海交通大学面试记-3days/" class="video-card">
                     <div class="video-cover">
                         <span class="video-badge" style="background: #3498db;">学习</span>
-                        <img src="/media/pages/travel/2025.6.16-上海交通大学面试记-3days/上海交通大学欢迎您.jpg" alt="上交面试" loading="lazy">
+                        <img src="../media/pages/travel/2025.6.16-上海交通大学面试记-3days/上海交通大学欢迎您.jpg" alt="上交面试" loading="lazy">
                         <span class="video-duration">06.16</span>
                     </div>
                     <div class="video-info">
@@ -1367,10 +1489,10 @@
                 </a>
 
                 <!-- 南京大学强基 (2025.6.15) -->
-                <a href="/pages/travel/2025.6.15-南京大学强基记-2days/" class="video-card">
+                <a href="../pages/travel/2025.6.15-南京大学强基记-2days/" class="video-card">
                     <div class="video-cover">
                         <span class="video-badge" style="background: #3498db;">学习</span>
-                        <img src="/media/pages/travel/2025.6.15-南京大学强基记-2days/南京大学1.jpg" alt="南京大学" loading="lazy"
+                        <img src="../media/pages/travel/2025.6.15-南京大学强基记-2days/南京大学1.jpg" alt="南京大学" loading="lazy"
                             onerror="this.src='https://via.placeholder.com/400x225?text=南大'">
                         <span class="video-duration">06.15</span>
                     </div>
@@ -1387,10 +1509,10 @@
                 </a>
 
                 <!-- 杭州支持浙江队 (2025.6.14) -->
-                <a href="/pages/travel/2025.6.14-杭州支持浙江队/" class="video-card">
+                <a href="../pages/travel/2025.6.14-杭州支持浙江队/" class="video-card">
                     <div class="video-cover">
                         <span class="video-badge" style="background: #e67e22;">体育</span>
-                        <img src="/media/pages/travel/2025.6.14-杭州支持浙江队/浙江队2-2上海上港.jpg" alt="浙江队" loading="lazy"
+                        <img src="../media/pages/travel/2025.6.14-杭州支持浙江队/浙江队2-2上海上港.jpg" alt="浙江队" loading="lazy"
                             onerror="this.src='https://via.placeholder.com/400x225?text=浙江队'">
                         <span class="video-duration">06.14</span>
                     </div>
@@ -1406,10 +1528,10 @@
                 </a>
 
                 <!-- 上海旅游 (2024.7.28) -->
-                <a href="/pages/travel/2024.7.28-上海旅游-3days/" class="video-card">
+                <a href="../pages/travel/2024.7.28-上海旅游-3days/" class="video-card">
                     <div class="video-cover">
                         <span class="video-badge" style="background: #e67e22;">旅行</span>
-                        <img src="/media/pages/travel/2024.7.28-上海旅游-3days/外滩.jpg" alt="上海旅游" loading="lazy"
+                        <img src="../media/pages/travel/2024.7.28-上海旅游-3days/外滩.jpg" alt="上海旅游" loading="lazy"
                             onerror="this.src='https://via.placeholder.com/400x225?text=上海'">
                         <span class="video-duration">07.28-30</span>
                     </div>
@@ -1435,7 +1557,7 @@
             </div>
             <div class="video-grid">
                 <!-- 数据结构与算法 -->
-                <a href="/pages/study/cs/main.html" class="video-card">
+                <a href="../pages/study/cs/main.html" class="video-card">
                     <div class="video-cover">
                         <span class="video-badge" style="background: #4f46e5;">学习</span>
                         <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 225'%3E%3Crect width='400' height='225' fill='%234f46e5'/%3E%3Ctext x='50%25' y='50%25' dominant-anchor='middle' dy='.3em' fill='%23fff' font-size='28' font-weight='bold'%3E数据结构%3C/text%3E%3C/svg%3E"
@@ -1453,7 +1575,7 @@
                     </div>
                 </a>
                 <!-- 思想道德与法治 -->
-                <a href="/pages/study/思法/" class="video-card">
+                <a href="../pages/study/思法/" class="video-card">
                     <div class="video-cover">
                         <span class="video-badge" style="background: #dc2626;">学习</span>
                         <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 225'%3E%3Crect width='400' height='225' fill='%23dc2626'/%3E%3Ctext x='50%25' y='50%25' dominant-anchor='middle' dy='.3em' fill='%23fff' font-size='28' font-weight='bold'%3E思法%3C/text%3E%3C/svg%3E"
@@ -1471,7 +1593,7 @@
                     </div>
                 </a>
                 <!-- 高等数学II-2 -->
-                <a href="/pages/study/math/main.html" class="video-card">
+                <a href="../pages/study/math/main.html" class="video-card">
                     <div class="video-cover">
                         <span class="video-badge" style="background: #3498db;">学习</span>
                         <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 225'%3E%3Crect width='400' height='225' fill='%233498db'/%3E%3Ctext x='50%25' y='50%25' dominant-anchor='middle' dy='.3em' fill='%23fff' font-size='28' font-weight='bold'%3E高数%3C/text%3E%3C/svg%3E"
@@ -1489,7 +1611,7 @@
                     </div>
                 </a>
                 <!-- 大学物理 -->
-                <a href="/pages/study/PHYS/main.html" class="video-card">
+                <a href="../pages/study/PHYS/main.html" class="video-card">
                     <div class="video-cover">
                         <span class="video-badge" style="background: #8b5e3c;">学习</span>
                         <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 225'%3E%3Crect width='400' height='225' fill='%238b5e3c'/%3E%3Ctext x='50%25' y='50%25' dominant-anchor='middle' dy='.3em' fill='%23fff' font-size='28' font-weight='bold'%3E大学物理%3C/text%3E%3C/svg%3E"
@@ -1517,10 +1639,10 @@
             </div>
             <div class="video-grid">
                 <!-- 装机记录 (长期) -->
-                <a href="/pages/diy/" class="video-card">
+                <a href="../pages/diy/" class="video-card">
                     <div class="video-cover">
                         <span class="video-badge" style="background: #e74c3c;">数码</span>
-                        <img src="/media/pages/diy/RTX2060裸机.jpg" alt="装机记录" loading="lazy">
+                        <img src="../media/pages/diy/RTX2060裸机.jpg" alt="装机记录" loading="lazy">
                         <span class="video-duration">长期</span>
                     </div>
                     <div class="video-info">
@@ -1545,10 +1667,10 @@
             </div>
             <div class="video-grid">
                 <!-- 我的世界重建计划 (2026.2.14-15) -->
-                <a href="/pages/games/mc/index.html" class="video-card">
+                <a href="../pages/games/mc/index.html" class="video-card">
                     <div class="video-cover">
                         <span class="video-badge" style="background: #3b8526;">游戏栏</span>
-                        <img src="/media/pages/games/mc/2026.2.15.jpg" alt="我的世界重建计划" loading="lazy"
+                        <img src="../media/pages/games/mc/2026.2.15.jpg" alt="我的世界重建计划" loading="lazy"
                             onerror="this.src='https://via.placeholder.com/400x225?text=MC'">
                         <span class="video-duration">02.14-15</span>
                     </div>
@@ -1574,10 +1696,10 @@
             <div class="video-grid">
 
                 <!-- 觉醒年代 · 百团大战 -->
-                <a href="/pages/YY往事/觉醒年代/" class="video-card">
+                <a href="../pages/YY往事/觉醒年代/" class="video-card">
                     <div class="video-cover">
                         <span class="video-badge" style="background: #8b0000;">YY往事</span>
-                        <img src="/media/pages/YY往事/觉醒年代/cover.jpg" alt="觉醒年代" loading="lazy"
+                        <img src="../media/pages/YY往事/觉醒年代/cover.jpg" alt="觉醒年代" loading="lazy"
                             onerror="this.style.background='linear-gradient(135deg, #8b0000, #ff4500)'; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 400 225\'%3E%3Crect width=\'400\' height=\'225\' fill=\'%238b0000\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' dominant-anchor=\'middle\' dy=\'.3em\' fill=\'%23ffd700\' font-size=\'24\' font-weight=\'bold\'%3E觉醒年代%3C/text%3E%3C/svg%3E'">
                         <span class="video-duration">百团大战</span>
                     </div>
@@ -1594,10 +1716,10 @@
                 </a>
 
                 <!-- EDG夺冠 -->
-                <a href="/pages/YY往事/EDG夺冠/" class="video-card">
+                <a href="../pages/YY往事/EDG夺冠/" class="video-card">
                     <div class="video-cover">
                         <span class="video-badge" style="background: #e10600;">YY往事</span>
-                        <img src="/media/pages/YY往事/EDG夺冠/kskbl.jpg" alt="EDG夺冠" loading="lazy"
+                        <img src="../media/pages/YY往事/EDG夺冠/kskbl.jpg" alt="EDG夺冠" loading="lazy"
                             onerror="this.style.background='linear-gradient(135deg, #e10600, #1a1a1a)'; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 400 225\'%3E%3Crect width=\'400\' height=\'225\' fill=\'%231a1a1a\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' dominant-anchor=\'middle\' dy=\'.3em\' fill=\'%23ffd700\' font-size=\'24\' font-weight=\'bold\'%3EEDG 夺冠%3C/text%3E%3C/svg%3E'">
                         <span class="video-duration">🏆 冠军</span>
                     </div>
@@ -1614,10 +1736,10 @@
                 </a>
 
                 <!-- 机房往事 -->
-                <a href="/pages/YY往事/机房往事/" class="video-card">
+                <a href="../pages/YY往事/机房往事/" class="video-card">
                     <div class="video-cover">
                         <span class="video-badge" style="background: #2d6a4f;">YY往事</span>
-                        <img src="/media/pages/YY往事/机房往事/74404.jpg" alt="机房往事" loading="lazy"
+                        <img src="../media/pages/YY往事/机房往事/74404.jpg" alt="机房往事" loading="lazy"
                             onerror="this.style.background='linear-gradient(135deg, #1a1a2e, #16213e)'; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 400 225\'%3E%3Crect width=\'400\' height=\'225\' fill=\'%231a1a2e\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' dominant-anchor=\'middle\' dy=\'.3em\' fill=\'%234ecdc4\' font-size=\'24\' font-weight=\'bold\'%3E机房往事%3C/text%3E%3C/svg%3E'">
                         <span class="video-duration">🎮 游戏</span>
                     </div>
@@ -1634,10 +1756,10 @@
                 </a>
 
                 <!-- 返校宣讲 (2026.2.11-13) -->
-                <a href="/pages/YY往事/返校宣讲/index.html" class="video-card">
+                <a href="../pages/YY往事/返校宣讲/index.html" class="video-card">
                     <div class="video-cover">
                         <span class="video-badge" style="background: #9b59b6;">YY往事</span>
-                        <img src="/media/pages/YY往事/返校宣讲/录取榜.jpg" alt="重庆大学返校宣讲" loading="lazy">
+                        <img src="../media/pages/YY往事/返校宣讲/录取榜.jpg" alt="重庆大学返校宣讲" loading="lazy">
                         <span class="video-duration">02.11-13</span>
                     </div>
                     <div class="video-info">
@@ -1689,7 +1811,7 @@
                         <li><a href="#categories"><i class="fas fa-th-list"></i> 内容分类</a></li>
                         <li><a href="#blog"><i class="fas fa-blog"></i> 最新动态</a></li>
                         <li><a href="../talk/comment.html"><i class="fas fa-comment-dots"></i> 留言板</a></li>
-                        <li><a href="/resume/index.html"><i class="fas fa-id-card"></i> 个人简介</a></li>
+                        <li><a href="../resume/index.html"><i class="fas fa-id-card"></i> 个人简介</a></li>
                         <li><a href="https://github.com/hyper152/personal-blog" target="_blank"><i
                                     class="fab fa-github"></i> 开源代码</a></li>
                     </ul>
@@ -1698,12 +1820,12 @@
                 <div class="footer-col">
                     <h3>内容分类</h3>
                     <ul>
-                        <li><a href="/pages/travel/"><i class="fas fa-map"></i> 旅游记录</a></li>
-                        <li><a href="/pages/diy/"><i class="fas fa-laptop"></i> 装机记录</a></li>
-                        <li><a href="/pages/YY往事/"><i class="fas fa-history"></i> YY往事</a></li>
-                        <li><a href="/pages/study/"><i class="fas fa-graduation-cap"></i> 学习</a></li>
-                        <li><a href="/pages/devlog/"><i class="fas fa-code"></i> 开发日志</a></li>
-                        <li><a href="/pages/games/"><i class="fas fa-gamepad"></i> 游戏栏</a></li>
+                        <li><a href="../pages/travel/"><i class="fas fa-map"></i> 旅游记录</a></li>
+                        <li><a href="../pages/diy/"><i class="fas fa-laptop"></i> 装机记录</a></li>
+                        <li><a href="../pages/YY往事/"><i class="fas fa-history"></i> YY往事</a></li>
+                        <li><a href="../pages/study/"><i class="fas fa-graduation-cap"></i> 学习</a></li>
+                        <li><a href="../pages/devlog/"><i class="fas fa-code"></i> 开发日志</a></li>
+                        <li><a href="../pages/games/"><i class="fas fa-gamepad"></i> 游戏栏</a></li>
                     </ul>
                 </div>
 
@@ -1730,11 +1852,11 @@
     </footer>
 
     <!-- 回到顶部按钮 -->
-    <button class="back-to-top" id="backToTopBtn">
+    <button class="back-to-top" id="backToTopBtn" aria-label="返回页面顶部">
         <i class="fas fa-arrow-up"></i>
     </button>
 
-    <script src="/static/js/auth.js"></script>
+    <script src="../static/js/auth.js"></script>
     <script>
         // ===== 轮播功能 =====
         const track = document.getElementById('carouselTrack');
@@ -1755,6 +1877,7 @@
 
             dots.forEach((dot, i) => {
                 dot.classList.toggle('active', i === index);
+                dot.setAttribute('aria-current', i === index ? 'true' : 'false');
             });
 
             currentIndex = index;
@@ -1789,10 +1912,18 @@
         });
 
         dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
+            const activateDot = () => {
                 stopAutoPlay();
                 updateCarousel(index);
                 startAutoPlay();
+            };
+
+            dot.addEventListener('click', activateDot);
+            dot.addEventListener('keydown', event => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    activateDot();
+                }
             });
         });
 
@@ -1844,7 +1975,7 @@
         // ===== 加载访问计数 =====
         async function loadVisitCount() {
             try {
-                const response = await fetch('/visit-count');
+                const response = await fetch('../visit-count');
                 const data = await response.json();
 
                 let totalVisits = 0;

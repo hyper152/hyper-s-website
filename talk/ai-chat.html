@@ -477,7 +477,7 @@
                     <i class="fas fa-user"></i>
                     <span>简介</span>
                 </a>
-                <a href="/" class="nav-btn">
+                <a href="../" class="nav-btn">
                     <i class="fas fa-home"></i>
                     <span>主页</span>
                 </a>
@@ -615,7 +615,7 @@
                 user: userName || '游客'
             };
             
-            fetch('/api/ollama/save-ai-question', {
+            fetch('../api/ollama/save-ai-question', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
@@ -671,7 +671,7 @@
 
         async function checkModelAvailability() {
             try {
-                const res = await fetch('/api/ollama/models');
+                const res = await fetch('../api/ollama/models');
                 const data = await res.json();
 
                 if (data.models && data.models.length > 0) {
@@ -742,7 +742,7 @@
             contentDiv.appendChild(typingDiv);
 
             try {
-                const res = await fetch('/api/ollama/chat', {
+                const res = await fetch('../api/ollama/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({

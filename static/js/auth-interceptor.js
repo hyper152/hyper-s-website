@@ -2,14 +2,16 @@
 // 登录状态拦截器，自动处理401未授权
 
 (function() {
+    const siteRoot = new URL('../../', document.currentScript.src);
+
     // 保存原始的fetch
     const originalFetch = window.fetch;
     
     // 需要拦截的API路径
     const PROTECTED_PATHS = [
-        '/api/talk/add',
-        '/api/talk/delete',
-        '/api/logout'
+        'api/talk/add',
+        'api/talk/delete',
+        'api/logout'
     ];
     
     // 重写fetch
@@ -41,7 +43,9 @@
                     // 保存当前页面，登录后跳回
                     const currentPath = window.location.pathname;
                     if (!currentPath.includes('/login/')) {
-                        window.location.href = `/login/index.html?redirect=${encodeURIComponent(currentPath)}`;
+                        const loginUrl = new URL('login/index.html', siteRoot);
+                        loginUrl.searchParams.set('redirect', currentPath);
+                        window.location.href = loginUrl;
                     }
                 }
                 return response;

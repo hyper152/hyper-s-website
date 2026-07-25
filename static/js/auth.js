@@ -2,6 +2,13 @@
 // 统一的登录状态管理
 
 const Auth = {
+    // 以当前脚本位置为基准定位站点根目录，避免依赖以 / 开头的路径
+    siteRoot: new URL('../../', document.currentScript.src),
+
+    resolve(path) {
+        return new URL(path, this.siteRoot);
+    },
+
     // 检查登录状态
     async checkLoginStatus() {
         try {
@@ -10,7 +17,7 @@ const Auth = {
             // 从localStorage获取session_id
             const sessionId = this.getLocalSessionId();
             
-            const res = await fetch('/api/check-login', {
+            const res = await fetch(this.resolve('api/check-login'), {
                 method: 'POST',
                 headers: { 
                     'Content-Type': 'application/json',
@@ -62,7 +69,7 @@ const Auth = {
             // 从localStorage获取session_id
             const sessionId = this.getLocalSessionId();
             
-            const res = await fetch('/api/logout', {
+            const res = await fetch(this.resolve('api/logout'), {
                 method: 'POST',
                 headers: { 
                     'Content-Type': 'application/json',
