@@ -367,8 +367,6 @@ def query_single_ip(ip, records, date_desc=""):
         if not is_logged_in_user(user):
             user = "游客"
         print(f"   [{r.get('time', '')}] {user} | {r.get('method', '')} {r.get('path', '')} | 状态: {r.get('status', 200)}")
-        if r.get('user_agent'):
-            print(f"      UA: {r.get('user_agent')[:80]}...")
 
     print("\n" + "=" * 80)
 
