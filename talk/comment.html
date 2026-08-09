@@ -484,10 +484,10 @@
                     <i class="fas fa-chevron-down"></i>
                 </button>
                 <div class="dropdown-menu" id="dropdownMenu">
-                    <a href="../login/index.html" class="dropdown-item" id="loginItem">
+                    <a href="../pages/login/index.html" class="dropdown-item" id="loginItem">
                         <i class="fas fa-sign-in-alt"></i> 登录
                     </a>
-                    <a href="../login/register.html" class="dropdown-item" id="registerItem">
+                    <a href="../pages/login/register.html" class="dropdown-item" id="registerItem">
                         <i class="fas fa-user-plus"></i> 注册
                     </a>
                     <a href="javascript:void(0)" class="dropdown-item" id="logoutItem" style="display:none;">
@@ -498,7 +498,7 @@
         </div>
 
         <div class="breadcrumb">
-            <a href="../home/index.html"><i class="fas fa-home"></i> 首页</a>
+            <a href="../pages/home/index.html"><i class="fas fa-home"></i> 首页</a>
             <span>/</span>
             <span>留言板</span>
         </div>
@@ -509,7 +509,7 @@
         </div>
 
         <div class="action-buttons">
-            <a href="../home/index.html" class="action-btn secondary">
+            <a href="../pages/home/index.html" class="action-btn secondary">
                 <i class="fas fa-arrow-left"></i> 返回首页
             </a>
         </div>
@@ -535,7 +535,7 @@
                     </button>
                     <div class="login-tip" id="loginTip" style="background:linear-gradient(135deg,#fff3cd,#ffe69b);color:#856404;border-left:4px solid #ff6b6b;">
                         <i class="fas fa-info-circle"></i>
-                        <span>当前为游客模式，可以自定义昵称留言，建议<a href="../login/index.html" style="color:var(--primary-dark);">登录</a>后使用</span>
+                        <span>当前为游客模式，可以自定义昵称留言，建议<a href="../pages/login/index.html" style="color:var(--primary-dark);">登录</a>后使用</span>
                     </div>
                 </form>
             </div>
@@ -689,7 +689,7 @@
                     loginTip.style.background = 'linear-gradient(135deg,#fff3cd,#ffe69b)';
                     loginTip.style.color = '#856404';
                     loginTip.style.borderLeft = '4px solid #ff6b6b';
-                    loginTip.innerHTML = '<i class="fas fa-info-circle"></i><span>当前为游客模式，可以自定义昵称留言，建议<a href="../login/index.html" style="color:var(--primary-dark);">登录</a>后使用</span>';
+                    loginTip.innerHTML = '<i class="fas fa-info-circle"></i><span>当前为游客模式，可以自定义昵称留言，建议<a href="../pages/login/index.html" style="color:var(--primary-dark);">登录</a>后使用</span>';
                 }
                 if (userBtnText) userBtnText.textContent = '未登录';
                 if (loginItem) loginItem.style.display = 'flex';

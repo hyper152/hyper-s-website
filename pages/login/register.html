@@ -334,7 +334,7 @@
                 sendCodeBtn.disabled = true;
                 sendCodeBtn.textContent = '发送中...';
                 
-                const res = await fetch('../api/register/send-code', {
+                const res = await fetch('../../api/register/send-code', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email })
@@ -439,7 +439,7 @@
             registerBtn.textContent = '注册中...';
 
             try {
-                const res = await fetch('../api/register', {
+                const res = await fetch('../../api/register', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({

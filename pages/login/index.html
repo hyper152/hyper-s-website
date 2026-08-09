@@ -230,8 +230,8 @@
         <!-- 密码登录表单 -->
         <form id="passwordLoginForm">
             <div class="form-group">
-                <label for="email">邮箱</label>
-                <input type="email" id="email" class="form-control" placeholder="请输入注册邮箱" required>
+                <label for="email">邮箱或用户名</label>
+                <input type="text" id="email" class="form-control" placeholder="请输入注册邮箱或用户名" required>
             </div>
             <div class="form-group">
                 <label for="password">密码</label>
@@ -261,7 +261,7 @@
         </div>
     </div>
 
-    <script src="../static/js/auth.js"></script>
+    <script src="../../static/js/auth.js"></script>
     <script>
         // 获取元素
         const tabs = document.querySelectorAll('.tab-item');
@@ -308,7 +308,7 @@
                 sendCodeBtn.disabled = true;
                 sendCodeBtn.textContent = '发送中...';
                 
-                const res = await fetch('../api/login/send-code', {
+                const res = await fetch('../../api/login/send-code', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email })
@@ -358,7 +358,7 @@
             }
 
             try {
-                const res = await fetch('../api/login/password', {
+                const res = await fetch('../../api/login/password', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, password })
@@ -367,31 +367,17 @@
                 const data = await res.json();
 
                 if (data.code === 200) {
-                    // 保存到localStorage
-                    Auth.saveLoginInfo(data.data.session_id, {
-                        username: data.data.username,
-                        email: data.data.email
-                    });
+                    if (data.data.username.toLowerCase() === 'admin') {
+                        Auth.clearLoginInfo();
+                    } else {
+                        Auth.saveLoginInfo(data.data.session_id, {
+                            username: data.data.username,
+                            email: data.data.email
+                        });
+                    }
                     
-                    showMessage('登录成功！', 'success');
-                    
-                    console.log('登录成功，session_id:', data.data.session_id);
-                    console.log('当前cookies:', document.cookie);
-                    
-                    // 显示手动跳转按钮
-                    const manualBtn = document.createElement('button');
-                    manualBtn.textContent = '点击进入首页';
-                    manualBtn.className = 'manual-btn';
-                    manualBtn.onclick = () => {
-                        const redirect = new URLSearchParams(window.location.search).get('redirect') || '../home/index.html';
-                        window.location.href = redirect;
-                    };
-                    
-                    // 移除之前的按钮（如果有）
-                    const oldBtn = document.querySelector('.manual-btn');
-                    if (oldBtn) oldBtn.remove();
-                    
-                    document.querySelector('.login-container').appendChild(manualBtn);
+                    showMessage('登录成功，正在跳转…', 'success');
+                    window.location.replace(getRedirectTarget());
                 } else {
                     showMessage(data.msg, 'error');
                 }
@@ -414,7 +400,7 @@
             }
 
             try {
-                const res = await fetch('../api/login/code', {
+                const res = await fetch('../../api/login/code', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, code })
@@ -428,25 +414,8 @@
                         email: data.data.email
                     });
                     
-                    showMessage('登录成功！', 'success');
-                    
-                    console.log('登录成功，session_id:', data.data.session_id);
-                    console.log('当前cookies:', document.cookie);
-                    
-                    // 显示手动跳转按钮
-                    const manualBtn = document.createElement('button');
-                    manualBtn.textContent = '点击进入首页';
-                    manualBtn.className = 'manual-btn';
-                    manualBtn.onclick = () => {
-                        const redirect = new URLSearchParams(window.location.search).get('redirect') || '../home/index.html';
-                        window.location.href = redirect;
-                    };
-                    
-                    // 移除之前的按钮（如果有）
-                    const oldBtn = document.querySelector('.manual-btn');
-                    if (oldBtn) oldBtn.remove();
-                    
-                    document.querySelector('.login-container').appendChild(manualBtn);
+                    showMessage('登录成功，正在跳转…', 'success');
+                    window.location.replace(getRedirectTarget());
                 } else {
                     showMessage(data.msg, 'error');
                 }
@@ -463,11 +432,43 @@
             msg.style.display = 'block';
         }
 
-        // 检查是否有重定向参数
+        function getRedirectTarget() {
+            const fallback = new URL('../home/index.html', window.location.href);
+            const requested = new URLSearchParams(window.location.search).get('redirect');
+            if (!requested) return fallback.href;
+            const target = new URL(requested, window.location.origin);
+            return target.origin === window.location.origin ? target.href : fallback.href;
+        }
+
+        async function redirectIfAuthenticated() {
+            const sessionId = Auth.getLocalSessionId();
+            try {
+                const response = await fetch(Auth.resolve('api/check-login'), {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': sessionId ? `Session ${sessionId}` : ''
+                    },
+                    credentials: 'include'
+                });
+                const data = response.ok ? await response.json() : {};
+                if (data.isLogin) {
+                    showMessage('已登录，正在跳转…', 'success');
+                    window.location.replace(getRedirectTarget());
+                } else if (sessionId) {
+                    Auth.clearLoginInfo();
+                }
+            } catch (error) {
+                console.error('检查登录状态失败:', error);
+            }
+        }
+
+        // 检查是否有重定向参数；已有有效会话时无需重复登录
         const params = new URLSearchParams(window.location.search);
         if (params.get('redirect')) {
             showMessage('请先登录后继续操作', 'info');
         }
+        redirectIfAuthenticated();
     </script>
 </body>
 </html>

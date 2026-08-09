@@ -43,7 +43,7 @@
                     // 保存当前页面，登录后跳回
                     const currentPath = window.location.pathname;
                     if (!currentPath.includes('/login/')) {
-                        const loginUrl = new URL('login/index.html', siteRoot);
+                        const loginUrl = new URL('pages/login/index.html', siteRoot);
                         loginUrl.searchParams.set('redirect', currentPath);
                         window.location.href = loginUrl;
                     }

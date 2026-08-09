@@ -68,18 +68,18 @@ python src/analyze_visitor.py 2026.4.27            # 按日期查询访问记录
 ├── main.py                  # HTTP 服务主入口
 ├── main-proxy.py            # PROXY Protocol 入口
 ├── developing.py            # 维护模式服务
-├── home/                    # 首页
-├── login/                   # 登录/注册
-├── resume/                  # 个人简历
 ├── media/                   # 媒体资源文件（已 gitignore）
 ├── pages/                   # 内容页面
+│   ├── HappyNewYear/        # 新年特别页面
 │   ├── devlog/              # 开发日志
 │   ├── diy/                 # 装机记录
 │   ├── games/               # 游戏栏
+│   ├── home/                # 首页
+│   ├── login/               # 登录/注册
+│   ├── resume/              # 个人简历
 │   ├── travel/              # 旅行记录
 │   └── YY往事/              # 校园回忆
 ├── talk/                    # 留言板 & AI 聊天
-├── HappyNewYear/            # 新年特别页面
 ├── src/                     # 后端 Python 模块
 ├── static/                  # 静态资源
 ├── data/                    # 数据存储（已 gitignore）
@@ -88,7 +88,7 @@ python src/analyze_visitor.py 2026.4.27            # 按日期查询访问记录
 
 ## 相关链接
 
-- [个人网站](http://0o0hyper0o0.cyou/home/)
+- [个人网站](http://0o0hyper0o0.cyou/pages/home/)
 - [GitHub](https://github.com/hyper152/hyper-s-website)
 
 ## 许可

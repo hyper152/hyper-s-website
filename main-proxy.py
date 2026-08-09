@@ -113,9 +113,9 @@ class Config:
     
     # 允许的路径白名单（防止扫描）
     ALLOWED_PATHS = [
-        '/', '/home/', '/talk', '/login/', '/pages/',
+        '/', '/talk', '/pages/',
         '/static/', '/api/', '/visit-count', '/banner/',
-        '/favicon.ico', '/HappyNewYear/', '/dwcc/'
+        '/favicon.ico', '/dwcc/'
     ]
 
 # ===================== 日志初始化 =====================
@@ -299,13 +299,13 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
             # 安全检查：防止路径遍历
             if not safe_path.startswith(server_root):
                 self._log_access("🚫 非法路径", path, "403", "0.0")
-                self.send_error(403, "禁止访问：非法路径")
+                self.send_error(403, "Forbidden")
                 return None
                 
             return safe_path
         except Exception as e:
             logger.error(f"路径校验异常：{e}")
-            self.send_error(400, "路径格式错误")
+            self.send_error(400, "Bad Request")
             return None
 
     def is_protected_path(self, path):
@@ -548,7 +548,7 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
         # 检查是否是受保护的路径
         if self.is_protected_path(path):
             logger.warning(f"阻止访问受保护路径: {path}")
-            self.send_error(403, "禁止访问")
+            self.send_error(403, "Forbidden")
             return
 
         # 处理/talk路径，返回静态页面
@@ -569,7 +569,7 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
         # 首页重定向
         if path in ('', '/'):
             self.send_response(301)
-            self.send_header('Location', '/home/')
+            self.send_header('Location', '/pages/home/')
             self.end_headers()
             return
 
@@ -592,7 +592,7 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
             
         if self.is_protected_path(self.path):
             logger.warning(f"阻止POST访问受保护路径: {self.path}")
-            self.send_error(403, "禁止访问")
+            self.send_error(403, "Forbidden")
             return
             
         local = self.translate_path(self.path)
@@ -617,7 +617,7 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
             
         if self.is_protected_path(self.path):
             logger.warning(f"阻止DELETE访问受保护路径: {self.path}")
-            self.send_error(403, "禁止访问")
+            self.send_error(403, "Forbidden")
             return
             
         local = self.translate_path(self.path)
@@ -640,10 +640,10 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
                 self.wfile.write(f.read())
         except FileNotFoundError:
             logger.error(f"留言板静态页面不存在：{talk_html_path}")
-            self.send_error(404, "留言板页面不存在，请检查talk/comment.html文件")
+            self.send_error(404, "Not Found")
         except Exception as e:
             logger.error(f"读取留言板页面失败：{e}")
-            self.send_error(500, "读取留言板页面失败")
+            self.send_error(500, "Internal Server Error")
 
     def _handle_visit_count(self):
         """处理访问计数请求"""
@@ -671,7 +671,7 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
     def _forward_to_flask(self):
         """转发请求到Flask"""
         if not FLASK_AVAILABLE:
-            self.send_error(500, "留言板模块未加载")
+            self.send_error(500, "Internal Server Error")
             return
         try:
             data = b""

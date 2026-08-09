@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-A personal vlog/blog website built mostly on Python stdlib `http.server`, with a Flask sub-app for API routes (message board, auth, Ollama AI proxy). Static HTML pages under `home/`, `pages/`, `talk/`, `login/`, etc. serve content; the Python server handles routing, access logging, visitor analytics, and rate limiting.
+A personal vlog/blog website built mostly on Python stdlib `http.server`, with a Flask sub-app for API routes (message board, auth, Ollama AI proxy). Static HTML pages under `pages/`, `talk/`, etc. serve content; the Python server handles routing, access logging, visitor analytics, and rate limiting.
 
 ## Quick Commands
 
@@ -82,15 +82,15 @@ All persistent data is in `data/` (gitignored):
 
 ### Frontend Pages
 
-- `home/index.html` — landing/home page. **Section order:** 开发日志 → 旅游记录 → 学习 → 装机记录 → 游戏栏 → YY往事. Category cards follow same order plus 留言板.
-- `login/index.html` + `login/register.html` — login/register forms
+- `pages/home/index.html` — landing/home page. **Section order:** 开发日志 → 旅游记录 → 学习 → 装机记录 → 游戏栏 → YY往事. Category cards follow same order plus 留言板.
+- `pages/login/index.html` + `pages/login/register.html` — login/register forms
 - `talk/comment.html` — message board
 - `talk/ai-chat.html` — Ollama AI chat interface
-- `resume/index.html` — personal resume
+- `pages/resume/index.html` — personal resume
 - `pages/` — content pages organized by category (devlog, diy, games, travel, YY往事)
 - `pages/study/` — course study pages (数据结构与算法, 思法, etc.)
-- `pages/study/math/` — 高等数学复习资料（从 `.hyper/study/高等数学下/试卷/` 提取整理的期末分类精选题）
-- `HappyNewYear/` — special NYE page
+- `pages/study/math/` — 高等数学复习资料（从 `study/高等数学下/试卷/` 提取整理的期末分类精选题）
+- `pages/HappyNewYear/` — special NYE page
 
 ### Network / Proxy Setup
 

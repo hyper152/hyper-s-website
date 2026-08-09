@@ -47,7 +47,7 @@ try:
 except ImportError as e:
     logger.error(f"导入auth模块失败：{e}")
     # 简易版函数...
-    def create_session(email):
+    def create_session(email, persistent=True):
         session_id = f"session_{int(time.time())}_{email}"
         return session_id
     
@@ -360,29 +360,37 @@ def login_by_password():
             return jsonify({"code": 400, "msg": "请输入邮箱和密码"})
         
         users = load_users()
-        if email not in users:
+        account_email = email if email in users else next(
+            (key for key, value in users.items() if value.get("username", "").lower() == email.lower()),
+            ""
+        )
+        if not account_email:
             return jsonify({"code": 400, "msg": "邮箱或密码错误"})
         
-        user = users[email]
+        user = users[account_email]
         
         if not verify_password(password, user["password"]):
             return jsonify({"code": 400, "msg": "邮箱或密码错误"})
         
-        session_id = create_session(email)
+        is_admin = user.get("username", "").lower() == "admin"
+        session_id = create_session(account_email, persistent=not is_admin)
         
         response = make_response(jsonify({
             "code": 200,
             "msg": "登录成功",
             "data": {
                 "username": user["username"],
-                "email": email,
+                "email": account_email,
                 "session_id": session_id
             }
         }))
         
-        response.set_cookie('session_id', session_id, max_age=30*24*60*60, path='/')
+        if is_admin:
+            response.set_cookie('session_id', session_id, path='/', httponly=True, samesite='Lax')
+        else:
+            response.set_cookie('session_id', session_id, max_age=30*24*60*60, path='/', httponly=True, samesite='Lax')
         
-        logger.info(f"密码登录成功: {user['username']}({email})")
+        logger.info(f"密码登录成功: {user['username']}({account_email})")
         return response
         
     except Exception as e:
@@ -400,10 +408,18 @@ def check_login():
         if is_login:
             logger.debug(f"登录状态检查: {user.get('username', '')}")
         
-        return jsonify({
+        response = make_response(jsonify({
             "isLogin": is_login,
             "user": user
-        })
+        }))
+        if is_login:
+            # 当会话来自 Authorization/localStorage 时同步恢复 Cookie，
+            # 这样后续受保护的静态页面 GET 请求也能识别登录状态。
+            if user.get("username", "").lower() == "admin":
+                response.set_cookie('session_id', session_id, path='/', httponly=True, samesite='Lax')
+            else:
+                response.set_cookie('session_id', session_id, max_age=30*24*60*60, path='/', httponly=True, samesite='Lax')
+        return response
     except Exception as e:
         logger.error(f"检查登录状态异常：{e}")
         return jsonify({"isLogin": False, "user": {}})

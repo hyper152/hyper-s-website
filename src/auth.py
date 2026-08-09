@@ -18,6 +18,7 @@ logger = logging.getLogger("auth")
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 USERS_FILE = os.path.join(BASE_DIR, "data", "users.json")
 SESSIONS_FILE = os.path.join(BASE_DIR, "data", "sessions.json")
+TEMP_SESSIONS = {}
 
 # 初始化数据文件
 def init_files():
@@ -56,21 +57,26 @@ def verify_password(password, hashed_password):
 
 # ==================== 会话管理函数 ====================
 
-def create_session(email):
+def create_session(email, persistent=True):
     """创建用户会话"""
     init_files()
     
     session_id = str(uuid.uuid4())
     expire_time = time.time() + 30*24*60*60  # 30天过期
     
-    with open(SESSIONS_FILE, "r", encoding="utf-8") as f:
-        sessions = json.load(f)
-    
-    sessions[session_id] = {
+    session = {
         "email": email,
         "login_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "expire_time": expire_time
     }
+    if not persistent:
+        TEMP_SESSIONS[session_id] = session
+        logger.debug(f"创建临时会话: {email}")
+        return session_id
+
+    with open(SESSIONS_FILE, "r", encoding="utf-8") as f:
+        sessions = json.load(f)
+    sessions[session_id] = session
     
     with open(SESSIONS_FILE, "w", encoding="utf-8") as f:
         json.dump(sessions, f, ensure_ascii=False, indent=2)
@@ -83,6 +89,12 @@ def check_login_status(session_id):
     if not session_id:
         return False
     
+    if session_id in TEMP_SESSIONS:
+        if time.time() <= TEMP_SESSIONS[session_id]["expire_time"]:
+            return True
+        del TEMP_SESSIONS[session_id]
+        return False
+
     init_files()
     try:
         with open(SESSIONS_FILE, "r", encoding="utf-8") as f:
@@ -109,16 +121,20 @@ def get_current_user(session_id):
         return {}
     
     init_files()
-    with open(SESSIONS_FILE, "r", encoding="utf-8") as f:
-        sessions = json.load(f)
+    if session_id in TEMP_SESSIONS:
+        sessions = TEMP_SESSIONS
+    else:
+        with open(SESSIONS_FILE, "r", encoding="utf-8") as f:
+            sessions = json.load(f)
     
     if session_id not in sessions:
         return {}
     
     if time.time() > sessions[session_id]["expire_time"]:
         del sessions[session_id]
-        with open(SESSIONS_FILE, "w", encoding="utf-8") as f:
-            json.dump(sessions, f, ensure_ascii=False, indent=2)
+        if sessions is not TEMP_SESSIONS:
+            with open(SESSIONS_FILE, "w", encoding="utf-8") as f:
+                json.dump(sessions, f, ensure_ascii=False, indent=2)
         return {}
     
     email = sessions[session_id]["email"]
@@ -140,6 +156,10 @@ def logout_user(session_id):
     if not session_id:
         return False
     
+    if session_id in TEMP_SESSIONS:
+        del TEMP_SESSIONS[session_id]
+        return True
+
     init_files()
     with open(SESSIONS_FILE, "r", encoding="utf-8") as f:
         sessions = json.load(f)
