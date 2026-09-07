@@ -12,6 +12,7 @@
 ✅ 访问记录保存到 visitor.json（线程安全，保留所有记录）
 """
 import socket
+import ssl
 import sys
 import os
 import time
@@ -41,6 +42,7 @@ class SimpleProxyProtocol:
         从 socket 解析 PROXY Protocol v2 头部
         返回真实客户端 IP，如果没有 PROXY 头部返回 None
         """
+        original_timeout = None
         try:
             # 保存原始超时设置
             original_timeout = sock.gettimeout()
@@ -90,12 +92,18 @@ class SimpleProxyProtocol:
         except Exception as e:
             # 其他错误，忽略
             return None
+        finally:
+            if original_timeout is not None:
+                with contextlib.suppress(Exception):
+                    sock.settimeout(original_timeout)
 
 # ===================== 配置抽离 =====================
 class Config:
     HOST = "0.0.0.0"
     PORT = 8000
     SERVER_DIR = None
+    CERT_FILE = None
+    KEY_FILE = None
 
     RATE_LIMIT = 60  # 60秒内允许的最大请求数
     RATE_LIMIT_WINDOW = 60  # 时间窗口（秒）
@@ -454,6 +462,14 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
         # 如果已经解析过，直接返回缓存
         if self.real_client_ip:
             return self.real_client_ip
+
+        # Proxy Protocol 在服务器接受连接时已经解析，并写入 client_address。
+        # 非本机地址优先于客户端可伪造的 HTTP 转发头。
+        if hasattr(self, 'client_address'):
+            peer_ip = self.client_address[0]
+            if peer_ip not in ('127.0.0.1', '::1'):
+                self.real_client_ip = peer_ip
+                return peer_ip
         
         # 只有在有 headers 且是有效请求时才尝试获取真实IP
         if hasattr(self, 'headers') and self.headers and hasattr(self, 'command') and self.command:
@@ -484,15 +500,6 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
                     return self.real_client_ip
             except Exception as e:
                 pass
-        
-        # 尝试解析 PROXY Protocol (适用于 TCP 隧道)
-        try:
-            real_ip = self.proxy_parser.parse(self.connection)
-            if real_ip:
-                self.real_client_ip = real_ip
-                return real_ip
-        except Exception as e:
-            pass
         
         # 回退到原始 remote_addr
         if hasattr(self, 'client_address'):
@@ -1020,6 +1027,8 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
 
 # ===================== 服务器 =====================
 class DualStackServer(ThreadingHTTPServer):
+    tls_context = None
+
     def server_bind(self):
         """绑定服务器"""
         try:
@@ -1032,6 +1041,23 @@ class DualStackServer(ThreadingHTTPServer):
         except Exception as e:
             logger.error(f"服务器绑定异常：{e}")
             raise
+
+    def get_request(self):
+        """先解析 frpc 的 Proxy Protocol，再进行 TLS 握手。"""
+        request, client_address = self.socket.accept()
+        proxy_ip = SimpleProxyProtocol.parse(request)
+        if proxy_ip:
+            client_address = (proxy_ip, client_address[1])
+
+        if self.tls_context:
+            try:
+                request = self.tls_context.wrap_socket(request, server_side=True)
+            except Exception:
+                with contextlib.suppress(Exception):
+                    request.close()
+                raise
+
+        return request, client_address
 
     def finish_request(self, request, client_address):
         """处理请求"""
@@ -1059,6 +1085,16 @@ def run_server():
     os.chdir(server_dir)
     handler = partial(BeautifulDirectoryHandler, directory=server_dir)
     httpd = DualStackServer((Config.HOST, Config.PORT), handler)
+    scheme = "http"
+    if Config.CERT_FILE and Config.KEY_FILE:
+        tls_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+        tls_context.minimum_version = ssl.TLSVersion.TLSv1_2
+        tls_context.load_cert_chain(
+            certfile=Config.CERT_FILE,
+            keyfile=Config.KEY_FILE,
+        )
+        httpd.tls_context = tls_context
+        scheme = "https"
     httpd.timeout = 10
     httpd.daemon_threads = True
 
@@ -1068,11 +1104,13 @@ def run_server():
     print("\n" + "="*60)
     print(f"🚀 服务启动成功！ {current_date}")
     print("="*60)
-    print(f"📌 本地访问: http://localhost:{Config.PORT}")
-    print(f"📌 外网访问: http://{local_ip}:{Config.PORT}")
-    print(f"📌 留言板: http://localhost:{Config.PORT}/talk")
-    print(f"📌 AI 助手: http://localhost:{Config.PORT}/talk/ai-chat.html")
-    print(f"📌 计数查询: http://localhost:{Config.PORT}/visit-count")
+    print(f"📌 本地访问: {scheme}://localhost:{Config.PORT}")
+    print(f"📌 外网访问: {scheme}://{local_ip}:{Config.PORT}")
+    print(f"📌 留言板: {scheme}://localhost:{Config.PORT}/talk")
+    print(f"📌 AI 助手: {scheme}://localhost:{Config.PORT}/talk/ai-chat.html")
+    print(f"📌 计数查询: {scheme}://localhost:{Config.PORT}/visit-count")
+    if scheme == "https":
+        print(f"📌 TLS 证书: {os.path.abspath(Config.CERT_FILE)}")
     print(f"📌 根目录: {os.path.abspath(server_dir)}")
     print(f"📌 真实IP获取: ✅ X-Forwarded-For / X-Real-IP / PROXY Protocol (自动识别)")
     print("="*60)
@@ -1091,14 +1129,24 @@ def run_server():
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="个人Vlog HTTP服务端")
+    parser = argparse.ArgumentParser(description="个人Vlog HTTP/HTTPS服务端")
     parser.add_argument("-p", "--port", type=int, default=8000, help="监听端口")
     parser.add_argument("-H", "--host", type=str, default="0.0.0.0", help="监听地址")
+    parser.add_argument("--certfile", help="TLS 证书文件（PEM 格式，必须与 --keyfile 同时使用）")
+    parser.add_argument("--keyfile", help="TLS 私钥文件（PEM 格式，必须与 --certfile 同时使用）")
     parser.add_argument("--reset-visits", action="store_true", help="重置访问次数")
     args = parser.parse_args()
+
+    if bool(args.certfile) != bool(args.keyfile):
+        parser.error("--certfile 和 --keyfile 必须同时提供")
+    for option, path in (("--certfile", args.certfile), ("--keyfile", args.keyfile)):
+        if path and not os.path.isfile(path):
+            parser.error(f"{option} 指定的文件不存在: {path}")
     
     Config.PORT = args.port
     Config.HOST = args.host
+    Config.CERT_FILE = os.path.abspath(args.certfile) if args.certfile else None
+    Config.KEY_FILE = os.path.abspath(args.keyfile) if args.keyfile else None
     Config.RESET_VISITS = args.reset_visits 
     
     run_server()

@@ -51,6 +51,7 @@ python main.py
 
 ```bash
 python main.py -p 8000 -H 0.0.0.0       # 指定端口和地址
+python main.py -H 127.0.0.1 -p 8000 --certfile certs/hyp.asia.crt --keyfile certs/hyp.asia.key  # HTTPS
 python main.py --reset-visits             # 重置访问计数
 python main-proxy.py                      # 带 PROXY Protocol 支持
 ```
