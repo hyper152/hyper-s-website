@@ -2,6 +2,10 @@
 
 基于 Python 构建的个人博客与数字花园 —— 记录开发日志、旅行见闻、装机折腾、游戏故事和校园回忆。
 
+在线访问：[https://hyp.asia/](https://hyp.asia/) · [首页](https://hyp.asia/home/)
+
+首页路径为 `/home/`，根路径 `/` 和旧地址 `/pages/home/` 会自动跳转到新首页。
+
 ## 内容分类
 
 | 分类 | 内容 |
@@ -45,7 +49,7 @@ export MESSAGE_BOARD_SECRET="your_secret_key"
 python main.py
 ```
 
-访问 **http://localhost:8000** 即可查看网站。
+访问 [http://localhost:8000/home/](http://localhost:8000/home/) 即可查看首页。
 
 ### 启动参数
 
@@ -69,13 +73,14 @@ python src/analyze_visitor.py 2026.4.27            # 按日期查询访问记录
 ├── main.py                  # HTTP 服务主入口
 ├── main-proxy.py            # PROXY Protocol 入口
 ├── developing.py            # 维护模式服务
+├── home/                    # 首页（/home/）
 ├── media/                   # 媒体资源文件（已 gitignore）
 ├── pages/                   # 内容页面
 │   ├── HappyNewYear/        # 新年特别页面
 │   ├── devlog/              # 开发日志
 │   ├── diy/                 # 装机记录
 │   ├── games/               # 游戏栏
-│   ├── home/                # 首页
+│   ├── home/                # 旧首页地址跳转
 │   ├── login/               # 登录/注册
 │   ├── resume/              # 个人简历
 │   ├── travel/              # 旅行记录
@@ -89,7 +94,7 @@ python src/analyze_visitor.py 2026.4.27            # 按日期查询访问记录
 
 ## 相关链接
 
-- [个人网站](http://0o0hyper0o0.cyou/pages/home/)
+- [个人网站](https://hyp.asia/)
 - [GitHub](https://github.com/hyper152/hyper-s-website)
 
 ## 许可

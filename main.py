@@ -126,7 +126,7 @@ class Config:
     
     # 允许的路径白名单（防止扫描）
     ALLOWED_PATHS = [
-        '/', '/talk', '/pages/',
+        '/', '/talk', '/pages/', '/home/',
         '/static/', '/api/', '/visit-count', '/banner/',
         '/favicon.ico', '/dwcc/'
     ]
@@ -758,9 +758,9 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
             return
 
         # 首页重定向
-        if path in ('', '/'):
+        if path in ('', '/', '/home', '/home/index.html', '/pages/home', '/pages/home/', '/pages/home/index.html'):
             self.send_response(301)
-            self.send_header('Location', '/pages/home/')
+            self.send_header('Location', '/home/' + ('?' + parsed.query if parsed.query else ''))
             self.end_headers()
             return
 

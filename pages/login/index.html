@@ -433,7 +433,7 @@
         }
 
         function getRedirectTarget() {
-            const fallback = new URL('../home/index.html', window.location.href);
+            const fallback = new URL('/home/', window.location.href);
             const requested = new URLSearchParams(window.location.search).get('redirect');
             if (!requested) return fallback.href;
             const target = new URL(requested, window.location.origin);
