@@ -1,0 +1,209 @@
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    background: #f6f7f9;
+    color: #222b39;
+    font-family: system-ui, "Microsoft YaHei", sans-serif;
+    line-height: 1.6;
+}
+a {
+    color: inherit;
+    text-decoration: none;
+}
+.container {
+    width: min(1280px, 92%);
+    margin: auto;
+}
+.category-nav {
+    padding: 24px 0;
+    border-bottom: 1px solid #e4e7ec;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    color: #657082;
+    font-size: 14px;
+}
+.category-nav a:first-child {
+    font-weight: 750;
+    color: #165dff;
+}
+.page-heading {
+    padding: 42px 0 26px;
+}
+.eyebrow {
+    color: var(--accent, #165dff);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+h1 {
+    font-size: 32px;
+    margin: 8px 0;
+}
+h1 span {
+    font-size: 14px;
+    font-weight: 400;
+    color: #8c94a0;
+    margin-left: 12px;
+}
+.subtitle {
+    color: #7a8391;
+    margin: 0;
+}
+.category-tabs {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+}
+.category-tabs a {
+    padding: 7px 16px;
+    border-radius: 20px;
+    background: white;
+    border: 1px solid #e6e9ee;
+    font-size: 13px;
+}
+.category-tabs a[aria-current="page"] {
+    background: var(--accent, #165dff);
+    color: white;
+    border-color: transparent;
+}
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 28px 20px;
+    padding-bottom: 54px;
+}
+.video-card {
+    border-radius: 12px;
+    overflow: hidden;
+    background: white;
+    border: 1px solid #e7e9ed;
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+    min-width: 0;
+}
+.video-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 28px #22334412;
+}
+.video-cover {
+    aspect-ratio: 16/10;
+    position: relative;
+    overflow: hidden;
+    background: #e8edf5;
+}
+.video-cover img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+.video-card:hover img {
+    transform: scale(1.035);
+}
+.video-badge {
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    background: var(--accent, #165dff);
+    color: white;
+    padding: 3px 9px;
+    font-size: 11px;
+    border-radius: 6px;
+}
+.video-info {
+    padding: 16px;
+}
+.video-title {
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0 0 10px;
+}
+.video-meta {
+    font-size: 12px;
+    color: #89919e;
+    margin-bottom: 8px;
+}
+.video-desc {
+    font-size: 13px;
+    color: #747e8d;
+    line-height: 1.7;
+    margin: 0 0 14px;
+}
+.video-stats {
+    display: flex;
+    gap: 7px;
+    flex-wrap: wrap;
+}
+.video-stats span {
+    font-size: 11px;
+    background: #f2f4f8;
+    color: #677487;
+    padding: 3px 7px;
+    border-radius: 5px;
+}
+.topic-cover {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(125deg, #e9edff, #f4f8ff);
+    color: var(--accent, #165dff);
+}
+.topic-cover strong {
+    font-size: 40px;
+    font-weight: 650;
+}
+.topic-cover small {
+    font-size: 12px;
+    letter-spacing: 2px;
+    margin-top: 8px;
+}
+footer {
+    border-top: 1px solid #e4e7ec;
+    color: #8c94a0;
+    font-size: 12px;
+    text-align: center;
+    padding: 26px;
+}
+a:focus-visible {
+    outline: 3px solid #ff945c;
+    outline-offset: 4px;
+}
+@media (max-width: 1050px) {
+    .video-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+@media (max-width: 760px) {
+    .video-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px 14px;
+    }
+    .page-heading {
+        padding-top: 28px;
+    }
+    h1 {
+        font-size: 28px;
+    }
+}
+@media (max-width: 430px) {
+    .video-grid {
+        grid-template-columns: 1fr;
+    }
+    .video-cover {
+        aspect-ratio: 16/9;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .video-card,
+    .video-cover img {
+        transition: none;
+    }
+}
