@@ -1,75 +1,86 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>学习 · hyper的Vlog</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
-    background: #f0f2f5;
-    color: #1a1a2e;
-    padding: 20px;
-  }
-  .container { max-width: 900px; margin: 0 auto; }
-  h1 {
-    text-align: center;
-    font-size: 28px;
-    margin: 30px 0 8px;
-    background: linear-gradient(135deg, #4f46e5, #06b6d4);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  .subtitle { text-align:center; color:#888; font-size:14px; margin-bottom:30px; }
-  .card-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap:20px; }
-  .card {
-    background:#fff; border-radius:14px; padding:28px 24px;
-    text-decoration:none; color:inherit;
-    box-shadow: 0 2px 10px rgba(0,0,0,.06);
-    transition: .25s ease;
-    display:flex; flex-direction:column; align-items:center; text-align:center;
-    gap:12px;
-  }
-  .card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 8px 24px rgba(79,70,229,.15);
-  }
-  .card i { font-size:2.8rem; }
-  .card h3 { font-size:1.3rem; font-weight:600; }
-  .card p { font-size:0.9rem; color:#888; line-height:1.5; }
-  .back { display:inline-flex; align-items:center; gap:6px; color:#4f46e5; text-decoration:none; margin-bottom:20px; font-size:14px; }
-  .back:hover { text-decoration:underline; }
-</style>
-</head>
-<body>
-<div class="container">
-  <a href="../home/index.html" class="back"><i class="fas fa-arrow-left"></i> 返回首页</a>
-  <h1><i class="fas fa-graduation-cap"></i> 学习</h1>
-  <p class="subtitle">课程学习笔记与知识整理</p>
-  <div class="card-grid">
-    <a href="../../pages/study/cs/main.html" class="card">
-      <i class="fas fa-code" style="color:#4f46e5;"></i>
-      <h3>数据结构与算法</h3>
-      <p>CQU 2025级 · 课程资源 &amp; 选择题练习 &amp; 知识点总结</p>
-    </a>
-    <a href="../../pages/study/思法/" class="card">
-      <i class="fas fa-gavel" style="color:#dc2626;"></i>
-      <h3>思想道德与法治</h3>
-      <p>期末复习重点 · 高频考点整理</p>
-    </a>
-    <a href="../../pages/study/math/main.html" class="card">
-      <i class="fas fa-square-root-alt" style="color:#3498db;"></i>
-      <h3>高等数学II-2</h3>
-      <p>考点大纲 · 知识点详解 · 期末分类精选题 · 例题</p>
-    </a>
-    <a href="../../pages/study/PHYS/main.html" class="card">
-      <i class="fas fa-atom" style="color:#8b5e3c;"></i>
-      <h3>大学物理（上册）</h3>
-      <p>考点大纲 · 概念题自测 · 全面总结 &amp; 难度分层</p>
-    </a>
-  </div>
-</div>
-</body>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>学习 · hyper的Vlog</title>
+        <link rel="stylesheet" href="../../static/css/category.css" />
+        <style>
+            :root {
+                --accent: #7565bd;
+            }
+        </style>
+    </head>
+    <body>
+        <main class="container">
+            <nav class="category-nav">
+                <a href="../home/index.html">hyper / Vlog</a
+                ><a href="../home/index.html#categories">← 返回首页</a>
+            </nav>
+            <header class="page-heading">
+                <span class="eyebrow">HYPER / COLLECTION</span>
+                <h1>学习<span>4 篇</span></h1>
+                <p class="subtitle">课程资料、知识梳理与复习记录</p>
+            </header>
+            <nav class="category-tabs" aria-label="内容分类">
+                <a href="../devlog/index.html">开发日志</a
+                ><a href="../travel/index.html">旅游记录</a
+                ><a href="../study/index.html" aria-current="page">学习</a
+                ><a href="../diy/index.html">装机记录</a><a href="../games/index.html">游戏栏</a
+                ><a href="../YY%E5%BE%80%E4%BA%8B/index.html">YY往事</a>
+            </nav>
+            <div class="video-grid">
+                <a class="video-card" href="../../pages/study/cs/main.html"
+                    ><div class="video-cover">
+                        <div class="topic-cover">
+                            <strong>学习</strong><small>COURSE NOTES</small>
+                        </div>
+                        <span class="video-badge">学习</span>
+                    </div>
+                    <div class="video-info">
+                        <h2 class="video-title"></h2>
+                        <div class="video-meta">课程资料</div>
+                        <p class="video-desc"></p>
+                        <div class="video-stats"></div></div></a
+                ><a class="video-card" href="../../pages/study/思法/"
+                    ><div class="video-cover">
+                        <div class="topic-cover">
+                            <strong>学习</strong><small>COURSE NOTES</small>
+                        </div>
+                        <span class="video-badge">学习</span>
+                    </div>
+                    <div class="video-info">
+                        <h2 class="video-title"></h2>
+                        <div class="video-meta">课程资料</div>
+                        <p class="video-desc"></p>
+                        <div class="video-stats"></div></div></a
+                ><a class="video-card" href="../../pages/study/math/main.html"
+                    ><div class="video-cover">
+                        <div class="topic-cover">
+                            <strong>学习</strong><small>COURSE NOTES</small>
+                        </div>
+                        <span class="video-badge">学习</span>
+                    </div>
+                    <div class="video-info">
+                        <h2 class="video-title"></h2>
+                        <div class="video-meta">课程资料</div>
+                        <p class="video-desc"></p>
+                        <div class="video-stats"></div></div></a
+                ><a class="video-card" href="../../pages/study/PHYS/main.html"
+                    ><div class="video-cover">
+                        <div class="topic-cover">
+                            <strong>学习</strong><small>COURSE NOTES</small>
+                        </div>
+                        <span class="video-badge">学习</span>
+                    </div>
+                    <div class="video-info">
+                        <h2 class="video-title"></h2>
+                        <div class="video-meta">课程资料</div>
+                        <p class="video-desc"></p>
+                        <div class="video-stats"></div></div
+                ></a>
+            </div>
+        </main>
+        <footer>© 2026 hyper的Vlog · <a href="../home/index.html">返回首页</a></footer>
+    </body>
 </html>
