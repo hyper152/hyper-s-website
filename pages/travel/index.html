@@ -1,124 +1,292 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>旅游记录 · hyper的Vlog</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
-    background: #f0f2f5;
-    color: #1a1a2e;
-    padding:20px;
-  }
-  .container { max-width:900px; margin:0 auto; }
-  .back { display:inline-flex; align-items:center; gap:6px; color:#e67e22; text-decoration:none; margin-bottom:12px; font-size:14px; }
-  .back:hover { text-decoration:underline; }
-  h1 { text-align:center; font-size:28px; margin:20px 0 4px; }
-  h1 i { color:#e67e22; }
-  .subtitle { text-align:center; color:#888; font-size:13px; margin-bottom:24px; }
-  .card-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:16px; }
-  .card {
-    background:#fff; border-radius:14px; padding:20px; text-decoration:none; color:inherit;
-    box-shadow:0 2px 10px rgba(0,0,0,.06); transition:.25s ease; border-left:4px solid transparent;
-    display:flex; flex-direction:column; gap:6px;
-  }
-  .card:hover { transform:translateY(-5px); box-shadow:0 8px 24px rgba(230,126,34,.12); }
-  .card .date { font-size:12px; color:#999; display:flex; align-items:center; gap:4px; }
-  .card .title { font-size:15px; font-weight:600; line-height:1.4; }
-  .card .desc { font-size:13px; color:#888; line-height:1.5; }
-  .card .tags { display:flex; gap:6px; flex-wrap:wrap; margin-top:4px; }
-  .card .tags span {
-    font-size:11px; padding:2px 8px; border-radius:8px; background:#fef3c7; color:#b45309;
-  }
-</style>
-</head>
-<body>
-<div class="container">
-  <a href="../home/index.html" class="back"><i class="fas fa-arrow-left"></i> 返回首页</a>
-  <h1><i class="fas fa-map-marked-alt"></i> 旅游记录</h1>
-  <p class="subtitle">走遍山河，记录美好</p>
-  <div class="card-grid">
-    <a href="./2026.8-%E8%8B%B1%E5%9B%BD/index.html" class="card" style="border-left-color:#203b36;">
-      <div class="date">2026.08</div>
-      <div class="title">英国 · 城市、球场与夏日记忆</div>
-      <div class="desc">伦敦地标、剑桥学院、温莎城堡，还有热刺与纽卡斯尔的比赛现场。</div>
-      <div class="tags"><span>🇬🇧 英国</span><span>⚽ 足球</span><span>📷 旅行相册</span></div>
-    </a>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>旅游记录 · hyper的Vlog</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            body {
+                font-family:
+                    -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+                background: #f0f2f5;
+                color: #1a1a2e;
+                padding: 20px;
+            }
+            .container {
+                max-width: 900px;
+                margin: 0 auto;
+            }
+            .back {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                color: #e67e22;
+                text-decoration: none;
+                margin-bottom: 12px;
+                font-size: 14px;
+            }
+            .back:hover {
+                text-decoration: underline;
+            }
+            h1 {
+                text-align: center;
+                font-size: 28px;
+                margin: 20px 0 4px;
+            }
+            h1 i {
+                color: #e67e22;
+            }
+            .subtitle {
+                text-align: center;
+                color: #888;
+                font-size: 13px;
+                margin-bottom: 24px;
+            }
+            .card-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+                gap: 16px;
+            }
+            .card {
+                background: #fff;
+                border-radius: 14px;
+                padding: 20px;
+                text-decoration: none;
+                color: inherit;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+                transition: 0.25s ease;
+                border-left: 4px solid transparent;
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+            }
+            .card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 24px rgba(230, 126, 34, 0.12);
+            }
+            .card .date {
+                font-size: 12px;
+                color: #999;
+                display: flex;
+                align-items: center;
+                gap: 4px;
+            }
+            .card .title {
+                font-size: 15px;
+                font-weight: 600;
+                line-height: 1.4;
+            }
+            .card .desc {
+                font-size: 13px;
+                color: #888;
+                line-height: 1.5;
+            }
+            .card .tags {
+                display: flex;
+                gap: 6px;
+                flex-wrap: wrap;
+                margin-top: 4px;
+            }
+            .card .tags span {
+                font-size: 11px;
+                padding: 2px 8px;
+                border-radius: 8px;
+                background: #fef3c7;
+                color: #b45309;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <a href="../home/index.html" class="back"><i class="fas fa-arrow-left"></i> 返回首页</a>
+            <h1><i class="fas fa-map-marked-alt"></i> 旅游记录</h1>
+            <p class="subtitle">走遍山河，记录美好</p>
+            <div class="card-grid">
+                <a
+                    href="./2026.8-%E8%8B%B1%E5%9B%BD/index.html"
+                    class="card"
+                    style="border-left-color: #203b36"
+                >
+                    <div class="date">2026.08</div>
+                    <div class="title">英国 · 城市、球场与夏日记忆</div>
+                    <div class="desc">
+                        伦敦地标、剑桥学院、温莎城堡，还有热刺与纽卡斯尔的比赛现场。
+                    </div>
+                    <div class="tags">
+                        <span>🇬🇧 英国</span><span>⚽ 足球</span><span>📷 旅行相册</span>
+                    </div>
+                </a>
 
+                <a
+                    href="./2026.8-%E5%B9%BF%E5%B7%9E/index.html"
+                    class="card"
+                    style="border-left-color: #88703c"
+                    ><div class="date">2026.8.20</div>
+                    <div class="title">广州 · 校园、广州塔与一场雨</div>
+                    <div class="desc">
+                        从校园牌坊走到广州塔下，遇见阴云和雨，也留下同行朋友的笑脸。
+                    </div>
+                    <div class="tags"><span>广州</span><span>12 张精选照片</span></div></a
+                >
+                <a
+                    href="./2026.8-%E9%BB%84%E5%B1%B1/index.html"
+                    class="card"
+                    style="border-left-color: #50644b"
+                    ><div class="date">2026.8.12 — 8.14</div>
+                    <div class="title">黄山 · 穿过云雾，走上山脊</div>
+                    <div class="desc">
+                        坐火车抵达黄山，再乘缆车进入山间。石阶、松树、云雾和山顶合照，串起这趟夏日登山。
+                    </div>
+                    <div class="tags"><span>黄山</span><span>20 张精选照片</span></div></a
+                >
+                <a
+                    href="./2026.8-%E5%8C%97%E4%BA%AC/index.html"
+                    class="card"
+                    style="border-left-color: #954b3b"
+                    ><div class="date">2026.8.4 — 8.5</div>
+                    <div class="title">北京 · 从前门夜色到天坛晴空</div>
+                    <div class="desc">
+                        亮灯的街道、夜里的天安门、蓝天下的祈年殿。把北京两天的片段，按时间收进相册。
+                    </div>
+                    <div class="tags">
+                        <span>北京</span><span>10 张精选照片 · 1 段视频</span>
+                    </div></a
+                >
+                <a
+                    href="./2026.7-%E6%9D%AD%E5%B7%9E%E7%9C%8B%E4%B8%96%E7%95%8C%E6%9D%AF/index.html"
+                    class="card"
+                    style="border-left-color: #38675c"
+                    ><div class="date">2026.7.19 — 7.22</div>
+                    <div class="title">杭州 · 一起熬夜看世界杯</div>
+                    <div class="desc">
+                        从杭州东站到凌晨的屏幕前，看球、聚餐，也留下朋友相聚的日常。
+                    </div>
+                    <div class="tags">
+                        <span>杭州</span><span>12 张精选照片 · 1 段视频</span>
+                    </div></a
+                >
+                <a
+                    href="./2026.7-%E6%97%A0%E9%94%A1/index.html"
+                    class="card"
+                    style="border-left-color: #486b7a"
+                    ><div class="date">2026.7.17 — 7.19</div>
+                    <div class="title">无锡 · 河畔夜色与湖上风</div>
+                    <div class="desc">
+                        一起打游戏，沿着亮灯的河岸散步，再去湖上吹吹风。三天的无锡，风景和朋友都在照片里。
+                    </div>
+                    <div class="tags"><span>无锡</span><span>17 张精选照片</span></div></a
+                >
 
-    <a href="./2026.8-%E5%B9%BF%E5%B7%9E/index.html" class="card" style="border-left-color:#88703c"><div class="date">2026.8.20</div><div class="title">广州 · 校园、广州塔与一场雨</div><div class="desc">从校园牌坊走到广州塔下，遇见阴云和雨，也留下同行朋友的笑脸。</div><div class="tags"><span>广州</span><span>12 张精选照片</span></div></a>
-    <a href="./2026.8-%E9%BB%84%E5%B1%B1/index.html" class="card" style="border-left-color:#50644b"><div class="date">2026.8.12 — 8.14</div><div class="title">黄山 · 穿过云雾，走上山脊</div><div class="desc">坐火车抵达黄山，再乘缆车进入山间。石阶、松树、云雾和山顶合照，串起这趟夏日登山。</div><div class="tags"><span>黄山</span><span>20 张精选照片</span></div></a>
-    <a href="./2026.8-%E5%8C%97%E4%BA%AC/index.html" class="card" style="border-left-color:#954b3b"><div class="date">2026.8.4 — 8.5</div><div class="title">北京 · 从前门夜色到天坛晴空</div><div class="desc">亮灯的街道、夜里的天安门、蓝天下的祈年殿。把北京两天的片段，按时间收进相册。</div><div class="tags"><span>北京</span><span>10 张精选照片 · 1 段视频</span></div></a>
-    <a href="./2026.7-%E6%9D%AD%E5%B7%9E%E7%9C%8B%E4%B8%96%E7%95%8C%E6%9D%AF/index.html" class="card" style="border-left-color:#38675c"><div class="date">2026.7.19 — 7.22</div><div class="title">杭州 · 一起熬夜看世界杯</div><div class="desc">从杭州东站到凌晨的屏幕前，看球、聚餐，也留下朋友相聚的日常。</div><div class="tags"><span>杭州</span><span>12 张精选照片 · 1 段视频</span></div></a>
-    <a href="./2026.7-%E6%97%A0%E9%94%A1/index.html" class="card" style="border-left-color:#486b7a"><div class="date">2026.7.17 — 7.19</div><div class="title">无锡 · 河畔夜色与湖上风</div><div class="desc">一起打游戏，沿着亮灯的河岸散步，再去湖上吹吹风。三天的无锡，风景和朋友都在照片里。</div><div class="tags"><span>无锡</span><span>17 张精选照片</span></div></a>
+                <a
+                    href="../../pages/travel/2026.5-%E9%87%8D%E5%BA%86%E6%AD%A6%E9%9A%86/"
+                    class="card"
+                    style="border-left-color: #e67e22"
+                >
+                    <div class="date"><i class="far fa-calendar"></i> 2026.05.15-16</div>
+                    <div class="title">武隆 · 第一次绿皮火车之旅</div>
+                    <div class="desc">
+                        仙女山看云雾缭绕，天生三桥惊叹喀斯特地貌，大拇指打卡留念。
+                    </div>
+                    <div class="tags"><span>🚂 绿皮火车</span><span>🏔 喀斯特</span></div>
+                </a>
 
-    <a href="../../pages/travel/2026.5-%E9%87%8D%E5%BA%86%E6%AD%A6%E9%9A%86/" class="card" style="border-left-color:#e67e22;">
-      <div class="date"><i class="far fa-calendar"></i> 2026.05.15-16</div>
-      <div class="title">武隆 · 第一次绿皮火车之旅</div>
-      <div class="desc">仙女山看云雾缭绕，天生三桥惊叹喀斯特地貌，大拇指打卡留念。</div>
-      <div class="tags"><span>🚂 绿皮火车</span><span>🏔 喀斯特</span></div>
-    </a>
+                <a
+                    href="../../pages/travel/2026.5-%E9%87%8D%E5%BA%86/"
+                    class="card"
+                    style="border-left-color: #e67e22"
+                >
+                    <div class="date"><i class="far fa-calendar"></i> 2026.05.01-03</div>
+                    <div class="title">重庆 · 五一山城漫游记</div>
+                    <div class="desc">串串火锅、山顶烤肉、九宫格老火锅，山城巴适得板！</div>
+                    <div class="tags"><span>🌶 火锅</span><span>🌃 夜景</span></div>
+                </a>
 
-    <a href="../../pages/travel/2026.5-%E9%87%8D%E5%BA%86/" class="card" style="border-left-color:#e67e22;">
-      <div class="date"><i class="far fa-calendar"></i> 2026.05.01-03</div>
-      <div class="title">重庆 · 五一山城漫游记</div>
-      <div class="desc">串串火锅、山顶烤肉、九宫格老火锅，山城巴适得板！</div>
-      <div class="tags"><span>🌶 火锅</span><span>🌃 夜景</span></div>
-    </a>
+                <a
+                    href="../../pages/travel/2026.2-%E8%B4%B5%E9%98%B3/"
+                    class="card"
+                    style="border-left-color: #e67e22"
+                >
+                    <div class="date"><i class="far fa-calendar"></i> 2026.02.02</div>
+                    <div class="title">贵阳半日漫游 · 从北站到双子塔</div>
+                    <div class="desc">黔灵山看猴，民生路吃丝娃娃，夜探甲秀楼白宫双子塔。</div>
+                    <div class="tags"><span>🐒 黔灵山</span><span>🏙 双子塔</span></div>
+                </a>
 
-    <a href="../../pages/travel/2026.2-%E8%B4%B5%E9%98%B3/" class="card" style="border-left-color:#e67e22;">
-      <div class="date"><i class="far fa-calendar"></i> 2026.02.02</div>
-      <div class="title">贵阳半日漫游 · 从北站到双子塔</div>
-      <div class="desc">黔灵山看猴，民生路吃丝娃娃，夜探甲秀楼白宫双子塔。</div>
-      <div class="tags"><span>🐒 黔灵山</span><span>🏙 双子塔</span></div>
-    </a>
+                <a
+                    href="../../pages/travel/2025.8-%E9%9B%81%E8%8D%A1%E5%B1%B1/"
+                    class="card"
+                    style="border-left-color: #e67e22"
+                >
+                    <div class="date"><i class="far fa-calendar"></i> 2025.08.17</div>
+                    <div class="title">雁荡山 · 奇峰异石间的行走</div>
+                    <div class="desc">奇峰怪石、飞泉瀑布，一步一景，流连忘返。</div>
+                    <div class="tags"><span>⛰ 灵峰</span><span>🏞 瀑布</span></div>
+                </a>
 
-    <a href="../../pages/travel/2025.8-%E9%9B%81%E8%8D%A1%E5%B1%B1/" class="card" style="border-left-color:#e67e22;">
-      <div class="date"><i class="far fa-calendar"></i> 2025.08.17</div>
-      <div class="title">雁荡山 · 奇峰异石间的行走</div>
-      <div class="desc">奇峰怪石、飞泉瀑布，一步一景，流连忘返。</div>
-      <div class="tags"><span>⛰ 灵峰</span><span>🏞 瀑布</span></div>
-    </a>
+                <a
+                    href="../../pages/travel/2025.7-%E7%99%BE%E4%B8%88%E6%BC%88/"
+                    class="card"
+                    style="border-left-color: #e67e22"
+                >
+                    <div class="date"><i class="far fa-calendar"></i> 2025.07.24</div>
+                    <div class="title">百丈漈 · 水帘洞穿越记</div>
+                    <div class="desc">百丈漈的震撼与水帘洞的奇妙体验。</div>
+                    <div class="tags"><span>💧 一漈</span><span>🎓 重大录取</span></div>
+                </a>
 
-    <a href="../../pages/travel/2025.7-%E7%99%BE%E4%B8%88%E6%BC%88/" class="card" style="border-left-color:#e67e22;">
-      <div class="date"><i class="far fa-calendar"></i> 2025.07.24</div>
-      <div class="title">百丈漈 · 水帘洞穿越记</div>
-      <div class="desc">百丈漈的震撼与水帘洞的奇妙体验。</div>
-      <div class="tags"><span>💧 一漈</span><span>🎓 重大录取</span></div>
-    </a>
+                <a
+                    href="../../pages/travel/2025.6-%E4%B8%8A%E6%B5%B7%E4%BA%A4%E9%80%9A%E5%A4%A7%E5%AD%A6/"
+                    class="card"
+                    style="border-left-color: #3498db"
+                >
+                    <div class="date"><i class="far fa-calendar"></i> 2025.06.16</div>
+                    <div class="title">上海交大面试 · 第一次独自旅行</div>
+                    <div class="desc">到访上海交大，参加三位一体面试。</div>
+                    <div class="tags"><span>🎓 面试</span><span>🚄 双城</span></div>
+                </a>
 
-    <a href="../../pages/travel/2025.6-%E4%B8%8A%E6%B5%B7%E4%BA%A4%E9%80%9A%E5%A4%A7%E5%AD%A6/" class="card" style="border-left-color:#3498db;">
-      <div class="date"><i class="far fa-calendar"></i> 2025.06.16</div>
-      <div class="title">上海交大面试 · 第一次独自旅行</div>
-      <div class="desc">到访上海交大，参加三位一体面试。</div>
-      <div class="tags"><span>🎓 面试</span><span>🚄 双城</span></div>
-    </a>
+                <a
+                    href="../../pages/travel/2025.6-%E5%8D%97%E4%BA%AC%E5%A4%A7%E5%AD%A6/"
+                    class="card"
+                    style="border-left-color: #3498db"
+                >
+                    <div class="date"><i class="far fa-calendar"></i> 2025.06.15-16</div>
+                    <div class="title">南京大学强基记 · 赴沪赶考</div>
+                    <div class="desc">参加南大强基计划考试。</div>
+                    <div class="tags"><span>🏛 南大</span><span>✍️ 强基</span></div>
+                </a>
 
-    <a href="../../pages/travel/2025.6-%E5%8D%97%E4%BA%AC%E5%A4%A7%E5%AD%A6/" class="card" style="border-left-color:#3498db;">
-      <div class="date"><i class="far fa-calendar"></i> 2025.06.15-16</div>
-      <div class="title">南京大学强基记 · 赴沪赶考</div>
-      <div class="desc">参加南大强基计划考试。</div>
-      <div class="tags"><span>🏛 南大</span><span>✍️ 强基</span></div>
-    </a>
+                <a
+                    href="../../pages/travel/2025.6-%E6%9D%AD%E5%B7%9E/"
+                    class="card"
+                    style="border-left-color: #e67e22"
+                >
+                    <div class="date"><i class="far fa-calendar"></i> 2025.06.14</div>
+                    <div class="title">杭州 · 支持浙江队 2-2 上海上港</div>
+                    <div class="desc">黄龙体育中心现场观赛，感受足球激情。</div>
+                    <div class="tags"><span>⚽ 中超标</span><span>🏟 黄龙</span></div>
+                </a>
 
-    <a href="../../pages/travel/2025.6-%E6%9D%AD%E5%B7%9E/" class="card" style="border-left-color:#e67e22;">
-      <div class="date"><i class="far fa-calendar"></i> 2025.06.14</div>
-      <div class="title">杭州 · 支持浙江队 2-2 上海上港</div>
-      <div class="desc">黄龙体育中心现场观赛，感受足球激情。</div>
-      <div class="tags"><span>⚽ 中超标</span><span>🏟 黄龙</span></div>
-    </a>
-
-    <a href="../../pages/travel/2024.7-%E4%B8%8A%E6%B5%B7/" class="card" style="border-left-color:#e67e22;">
-      <div class="date"><i class="far fa-calendar"></i> 2024.07.28-30</div>
-      <div class="title">上海 · 学考全A捷报之旅</div>
-      <div class="desc">外滩夜景、交大校园、LPL现场观赛。</div>
-      <div class="tags"><span>🌟 学考全A</span><span>🎮 LPL</span></div>
-    </a>
-
-  </div>
-</div>
-</body>
+                <a
+                    href="../../pages/travel/2024.7-%E4%B8%8A%E6%B5%B7/"
+                    class="card"
+                    style="border-left-color: #e67e22"
+                >
+                    <div class="date"><i class="far fa-calendar"></i> 2024.07.28-30</div>
+                    <div class="title">上海 · 学考全A捷报之旅</div>
+                    <div class="desc">外滩夜景、交大校园、LPL现场观赛。</div>
+                    <div class="tags"><span>🌟 学考全A</span><span>🎮 LPL</span></div>
+                </a>
+            </div>
+        </div>
+    </body>
 </html>

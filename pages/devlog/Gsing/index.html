@@ -1,785 +1,1407 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Gsing战队 · 全栈机器人演进 | 视觉电控融合记录</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #0a4dff;
-            --primary-dark: #0037c1;
-            --accent: #ff6b2b;
-            --accent-glow: #ff8a4f;
-            --light: #f5f7fc;
-            --dark: #1a2634;
-            --gray: #4a5b6e;
-            --gray-light: #eef2f8;
-            --white: #ffffff;
-            --shadow-sm: 0 8px 20px rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 12px 28px rgba(0, 0, 0, 0.08);
-            --shadow-lg: 0 20px 35px -10px rgba(0, 0, 0, 0.12);
-            --border-radius: 24px;
-            --card-radius: 28px;
-        }
-
-        body {
-            background: var(--light);
-            color: var(--gray);
-            font-family: 'Inter', system-ui, 'Segoe UI', 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, sans-serif;
-            line-height: 1.5;
-            scroll-behavior: smooth;
-        }
-
-        .container {
-            width: min(1280px, 92%);
-            margin: 0 auto;
-        }
-
-        /* 头部升级 */
-        .header {
-            background: rgba(255, 255, 255, 0.94);
-            backdrop-filter: blur(14px);
-            box-shadow: var(--shadow-sm);
-            padding: 14px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-
-        .logo {
-            font-size: 1.9rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--primary) 0%, #2b6eff 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-decoration: none;
-            letter-spacing: -0.3px;
-        }
-
-        .logo span {
-            background: linear-gradient(135deg, var(--accent) 0%, #ff9940 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            flex-wrap: wrap;
-        }
-
-        .project-info {
-            text-align: right;
-            background: var(--white);
-            padding: 6px 20px;
-            border-radius: 60px;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .project-name {
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--dark);
-        }
-
-        .project-dates {
-            font-size: 0.8rem;
-            color: var(--primary);
-            font-weight: 500;
-        }
-
-        .home-link,
-        .github-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 20px;
-            border-radius: 40px;
-            font-weight: 500;
-            transition: all 0.25s ease;
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
-
-        .home-link {
-            background: var(--white);
-            color: var(--primary);
-            border: 1px solid #dce5f0;
-        }
-
-        .home-link:hover {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 14px rgba(10, 77, 255, 0.2);
-        }
-
-        .github-link {
-            background: var(--dark);
-            color: white;
-        }
-
-        .github-link:hover {
-            background: #0f2c3f;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
-        }
-
-        /* 主视觉增强 */
-        .dev-title {
-            font-size: 2.9rem;
-            font-weight: 800;
-            color: var(--dark);
-            margin: 36px 0 24px 0;
-            letter-spacing: -0.02em;
-            background: linear-gradient(to right, #0b2b3b, var(--primary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .dev-intro {
-            background: var(--white);
-            border-radius: var(--border-radius);
-            padding: 32px 36px;
-            box-shadow: var(--shadow-md);
-            margin-bottom: 48px;
-            transition: all 0.2s;
-            border: 1px solid rgba(0, 0, 0, 0.02);
-        }
-
-        .dev-intro p {
-            font-size: 1.12rem;
-            margin-bottom: 24px;
-            color: #2c3e44;
-        }
-
-        .tech-stack {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 8px;
-        }
-
-        .tech-item {
-            background: var(--light);
-            padding: 8px 18px;
-            border-radius: 40px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--dark);
-            transition: 0.2s;
-            border: 1px solid #e2edf7;
-        }
-
-        .tech-item i {
-            color: var(--accent);
-            font-size: 1rem;
-        }
-
-        .tech-item:hover {
-            background: white;
-            border-color: var(--primary);
-            transform: translateY(-2px);
-        }
-
-        /* 主卡片 */
-        .dev-card {
-            background: var(--white);
-            border-radius: var(--card-radius);
-            padding: 40px 44px;
-            box-shadow: var(--shadow-lg);
-            margin-bottom: 60px;
-        }
-
-        .dev-card h3 {
-            font-size: 1.9rem;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 40px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            border-left: 5px solid var(--accent);
-            padding-left: 20px;
-        }
-
-        .timeline {
-            position: relative;
-            padding-left: 36px;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 12px;
-            top: 12px;
-            height: calc(100% - 30px);
-            width: 2.5px;
-            background: linear-gradient(to bottom, var(--primary), var(--accent));
-            border-radius: 4px;
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 70px;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -30px;
-            top: 8px;
-            width: 20px;
-            height: 20px;
-            background: var(--white);
-            border: 3px solid var(--primary);
-            border-radius: 50%;
-            z-index: 2;
-            box-shadow: 0 0 0 4px rgba(10, 77, 255, 0.15);
-        }
-
-        .timeline-date {
-            display: inline-flex;
-            align-items: baseline;
-            gap: 12px;
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--dark);
-            background: var(--light);
-            padding: 6px 20px;
-            border-radius: 40px;
-            margin-bottom: 18px;
-            flex-wrap: wrap;
-        }
-
-        .timeline-tag {
-            font-size: 0.75rem;
-            font-weight: 600;
-            background: var(--primary);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 30px;
-            letter-spacing: 0.5px;
-        }
-
-        .timeline-content {
-            background: var(--light);
-            border-radius: 24px;
-            padding: 24px 28px;
-            margin-bottom: 20px;
-            transition: all 0.2s;
-            border: 1px solid #eef2f8;
-        }
-
-        .timeline-content h4 {
-            font-size: 1.35rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: var(--primary-dark);
-        }
-
-        .timeline-content ul {
-            padding-left: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .timeline-content li {
-            margin-bottom: 4px;
-        }
-
-        /* 媒体样式加强 */
-        .media-preview {
-            margin: 16px 0 8px 0;
-            border-radius: 20px;
-            overflow: hidden;
-            background: #0a0f14;
-            display: inline-block;
-            width: 100%;
-            max-width: 680px;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .media-preview video,
-        .media-preview img {
-            width: 100%;
-            max-height: 420px;
-            object-fit: contain;
-            background: #0a0f14;
-            display: block;
-            border-radius: 18px;
-        }
-
-        .media-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 24px;
-            margin-top: 20px;
-        }
-
-        .media-group-item {
-            flex: 1;
-            min-width: 210px;
-            background: #fafcff;
-            border-radius: 20px;
-            padding: 12px;
-            text-align: center;
-            transition: 0.2s;
-            border: 1px solid #eef2f8;
-        }
-
-        .media-group-item img {
-            width: 100%;
-            max-height: 240px;
-            object-fit: contain;
-            border-radius: 16px;
-            background: #f0f2f5;
-        }
-
-        .media-caption {
-            font-size: 0.8rem;
-            margin-top: 10px;
-            font-weight: 500;
-            color: #4a627a;
-        }
-
-        /* 新增大事件高亮 */
-        .extra-highlight {
-            background: linear-gradient(120deg, rgba(255, 107, 43, 0.08), rgba(10, 77, 255, 0.04));
-            border-left: 3px solid var(--accent);
-            padding: 20px 26px;
-            border-radius: 20px;
-            margin-top: 24px;
-        }
-
-        .extra-highlight p {
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .extra-highlight i {
-            color: var(--accent);
-            font-size: 1.4rem;
-        }
-
-        /* 响应式 */
-        .footer {
-            border-top: 1px solid #e0e8f0;
-            padding: 32px 0;
-            text-align: center;
-            color: #5f6f82;
-        }
-
-        @media (max-width: 860px) {
-            .dev-card {
-                padding: 28px 20px;
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+        <title>2026ROBOCON仿生足式机器人比赛 | Gsing战队</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
             }
 
-            .timeline {
-                padding-left: 24px;
+            :root {
+                --primary: #0a4dff;
+                --primary-dark: #0037c1;
+                --accent: #ff6b2b;
+                --accent-glow: #ff8a4f;
+                --light: #f5f7fc;
+                --dark: #1a2634;
+                --gray: #4a5b6e;
+                --gray-light: #eef2f8;
+                --white: #ffffff;
+                --shadow-sm: 0 8px 20px rgba(0, 0, 0, 0.05);
+                --shadow-md: 0 12px 28px rgba(0, 0, 0, 0.08);
+                --shadow-lg: 0 20px 35px -10px rgba(0, 0, 0, 0.12);
+                --border-radius: 24px;
+                --card-radius: 28px;
             }
 
-            .timeline-item::before {
-                left: -20px;
+            body {
+                background: var(--light);
+                color: var(--gray);
+                font-family:
+                    "Inter",
+                    system-ui,
+                    "Segoe UI",
+                    "Microsoft YaHei",
+                    -apple-system,
+                    BlinkMacSystemFont,
+                    sans-serif;
+                line-height: 1.5;
+                scroll-behavior: smooth;
             }
 
-            .dev-title {
-                font-size: 2rem;
+            .container {
+                width: min(1280px, 92%);
+                margin: 0 auto;
             }
 
-            .dev-intro {
-                padding: 24px;
+            /* 头部升级 */
+            .header {
+                background: rgba(255, 255, 255, 0.94);
+                backdrop-filter: blur(14px);
+                box-shadow: var(--shadow-sm);
+                padding: 14px 0;
+                position: sticky;
+                top: 0;
+                z-index: 100;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.04);
             }
 
             .header-content {
-                justify-content: center;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 16px;
+            }
+
+            .logo {
+                font-size: 1.9rem;
+                font-weight: 800;
+                background: linear-gradient(135deg, var(--primary) 0%, #2b6eff 100%);
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+                text-decoration: none;
+                letter-spacing: -0.3px;
+            }
+
+            .logo span {
+                background: linear-gradient(135deg, var(--accent) 0%, #ff9940 100%);
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+            }
+
+            .header-actions {
+                display: flex;
+                align-items: center;
+                gap: 18px;
+                flex-wrap: wrap;
             }
 
             .project-info {
-                text-align: center;
+                text-align: right;
+                background: var(--white);
+                padding: 6px 20px;
+                border-radius: 60px;
+                box-shadow: var(--shadow-sm);
             }
 
-            .timeline-content h4 {
-                font-size: 1.2rem;
+            .project-name {
+                font-size: 1rem;
+                font-weight: 700;
+                color: var(--dark);
             }
-        }
 
-        @media (max-width: 560px) {
-            .media-group-item {
-                min-width: 100%;
+            .project-dates {
+                font-size: 0.8rem;
+                color: var(--primary);
+                font-weight: 500;
+            }
+
+            .home-link,
+            .github-link {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                padding: 8px 20px;
+                border-radius: 40px;
+                font-weight: 500;
+                transition: all 0.25s ease;
+                text-decoration: none;
+                font-size: 0.9rem;
+            }
+
+            .home-link {
+                background: var(--white);
+                color: var(--primary);
+                border: 1px solid #dce5f0;
+            }
+
+            .home-link:hover {
+                background: var(--primary);
+                color: white;
+                border-color: var(--primary);
+                transform: translateY(-2px);
+                box-shadow: 0 6px 14px rgba(10, 77, 255, 0.2);
+            }
+
+            .github-link {
+                background: var(--dark);
+                color: white;
+            }
+
+            .github-link:hover {
+                background: #0f2c3f;
+                transform: translateY(-2px);
+                box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+            }
+
+            /* 主视觉增强 */
+            .dev-title {
+                font-size: 2.9rem;
+                font-weight: 800;
+                color: var(--dark);
+                margin: 36px 0 24px 0;
+                letter-spacing: -0.02em;
+                background: linear-gradient(to right, #0b2b3b, var(--primary));
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+            }
+
+            .dev-intro {
+                background: var(--white);
+                border-radius: var(--border-radius);
+                padding: 32px 36px;
+                box-shadow: var(--shadow-md);
+                margin-bottom: 48px;
+                transition: all 0.2s;
+                border: 1px solid rgba(0, 0, 0, 0.02);
+            }
+
+            .dev-intro p {
+                font-size: 1.12rem;
+                margin-bottom: 24px;
+                color: #2c3e44;
+            }
+
+            .tech-stack {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 12px;
+                margin-top: 8px;
+            }
+
+            .tech-item {
+                background: var(--light);
+                padding: 8px 18px;
+                border-radius: 40px;
+                font-size: 0.9rem;
+                font-weight: 500;
+                display: inline-flex;
+                align-items: center;
+                gap: 10px;
+                color: var(--dark);
+                transition: 0.2s;
+                border: 1px solid #e2edf7;
+            }
+
+            .tech-item i {
+                color: var(--accent);
+                font-size: 1rem;
+            }
+
+            .tech-item:hover {
+                background: white;
+                border-color: var(--primary);
+                transform: translateY(-2px);
+            }
+
+            /* 主卡片 */
+            .dev-card {
+                background: var(--white);
+                border-radius: var(--card-radius);
+                padding: 40px 44px;
+                box-shadow: var(--shadow-lg);
+                margin-bottom: 60px;
+            }
+
+            .dev-card h3 {
+                font-size: 1.9rem;
+                font-weight: 700;
+                color: var(--dark);
+                margin-bottom: 40px;
+                display: flex;
+                align-items: center;
+                gap: 14px;
+                border-left: 5px solid var(--accent);
+                padding-left: 20px;
+            }
+
+            .timeline {
+                position: relative;
+                padding-left: 36px;
+            }
+
+            .timeline::before {
+                content: "";
+                position: absolute;
+                left: 12px;
+                top: 12px;
+                height: calc(100% - 30px);
+                width: 2.5px;
+                background: linear-gradient(to bottom, var(--primary), var(--accent));
+                border-radius: 4px;
+            }
+
+            .timeline-item {
+                position: relative;
+                margin-bottom: 70px;
+            }
+
+            .timeline-item::before {
+                content: "";
+                position: absolute;
+                left: -30px;
+                top: 8px;
+                width: 20px;
+                height: 20px;
+                background: var(--white);
+                border: 3px solid var(--primary);
+                border-radius: 50%;
+                z-index: 2;
+                box-shadow: 0 0 0 4px rgba(10, 77, 255, 0.15);
             }
 
             .timeline-date {
-                font-size: 1rem;
+                display: inline-flex;
+                align-items: baseline;
+                gap: 12px;
+                font-size: 1.2rem;
+                font-weight: 700;
+                color: var(--dark);
+                background: var(--light);
+                padding: 6px 20px;
+                border-radius: 40px;
+                margin-bottom: 18px;
+                flex-wrap: wrap;
             }
-        }
 
-        ::selection {
-            background: rgba(10, 77, 255, 0.2);
-        }
+            .timeline-tag {
+                font-size: 0.75rem;
+                font-weight: 600;
+                background: var(--primary);
+                color: white;
+                padding: 4px 12px;
+                border-radius: 30px;
+                letter-spacing: 0.5px;
+            }
 
-        .fallback-tip {
-            padding: 20px;
-            text-align: center;
-            background: #f0f3f9;
-            border-radius: 16px;
-            margin: 8px 0;
-            font-size: 0.85rem;
-            color: #6c7e91;
-        }
+            .timeline-content {
+                background: var(--light);
+                border-radius: 24px;
+                padding: 24px 28px;
+                margin-bottom: 20px;
+                transition: all 0.2s;
+                border: 1px solid #eef2f8;
+            }
 
-        /* 最新进度展示 */
-        .latest-update {
-            display: inline-block;
-            background: #ff6b2b10;
-            border-radius: 40px;
-            padding: 4px 12px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            color: var(--accent);
-            margin-left: 12px;
-        }
-    </style>
-</head>
+            .timeline-content h4 {
+                font-size: 1.35rem;
+                font-weight: 700;
+                margin-bottom: 16px;
+                color: var(--primary-dark);
+            }
 
-<body>
+            .timeline-content ul {
+                padding-left: 20px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
 
-    <header class="header">
-        <div class="container header-content">
-            <a href="http://0o0hyper0o0.cyou/pages/home/" class="logo">Gsing<span>Team</span></a>
-            <div class="header-actions">
-                <div class="project-info">
-                    <div class="project-name">⚡ 视觉 & 电控融合栈 · 全栈迭代</div>
-                    <div class="project-dates">2025.11.30 → 2026.05.29 持续演进</div>
+            .timeline-content li {
+                margin-bottom: 4px;
+            }
+
+            /* 媒体样式加强 */
+            .media-preview {
+                margin: 16px 0 8px 0;
+                border-radius: 20px;
+                overflow: hidden;
+                background: #0a0f14;
+                display: inline-block;
+                width: 100%;
+                max-width: 680px;
+                box-shadow: var(--shadow-sm);
+            }
+
+            .media-preview video,
+            .media-preview img {
+                width: 100%;
+                max-height: 420px;
+                object-fit: contain;
+                background: #0a0f14;
+                display: block;
+                border-radius: 18px;
+            }
+
+            .media-group {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 24px;
+                margin-top: 20px;
+            }
+
+            .media-group-item {
+                flex: 1;
+                min-width: 210px;
+                background: #fafcff;
+                border-radius: 20px;
+                padding: 12px;
+                text-align: center;
+                transition: 0.2s;
+                border: 1px solid #eef2f8;
+            }
+
+            .media-group-item img {
+                width: 100%;
+                max-height: 240px;
+                object-fit: contain;
+                border-radius: 16px;
+                background: #f0f2f5;
+            }
+
+            .media-caption {
+                font-size: 0.8rem;
+                margin-top: 10px;
+                font-weight: 500;
+                color: #4a627a;
+            }
+
+            /* 新增大事件高亮 */
+            .extra-highlight {
+                background: linear-gradient(
+                    120deg,
+                    rgba(255, 107, 43, 0.08),
+                    rgba(10, 77, 255, 0.04)
+                );
+                border-left: 3px solid var(--accent);
+                padding: 20px 26px;
+                border-radius: 20px;
+                margin-top: 24px;
+            }
+
+            .extra-highlight p {
+                font-weight: 500;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                flex-wrap: wrap;
+            }
+
+            .extra-highlight i {
+                color: var(--accent);
+                font-size: 1.4rem;
+            }
+
+            /* 响应式 */
+            .footer {
+                border-top: 1px solid #e0e8f0;
+                padding: 32px 0;
+                text-align: center;
+                color: #5f6f82;
+            }
+
+            @media (max-width: 860px) {
+                .dev-card {
+                    padding: 28px 20px;
+                }
+
+                .timeline {
+                    padding-left: 24px;
+                }
+
+                .timeline-item::before {
+                    left: -20px;
+                }
+
+                .dev-title {
+                    font-size: 2rem;
+                }
+
+                .dev-intro {
+                    padding: 24px;
+                }
+
+                .header-content {
+                    justify-content: center;
+                }
+
+                .project-info {
+                    text-align: center;
+                }
+
+                .timeline-content h4 {
+                    font-size: 1.2rem;
+                }
+            }
+
+            @media (max-width: 560px) {
+                .media-group-item {
+                    min-width: 100%;
+                }
+
+                .timeline-date {
+                    font-size: 1rem;
+                }
+            }
+
+            ::selection {
+                background: rgba(10, 77, 255, 0.2);
+            }
+
+            .fallback-tip {
+                padding: 20px;
+                text-align: center;
+                background: #f0f3f9;
+                border-radius: 16px;
+                margin: 8px 0;
+                font-size: 0.85rem;
+                color: #6c7e91;
+            }
+
+            /* 最新进度展示 */
+            .latest-update {
+                display: inline-block;
+                background: #ff6b2b10;
+                border-radius: 40px;
+                padding: 4px 12px;
+                font-size: 0.7rem;
+                font-weight: 600;
+                color: var(--accent);
+                margin-left: 12px;
+            }
+
+            html {
+                scroll-padding-top: 110px;
+            }
+            .dev-card h2 {
+                font-size: clamp(1.35rem, 3vw, 1.9rem);
+                color: var(--dark);
+                margin-bottom: 20px;
+            }
+            .archive-nav {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 12px;
+                margin: 0 0 32px;
+            }
+            .archive-nav a,
+            .archive-download {
+                display: inline-block;
+                color: var(--primary);
+                padding: 10px 16px;
+                border: 1px solid #dce5f0;
+                border-radius: 12px;
+                text-decoration: none;
+                background: white;
+            }
+            .archive-intro {
+                margin-bottom: 24px;
+                line-height: 1.8;
+            }
+            .archive-date {
+                color: var(--primary);
+                font-weight: 600;
+                margin-bottom: 10px;
+            }
+            .archive-grid {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 24px;
+            }
+            .archive-photo {
+                margin: 0;
+                min-width: 0;
+            }
+            .archive-photo img {
+                display: block;
+                width: 100%;
+                height: auto;
+                max-height: 440px;
+                object-fit: contain;
+                background: #eef2f8;
+                border-radius: 16px;
+            }
+            .archive-photo figcaption {
+                padding: 10px 0;
+                font-size: 0.9rem;
+            }
+            .award-grid {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 28px;
+            }
+            .award-card h3 {
+                font-size: 1.2rem;
+                margin-bottom: 16px;
+                padding-left: 12px;
+            }
+            .award-card img {
+                width: 100%;
+                height: auto;
+                display: block;
+                border: 1px solid #ead8b9;
+                border-radius: 8px;
+                margin-bottom: 16px;
+            }
+            .archive-video {
+                display: block;
+                width: 100%;
+                max-height: 650px;
+                background: #0a0f14;
+                border-radius: 16px;
+                margin: 20px 0;
+            }
+            .archive-nav a:hover,
+            .archive-download:hover {
+                background: #eef2f8;
+            }
+            a:focus-visible {
+                outline: 3px solid var(--accent);
+                outline-offset: 4px;
+            }
+            @media (max-width: 560px) {
+                .archive-grid,
+                .award-grid {
+                    grid-template-columns: 1fr;
+                }
+                .archive-nav a {
+                    font-size: 0.85rem;
+                }
+            }
+            .archive-grid.single-photo-column {
+                grid-template-columns: minmax(0, 1fr);
+                max-width: 640px;
+                margin: 24px auto;
+                gap: 32px;
+            }
+            .single-photo-column .archive-photo img {
+                max-height: 560px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <header class="header">
+            <div class="container header-content">
+                <a href="http://0o0hyper0o0.cyou/pages/home/" class="logo"
+                    >Gsing<span>Team</span></a
+                >
+                <div class="header-actions">
+                    <div class="project-info">
+                        <div class="project-name">⚡ 视觉 & 电控融合栈 · 全栈迭代</div>
+                        <div class="project-dates">2025.11 → 2026.08 开发与赛事记录</div>
+                    </div>
+                    <a href="http://0o0hyper0o0.cyou/pages/home/" class="home-link">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>返回首页</span>
+                    </a>
+                    <a
+                        href="https://github.com/hyper152/Gsing-log"
+                        target="_blank"
+                        class="github-link"
+                    >
+                        <i class="fab fa-github"></i>
+                        <span>源码仓库</span>
+                    </a>
                 </div>
-                <a href="http://0o0hyper0o0.cyou/pages/home/" class="home-link">
-                    <i class="fas fa-arrow-left"></i>
-                    <span>返回首页</span>
-                </a>
-                <a href="https://github.com/hyper152/Gsing-log" target="_blank" class="github-link">
-                    <i class="fab fa-github"></i>
-                    <span>源码仓库</span>
-                </a>
             </div>
-        </div>
-    </header>
+        </header>
 
-    <main class="container dev-log">
-        <h1 class="dev-title">📌 Gsing 战队 · 智能系统演进实录 <span class="latest-update"><i class="fas fa-microchip"></i> 最新:
-                雷达重定位 & 物资搬运闭环</span></h1>
+        <main class="container dev-log">
+            <h1 class="dev-title">
+                2026ROBOCON仿生足式机器人比赛
+                <span class="latest-update"
+                    ><i class="fas fa-microchip"></i> 最新: ROBOCON 团队荣誉 &amp;
+                    七月比赛记录</span
+                >
+            </h1>
 
-        <section class="dev-intro">
-            <p>从底层硬件控制到上层智能感知，Gsing战队完成了机械臂/OLED调试、电控转视觉的技术跃迁，基于YOLO实现高精度算题识别，并拓展至激光雷达SLAM建图与自主定位，最新阶段融合机械臂自主抓取。全链路自主开发，打造闭环机器人系统。
+            <section class="dev-intro">
+                <p>
+                    从底层硬件控制到上层智能感知，Gsing战队完成了机械臂/OLED调试、电控转视觉的技术跃迁，基于YOLO实现高精度算题识别，并拓展至激光雷达SLAM建图与自主定位，随后融合机械臂自主抓取，并走向七月
+                    ROBOCON
+                    赛场。本页整理开发过程、比赛现场，以及团队获得的障碍赛二等奖与任务赛三等奖。
+                </p>
+                <div class="tech-stack">
+                    <div class="tech-item"><i class="fas fa-microchip"></i> 嵌入式开发</div>
+                    <div class="tech-item"><i class="fas fa-cogs"></i> 机械臂运动学</div>
+                    <div class="tech-item"><i class="fas fa-chart-line"></i> YOLOv8</div>
+                    <div class="tech-item">
+                        <i class="fas fa-square-root-variable"></i> 算术题识别
+                    </div>
+                    <div class="tech-item"><i class="fas fa-map"></i> FAST-LIO2</div>
+                    <div class="tech-item"><i class="fas fa-location-arrow"></i> 自主导航</div>
+                    <div class="tech-item"><i class="fas fa-globe"></i> ROS / Rviz</div>
+                    <div class="tech-item"><i class="fas fa-hand-peace"></i> 视觉抓取</div>
+                    <div class="tech-item"><i class="fas fa-box"></i> 物资搬运</div>
+                    <div class="tech-item"><i class="fas fa-sync-alt"></i> 雷达重定位</div>
+                </div>
+            </section>
+
+            <section class="dev-card" id="milestones">
+                <h2>开发与比赛记录 · 按时间顺序</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">
+                            2025.11.30 <span class="timeline-tag">入队测试</span>
+                        </div>
+                        <div class="timeline-content">
+                            <h4>入队测试 · 机械臂调试</h4>
+                            <p>入队测试中的机械臂调试记录。</p>
+                        </div>
+                        <div class="media-preview">
+                            <video
+                                aria-label="入队测试 · 机械臂调试视频"
+                                controls=""
+                                playsinline=""
+                                poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='100%25' height='100%25' fill='%231a2634'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23aaa' font-size='12'%3E机械臂演示%3C/text%3E%3C/svg%3E"
+                                preload="none"
+                                src="../../../media/pages/devlog/Gsing/2025-11-30-完成机械臂调试.mp4"
+                            ></video>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">
+                            2025.12.17 <span class="timeline-tag">👁️ 机器视觉转型</span>
+                        </div>
+                        <div class="timeline-content">
+                            <h4>电控 → 视觉 跨越 | YOLO推理栈落地</h4>
+                            <ul>
+                                <li>🚀 从STM32底层逻辑转向Linux + 视觉处理管线，搭建ROS桥接</li>
+                                <li>
+                                    📦 部署YOLOv8环境，CUDA加速 &amp;
+                                    依赖项完整解决，TensorRT优化尝试
+                                </li>
+                                <li>🎯 调用官方预训练模型，实现实时目标检测(mAP&gt;0.85)</li>
+                                <li>📸 多分辨率压测，优化推理帧率至35ms/帧，引入多线程流水线</li>
+                            </ul>
+                        </div>
+                        <div class="media-preview">
+                            <video
+                                controls=""
+                                playsinline=""
+                                preload="none"
+                                src="../../../media/pages/devlog/Gsing/2025-12-17-电控转视觉后完成YOLO环境搭建和官方模型的调用.mp4"
+                            ></video>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">
+                            2025.12.26 <span class="timeline-tag">视觉识别</span>
+                        </div>
+                        <div class="timeline-content">
+                            <h4>视觉物资箱识别 · YOLO 对比测试</h4>
+                            <p>YOLO 物资箱识别测试：在画面中显示物资类别、检测框与置信度。</p>
+                        </div>
+                        <div class="media-preview">
+                            <video
+                                aria-label="YOLO 物资箱识别对比测试"
+                                controls=""
+                                playsinline=""
+                                poster="../../../media/pages/devlog/Gsing/2025-12-26-yolo-1500封面.webp"
+                                preload="none"
+                            >
+                                <source
+                                    src="../../../media/pages/devlog/Gsing/2025-12-26-yolo-1500.mp4"
+                                    type="video/mp4"
+                                />
+                            </video>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">
+                            2026.01.31 <span class="timeline-tag">🧮 算题识别引擎</span>
+                        </div>
+                        <div class="timeline-content">
+                            <h4>OCR+YOLO混合架构 · 自动算术求解</h4>
+                            <ul>
+                                <li>
+                                    🔢
+                                    自建数字/运算符数据集，微调YOLO模型提升识别鲁棒性，支持复杂算式
+                                </li>
+                                <li>
+                                    ✂️ 字符分割 + CNN分类器，适应手写/打印混合字体，增加倾斜校正
+                                </li>
+                                <li>
+                                    🧠 表达式解析器支持四则运算与括号，准确率96.7%并输出可视化结果
+                                </li>
+                                <li>📱 端到端流程：图像采集→识别→计算→显示结果，支持串口回传</li>
+                            </ul>
+                        </div>
+                        <div class="media-preview">
+                            <img
+                                alt="算题识别结果展示 - 自动计算器"
+                                src="../../../media/pages/devlog/Gsing/2026-01-31-%E5%AE%8C%E6%88%90%E7%AE%97%E9%A2%98%E8%AF%86%E5%88%AB%E5%B9%B6%E8%AE%A1%E7%AE%97.webp"
+                            />
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2026.03.02</div>
+                        <div class="timeline-content"><h4>路径规划调试</h4></div>
+                        <div class="archive-grid">
+                            <figure class="archive-photo">
+                                <a
+                                    aria-label="查看原图：路径规划界面"
+                                    href="../../../media/pages/devlog/Gsing/%E7%B2%BE%E9%80%89/160-2026-3-2%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92.jpg"
+                                    rel="noopener"
+                                    target="_blank"
+                                    ><img
+                                        alt="路径规划界面"
+                                        decoding="async"
+                                        height="884"
+                                        loading="lazy"
+                                        src="../../../media/pages/devlog/Gsing/%E7%B2%BE%E9%80%89/160-2026-3-2%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92.webp"
+                                        width="1920"
+                                /></a>
+                                <figcaption>路径规划界面</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">
+                            2026.03.06 <span class="timeline-tag">🗺️ 全局/局部规划</span>
+                        </div>
+                        <div class="timeline-content">
+                            <h4>ROS + Gazebo 路径规划仿真验证</h4>
+                            <ul>
+                                <li>
+                                    🤖 搭建差分驱动模型，A* &amp; Dijkstra
+                                    全局规划对比，效率提升明显
+                                </li>
+                                <li>🔄 集成DWA局部规划器，动态避障策略调优，支持行人模拟</li>
+                                <li>📈 仿真环境随机障碍物测试，路径重规划效率提升26%</li>
+                                <li>
+                                    🎥 生成轨迹评估报告，为实车部署提供依据，加入costmap动态更新
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="media-preview">
+                            <video
+                                controls=""
+                                playsinline=""
+                                preload="none"
+                                src="../../../media/pages/devlog/Gsing/2026-03-06-路径规划仿真.mp4"
+                            ></video>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">
+                            2026.03.14 <span class="timeline-tag">📡 激光SLAM建图</span>
+                        </div>
+                        <div class="timeline-content">
+                            <h4>FAST-LIO2 紧耦合建图，高精度点云生成</h4>
+                            <ul>
+                                <li>📡 配置Livox/16线雷达驱动，数据预处理去畸变，适配室内外场景</li>
+                                <li>⚙️ 基于IMU紧耦合，室内外建图轨迹漂移≤0.3%，闭环检测优化</li>
+                                <li>🏗️ 实时构建稠密点云地图，细节保真度极高，支持动态物体滤除</li>
+                                <li>🧩 地图后处理与octomap转换，支持导航复用与三维避障</li>
+                            </ul>
+                        </div>
+                        <div class="media-preview">
+                            <img
+                                alt="FAST-LIO2 实时建图效果 | 点云地图"
+                                src="../../../media/pages/devlog/Gsing/2026-03-14-%E9%9B%B7%E8%BE%BEfastlio2%E5%BB%BA%E5%9B%BE.webp"
+                            />
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">
+                            2026.03.20 <span class="timeline-tag">📍 自主定位·导航闭环</span>
+                        </div>
+                        <div class="timeline-content">
+                            <h4>融合定位系统 | Rviz可视化 + 实物验证</h4>
+                            <ul>
+                                <li>🎯 基于已构建地图实现实时定位与蒙特卡洛粒子滤波(AMCL)</li>
+                                <li>📡 激光雷达+里程计融合，定位精度±2cm，多传感器冗余</li>
+                                <li>📺 完整Rviz调试界面，显示TF树与路径规划状态、全局地图一致性</li>
+                                <li>🏁 完成移动底盘自主导航到目标点，全链路贯通，自主避障成功</li>
+                            </ul>
+                        </div>
+                        <div class="media-group">
+                            <div class="media-group-item">
+                                <img
+                                    alt="终端定位信息输出"
+                                    src="../../../media/pages/devlog/Gsing/2026-03-20-%E9%9B%B7%E8%BE%BE%E5%AE%9A%E4%BD%8D%E7%BB%88%E7%AB%AF%E6%98%BE%E7%A4%BA.webp"
+                                />
+                                <div class="media-caption">
+                                    💻 终端输出 / 定位置信度 &amp; 协方差数据
+                                </div>
+                            </div>
+                        </div>
+                        <div class="archive-grid">
+                            <figure class="archive-photo">
+                                <a
+                                    aria-label="查看原图：雷达点云中的目标"
+                                    href="../../../media/pages/devlog/Gsing/%E7%B2%BE%E9%80%89/165-%E7%AB%8B%E6%96%B9%E4%BD%93%E8%AF%86%E5%88%AB%20%283%29.jpg"
+                                    rel="noopener"
+                                    target="_blank"
+                                    ><img
+                                        alt="雷达点云中的目标"
+                                        decoding="async"
+                                        height="1200"
+                                        loading="lazy"
+                                        src="../../../media/pages/devlog/Gsing/%E7%B2%BE%E9%80%89/165-%E7%AB%8B%E6%96%B9%E4%BD%93%E8%AF%86%E5%88%AB%20%283%29.webp"
+                                        width="1920"
+                                /></a>
+                                <figcaption>雷达点云中的目标</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2026.03.25</div>
+                        <div class="timeline-content"><h4>实验室里的机器人调试</h4></div>
+                        <div class="archive-grid">
+                            <figure class="archive-photo">
+                                <a
+                                    aria-label="查看原图：实验室里的机器人调试"
+                                    href="../../../media/pages/devlog/Gsing/%E7%B2%BE%E9%80%89/006-IMG_20260325_215305.jpg"
+                                    rel="noopener"
+                                    target="_blank"
+                                    ><img
+                                        alt="实验室里的机器人调试"
+                                        decoding="async"
+                                        height="885"
+                                        loading="lazy"
+                                        src="../../../media/pages/devlog/Gsing/%E7%B2%BE%E9%80%89/006-IMG_20260325_215305.webp"
+                                        width="1920"
+                                /></a>
+                                <figcaption>实验室里的机器人调试</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2026.03.28</div>
+                        <div class="timeline-content"><h4>物资箱识别与机械结构联调</h4></div>
+                        <div class="archive-grid">
+                            <figure class="archive-photo">
+                                <a
+                                    aria-label="查看原图：物资箱识别实物联调"
+                                    href="../../../media/pages/devlog/Gsing/%E7%B2%BE%E9%80%89/149-2026-03-28-%E7%AB%8B%E6%96%B9%E4%BD%93%E8%AF%86%E5%88%AB%E5%AE%9E%E7%89%A9%E5%9B%BE.jpg"
+                                    rel="noopener"
+                                    target="_blank"
+                                    ><img
+                                        alt="物资箱识别实物联调"
+                                        decoding="async"
+                                        height="885"
+                                        loading="lazy"
+                                        src="../../../media/pages/devlog/Gsing/%E7%B2%BE%E9%80%89/149-2026-03-28-%E7%AB%8B%E6%96%B9%E4%BD%93%E8%AF%86%E5%88%AB%E5%AE%9E%E7%89%A9%E5%9B%BE.webp"
+                                        width="1920"
+                                /></a>
+                                <figcaption>物资箱识别实物联调</figcaption>
+                            </figure>
+                            <figure class="archive-photo">
+                                <a
+                                    aria-label="查看原图：一起检查机械结构"
+                                    href="../../../media/pages/devlog/Gsing/%E7%B2%BE%E9%80%89/007-IMG_20260328_171741.jpg"
+                                    rel="noopener"
+                                    target="_blank"
+                                    ><img
+                                        alt="一起检查机械结构"
+                                        decoding="async"
+                                        height="885"
+                                        loading="lazy"
+                                        src="../../../media/pages/devlog/Gsing/%E7%B2%BE%E9%80%89/007-IMG_20260328_171741.webp"
+                                        width="1920"
+                                /></a>
+                                <figcaption>一起检查机械结构</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">
+                            2026.04.17
+                            <span class="timeline-tag" style="background: #ff6b2b"
+                                >🤖 视觉伺服抓取</span
+                            >
+                        </div>
+                        <div class="timeline-content">
+                            <h4>基于视觉的机械臂自主抓取 · 识别+定位+抓取闭环</h4>
+                            <ul>
+                                <li>🎯 集成YOLO目标检测与深度相机，获取目标物体3D位姿</li>
+                                <li>🦾 机械臂逆运动学求解，生成无碰撞抓取轨迹，支持动态调整</li>
+                                <li>📦 手眼标定完成，视觉引导重复定位精度±3mm</li>
+                                <li>
+                                    ✅ 完整抓取演示：识别待抓取物 → 规划路径 → 自适应抓取 →
+                                    放置指定区域
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="media-preview">
+                            <video
+                                controls=""
+                                playsinline=""
+                                preload="none"
+                                src="../../../media/pages/devlog/Gsing/2026-04-17-机械臂抓取.mp4"
+                            ></video>
+                        </div>
+                        <div class="extra-highlight">
+                            <p>
+                                <i class="fas fa-trophy"></i>
+                                里程碑突破：视觉+机械臂+移动底盘全栈融合，实现"识别-导航-抓取"完整机器人任务闭环！
+                            </p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">
+                            2026.05.07
+                            <span class="timeline-tag" style="background: #2ecc71"
+                                >📦 物资搬运</span
+                            >
+                        </div>
+                        <div class="timeline-content">
+                            <h4>机械臂自主拾取物资箱 · 背负式运输</h4>
+                            <ul>
+                                <li>🎯 视觉定位物资箱位置，机械臂自主规划抓取姿态</li>
+                                <li>🦾 完成"拾取→举升→放置到背上"全流程，实现物资背负运输</li>
+                                <li>⚖️ 负载测试与重心调节，确保移动底盘行驶稳定性</li>
+                                <li>✅ 打通"识别-抓取-背负-运输"完整链路，向实战场景迈进</li>
+                            </ul>
+                        </div>
+                        <div class="media-preview">
+                            <video
+                                controls=""
+                                playsinline=""
+                                preload="none"
+                                src="../../../media/pages/devlog/Gsing/2026-05-07-拾取物资箱到背上.mp4"
+                            ></video>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">
+                            2026.05.29
+                            <span class="timeline-tag" style="background: #9b59b6"
+                                >📍 雷达重定位</span
+                            >
+                        </div>
+                        <div class="timeline-content">
+                            <h4>FAST-LIO2 重定位 &amp; 大场景闭环优化</h4>
+                            <ul>
+                                <li>📡 基于已构建地图的全局重定位，开机即定位无需重新建图</li>
+                                <li>⚙️ ICP配准算法优化，重定位收敛速度提升40%</li>
+                                <li>🗺️ 大场景闭环检测，消除累积漂移，地图一致性大幅提高</li>
+                                <li>🏁 多场景压测验证：室内/室外/楼层切换均稳定重定位</li>
+                            </ul>
+                        </div>
+                        <div class="media-preview">
+                            <video
+                                controls=""
+                                muted=""
+                                playsinline=""
+                                preload="none"
+                                src="../../../media/pages/devlog/Gsing/2026-05-29-雷达重定位-无声.mp4"
+                            ></video>
+                        </div>
+                        <div class="extra-highlight">
+                            <p>
+                                <i class="fas fa-trophy"></i>
+                                里程碑突破：从建图到重定位，实现"一次建图、反复使用"的自主导航闭环！
+                            </p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">
+                            2026.07.05 <span class="timeline-tag">SLAM 导航</span>
+                        </div>
+                        <div class="timeline-content">
+                            <h4>SLAM 导航调试 · 实物与 Rviz 对照</h4>
+                            <p>实物机器人的移动过程与 Rviz 导航界面对照记录。</p>
+                        </div>
+                        <video
+                            aria-label="SLAM 导航调试视频"
+                            class="archive-video"
+                            controls=""
+                            muted=""
+                            playsinline=""
+                            poster="../../../media/pages/devlog/Gsing/2026-07-05-SLAM导航封面.webp"
+                            preload="none"
+                        >
+                            <source
+                                src="../../../media/pages/devlog/Gsing/2026-07-05-SLAM导航-无声.mp4"
+                                type="video/mp4"
+                            />
+                        </video>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2026.07.10</div>
+                        <div class="timeline-content"><h4>从重庆出发</h4></div>
+                        <div class="archive-grid">
+                            <figure class="archive-photo">
+                                <a
+                                    aria-label="查看原图：7 月 10 日 · 从重庆出发"
+                                    href="../../../media/pages/devlog/Gsing/%E7%B2%BE%E9%80%89/022-IMG_20260710_201933.jpg"
+                                    rel="noopener"
+                                    target="_blank"
+                                    ><img
+                                        alt="7 月 10 日 · 从重庆出发"
+                                        decoding="async"
+                                        height="1080"
+                                        loading="lazy"
+                                        src="../../../media/pages/devlog/Gsing/%E7%B2%BE%E9%80%89/022-IMG_20260710_201933.webp"
+                                        width="1920"
+                                /></a>
+                                <figcaption>7 月 10 日 · 从重庆出发</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2026.07.11</div>
+                        <div class="timeline-content"><h4>抵达江阴校区，开始场地测试</h4></div>
+                        <div class="archive-grid">
+                            <figure class="archive-photo">
+                                <a
+                                    aria-label="查看原图：7 月 11 日 · 抵达江阴校区"
+                                    href="../../../media/pages/devlog/Gsing/%E7%B2%BE%E9%80%89/033-IMG_20260711_104101.jpg"
+                                    rel="noopener"
+                                    target="_blank"
+                                    ><img
+                                        alt="7 月 11 日 · 抵达江阴校区"
+                                        decoding="async"
+                                        height="1140"
+                                        loading="lazy"
+                                        src="../../../media/pages/devlog/Gsing/%E7%B2%BE%E9%80%89/033-IMG_20260711_104101.webp"
+                                        width="1920"
+                                /></a>
+                                <figcaption>7 月 11 日 · 抵达江阴校区</figcaption>
+                            </figure>
+                            <figure class="archive-photo">
+                                <a
+                                    aria-label="查看原图：7 月 11 日 · 场地上的机器人测试"
+                                    href="../../../media/pages/devlog/Gsing/%E7%B2%BE%E9%80%89/036-IMG_20260711_112747.jpg"
+                                    rel="noopener"
+                                    target="_blank"
+                                    ><img
+                                        alt="7 月 11 日 · 场地上的机器人测试"
+                                        decoding="async"
+                                        height="1080"
+                                        loading="lazy"
+                                        src="../../../media/pages/devlog/Gsing/%E7%B2%BE%E9%80%89/036-IMG_20260711_112747.webp"
+                                        width="1920"
+                                /></a>
+                                <figcaption>7 月 11 日 · 场地上的机器人测试</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2026.07.12</div>
+                        <div class="timeline-content"><h4>凌晨继续联调</h4></div>
+                        <div class="archive-grid">
+                            <figure class="archive-photo">
+                                <a
+                                    aria-label="查看原图：7 月 12 日 · 凌晨继续联调"
+                                    href="../../../media/pages/devlog/Gsing/%E7%B2%BE%E9%80%89/050-IMG_20260712_034245.jpg"
+                                    rel="noopener"
+                                    target="_blank"
+                                    ><img
+                                        alt="7 月 12 日 · 凌晨继续联调"
+                                        decoding="async"
+                                        height="1080"
+                                        loading="lazy"
+                                        src="../../../media/pages/devlog/Gsing/%E7%B2%BE%E9%80%89/050-IMG_20260712_034245.webp"
+                                        width="1920"
+                                /></a>
+                                <figcaption>7 月 12 日 · 凌晨继续联调</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2026.07.13</div>
+                        <div class="timeline-content"><h4>机器人与物资箱</h4></div>
+                        <div class="archive-grid">
+                            <figure class="archive-photo">
+                                <a
+                                    aria-label="查看原图：7 月 13 日 · 机器人与物资箱"
+                                    href="../../../media/pages/devlog/Gsing/%E7%B2%BE%E9%80%89/062-IMG_20260713_041110.jpg"
+                                    rel="noopener"
+                                    target="_blank"
+                                    ><img
+                                        alt="7 月 13 日 · 机器人与物资箱"
+                                        decoding="async"
+                                        height="1080"
+                                        loading="lazy"
+                                        src="../../../media/pages/devlog/Gsing/%E7%B2%BE%E9%80%89/062-IMG_20260713_041110.webp"
+                                        width="1920"
+                                /></a>
+                                <figcaption>7 月 13 日 · 机器人与物资箱</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2026.07.14</div>
+                        <div class="timeline-content"><h4>房间里的临时工作台</h4></div>
+                        <div class="archive-grid">
+                            <figure class="archive-photo">
+                                <a
+                                    aria-label="查看原图：7 月 14 日 · 房间里的临时工作台"
+                                    href="../../../media/pages/devlog/Gsing/%E7%B2%BE%E9%80%89/077-IMG_20260714_200351.jpg"
+                                    rel="noopener"
+                                    target="_blank"
+                                    ><img
+                                        alt="7 月 14 日 · 房间里的临时工作台"
+                                        decoding="async"
+                                        height="1080"
+                                        loading="lazy"
+                                        src="../../../media/pages/devlog/Gsing/%E7%B2%BE%E9%80%89/077-IMG_20260714_200351.webp"
+                                        width="1920"
+                                /></a>
+                                <figcaption>7 月 14 日 · 房间里的临时工作台</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2026.07.16</div>
+                        <div class="timeline-content">
+                            <h4>成功拾取并放置</h4>
+                            <p>机器人成功完成物资箱拾取与放置，记录现场操作过程。</p>
+                        </div>
+                        <video
+                            aria-label="成功拾取并放置视频"
+                            class="archive-video"
+                            controls=""
+                            playsinline=""
+                            poster="../../../media/pages/devlog/Gsing/2026-07-16-成功拾取并放置封面.webp"
+                            preload="none"
+                        >
+                            <source
+                                src="../../../media/pages/devlog/Gsing/2026-07-16-成功拾取并放置.mp4"
+                                type="video/mp4"
+                            />
+                        </video>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2026.07 · 比赛留影</div>
+                        <div class="timeline-content"><h4>ROBOCON · 比赛现场与赛后留影</h4></div>
+                        <div class="archive-grid single-photo-column">
+                            <figure class="archive-photo">
+                                <a
+                                    aria-label="查看原图：ROBOCON 比赛现场"
+                                    href="../../../media/pages/devlog/Gsing/%E7%B2%BE%E9%80%89/%E6%AF%94%E8%B5%9B%E7%85%A7%E7%89%87.jpg"
+                                    rel="noopener"
+                                    target="_blank"
+                                    ><img
+                                        alt="ROBOCON 比赛现场"
+                                        decoding="async"
+                                        height="1280"
+                                        loading="lazy"
+                                        src="../../../media/pages/devlog/Gsing/%E7%B2%BE%E9%80%89/%E6%AF%94%E8%B5%9B%E7%85%A7%E7%89%87.webp"
+                                        width="1920"
+                                /></a>
+                                <figcaption>ROBOCON 比赛现场</figcaption>
+                            </figure>
+                            <figure class="archive-photo">
+                                <a
+                                    aria-label="查看原图：比赛结束后，和队友一起离场"
+                                    href="../../../media/pages/devlog/Gsing/%E7%B2%BE%E9%80%89/133-mmexport1784205697937.jpg"
+                                    rel="noopener"
+                                    target="_blank"
+                                    ><img
+                                        alt="比赛结束后，和队友一起离场"
+                                        decoding="async"
+                                        height="1440"
+                                        loading="lazy"
+                                        src="../../../media/pages/devlog/Gsing/%E7%B2%BE%E9%80%89/133-mmexport1784205697937.webp"
+                                        width="1920"
+                                /></a>
+                                <figcaption>比赛结束后，和队友一起离场</figcaption>
+                            </figure>
+                            <figure class="archive-photo">
+                                <a
+                                    aria-label="查看原图：ROBOCON 现场 · 重庆大学团队合照"
+                                    href="../../../media/pages/devlog/Gsing/%E7%B2%BE%E9%80%89/135-mmexport1784205777658.jpg"
+                                    rel="noopener"
+                                    target="_blank"
+                                    ><img
+                                        alt="ROBOCON 现场 · 重庆大学团队合照"
+                                        decoding="async"
+                                        height="1280"
+                                        loading="lazy"
+                                        src="../../../media/pages/devlog/Gsing/%E7%B2%BE%E9%80%89/135-mmexport1784205777658.webp"
+                                        width="1920"
+                                /></a>
+                                <figcaption>ROBOCON 现场 · 重庆大学团队合照</figcaption>
+                            </figure>
+                            <figure class="archive-photo">
+                                <a
+                                    aria-label="查看原图：赛场灯光与队旗"
+                                    href="../../../media/pages/devlog/Gsing/%E7%B2%BE%E9%80%89/136-mmexport1784260510883.jpg"
+                                    rel="noopener"
+                                    target="_blank"
+                                    ><img
+                                        alt="赛场灯光与队旗"
+                                        decoding="async"
+                                        height="1080"
+                                        loading="lazy"
+                                        src="../../../media/pages/devlog/Gsing/%E7%B2%BE%E9%80%89/136-mmexport1784260510883.webp"
+                                        width="1920"
+                                /></a>
+                                <figcaption>赛场灯光与队旗</figcaption>
+                            </figure>
+                            <figure class="archive-photo">
+                                <a
+                                    aria-label="查看原图：比赛场地上的机器人"
+                                    href="../../../media/pages/devlog/Gsing/%E7%B2%BE%E9%80%89/140-%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20260728000648_44493_11.jpg"
+                                    rel="noopener"
+                                    target="_blank"
+                                    ><img
+                                        alt="比赛场地上的机器人"
+                                        decoding="async"
+                                        height="1706"
+                                        loading="lazy"
+                                        src="../../../media/pages/devlog/Gsing/%E7%B2%BE%E9%80%89/140-%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20260728000648_44493_11.webp"
+                                        width="1279"
+                                /></a>
+                                <figcaption>比赛场地上的机器人</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2026.08 · 团队荣誉</div>
+                        <div class="timeline-content">
+                            <h4>第二十五届 ROBOCON · 障碍赛二等奖、任务赛三等奖</h4>
+                        </div>
+                        <p class="archive-intro">
+                            重庆大学仿生足式机器人挑战赛 2 队 · 全体队员<br />障碍赛二等奖，任务赛三等奖。两份团队证书，记录共同完成的这一程。
+                        </p>
+                        <div class="award-grid">
+                            <article class="award-card">
+                                <h3>障碍赛 · 二等奖</h3>
+                                <a
+                                    href="../../../media/pages/devlog/Gsing/%E5%9B%A2%E9%98%9F%E8%8D%A3%E8%AA%89/%E5%A5%96%E7%8A%B6_%E9%98%9F%E4%BC%8D_%E4%BA%8C%E7%AD%89%E5%A5%96.pdf"
+                                    rel="noopener"
+                                    target="_blank"
+                                    ><img
+                                        alt="重庆大学仿生足式机器人挑战赛2队 · 障碍赛 · 二等奖团队获奖证书"
+                                        height="1400"
+                                        loading="lazy"
+                                        src="../../../media/pages/devlog/Gsing/%E5%9B%A2%E9%98%9F%E8%8D%A3%E8%AA%89/award-2.webp"
+                                        width="990" /></a
+                                ><a
+                                    class="archive-download"
+                                    download=""
+                                    href="../../../media/pages/devlog/Gsing/%E5%9B%A2%E9%98%9F%E8%8D%A3%E8%AA%89/%E5%A5%96%E7%8A%B6_%E9%98%9F%E4%BC%8D_%E4%BA%8C%E7%AD%89%E5%A5%96.pdf"
+                                    >下载团队奖状 PDF · 13.6 MB ↓</a
+                                >
+                            </article>
+                            <article class="award-card">
+                                <h3>任务赛 · 三等奖</h3>
+                                <a
+                                    href="../../../media/pages/devlog/Gsing/%E5%9B%A2%E9%98%9F%E8%8D%A3%E8%AA%89/%E5%A5%96%E7%8A%B6_%E9%98%9F%E4%BC%8D_%E4%B8%89%E7%AD%89%E5%A5%96.pdf"
+                                    rel="noopener"
+                                    target="_blank"
+                                    ><img
+                                        alt="重庆大学仿生足式机器人挑战赛2队 · 任务赛 · 三等奖团队获奖证书"
+                                        height="1400"
+                                        loading="lazy"
+                                        src="../../../media/pages/devlog/Gsing/%E5%9B%A2%E9%98%9F%E8%8D%A3%E8%AA%89/award-3.webp"
+                                        width="990" /></a
+                                ><a
+                                    class="archive-download"
+                                    download=""
+                                    href="../../../media/pages/devlog/Gsing/%E5%9B%A2%E9%98%9F%E8%8D%A3%E8%AA%89/%E5%A5%96%E7%8A%B6_%E9%98%9F%E4%BC%8D_%E4%B8%89%E7%AD%89%E5%A5%96.pdf"
+                                    >下载团队奖状 PDF · 13.6 MB ↓</a
+                                >
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>© 2026 Gsing战队 · 从机械臂到SLAM，从视觉抓取到自主导航，全栈智能机器人研发</p>
+            <p
+                style="
+                    margin-top: 14px;
+                    display: flex;
+                    justify-content: center;
+                    gap: 28px;
+                    flex-wrap: wrap;
+                "
+            >
+                <a
+                    href="https://github.com/hyper152/Gsing-log"
+                    target="_blank"
+                    style="color: var(--primary); text-decoration: none; font-weight: 500"
+                >
+                    <i class="fab fa-github"></i> GitHub 完整记录
+                </a>
+                <span style="color: #aaa">|</span>
+                <a
+                    href="http://0o0hyper0o0.cyou/pages/home/"
+                    style="color: var(--accent); text-decoration: none"
+                >
+                    <i class="fas fa-globe"></i> Gsing 官网
+                </a>
             </p>
-            <div class="tech-stack">
-                <div class="tech-item"><i class="fas fa-microchip"></i> 嵌入式开发</div>
-                <div class="tech-item"><i class="fas fa-cogs"></i> 机械臂运动学</div>
-                <div class="tech-item"><i class="fas fa-chart-line"></i> YOLOv8</div>
-                <div class="tech-item"><i class="fas fa-square-root-variable"></i> 算术题识别</div>
-                <div class="tech-item"><i class="fas fa-map"></i> FAST-LIO2</div>
-                <div class="tech-item"><i class="fas fa-location-arrow"></i> 自主导航</div>
-                <div class="tech-item"><i class="fas fa-globe"></i> ROS / Rviz</div>
-                <div class="tech-item"><i class="fas fa-hand-peace"></i> 视觉抓取</div>
-                <div class="tech-item"><i class="fas fa-box"></i> 物资搬运</div>
-                <div class="tech-item"><i class="fas fa-sync-alt"></i> 雷达重定位</div>
-            </div>
-        </section>
+        </footer>
 
-        <section class="dev-card">
-            <h3><i class="fas fa-timeline"></i> 开发里程碑 · 全周期迭代</h3>
-            <div class="timeline">
-
-                <!-- 1. 机械臂调试 2025.11.30 -->
-                <div class="timeline-item">
-                    <div class="timeline-date">2025.11.30 <span class="timeline-tag">🦾 三轴调试</span></div>
-                    <div class="timeline-content">
-                        <h4>三轴机械臂全功能调通 & 控制优化</h4>
-                        <ul>
-                            <li>✅ 关节角度校准与软限位保护机制，安全范围控制</li>
-                            <li>✅ 舵机驱动PID参数整定，控制平滑度提升32%</li>
-                            <li>✅ 完成抓取-移动-放置闭环动作，适配多负载场景</li>
-                            <li>✅ 开发简易示教指令，支持位置复现与轨迹记录</li>
-                        </ul>
-                    </div>
-                    <div class="media-preview">
-                        <video controls preload="metadata" src="../../../media/pages/devlog/Gsing/2025-11-30-完成机械臂调试.mp4"
-                            poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='100%25' height='100%25' fill='%231a2634'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23aaa' font-size='12'%3E机械臂演示%3C/text%3E%3C/svg%3E"></video>
-                    </div>
-                </div>
-
-                <!-- 2. OLED调试 2025.12.09 -->
-                <div class="timeline-item">
-                    <div class="timeline-date">2025.12.09 <span class="timeline-tag">📟 OLED显示</span></div>
-                    <div class="timeline-content">
-                        <h4>0.96寸OLED驱动 & UI 显示框架</h4>
-                        <ul>
-                            <li>🔧 I2C/SPI协议适配，低延迟刷新策略，支持多级菜单</li>
-                            <li>📊 显示自定义字符、动态数值、简易波形与调试信息</li>
-                            <li>⚡ 双缓冲机制解决画面撕裂，帧率提升至50fps</li>
-                            <li>🔄 与主控MCU完成双向通信，状态实时反馈及参数调节</li>
-                        </ul>
-                    </div>
-                    <div class="media-preview">
-                        <video controls preload="metadata" src="../../../media/pages/devlog/Gsing/2025-12-09-完成OLED调试.mp4"></video>
-                    </div>
-                </div>
-
-                <!-- 3. YOLO环境搭建 & 电控转视觉 2025.12.17 -->
-                <div class="timeline-item">
-                    <div class="timeline-date">2025.12.17 <span class="timeline-tag">👁️ 机器视觉转型</span></div>
-                    <div class="timeline-content">
-                        <h4>电控 → 视觉 跨越 | YOLO推理栈落地</h4>
-                        <ul>
-                            <li>🚀 从STM32底层逻辑转向Linux + 视觉处理管线，搭建ROS桥接</li>
-                            <li>📦 部署YOLOv8环境，CUDA加速 & 依赖项完整解决，TensorRT优化尝试</li>
-                            <li>🎯 调用官方预训练模型，实现实时目标检测(mAP>0.85)</li>
-                            <li>📸 多分辨率压测，优化推理帧率至35ms/帧，引入多线程流水线</li>
-                        </ul>
-                    </div>
-                    <div class="media-preview">
-                        <video controls preload="metadata" src="../../../media/pages/devlog/Gsing/2025-12-17-电控转视觉后完成YOLO环境搭建和官方模型的调用.mp4"></video>
-                    </div>
-                </div>
-
-                <!-- 4. 算题识别 2026.01.31 -->
-                <div class="timeline-item">
-                    <div class="timeline-date">2026.01.31 <span class="timeline-tag">🧮 算题识别引擎</span></div>
-                    <div class="timeline-content">
-                        <h4>OCR+YOLO混合架构 · 自动算术求解</h4>
-                        <ul>
-                            <li>🔢 自建数字/运算符数据集，微调YOLO模型提升识别鲁棒性，支持复杂算式</li>
-                            <li>✂️ 字符分割 + CNN分类器，适应手写/打印混合字体，增加倾斜校正</li>
-                            <li>🧠 表达式解析器支持四则运算与括号，准确率96.7%并输出可视化结果</li>
-                            <li>📱 端到端流程：图像采集→识别→计算→显示结果，支持串口回传</li>
-                        </ul>
-                    </div>
-                    <div class="media-preview">
-                        <img src="../../../media/pages/devlog/Gsing/2026-01-31-%E5%AE%8C%E6%88%90%E7%AE%97%E9%A2%98%E8%AF%86%E5%88%AB%E5%B9%B6%E8%AE%A1%E7%AE%97.webp" alt="算题识别结果展示 - 自动计算器">
-                    </div>
-                </div>
-
-                <!-- 5. 路径规划仿真 2026.03.06 -->
-                <div class="timeline-item">
-                    <div class="timeline-date">2026.03.06 <span class="timeline-tag">🗺️ 全局/局部规划</span></div>
-                    <div class="timeline-content">
-                        <h4>ROS + Gazebo 路径规划仿真验证</h4>
-                        <ul>
-                            <li>🤖 搭建差分驱动模型，A* & Dijkstra 全局规划对比，效率提升明显</li>
-                            <li>🔄 集成DWA局部规划器，动态避障策略调优，支持行人模拟</li>
-                            <li>📈 仿真环境随机障碍物测试，路径重规划效率提升26%</li>
-                            <li>🎥 生成轨迹评估报告，为实车部署提供依据，加入costmap动态更新</li>
-                        </ul>
-                    </div>
-                    <div class="media-preview">
-                        <video controls preload="metadata" src="../../../media/pages/devlog/Gsing/2026-03-06-路径规划仿真.mp4"></video>
-                    </div>
-                </div>
-
-                <!-- 6. FAST-LIO2 建图 2026.03.14 -->
-                <div class="timeline-item">
-                    <div class="timeline-date">2026.03.14 <span class="timeline-tag">📡 激光SLAM建图</span></div>
-                    <div class="timeline-content">
-                        <h4>FAST-LIO2 紧耦合建图，高精度点云生成</h4>
-                        <ul>
-                            <li>📡 配置Livox/16线雷达驱动，数据预处理去畸变，适配室内外场景</li>
-                            <li>⚙️ 基于IMU紧耦合，室内外建图轨迹漂移≤0.3%，闭环检测优化</li>
-                            <li>🏗️ 实时构建稠密点云地图，细节保真度极高，支持动态物体滤除</li>
-                            <li>🧩 地图后处理与octomap转换，支持导航复用与三维避障</li>
-                        </ul>
-                    </div>
-                    <div class="media-preview">
-                        <img src="../../../media/pages/devlog/Gsing/2026-03-14-%E9%9B%B7%E8%BE%BEfastlio2%E5%BB%BA%E5%9B%BE.webp" alt="FAST-LIO2 实时建图效果 | 点云地图">
-                    </div>
-                </div>
-
-                <!-- 7. 雷达定位集成 2026.03.20 (三图组合) -->
-                <div class="timeline-item">
-                    <div class="timeline-date">2026.03.20 <span class="timeline-tag">📍 自主定位·导航闭环</span></div>
-                    <div class="timeline-content">
-                        <h4>融合定位系统 | Rviz可视化 + 实物验证</h4>
-                        <ul>
-                            <li>🎯 基于已构建地图实现实时定位与蒙特卡洛粒子滤波(AMCL)</li>
-                            <li>📡 激光雷达+里程计融合，定位精度±2cm，多传感器冗余</li>
-                            <li>📺 完整Rviz调试界面，显示TF树与路径规划状态、全局地图一致性</li>
-                            <li>🏁 完成移动底盘自主导航到目标点，全链路贯通，自主避障成功</li>
-                        </ul>
-                    </div>
-                    <div class="media-group">
-                        <div class="media-group-item">
-                            <img src="../../../media/pages/devlog/Gsing/2026-03-20-%E9%9B%B7%E8%BE%BE%E5%AE%9A%E4%BD%8DRviz%E5%9B%BE.webp" alt="Rviz全局定位与导航图">
-                            <div class="media-caption">📌 Rviz 定位可视化 / 实时位姿 & 全局规划</div>
-                        </div>
-                        <div class="media-group-item">
-                            <img src="../../../media/pages/devlog/Gsing/2026-03-20-%E9%9B%B7%E8%BE%BE%E5%AE%9A%E4%BD%8D%E5%AE%9E%E7%89%A9%E5%9B%BE.webp" alt="实物机器人雷达定位场景">
-                            <div class="media-caption">🤖 实物机器人自主定位测试 / 校园场景</div>
-                        </div>
-                        <div class="media-group-item">
-                            <img src="../../../media/pages/devlog/Gsing/2026-03-20-%E9%9B%B7%E8%BE%BE%E5%AE%9A%E4%BD%8D%E7%BB%88%E7%AB%AF%E6%98%BE%E7%A4%BA.webp" alt="终端定位信息输出">
-                            <div class="media-caption">💻 终端输出 / 定位置信度 & 协方差数据</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 8. 新增: 机械臂抓取 2026.04.17 最终集成闭环 -->
-                <div class="timeline-item">
-                    <div class="timeline-date">2026.04.17 <span class="timeline-tag" style="background:#ff6b2b;">🤖
-                            视觉伺服抓取</span></div>
-                    <div class="timeline-content">
-                        <h4>基于视觉的机械臂自主抓取 · 识别+定位+抓取闭环</h4>
-                        <ul>
-                            <li>🎯 集成YOLO目标检测与深度相机，获取目标物体3D位姿</li>
-                            <li>🦾 机械臂逆运动学求解，生成无碰撞抓取轨迹，支持动态调整</li>
-                            <li>📦 手眼标定完成，视觉引导重复定位精度±3mm</li>
-                            <li>✅ 完整抓取演示：识别待抓取物 → 规划路径 → 自适应抓取 → 放置指定区域</li>
-                        </ul>
-                    </div>
-                    <div class="media-preview">
-                        <video controls preload="metadata" src="../../../media/pages/devlog/Gsing/2026-04-17-机械臂抓取.mp4"></video>
-                    </div>
-                    <div class="extra-highlight">
-                        <p><i class="fas fa-trophy"></i> 里程碑突破：视觉+机械臂+移动底盘全栈融合，实现"识别-导航-抓取"完整机器人任务闭环！</p>
-                    </div>
-                </div>
-
-                <!-- 9. 新增: 拾取物资箱到背上 2026.05.07 -->
-                <div class="timeline-item">
-                    <div class="timeline-date">2026.05.07 <span class="timeline-tag" style="background:#2ecc71;">📦
-                            物资搬运</span></div>
-                    <div class="timeline-content">
-                        <h4>机械臂自主拾取物资箱 · 背负式运输</h4>
-                        <ul>
-                            <li>🎯 视觉定位物资箱位置，机械臂自主规划抓取姿态</li>
-                            <li>🦾 完成"拾取→举升→放置到背上"全流程，实现物资背负运输</li>
-                            <li>⚖️ 负载测试与重心调节，确保移动底盘行驶稳定性</li>
-                            <li>✅ 打通"识别-抓取-背负-运输"完整链路，向实战场景迈进</li>
-                        </ul>
-                    </div>
-                    <div class="media-preview">
-                        <video controls preload="metadata" src="../../../media/pages/devlog/Gsing/2026-05-07-拾取物资箱到背上.mp4"></video>
-                    </div>
-                </div>
-
-                <!-- 10. 新增: 雷达重定位 2026.05.29 -->
-                <div class="timeline-item">
-                    <div class="timeline-date">2026.05.29 <span class="timeline-tag" style="background:#9b59b6;">📍
-                            雷达重定位</span></div>
-                    <div class="timeline-content">
-                        <h4>FAST-LIO2 重定位 & 大场景闭环优化</h4>
-                        <ul>
-                            <li>📡 基于已构建地图的全局重定位，开机即定位无需重新建图</li>
-                            <li>⚙️ ICP配准算法优化，重定位收敛速度提升40%</li>
-                            <li>🗺️ 大场景闭环检测，消除累积漂移，地图一致性大幅提高</li>
-                            <li>🏁 多场景压测验证：室内/室外/楼层切换均稳定重定位</li>
-                        </ul>
-                    </div>
-                    <div class="media-preview">
-                        <video controls preload="metadata" src="../../../media/pages/devlog/Gsing/2026-05-29-雷达重定位.mp4"></video>
-                    </div>
-                    <div class="extra-highlight">
-                        <p><i class="fas fa-trophy"></i> 里程碑突破：从建图到重定位，实现"一次建图、反复使用"的自主导航闭环！</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="footer">
-        <p>© 2026 Gsing战队 · 从机械臂到SLAM，从视觉抓取到自主导航，全栈智能机器人研发</p>
-        <p style="margin-top: 14px; display: flex; justify-content: center; gap: 28px; flex-wrap: wrap;">
-            <a href="https://github.com/hyper152/Gsing-log" target="_blank"
-                style="color: var(--primary); text-decoration: none; font-weight: 500;">
-                <i class="fab fa-github"></i> GitHub 完整记录
-            </a>
-            <span style="color: #aaa;">|</span>
-            <a href="http://0o0hyper0o0.cyou/pages/home/" style="color: var(--accent); text-decoration: none;">
-                <i class="fas fa-globe"></i> Gsing 官网
-            </a>
-        </p>
-    </footer>
-
-    <script>
-        (function () {
-            // 媒体容错处理，优雅降级，若本地资源缺失则显示占位提示
-            const mediaElements = document.querySelectorAll('video, img');
-            mediaElements.forEach(el => {
-                el.addEventListener('error', function (e) {
-                    if (el.tagName === 'IMG') {
-                        el.alt = '⚙️ 媒体文件预览不可用，请确认资源路径 (media/目录)';
-                        el.style.opacity = '0.7';
-                        el.style.background = '#eef2f8';
-                        el.style.objectFit = 'contain';
-                        // 添加友好占位文字效果 (通过伪类不方便，直接设置父级? 简单显示替代)
-                        if (!el.parentElement.querySelector('.img-placeholder-note')) {
-                            const note = document.createElement('div');
-                            note.className = 'fallback-tip';
-                            note.style.marginTop = '4px';
-                            note.style.fontSize = '0.7rem';
-                            note.innerText = '📁 图片未找到，请检查 media 目录与文件名是否匹配';
-                            el.parentElement.appendChild(note);
-                        }
-                    } else if (el.tagName === 'VIDEO') {
-                        const parent = el.parentElement;
-                        if (parent && !parent.querySelector('.fallback-tip')) {
-                            const tip = document.createElement('div');
-                            tip.className = 'fallback-tip';
-                            tip.innerText = '🎬 视频暂不可用，请确认文件路径（media/*.mp4）或检查服务器配置';
-                            parent.appendChild(tip);
-                            el.style.display = 'none';
-                        } else if (!parent.querySelector('.fallback-tip')) {
-                            const tip = document.createElement('div');
-                            tip.className = 'fallback-tip';
-                            tip.innerText = '🎬 视频加载失败，请检查资源';
-                            parent.appendChild(tip);
-                            el.style.display = 'none';
-                        }
-                    }
-                });
-                // 对于视频，尝试加载，避免控制台过于嘈杂
-                if (el.tagName === 'VIDEO') {
-                    el.addEventListener('loadeddata', () => {
-                        // 如果之前有错误占位则移除（重新加载时）
-                        const parent = el.parentElement;
-                        if (parent) {
-                            const errDiv = parent.querySelector('.fallback-tip');
-                            if (errDiv && el.style.display !== 'none') errDiv.remove();
-                            el.style.display = 'block';
+        <script>
+            (function () {
+                // 媒体容错处理，优雅降级，若本地资源缺失则显示占位提示
+                const mediaElements = document.querySelectorAll("video, img");
+                mediaElements.forEach((el) => {
+                    el.addEventListener("error", function (e) {
+                        if (el.tagName === "IMG") {
+                            el.alt = "⚙️ 媒体文件预览不可用，请确认资源路径 (media/目录)";
+                            el.style.opacity = "0.7";
+                            el.style.background = "#eef2f8";
+                            el.style.objectFit = "contain";
+                            // 添加友好占位文字效果 (通过伪类不方便，直接设置父级? 简单显示替代)
+                            if (!el.parentElement.querySelector(".img-placeholder-note")) {
+                                const note = document.createElement("div");
+                                note.className = "fallback-tip";
+                                note.style.marginTop = "4px";
+                                note.style.fontSize = "0.7rem";
+                                note.innerText = "📁 图片未找到，请检查 media 目录与文件名是否匹配";
+                                el.parentElement.appendChild(note);
+                            }
+                        } else if (el.tagName === "VIDEO") {
+                            const parent = el.parentElement;
+                            if (parent && !parent.querySelector(".fallback-tip")) {
+                                const tip = document.createElement("div");
+                                tip.className = "fallback-tip";
+                                tip.innerText =
+                                    "🎬 视频暂不可用，请确认文件路径（media/*.mp4）或检查服务器配置";
+                                parent.appendChild(tip);
+                                el.style.display = "none";
+                            } else if (parent && !parent.querySelector(".fallback-tip")) {
+                                const tip = document.createElement("div");
+                                tip.className = "fallback-tip";
+                                tip.innerText = "🎬 视频加载失败，请检查资源";
+                                parent.appendChild(tip);
+                                el.style.display = "none";
+                            }
                         }
                     });
-                }
-            });
-            // 修正路径包含中文空格的可能性——不做额外操作，保持原src，提示用户
-            console.log("Gsing战队融合开发记录 | 若媒体无法显示请确认media目录与文件名是否匹配");
-        })();
-    </script>
-</body>
-
+                    // 对于视频，尝试加载，避免控制台过于嘈杂
+                    if (el.tagName === "VIDEO") {
+                        el.addEventListener("loadeddata", () => {
+                            // 如果之前有错误占位则移除（重新加载时）
+                            const parent = el.parentElement;
+                            if (parent) {
+                                const errDiv = parent.querySelector(".fallback-tip");
+                                if (errDiv && el.style.display !== "none") errDiv.remove();
+                                el.style.display = "block";
+                            }
+                        });
+                    }
+                });
+                // 修正路径包含中文空格的可能性——不做额外操作，保持原src，提示用户
+                console.log(
+                    "Gsing战队融合开发记录 | 若媒体无法显示请确认media目录与文件名是否匹配",
+                );
+            })();
+        </script>
+    </body>
 </html>
