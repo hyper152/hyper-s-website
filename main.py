@@ -29,6 +29,11 @@ from collections import defaultdict
 from http.server import CGIHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import unquote, urlparse
 
+try:
+    from src import knowledge_base
+except Exception as e:
+    knowledge_base = None
+
 # ===================== PROXY Protocol 解析器（纯Python实现） =====================
 class SimpleProxyProtocol:
     """简单的 PROXY Protocol v2 解析器"""
@@ -312,19 +317,24 @@ def count_visit():
     """计数访问量（线程安全）"""
     with _count_lock:
         try:
-            if not os.path.exists(VISIT_COUNT_FILE):
-                with open(VISIT_COUNT_FILE, 'w', encoding='utf-8') as f:
-                    json.dump({"count": 0, "total_visits": 0}, f)
-            
-            with open(VISIT_COUNT_FILE, 'r+', encoding='utf-8') as f:
-                data = json.load(f)
-                current_count = data.get("count", 0)
-                data["count"] = current_count + 1
-                data["total_visits"] = data["count"]
-                data["update_time"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                f.seek(0)
+            data = {}
+            if os.path.exists(VISIT_COUNT_FILE):
+                with open(VISIT_COUNT_FILE, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+
+            # 兼容旧版只保存 total_visits 的数据，避免升级后从 0 重新计数。
+            current_count = int(data.get("count", data.get("total_visits", 0)) or 0)
+            data["count"] = current_count + 1
+            data["total_visits"] = data["count"]
+            data["update_time"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+            # 原子替换，接口不会在文件写到一半时读到损坏的 JSON。
+            temp_file = VISIT_COUNT_FILE + '.tmp'
+            with open(temp_file, 'w', encoding='utf-8') as f:
                 json.dump(data, f, ensure_ascii=False, indent=4)
-                f.truncate()
+                f.flush()
+                os.fsync(f.fileno())
+            os.replace(temp_file, VISIT_COUNT_FILE)
             return data["count"]
         except Exception as e:
             logger.error(f"计数失败：{e}")
@@ -332,15 +342,16 @@ def count_visit():
 
 def get_total_visits():
     """获取总访问量"""
-    try:
-        if not os.path.exists(VISIT_COUNT_FILE):
+    with _count_lock:
+        try:
+            if not os.path.exists(VISIT_COUNT_FILE):
+                return 0
+            with open(VISIT_COUNT_FILE, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            return int(data.get("count", data.get("total_visits", 0)) or 0)
+        except Exception as e:
+            logger.error(f"获取计数失败：{e}")
             return 0
-        with open(VISIT_COUNT_FILE, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-        return data.get("count", data.get("total_visits", 0))
-    except Exception as e:
-        logger.error(f"获取计数失败：{e}")
-        return 0
 
 def get_session_id_from_request(request_handler):
     """从请求中获取session_id"""
@@ -786,6 +797,11 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
             self.send_error(403, "Forbidden")
             return
 
+        # seekdb 网站知识库搜索接口（不依赖 Flask）
+        if path == '/api/knowledge/search':
+            self._handle_knowledge_search()
+            return
+
         # 直接处理 AI 问题保存接口
         if path == '/api/ollama/save-ai-question':
             content_length = int(self.headers.get('Content-Length', 0))
@@ -831,6 +847,34 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
             self._forward_to_flask()
             return
         super().do_POST()
+
+    def _handle_knowledge_search(self):
+        try:
+            content_length = int(self.headers.get('Content-Length', 0))
+            if content_length <= 0 or content_length > Config.MAX_POST_SIZE:
+                raise ValueError("请求内容为空或过大")
+            payload = json.loads(self.rfile.read(content_length).decode('utf-8'))
+            if knowledge_base is None:
+                raise RuntimeError("知识库模块加载失败")
+            results = knowledge_base.search(
+                payload.get('query'),
+                os.path.join(data_dir, 'seekdb'),
+                payload.get('limit', 5),
+            )
+            body = {"code": 200, "message": "success", "data": results}
+            status = 200
+        except (ValueError, json.JSONDecodeError) as e:
+            body, status = {"code": 400, "message": str(e), "data": []}, 400
+        except Exception as e:
+            logger.error(f"知识库搜索失败：{e}")
+            body, status = {"code": 503, "message": str(e), "data": []}, 503
+        encoded = json.dumps(body, ensure_ascii=False).encode('utf-8')
+        self.send_response(status)
+        self.send_header('Content-Type', 'application/json; charset=utf-8')
+        self.send_header('Content-Length', str(len(encoded)))
+        self.send_header('Cache-Control', 'no-store')
+        self.end_headers()
+        self.wfile.write(encoded)
 
     def do_DELETE(self):
         """处理DELETE请求"""
@@ -891,25 +935,23 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
 
     def _handle_visit_count(self):
         """处理访问计数请求"""
+        total = get_total_visits()
         self.send_response(200)
         self.send_header("Content-type", "application/json; charset=utf-8")
+        # 访问数是实时数据，禁止浏览器/CDN复用曾经缓存的 0。
+        self.send_header("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0")
+        self.send_header("Pragma", "no-cache")
+        self.send_header("Expires", "0")
         self.end_headers()
-        
-        try:
-            if os.path.exists(VISIT_COUNT_FILE):
-                with open(VISIT_COUNT_FILE, 'r', encoding='utf-8') as f:
-                    data = json.load(f)
-            else:
-                total = get_total_visits()
-                data = {"count": total, "total_visits": total, "update_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
-        except:
-            total = get_total_visits()
-            data = {"count": total, "total_visits": total, "update_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
-        
+
         self.wfile.write(json.dumps({
-            "code": 200, 
+            "code": 200,
             "message": "success",
-            "data": data
+            "data": {
+                "count": total,
+                "total_visits": total,
+                "update_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            }
         }, ensure_ascii=False).encode('utf-8'))
 
     def _forward_to_flask(self):

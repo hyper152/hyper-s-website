@@ -915,7 +915,9 @@
         async function loadVisitCount() {
             try {
                 // 尝试获取真实计数，如果失败则显示模拟值
-                const response = await fetch('../../../visit-count').catch(() => null);
+                const response = await fetch(`/visit-count?t=${Date.now()}`, {
+                    cache: 'no-store'
+                }).catch(() => null);
                 if (response && response.ok) {
                     const data = await response.json();
                     let totalVisits = 0;

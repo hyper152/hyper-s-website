@@ -1561,6 +1561,15 @@
                     <h3 style="font-size: 1.3rem">AI 助手</h3>
                     <p style="font-size: 0.95rem">和hyper的Ollama 模型聊天</p>
                 </a>
+                <a
+                    class="category-card"
+                    href="/talk/knowledge-search.html"
+                    style="margin: 0; padding: 28px 40px"
+                >
+                    <i class="fas fa-database" style="font-size: 3rem"></i>
+                    <h3 style="font-size: 1.3rem">AI 知识库</h3>
+                    <p style="font-size: 0.95rem">用 seekdb 语义搜索本站内容</p>
+                </a>
             </div>
             <!-- ===== 分隔符 ===== -->
             <!-- ===== 最新动态标题 ===== -->
@@ -1733,16 +1742,21 @@
             // ===== 加载访问计数 =====
             async function loadVisitCount() {
                 try {
-                    const response = await fetch("/visit-count");
+                    const response = await fetch(`/visit-count?t=${Date.now()}`, {
+                        cache: "no-store",
+                    });
+                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
                     const data = await response.json();
 
-                    let totalVisits = 0;
-                    if (data.code === 200 && data.data) totalVisits = data.data.total_visits;
-                    else if (data.total_visits) totalVisits = data.total_visits;
-                    else if (data.count) totalVisits = data.count;
+                    const rawCount = data?.data?.total_visits
+                        ?? data?.data?.count
+                        ?? data?.total_visits
+                        ?? data?.count;
+                    const totalVisits = Number(rawCount);
+                    if (!Number.isFinite(totalVisits)) throw new Error("访问计数格式无效");
 
-                    document.getElementById("visitCounterNumber").textContent = totalVisits || 0;
-                    document.getElementById("footerVisitNumber").textContent = totalVisits || 0;
+                    document.getElementById("visitCounterNumber").textContent = totalVisits;
+                    document.getElementById("footerVisitNumber").textContent = totalVisits;
                 } catch (error) {
                     console.error("获取访问计数出错:", error);
                 }

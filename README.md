@@ -24,6 +24,7 @@
 - **访问计数** — 全站访问量统计，持久化存储，线程安全
 - **邮件通知** — QQ 邮箱 SMTP 验证码发送，支持环境变量配置
 - **AI 助手** — 基于 Ollama 的本地大模型聊天
+- **AI 知识库** — 基于 OceanBase seekdb 的网站内容语义检索
 - **IP 归属地** — 访客 IP 分析，支持城市级定位
 - **限流保护** — 按 IP 限流，防止恶意请求
 - **路径保护** — 禁止访问 `data/` 等敏感目录，防止路径遍历攻击
@@ -33,7 +34,7 @@
 ### 1. 安装依赖
 
 ```bash
-pip install flask requests
+pip install -r requirements.txt
 ```
 
 ### 2. 配置环境变量（可选）
@@ -48,6 +49,33 @@ export MESSAGE_BOARD_SECRET="your_secret_key"
 ```bash
 python main.py
 ```
+
+首次使用 AI 知识库前，扫描网站内容并建立向量索引：
+
+```bash
+python src/knowledge_base.py
+```
+
+`pyseekdb` 的 Python 嵌入式模式目前仅支持 Linux。Windows 开发环境请先启动
+seekdb Docker：
+
+```powershell
+docker volume create hyper-seekdb
+docker run -d --name hyper-seekdb -p 2881:2881 -p 2886:2886 `
+  -e ROOT_PASSWORD=Seekdb123456 -e SEEKDB_DATABASE=hyper_site `
+  -v hyper-seekdb:/var/lib/oceanbase oceanbase/seekdb:latest
+
+$env:SEEKDB_HOST = "127.0.0.1"
+$env:SEEKDB_PASSWORD = "Seekdb123456"
+python src/knowledge_base.py
+python main.py
+```
+
+启动网站与重建索引时须使用相同的 `SEEKDB_*` 环境变量。Linux 可以不设置
+`SEEKDB_HOST`，直接使用默认的 `data/seekdb` 嵌入式数据库。
+
+文章发生变化后重新执行该命令即可更新索引。知识库页面地址为
+`http://localhost:8000/talk/knowledge-search.html`。
 
 访问 [http://localhost:8000/home/](http://localhost:8000/home/) 即可查看首页。
 
