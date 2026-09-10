@@ -149,10 +149,11 @@ SHOW DATABASES;
 USE hyper_site;
 SHOW TABLES;
 SELECT collection_name FROM sdk_collections;
+SELECT title, url, source FROM site_pages_readable LIMIT 20;
 EXIT;
 ```
 
-名称类似 `c$v2$...` 的表是 seekdb 自动维护的内部向量表，不要直接修改。网站知识库应通过 `src/knowledge_base.py` 和 `pyseekdb` 管理。
+`site_pages_readable` 是供人工查看的只读视图，包含 `chunk_id`、`title`、`url`、`source` 和 `content`。名称类似 `c$v2$...` 的表是 seekdb 根据 Collection ID 自动维护的物理向量表，不是错误表名，不要重命名、修改或删除。网站知识库应通过 `src/knowledge_base.py` 和 `pyseekdb` 管理；每次重建索引时，可读视图会自动更新到新的物理表。
 
 常用容器命令：
 

@@ -83,6 +83,48 @@ def _create_client(db_path):
         raise
 
 
+def _sync_readable_view(drop_only=False):
+    """为 SDK 物理表维护一个稳定、易读的只读 SQL 视图。"""
+    host = os.environ.get("SEEKDB_HOST", "").strip()
+    if not host:
+        return
+    import pymysql
+
+    connection = pymysql.connect(
+        host=host,
+        port=int(os.environ.get("SEEKDB_PORT", "2881")),
+        user=os.environ.get("SEEKDB_USER", "root"),
+        password=os.environ.get("SEEKDB_PASSWORD", ""),
+        database=os.environ.get("SEEKDB_DATABASE", "hyper_site"),
+        charset="utf8mb4",
+        autocommit=True,
+    )
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute("DROP VIEW IF EXISTS site_pages_readable")
+            if drop_only:
+                return
+            cursor.execute(
+                "SELECT collection_id FROM sdk_collections WHERE collection_name=%s",
+                (COLLECTION_NAME,),
+            )
+            row = cursor.fetchone()
+            if not row or not re.fullmatch(r"[0-9a-f]{32}", row[0]):
+                return
+            physical_table = f"c$v2${row[0]}"
+            cursor.execute(f"""
+                CREATE VIEW site_pages_readable AS
+                SELECT CONVERT(`_id` USING utf8mb4) AS chunk_id,
+                       JSON_UNQUOTE(JSON_EXTRACT(`metadata`, '$.title')) AS title,
+                       JSON_UNQUOTE(JSON_EXTRACT(`metadata`, '$.url')) AS url,
+                       JSON_UNQUOTE(JSON_EXTRACT(`metadata`, '$.source')) AS source,
+                       `document` AS content
+                FROM `{physical_table}`
+            """)
+    finally:
+        connection.close()
+
+
 def _get_collection(db_path):
     global _client, _collection
     with _lock:
@@ -150,6 +192,7 @@ def build_index(site_root, db_path):
                 metadatas.append({"title": title, "url": _page_url(relative), "source": relative.as_posix()})
 
     client = _create_client(db_path)
+    _sync_readable_view(drop_only=True)
     try:
         client.delete_collection(COLLECTION_NAME)
     except Exception:
@@ -164,6 +207,7 @@ def build_index(site_root, db_path):
         )
     if ids:
         collection.refresh_index()
+    _sync_readable_view()
     with _lock:
         _collection = collection
     return {"pages": page_count, "chunks": len(ids)}

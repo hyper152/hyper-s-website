@@ -1,8 +1,25 @@
-__pycache__/
-media/
-data/
-logs/
-run.md
-*.crt
+# Authentication data and secrets
+.env
+.env.*
+!.env.example
+data/users.json
+data/sessions.json
+certs/
 *.key
 *.pem
+*.pfx
+*.p12
+
+# Runtime and audit logs
+logs/
+*.log
+data/visitor.json
+data/ai.json
+
+# Docker/seekdb runtime handles (PID, socket and Linux symlink)
+data/seekdb-server/run/
+data/seekdb-server/**/*.db-shm
+data/seekdb-server/**/*.db-wal
+
+media/
+*.pyc
