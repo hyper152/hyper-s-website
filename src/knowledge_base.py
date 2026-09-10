@@ -9,6 +9,13 @@ from urllib.parse import quote
 
 
 COLLECTION_NAME = "site_pages"
+EXCLUDED_PAGES = {
+    "pages/home/index.html",
+    "pages/login/index.html",
+    "pages/login/register.html",
+    "talk/ai-chat.html",
+    "talk/comment.html",
+}
 _client = None
 _collection = None
 _lock = threading.RLock()
@@ -124,14 +131,14 @@ def build_index(site_root, db_path):
         if not base.exists():
             continue
         for html_file in sorted(base.rglob("*.html")):
-            if html_file.name == "knowledge-search.html":
+            relative = html_file.relative_to(site_root)
+            if html_file.name == "knowledge-search.html" or relative.as_posix() in EXCLUDED_PAGES:
                 continue
             try:
                 parser = _TextExtractor()
                 parser.feed(html_file.read_text(encoding="utf-8", errors="ignore"))
             except OSError:
                 continue
-            relative = html_file.relative_to(site_root)
             title = parser.title or html_file.stem
             chunks = _chunks(" ".join(parser.parts))
             if not chunks:
@@ -167,26 +174,56 @@ def search(query, db_path, limit=5):
     if not query:
         raise ValueError("请输入搜索内容")
     limit = max(1, min(int(limit), 10))
+    # 先扩大向量召回，再结合中文字符片段重排，改善短中文查询的精度。
+    candidate_count = max(30, limit * 6)
     with _lock:
-        result = _get_collection(db_path).query(query_texts=[query], n_results=limit)
+        result = _get_collection(db_path).query(query_texts=[query], n_results=candidate_count)
 
     def first(key):
         value = result.get(key, []) if isinstance(result, dict) else []
         return value[0] if value and isinstance(value[0], list) else value
 
     docs, metadata, distances, result_ids = first("documents"), first("metadatas"), first("distances"), first("ids")
+    def fragments(value):
+        compact = re.sub(r"[^0-9A-Za-z\u4e00-\u9fff]+", "", value).lower()
+        result = set(re.findall(r"[a-z0-9]+", value.lower()))
+        for size in (2, 3, 4):
+            result.update(compact[i:i + size] for i in range(max(0, len(compact) - size + 1)))
+        return result
+
+    query_fragments = fragments(query)
     items = []
     for index, document in enumerate(docs or []):
         meta = metadata[index] if index < len(metadata or []) and metadata[index] else {}
-        items.append({
+        distance = distances[index] if index < len(distances or []) else None
+        searchable = f"{meta.get('title', '')} {document}"
+        doc_fragments = fragments(searchable)
+        lexical = len(query_fragments & doc_fragments) / max(1, len(query_fragments))
+        title_fragments = fragments(meta.get("title", ""))
+        title_lexical = len(query_fragments & title_fragments) / max(1, len(query_fragments))
+        exact_bonus = 0.35 if query.lower() in searchable.lower() else 0
+        title_bonus = 0.25 if query.lower() in meta.get("title", "").lower() else 0
+        semantic = 1 / (1 + max(0, float(distance or 0)))
+        item = {
             "id": result_ids[index] if index < len(result_ids or []) else "",
             "title": meta.get("title", "未命名页面"),
             "url": meta.get("url", "#"),
             "source": meta.get("source", ""),
             "content": document,
-            "distance": distances[index] if index < len(distances or []) else None,
-        })
-    return items
+            "distance": distance,
+        }
+        items.append((semantic * 0.45 + lexical * 0.35 + title_lexical * 0.20 + exact_bonus + title_bonus, item))
+    items.sort(key=lambda pair: pair[0], reverse=True)
+    unique = []
+    seen_urls = set()
+    for _, item in items:
+        if item["url"] in seen_urls:
+            continue
+        seen_urls.add(item["url"])
+        unique.append(item)
+        if len(unique) == limit:
+            break
+    return unique
 
 
 if __name__ == "__main__":

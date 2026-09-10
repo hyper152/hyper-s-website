@@ -3,7 +3,6 @@ media/
 data/
 logs/
 run.md
-pages/sarcopia/
 *.crt
 *.key
 *.pem

@@ -28,6 +28,7 @@ from datetime import datetime
 from collections import defaultdict
 from http.server import CGIHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import unquote, urlparse
+from src.ip_location import query_ip_city
 
 try:
     from src import knowledge_base
@@ -540,9 +541,10 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
         else:
             user_part = "👤 游客"
         
-        # 构建日志消息（带日期和IP，使用解码后的路径）
+        # 构建日志消息（带日期、IP和城市，使用解码后的路径）
         if client_ip:
-            log_msg = f"{date_str} {time_str} {emoji} {user_part} [{client_ip}] | {method} {decoded_path} | {status} | {duration}ms | 👁️ {visits}"
+            city = query_ip_city(client_ip)
+            log_msg = f"{date_str} {time_str} {emoji} {user_part} [{client_ip}] [{city}] | {method} {decoded_path} | {status} | {duration}ms | 👁️ {visits}"
         else:
             log_msg = f"{date_str} {time_str} {emoji} {user_part} | {method} {decoded_path} | {status} | {duration}ms | 👁️ {visits}"
         
