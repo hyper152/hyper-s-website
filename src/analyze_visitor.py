@@ -154,7 +154,7 @@ def analyze_visitor_data(records):
 
 
 def print_by_region(ip_counter, ip_details):
-    """按地区分类输出 IP（紧凑多列）"""
+    """按地区分类，按独立 IP 数量降序输出（紧凑多列）。"""
     regions = defaultdict(list)
     internal_ips = []
     failed = 0
@@ -181,9 +181,9 @@ def print_by_region(ip_counter, ip_details):
 
         regions[region].append((ip, count, users))
 
-    # 输出
-    for region in sorted(regions.keys(), key=lambda r: (
-        0 if r.startswith('🇨🇳') else 1 if r.startswith('🌍') else 2, r
+    # 地区按独立 IP 数量降序；数量相同按请求总数降序，再按名称排序。
+    for region in sorted(regions, key=lambda r: (
+        -len(regions[r]), -sum(count for _, count, _ in regions[r]), r
     )):
         ips = regions[region]
         total = sum(c for _, c, _ in ips)
