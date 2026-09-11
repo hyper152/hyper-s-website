@@ -5,6 +5,7 @@ Ollama API 代理模块 - 自注册版
 import json
 import requests
 import logging
+from src.storage import get_store
 from flask import Blueprint, request, Response, jsonify, stream_with_context
 
 logger = logging.getLogger("ollama")
@@ -68,21 +69,12 @@ def chat():
 
 @ollama_bp.route('/save-ai-question', methods=['POST'])
 def save_ai_question():
-    """保存AI提问到 data/ai.json"""
+    """保存 AI 提问到 SQLite"""
     try:
         data = request.get_json()
         if not data:
             return jsonify({'status': 'fail', 'msg': '无数据'}), 400
-        # 读取原有内容
-        ai_json_path = __file__.replace('src/ollama.py', 'data/ai.json')
-        try:
-            with open(ai_json_path, 'r', encoding='utf-8') as f:
-                arr = json.load(f)
-        except Exception:
-            arr = []
-        arr.append(data)
-        with open(ai_json_path, 'w', encoding='utf-8') as f:
-            json.dump(arr, f, ensure_ascii=False, indent=2)
+        get_store().append('ai_questions', data)
         return jsonify({'status': 'ok'})
     except Exception as e:
         logger.error(f"保存AI提问失败: {e}")

@@ -8,6 +8,7 @@ import time
 import logging
 import random
 import string
+from src.storage import get_store
 from flask import Flask, request, jsonify, make_response
 from email.mime.text import MIMEText
 from email.utils import formataddr
@@ -27,8 +28,6 @@ app.config["SECRET_KEY"] = os.environ.get("MESSAGE_BOARD_SECRET", "personal_vlog
 
 ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 DATA_DIR = os.path.join(ROOT_DIR, "data")
-USER_FILE = os.path.join(DATA_DIR, "users.json")
-MESSAGES_FILE = os.path.join(DATA_DIR, "messages.json")
 VERIFY_CACHE = {}  # 验证码缓存
 
 os.makedirs(DATA_DIR, exist_ok=True)
@@ -94,46 +93,12 @@ except ImportError as e:
 
 # ===================== 工具函数 =====================
 def load_users():
-    """加载用户数据"""
-    try:
-        if not os.path.exists(USER_FILE):
-            return {}
-        with open(USER_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except Exception as e:
-        logger.error(f"加载用户数据失败：{e}")
-        return {}
+    return get_store().users()
 
-def save_users(users):
-    """保存用户数据"""
-    try:
-        with open(USER_FILE, "w", encoding="utf-8") as f:
-            json.dump(users, f, ensure_ascii=False, indent=2)
-        return True
-    except Exception as e:
-        logger.error(f"保存用户数据失败：{e}")
-        return False
 
 def load_messages():
-    """加载留言数据"""
-    try:
-        if not os.path.exists(MESSAGES_FILE):
-            return []
-        with open(MESSAGES_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except Exception as e:
-        logger.error(f"加载留言数据失败：{e}")
-        return []
+    return get_store().records('messages')
 
-def save_messages(messages):
-    """保存留言数据"""
-    try:
-        with open(MESSAGES_FILE, "w", encoding="utf-8") as f:
-            json.dump(messages, f, ensure_ascii=False, indent=2)
-        return True
-    except Exception as e:
-        logger.error(f"保存留言数据失败：{e}")
-        return False
 
 def get_session_id_from_request():
     """从请求中获取session_id"""
@@ -248,7 +213,7 @@ def register():
         
         encrypted_password = hash_password(password)
         
-        users[email] = {
+        user = {
             "username": username,
             "password": encrypted_password,
             "email": email,
@@ -256,7 +221,7 @@ def register():
             "create_time_str": time.strftime("%Y-%m-%d %H:%M:%S")
         }
         
-        if save_users(users):
+        if get_store().create_user(email, user):
             del VERIFY_CACHE[email]
             logger.info(f"用户注册成功: {username}({email})")
             return jsonify({"code": 200, "msg": "注册成功，请登录"})
@@ -490,8 +455,6 @@ def add_message():
             username = result
             logger.info(f"留言添加成功（游客）: {username}")
         
-        messages = load_messages()
-        
         message = {
             "id": str(int(time.time() * 1000)) + str(random.randint(100, 999)),
             "username": username,
@@ -501,13 +464,9 @@ def add_message():
             "is_guest": not is_login  # 标记是否为游客留言
         }
         
-        messages.append(message)
-        
-        if save_messages(messages):
-            return jsonify({"code": 200, "msg": "留言成功"})
-        else:
-            return jsonify({"code": 500, "msg": "保存留言失败"})
-        
+        get_store().append('messages', message)
+        return jsonify({"code": 200, "msg": "留言成功"})
+
     except Exception as e:
         logger.error(f"添加留言异常：{e}")
         return jsonify({"code": 500, "msg": "服务器内部错误"})

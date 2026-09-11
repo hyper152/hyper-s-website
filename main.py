@@ -9,7 +9,7 @@
 ✅ 日志带日期显示
 ✅ URL解码，显示中文路径
 ✅ 过滤静态资源日志（图片/视频/CSS/JS等）
-✅ 访问记录保存到 visitor.json（线程安全，保留所有记录）
+✅ 访问记录保存到 site.db / visits（线程安全，保留所有记录）
 """
 import socket
 import ssl
@@ -28,12 +28,9 @@ from datetime import datetime
 from collections import defaultdict
 from http.server import CGIHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import unquote, urlparse
+import posixpath
 from src.ip_location import query_ip_city
-
-try:
-    from src import knowledge_base
-except Exception as e:
-    knowledge_base = None
+from src.storage import get_store
 
 # ===================== PROXY Protocol 解析器（纯Python实现） =====================
 class SimpleProxyProtocol:
@@ -142,7 +139,7 @@ class Config:
                     '.mp4', '.avi', '.mov', '.wmv', '.flv', '.mkv', '.webm', '.mpeg', '.mpg',
                     '.css', '.js', '.map', '.woff', '.woff2', '.ttf', '.eot']
     
-    # visitor.json 最大记录数（0表示不限制）
+    # site.db / visits 最大记录数（0表示不限制）
     MAX_VISITOR_RECORDS = 0
 
 
@@ -226,62 +223,17 @@ sys.path.insert(0, current_script_dir)
 
 # ===================== 线程安全的 Visitor 管理器 =====================
 class VisitorManager:
-    """线程安全的 visitor.json 管理器"""
-    
-    _lock = threading.Lock()
-    _visitor_file = os.path.join(data_dir, 'visitor.json')
-    
+    """SQLite 访问记录管理器。"""
     @classmethod
     def add_record(cls, record):
-        """线程安全地添加访问记录（路径会自动解码为中文）"""
-        with cls._lock:
-            try:
-                # 读取现有数据
-                visitors = []
-                if os.path.exists(cls._visitor_file):
-                    try:
-                        with open(cls._visitor_file, 'r', encoding='utf-8') as f:
-                            content = f.read().strip()
-                            if content:
-                                visitors = json.loads(content)
-                    except (json.JSONDecodeError, IOError):
-                        visitors = []
-                
-                # 确保路径是解码后的中文格式
-                if 'path' in record:
-                    record['path'] = decode_path(record['path'])
-                
-                # 追加新记录
-                visitors.append(record)
-                
-                # 限制记录数（如果配置了）
-                max_records = Config.MAX_VISITOR_RECORDS
-                if max_records > 0 and len(visitors) > max_records:
-                    visitors = visitors[-max_records:]
-                
-                # 原子写入：先写临时文件，再替换
-                temp_file = cls._visitor_file + '.tmp'
-                with open(temp_file, 'w', encoding='utf-8') as f:
-                    json.dump(visitors, f, ensure_ascii=False, indent=2)
-                
-                # 原子替换（Windows 和 Linux 都支持）
-                os.replace(temp_file, cls._visitor_file)
-                    
-            except Exception as e:
-                logger.debug(f"保存访问记录失败: {e}")
-    
+        item = dict(record)
+        if 'path' in item:
+            item['path'] = decode_path(item['path'])
+        get_store().append('visits', item, Config.MAX_VISITOR_RECORDS)
+
     @classmethod
     def get_count(cls):
-        """获取记录总数"""
-        with cls._lock:
-            try:
-                if not os.path.exists(cls._visitor_file):
-                    return 0
-                with open(cls._visitor_file, 'r', encoding='utf-8') as f:
-                    visitors = json.load(f)
-                return len(visitors)
-            except:
-                return 0
+        return get_store().count_visits()
 
 # ===================== 依赖导入 =====================
 FLASK_AVAILABLE = False
@@ -307,52 +259,13 @@ except ImportError as e:
     def get_current_user(session_id): return {}
     def check_login_status(session_id): return False
 
-# 用于 ai.json 并发写入的全局锁
-_ai_file_lock = threading.Lock()
-
-# 简化访问计数（内置版，无需额外模块）
-VISIT_COUNT_FILE = os.path.join(data_dir, 'visit_count.json')
-_count_lock = threading.Lock()
-
 def count_visit():
-    """计数访问量（线程安全）"""
-    with _count_lock:
-        try:
-            data = {}
-            if os.path.exists(VISIT_COUNT_FILE):
-                with open(VISIT_COUNT_FILE, 'r', encoding='utf-8') as f:
-                    data = json.load(f)
+    return get_store().counter(increment=True)
 
-            # 兼容旧版只保存 total_visits 的数据，避免升级后从 0 重新计数。
-            current_count = int(data.get("count", data.get("total_visits", 0)) or 0)
-            data["count"] = current_count + 1
-            data["total_visits"] = data["count"]
-            data["update_time"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-            # 原子替换，接口不会在文件写到一半时读到损坏的 JSON。
-            temp_file = VISIT_COUNT_FILE + '.tmp'
-            with open(temp_file, 'w', encoding='utf-8') as f:
-                json.dump(data, f, ensure_ascii=False, indent=4)
-                f.flush()
-                os.fsync(f.fileno())
-            os.replace(temp_file, VISIT_COUNT_FILE)
-            return data["count"]
-        except Exception as e:
-            logger.error(f"计数失败：{e}")
-            return 0
 
 def get_total_visits():
-    """获取总访问量"""
-    with _count_lock:
-        try:
-            if not os.path.exists(VISIT_COUNT_FILE):
-                return 0
-            with open(VISIT_COUNT_FILE, 'r', encoding='utf-8') as f:
-                data = json.load(f)
-            return int(data.get("count", data.get("total_visits", 0)) or 0)
-        except Exception as e:
-            logger.error(f"获取计数失败：{e}")
-            return 0
+    return get_store().counter()
+
 
 def get_session_id_from_request(request_handler):
     """从请求中获取session_id"""
@@ -412,6 +325,10 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
         """完全禁用默认日志"""
         pass
 
+    def send_response(self, code, message=None):
+        self.status = code
+        super().send_response(code, message)
+
     def validate_path(self, path):
         """路径校验"""
         try:
@@ -431,16 +348,20 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
             return None
 
     def is_protected_path(self, path):
-        """检查是否是受保护的路径"""
-        for protected_dir in Config.PROTECTED_DIRS:
-            if path.startswith(protected_dir):
-                return True
-        
-        for sensitive_file in Config.SENSITIVE_FILES:
-            if path.endswith(f'/data/{sensitive_file}') or path.endswith(f'\\data\\{sensitive_file}'):
-                return True
-        
-        return False
+        """数据库、WAL、备份及旧 JSON 均不能通过 HTTP 下载。"""
+        normalized = posixpath.normpath('/' + unquote(urlparse(path).path).replace('\\', '/').lstrip('/')).lower()
+        if normalized == '/data' or normalized.startswith('/data/'):
+            return True
+        local = os.path.realpath(self.translate_path(path))
+        private = os.path.realpath(data_dir)
+        return os.path.commonpath([local, private]) == private
+
+    def send_head(self):
+        # GET 和 HEAD 都经过此入口，防止继承的 HEAD 绕过路径保护。
+        if self.is_protected_path(self.path):
+            self.send_error(403, "Forbidden")
+            return None
+        return super().send_head()
 
     def is_allowed_path(self, path):
         """检查路径是否在白名单内（防止扫描）"""
@@ -521,6 +442,17 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
         
         return self.real_client_ip
 
+    def _set_question_log(self, label, text):
+        """只记录当前问题，转义控制字符，保持访问日志为单行。"""
+        if isinstance(text, str) and text.strip():
+            text = text.strip()
+            if len(text) > 2000:
+                text = text[:2000] + "…（已截断）"
+            escaped = json.dumps(text, ensure_ascii=False)
+            for char in ("\u0085", "\u2028", "\u2029"):
+                escaped = escaped.replace(char, f"\\u{ord(char):04x}")
+            self._question_log = f"{label}={escaped}"
+
     def _log_access(self, emoji, path, status, duration, username="", method="GET", visits=0, client_ip=""):
         """统一的访问日志输出 - 只记录路由，不记录静态资源"""
         # 解码路径显示中文
@@ -548,6 +480,9 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
         else:
             log_msg = f"{date_str} {time_str} {emoji} {user_part} | {method} {decoded_path} | {status} | {duration}ms | 👁️ {visits}"
         
+        if getattr(self, '_question_log', ''):
+            log_msg += f" | {self._question_log}"
+
         # 创建日志记录
         record = logging.LogRecord(
             name=logger.name,
@@ -566,6 +501,7 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
         if self.request_handled:
             return
         self.request_handled = True
+        self._question_log = ""
 
         start_time = time.time()
         client_ip = None
@@ -610,7 +546,7 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
             else:
                 total_visits = get_total_visits()
 
-            # ========== 保存访问记录到 visitor.json（线程安全） ==========
+            # ========== 保存访问记录到 site.db / visits（线程安全） ==========
             try:
                 # 解码路径为中文
                 decoded_request_path = decode_path(request_path)
@@ -799,11 +735,6 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
             self.send_error(403, "Forbidden")
             return
 
-        # seekdb 网站知识库搜索接口（不依赖 Flask）
-        if path == '/api/knowledge/search':
-            self._handle_knowledge_search()
-            return
-
         # 直接处理 AI 问题保存接口
         if path == '/api/ollama/save-ai-question':
             content_length = int(self.headers.get('Content-Length', 0))
@@ -817,19 +748,8 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
                 else:
                     ip = self.client_address[0]
                 data['ip'] = ip
-                ai_json_path = os.path.join(data_dir, 'ai.json')
-                
-                # 线程安全写入（使用共享锁实例）
-                with _ai_file_lock:
-                    try:
-                        with open(ai_json_path, 'r', encoding='utf-8') as f:
-                            arr = json.load(f)
-                    except Exception:
-                        arr = []
-                    arr.append(data)
-                    with open(ai_json_path, 'w', encoding='utf-8') as f:
-                        json.dump(arr, f, ensure_ascii=False, indent=2)
-                
+                get_store().append('ai_questions', data)
+
                 self.send_response(200)
                 self.send_header('Content-Type', 'application/json; charset=utf-8')
                 self.end_headers()
@@ -849,34 +769,6 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
             self._forward_to_flask()
             return
         super().do_POST()
-
-    def _handle_knowledge_search(self):
-        try:
-            content_length = int(self.headers.get('Content-Length', 0))
-            if content_length <= 0 or content_length > Config.MAX_POST_SIZE:
-                raise ValueError("请求内容为空或过大")
-            payload = json.loads(self.rfile.read(content_length).decode('utf-8'))
-            if knowledge_base is None:
-                raise RuntimeError("知识库模块加载失败")
-            results = knowledge_base.search(
-                payload.get('query'),
-                os.path.join(data_dir, 'seekdb'),
-                payload.get('limit', 5),
-            )
-            body = {"code": 200, "message": "success", "data": results}
-            status = 200
-        except (ValueError, json.JSONDecodeError) as e:
-            body, status = {"code": 400, "message": str(e), "data": []}, 400
-        except Exception as e:
-            logger.error(f"知识库搜索失败：{e}")
-            body, status = {"code": 503, "message": str(e), "data": []}, 503
-        encoded = json.dumps(body, ensure_ascii=False).encode('utf-8')
-        self.send_response(status)
-        self.send_header('Content-Type', 'application/json; charset=utf-8')
-        self.send_header('Content-Length', str(len(encoded)))
-        self.send_header('Cache-Control', 'no-store')
-        self.end_headers()
-        self.wfile.write(encoded)
 
     def do_DELETE(self):
         """处理DELETE请求"""
@@ -967,6 +859,18 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
                 cl = int(self.headers.get("Content-Length", 0))
                 if 0 < cl < Config.MAX_POST_SIZE:
                     data = self.rfile.read(cl)
+
+            if self.command == "POST" and urlparse(self.path).path == '/api/ollama/chat':
+                try:
+                    payload = json.loads(data)
+                    messages = payload.get('messages', []) if isinstance(payload, dict) else []
+                    if isinstance(messages, list):
+                        for message in reversed(messages):
+                            if isinstance(message, dict) and message.get('role') == 'user':
+                                self._set_question_log("AI提问", message.get('content'))
+                                break
+                except (ValueError, UnicodeDecodeError):
+                    pass
 
             logger.debug(f"转发请求到 Flask: {self.command} {self.path}")
             
@@ -1117,10 +1021,10 @@ class DualStackServer(ThreadingHTTPServer):
 # ===================== 启动 =====================
 def run_server():
     """启动服务器"""
+    get_store()
     if Config.RESET_VISITS:
         try:
-            with open(VISIT_COUNT_FILE, 'w', encoding='utf-8') as f:
-                json.dump({"count": 0, "total_visits": 0}, f)
+            get_store().counter(reset=True)
             logger.info("✅ 访问计数已重置为0")
         except Exception as e:
             logger.error(f"重置计数失败：{e}")
@@ -1160,7 +1064,7 @@ def run_server():
     print("="*60)
     print("📊 访问日志格式: [日期 时间] 图标 用户 [真实IP] | 方法 路径 | 状态 | 耗时 | 访问量")
     print("📊 静态资源过滤: 不记录图片/视频/CSS/JS等文件")
-    print(f"📊 访问记录保存: data/visitor.json（线程安全，当前 {VisitorManager.get_count()} 条）")
+    print(f"📊 访问记录保存: data/site.db（SQLite，当前 {VisitorManager.get_count()} 条）")
     print("📊 路径格式: URL编码已自动转换为中文")
     print("="*60 + "\n")
 

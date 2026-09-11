@@ -23,3 +23,7 @@ data/seekdb-server/**/*.db-wal
 
 media/
 *.pyc
+
+# SQLite runtime and migration backups
+data/site.db*
+data/backups/

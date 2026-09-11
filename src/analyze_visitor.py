@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-visitor.json 分析工具 - 极速离线版（集成 ip2region.db，0.0x毫秒查询，永不封禁）
+SQLite visits 表 分析工具 - 极速离线版（集成 ip2region.db，0.0x毫秒查询，永不封禁）
 用法：
   python analyze_visitor.py                        # 完整分析所有记录
   python analyze_visitor.py 2026.4.23              # 只分析 2026-04-23 当天的记录
@@ -15,12 +15,14 @@ visitor.json 分析工具 - 极速离线版（集成 ip2region.db，0.0x毫秒�
 import json
 import os
 import sys
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from src.storage import get_store
 from collections import Counter, defaultdict
 from datetime import datetime
 
 # 导入本地的 ip2Region 库
 try:
-    from ip2Region import Ip2Region
+    from src.ip2Region import Ip2Region
 except ImportError:
     print("❌ 未找到 ip2Region.py，请确保它和 analyze_visitor.py 在同一目录！")
     sys.exit(1)
@@ -28,10 +30,10 @@ except ImportError:
 # 路径配置
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(os.path.dirname(SCRIPT_DIR), 'data')
-VISITOR_FILE = os.path.join(DATA_DIR, 'visitor.json')
+VISITOR_FILE = str(get_store().path)
 
 # ip2region.db 数据库文件的精确路径配置
-DB_PATH = os.path.join(DATA_DIR, 'ip2region-master', 'data', 'ip2region.db')
+DB_PATH = os.path.join(SCRIPT_DIR, 'ip2region-master', 'data', 'ip2region.db')
 
 # 全局初始化 IP 查询库
 ip_searcher = None
@@ -147,24 +149,8 @@ def filter_records_by_date(records, start_date, end_date):
 
 
 def load_visitor_data():
-    """加载 visitor.json 数据"""
-    if not os.path.exists(VISITOR_FILE):
-        print(f"❌ 未找到文件: {VISITOR_FILE}")
-        return None
-
-    try:
-        with open(VISITOR_FILE, 'r', encoding='utf-8') as f:
-            content = f.read().strip()
-            if not content:
-                print("❌ visitor.json 文件为空")
-                return None
-            return json.loads(content)
-    except json.JSONDecodeError as e:
-        print(f"❌ JSON 解析失败: {e}")
-        return None
-    except IOError as e:
-        print(f"❌ 读取文件失败: {e}")
-        return None
+    """从 SQLite 加载访问记录。"""
+    return get_store().records('visits')
 
 
 def analyze_visitor_data(records):
@@ -318,7 +304,7 @@ def query_single_ip(ip, records, date_desc=""):
     print(f"   ISP:       {loc.get('isp', '未知')}")
 
     if not records:
-        print(f"\n   ⚠️ 在 visitor.json 中未找到该 IP 的访问记录")
+        print(f"\n   ⚠️ 在 SQLite visits 表 中未找到该 IP 的访问记录")
         print("\n" + "=" * 80)
         return
 
