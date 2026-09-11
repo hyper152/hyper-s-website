@@ -1,175 +1,110 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <html lang="zh-CN">
-    <head>
-        <meta charset="utf-8" />
-        <meta content="width=device-width, initial-scale=1" name="viewport" />
-        <title>开发日志 · hyper的Vlog</title>
-        <link href="../../static/css/category.css" rel="stylesheet" />
-        <style>
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>开发日志 · hyper的Vlog</title>
+<link href="../../static/css/category.css" rel="stylesheet"/>
+<style>
             :root {
-                --accent: #165dff;
+                --accent: #67824f;
             }
         </style>
-    </head>
-    <body>
-        <main class="container">
-            <nav class="category-nav">
-                <a href="/home/">hyper / Vlog</a
-                ><a href="/home/#categories">← 返回首页</a>
-            </nav>
-            <header class="page-heading">
-                <span class="eyebrow">HYPER / COLLECTION</span>
-                <h1>开发日志<span>8 篇</span></h1>
-                <p class="subtitle">技术探索与项目开发记录</p>
-            </header>
-            <nav aria-label="内容分类" class="category-tabs">
-                <a aria-current="page" href="../devlog/index.html">开发日志</a
-                ><a href="../travel/index.html">旅游记录</a><a href="../study/index.html">学习</a
-                ><a href="../diy/index.html">装机记录</a><a href="../games/index.html">游戏栏</a
-                ><a href="../YY%E5%BE%80%E4%BA%8B/index.html">YY往事</a>
-            </nav>
-            <div class="video-grid">
-                <a
-                    class="video-card"
-                    href="./2026%E7%94%B5%E8%B5%9BTI%E6%9D%AF%E7%9C%81%E8%B5%9B/index.html"
-                    ><div class="video-cover">
-                        <img
-                            alt="2026电赛TI杯省赛"
-                            decoding="async"
-                            loading="lazy"
-                            src="../../media/pages/devlog/2026%E7%94%B5%E8%B5%9BTI%E6%9D%AF%E7%9C%81%E8%B5%9B/IMG_20260804_094935.webp"
-                        /><span class="video-badge">开发日志</span>
-                    </div>
-                    <div class="video-info">
-                        <h2 class="video-title">2026电赛TI杯省赛</h2>
-                        <div class="video-meta">2026.07.28–08.04</div>
-                        <p class="video-desc">视觉调试、装置联调、封箱送测，按时间记录省赛过程。</p>
-                        <div class="video-stats">
-                            <span>拟获二等奖</span><span>11 张照片</span><span>3 段视频</span>
-                        </div>
-                    </div></a
-                ><a
-                    class="video-card"
-                    href="../../pages/devlog/%E7%94%B5%E8%B5%9B%E6%A0%A1%E8%B5%9B/"
-                    ><div class="video-cover">
-                        <img
-                            alt="电赛校赛 · 从希望到绝望"
-                            decoding="async"
-                            loading="lazy"
-                            src="../../media/pages/devlog/%E7%94%B5%E8%B5%9B%E6%A0%A1%E8%B5%9B/IMG_20260429_015756-%E8%B0%83%E8%AF%95%E7%8E%B0%E5%9C%BA.webp"
-                        /><span class="video-badge">开发日志</span>
-                    </div>
-                    <div class="video-info">
-                        <h2 class="video-title">电赛校赛 · 从希望到绝望</h2>
-                        <div class="video-meta">2026.04.28-30</div>
-                        <p class="video-desc">三天两夜的电赛校赛，循迹算法调试，两个不眠夜。</p>
-                        <div class="video-stats"><span>⚡ 硬件</span></div>
-                    </div></a
-                ><a class="video-card" href="../../pages/devlog/Gsing/"
-                    ><div class="video-cover">
-                        <img
-                            alt="2026ROBOCON仿生足式机器人比赛"
-                            decoding="async"
-                            loading="lazy"
-                            src="../../media/pages/devlog/Gsing/%E7%B2%BE%E9%80%89/%E6%AF%94%E8%B5%9B%E7%85%A7%E7%89%87.webp"
-                        /><span class="video-badge">开发日志</span>
-                    </div>
-                    <div class="video-info">
-                        <h2 class="video-title">2026ROBOCON仿生足式机器人比赛</h2>
-                        <div class="video-meta">2025.11-2026.08</div>
-                        <p class="video-desc">
+<link rel="stylesheet" href="/static/css/site-theme.css?v=20260911-centered-navigation">
+<meta name="theme-color" content="#f6f7f2">
+</head>
+<body data-site-theme="garden" data-page-kind="page">
+<nav class="page-controls" aria-label="页面快捷导航"><a href="/home/" data-page-back><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m10 5-7 7 7 7M3 12h18"/></svg><span>返回上一页</span></a><a href="/home/"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9"/></svg><span>首页</span></a></nav>
+<main class="container">
+<nav class="category-nav">
+<a href="/home/">hyper / Vlog</a><a href="/home/#categories">← 返回首页</a>
+</nav>
+<header class="page-heading">
+<span class="eyebrow">HYPER / COLLECTION</span>
+<h1>开发日志<span>8 篇</span></h1>
+<p class="subtitle">技术探索与项目开发记录 · 按时间降序</p>
+</header>
+<nav aria-label="内容分类" class="category-tabs">
+<a aria-current="page" href="../devlog/index.html">开发日志</a><a href="../travel/index.html">旅游记录</a><a href="../study/index.html">学习</a><a href="../diy/index.html">装机记录</a><a href="../games/index.html">游戏栏</a><a href="../YY%E5%BE%80%E4%BA%8B/index.html">YY往事</a>
+</nav>
+<div class="video-grid"><a class="video-card" data-sort-date="2026-08-04" href="./2026%E7%94%B5%E8%B5%9BTI%E6%9D%AF%E7%9C%81%E8%B5%9B/index.html"><div class="video-cover">
+<img alt="2026电赛TI杯省赛" decoding="async" loading="lazy" src="../../media/pages/devlog/2026%E7%94%B5%E8%B5%9BTI%E6%9D%AF%E7%9C%81%E8%B5%9B/IMG_20260804_094935.webp"/><span class="video-badge">开发日志</span>
+</div>
+<div class="video-info">
+<h2 class="video-title">2026电赛TI杯省赛</h2>
+<div class="video-meta">2026.07.28–08.04</div>
+<p class="video-desc">视觉调试、装置联调、封箱送测，按时间记录省赛过程。</p>
+<div class="video-stats">
+<span>拟获二等奖</span><span>11 张照片</span><span>3 段视频</span>
+</div>
+</div></a><a class="video-card" data-sort-date="2026-08-01" href="../../pages/devlog/Gsing/"><div class="video-cover">
+<img alt="2026ROBOCON仿生足式机器人比赛" decoding="async" loading="lazy" src="../../media/pages/devlog/Gsing/%E7%B2%BE%E9%80%89/%E6%AF%94%E8%B5%9B%E7%85%A7%E7%89%87.webp"/><span class="video-badge">开发日志</span>
+</div>
+<div class="video-info">
+<h2 class="video-title">2026ROBOCON仿生足式机器人比赛</h2>
+<div class="video-meta">2025.11-2026.08</div>
+<p class="video-desc">
                             从视觉与雷达联调到七月赛场，获团队障碍赛二等奖、任务赛三等奖。
                         </p>
-                        <div class="video-stats"><span>🤖 机器人</span><span>👁 SLAM</span></div>
-                    </div></a
-                ><a class="video-card" href="../../pages/devlog/happy_run/"
-                    ><div class="video-cover">
-                        <img
-                            alt="步道乐跑 · Fake Location 自动化"
-                            decoding="async"
-                            loading="lazy"
-                            src="../../media/pages/devlog/happy_run/happy_run.webp"
-                        />
-                        <span class="video-badge">开发日志</span>
-                    </div>
-                    <div class="video-info">
-                        <h2 class="video-title">步道乐跑 · Fake Location 自动化</h2>
-                        <div class="video-meta">2026.04</div>
-                        <p class="video-desc">Fake Location + VM 实现步道乐跑自动打卡教程。</p>
-                        <div class="video-stats"><span>📱 自动化</span></div>
-                    </div></a
-                ><a class="video-card" href="../../pages/devlog/CQU-coursehelper/"
-                    ><div class="video-cover">
-                        <img
-                            alt="CQU-CourseHelper · 油猴脚本"
-                            decoding="async"
-                            loading="lazy"
-                            src="../../media/pages/devlog/CQU-coursehelper/CQU-coursehelper.webp"
-                        />
-                        <span class="video-badge">开发日志</span>
-                    </div>
-                    <div class="video-info">
-                        <h2 class="video-title">CQU-CourseHelper · 油猴脚本</h2>
-                        <div class="video-meta">2025.12.29</div>
-                        <p class="video-desc">Tampermonkey 脚本，后台播放 CQU 课程视频。</p>
-                        <div class="video-stats"><span>📜 油猴</span></div>
-                    </div></a
-                ><a
-                    class="video-card"
-                    href="../../pages/devlog/%E5%A3%B0%E6%8E%A7%E5%BC%80%E5%85%B3%E7%81%AF/"
-                    ><div class="video-cover">
-                        <img
-                            alt="声控电机控制寝室大灯"
-                            decoding="async"
-                            loading="lazy"
-                            src="../../media/pages/devlog/声控开关灯/2025-12-31-声控开关灯.webp"
-                        />
-                        <span class="video-badge">开发日志</span>
-                    </div>
-                    <div class="video-info">
-                        <h2 class="video-title">声控电机控制寝室大灯</h2>
-                        <div class="video-meta">2025.12.31</div>
-                        <p class="video-desc">声音识别模块控制继电器，实现寝室声控灯。</p>
-                        <div class="video-stats"><span>⚡ 硬件</span><span>🎤 声控</span></div>
-                    </div></a
-                ><a
-                    class="video-card"
-                    href="../../pages/devlog/CQU-CRTC%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%AF%94%E8%B5%9B/"
-                    ><div class="video-cover">
-                        <img
-                            alt="CRTC 机器人比赛 · 捡球机器人"
-                            decoding="async"
-                            loading="lazy"
-                            src="../../media/pages/devlog/CQU-CRTC%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%AF%94%E8%B5%9B/2025-10-16-%E8%BD%A63.0-%E4%B8%8D%E4%BC%9A%E7%94%A8MG995.webp"
-                        /><span class="video-badge">开发日志</span>
-                    </div>
-                    <div class="video-info">
-                        <h2 class="video-title">CRTC 机器人比赛 · 捡球机器人</h2>
-                        <div class="video-meta">2025.10-11</div>
-                        <p class="video-desc">STM32 + 舵机 + 双车协同的捡球机器人。</p>
-                        <div class="video-stats"><span>🤖 机器人</span><span>⚡ STM32</span></div>
-                    </div></a
-                ><a class="video-card" href="../../pages/devlog/personal-blog/"
-                    ><div class="video-cover">
-                        <img
-                            alt="个人博客系统 · 从0到1全记录"
-                            decoding="async"
-                            loading="lazy"
-                            src="../../media/pages/devlog/personal-blog/2023-10-02-%E7%AC%AC%E4%B8%80%E7%89%88%E7%BD%91%E7%AB%99.webp"
-                        /><span class="video-badge">开发日志</span>
-                    </div>
-                    <div class="video-info">
-                        <h2 class="video-title">个人博客系统 · 从0到1全记录</h2>
-                        <div class="video-meta">2023-2026</div>
-                        <p class="video-desc">
+<div class="video-stats"><span>🤖 机器人</span><span>👁 SLAM</span></div>
+</div></a><a class="video-card" data-sort-date="2026-04-30" href="../../pages/devlog/%E7%94%B5%E8%B5%9B%E6%A0%A1%E8%B5%9B/"><div class="video-cover">
+<img alt="电赛校赛 · 从希望到绝望" decoding="async" loading="lazy" src="../../media/pages/devlog/%E7%94%B5%E8%B5%9B%E6%A0%A1%E8%B5%9B/IMG_20260429_015756-%E8%B0%83%E8%AF%95%E7%8E%B0%E5%9C%BA.webp"/><span class="video-badge">开发日志</span>
+</div>
+<div class="video-info">
+<h2 class="video-title">电赛校赛 · 从希望到绝望</h2>
+<div class="video-meta">2026.04.28-30</div>
+<p class="video-desc">三天两夜的电赛校赛，循迹算法调试，两个不眠夜。</p>
+<div class="video-stats"><span>⚡ 硬件</span></div>
+</div></a><a class="video-card" data-sort-date="2026-04-01" href="../../pages/devlog/happy_run/"><div class="video-cover">
+<img alt="步道乐跑 · Fake Location 自动化" decoding="async" loading="lazy" src="../../media/pages/devlog/happy_run/happy_run.webp"/>
+<span class="video-badge">开发日志</span>
+</div>
+<div class="video-info">
+<h2 class="video-title">步道乐跑 · Fake Location 自动化</h2>
+<div class="video-meta">2026.04</div>
+<p class="video-desc">Fake Location + VM 实现步道乐跑自动打卡教程。</p>
+<div class="video-stats"><span>📱 自动化</span></div>
+</div></a><a class="video-card" data-sort-date="2026-01-01" href="../../pages/devlog/personal-blog/"><div class="video-cover">
+<img alt="个人博客系统 · 从0到1全记录" decoding="async" loading="lazy" src="../../media/pages/devlog/personal-blog/2023-10-02-%E7%AC%AC%E4%B8%80%E7%89%88%E7%BD%91%E7%AB%99.webp"/><span class="video-badge">开发日志</span>
+</div>
+<div class="video-info">
+<h2 class="video-title">个人博客系统 · 从0到1全记录</h2>
+<div class="video-meta">2023-2026</div>
+<p class="video-desc">
                             Flask + SQLite 构建的个人博客网站，前后端全栈开发。
                         </p>
-                        <div class="video-stats"><span>🌐 全栈</span><span>🐍 Flask</span></div>
-                    </div></a
-                >
-            </div>
-        </main>
-        <footer>© 2026 hyper的Vlog · <a href="/home/">返回首页</a></footer>
-    </body>
+<div class="video-stats"><span>🌐 全栈</span><span>🐍 Flask</span></div>
+</div></a><a class="video-card" data-sort-date="2025-12-31" href="../../pages/devlog/%E5%A3%B0%E6%8E%A7%E5%BC%80%E5%85%B3%E7%81%AF/"><div class="video-cover">
+<img alt="声控电机控制寝室大灯" decoding="async" loading="lazy" src="../../media/pages/devlog/声控开关灯/2025-12-31-声控开关灯.webp"/>
+<span class="video-badge">开发日志</span>
+</div>
+<div class="video-info">
+<h2 class="video-title">声控电机控制寝室大灯</h2>
+<div class="video-meta">2025.12.31</div>
+<p class="video-desc">声音识别模块控制继电器，实现寝室声控灯。</p>
+<div class="video-stats"><span>⚡ 硬件</span><span>🎤 声控</span></div>
+</div></a><a class="video-card" data-sort-date="2025-12-29" href="../../pages/devlog/CQU-coursehelper/"><div class="video-cover">
+<img alt="CQU-CourseHelper · 油猴脚本" decoding="async" loading="lazy" src="../../media/pages/devlog/CQU-coursehelper/CQU-coursehelper.webp"/>
+<span class="video-badge">开发日志</span>
+</div>
+<div class="video-info">
+<h2 class="video-title">CQU-CourseHelper · 油猴脚本</h2>
+<div class="video-meta">2025.12.29</div>
+<p class="video-desc">Tampermonkey 脚本，后台播放 CQU 课程视频。</p>
+<div class="video-stats"><span>📜 油猴</span></div>
+</div></a><a class="video-card" data-sort-date="2025-11-01" href="../../pages/devlog/CQU-CRTC%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%AF%94%E8%B5%9B/"><div class="video-cover">
+<img alt="CRTC 机器人比赛 · 捡球机器人" decoding="async" loading="lazy" src="../../media/pages/devlog/CQU-CRTC%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%AF%94%E8%B5%9B/2025-10-16-%E8%BD%A63.0-%E4%B8%8D%E4%BC%9A%E7%94%A8MG995.webp"/><span class="video-badge">开发日志</span>
+</div>
+<div class="video-info">
+<h2 class="video-title">CRTC 机器人比赛 · 捡球机器人</h2>
+<div class="video-meta">2025.10-11</div>
+<p class="video-desc">STM32 + 舵机 + 双车协同的捡球机器人。</p>
+<div class="video-stats"><span>🤖 机器人</span><span>⚡ STM32</span></div>
+</div></a></div>
+</main>
+<footer>© 2026 hyper的Vlog · <a href="/home/">返回首页</a></footer>
+
+<script src="/static/js/page-navigation.js?v=20260911-1" defer></script>
+</body>
 </html>

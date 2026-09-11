@@ -15,13 +15,13 @@
 
         :root {
             --edg-black: #1a1a1a;
-            --edg-red: #e10600;
-            --edg-gold: #ffd700;
-            --light: #f8f9fa;
+            --edg-red: #43684b;
+            --edg-gold: #67824f;
+            --light: #f6f7f2;
             --dark: #2d3436;
             --gray: #495057;
-            --light-gray: #e9ecef;
-            --shadow: 0 2px 12px rgba(0,0,0,0.08);
+            --light-gray: #edf1e7;
+            --shadow: 0 2px 12px rgba(0, 0, 0,0.08);
         }
 
         body {
@@ -79,7 +79,7 @@
 
         .nav-links a {
             text-decoration: none;
-            color: #ccc;
+            color: #cccccc;
             font-weight: 500;
             transition: all 0.2s ease;
             padding: 5px 0;
@@ -131,14 +131,14 @@
 
         .champion-badge {
             display: inline-block;
-            background: linear-gradient(135deg, var(--edg-gold), #ffaa00);
+            background: linear-gradient(135deg, var(--edg-gold), #67824f);
             color: var(--edg-black);
             padding: 8px 30px;
             border-radius: 50px;
             font-size: 1.2rem;
             font-weight: 700;
             margin-bottom: 20px;
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+            box-shadow: 0 0 30px rgba(103, 130, 79, 0.3);
         }
 
         .hero h1 {
@@ -161,7 +161,7 @@
 
         .hero-date {
             display: inline-block;
-            background: rgba(225, 6, 0, 0.2);
+            background: rgba(67, 104, 75, 0.2);
             padding: 10px 25px;
             border-radius: 30px;
             border: 1px solid var(--edg-red);
@@ -188,12 +188,12 @@
         }
 
         .record-card {
-            background: linear-gradient(145deg, #222, #111);
+            background: linear-gradient(145deg, #222222, #111111);
             border-radius: 16px;
             padding: 30px;
             text-align: center;
-            border: 1px solid #333;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid #333333;
+            box-shadow: 0 10px 30px rgba(0, 0, 0,0.5);
             transition: transform 0.3s ease;
         }
 
@@ -218,12 +218,12 @@
 
         .record-card .score small {
             font-size: 1.5rem;
-            color: #666;
+            color: #666666;
         }
 
         .record-card .opponent {
             font-size: 1.2rem;
-            color: #aaa;
+            color: #aaaaaa;
         }
 
         .record-card .result {
@@ -281,22 +281,22 @@
         }
 
         .video-card {
-            background: linear-gradient(145deg, #222, #111);
+            background: linear-gradient(145deg, #222222, #111111);
             border-radius: 16px;
             overflow: hidden;
-            border: 1px solid #333;
+            border: 1px solid #333333;
             transition: all 0.3s ease;
         }
 
         .video-card:hover {
             border-color: var(--edg-red);
-            box-shadow: 0 0 30px rgba(225, 6, 0, 0.3);
+            box-shadow: 0 0 30px rgba(67, 104, 75, 0.3);
         }
 
         .video-wrapper {
             width: 100%;
             aspect-ratio: 16 / 9;
-            background: #000;
+            background: #000000;
         }
 
         .video-wrapper video {
@@ -321,7 +321,7 @@
         }
 
         .video-info p {
-            color: #aaa;
+            color: #aaaaaa;
             font-size: 0.95rem;
         }
 
@@ -342,10 +342,10 @@
         }
 
         .moment-card {
-            background: linear-gradient(145deg, #222, #111);
+            background: linear-gradient(145deg, #222222, #111111);
             border-radius: 20px;
             overflow: hidden;
-            border: 1px solid #333;
+            border: 1px solid #333333;
         }
 
         .moment-img {
@@ -366,7 +366,7 @@
         .moment-caption {
             padding: 30px;
             text-align: center;
-            background: linear-gradient(90deg, transparent, rgba(225,6,0,0.1), transparent);
+            background: linear-gradient(90deg, transparent, rgba(67, 104, 75,0.1), transparent);
         }
 
         .moment-caption h3 {
@@ -377,7 +377,7 @@
 
         .moment-caption p {
             font-size: 1.2rem;
-            color: #ccc;
+            color: #cccccc;
         }
 
         /* 荣耀时刻 */
@@ -390,7 +390,7 @@
             max-width: 800px;
             margin: 0 auto;
             padding: 40px;
-            background: linear-gradient(145deg, #222, #111);
+            background: linear-gradient(145deg, #222222, #111111);
             border-radius: 20px;
             border: 1px solid var(--edg-gold);
             position: relative;
@@ -436,7 +436,7 @@
         }
 
         footer p {
-            color: #666;
+            color: #666666;
         }
 
         footer a {
@@ -473,9 +473,12 @@
             }
         }
     </style>
+<link rel="stylesheet" href="/static/css/site-theme.css?v=20260911-centered-navigation">
+<meta name="theme-color" content="#f6f7f2">
 </head>
 
-<body>
+<body data-site-theme="garden" data-page-kind="page">
+<nav class="page-controls" aria-label="页面快捷导航"><a href="/pages/YY往事/" data-page-back><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m10 5-7 7 7 7M3 12h18"/></svg><span>返回上一页</span></a><a href="/home/"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9"/></svg><span>首页</span></a></nav>
 
 <!-- 导航栏 -->
 <nav class="navbar">
@@ -555,7 +558,7 @@
                     <span class="video-badge"><i class="fas fa-fire"></i> 经典战役</span>
                 </div>
             </div>
-            
+
             <!-- 决赛视频 -->
             <div class="video-card">
                 <div class="video-wrapper">
@@ -611,7 +614,7 @@
             <a href="../../../talk/"><i class="fas fa-comment"></i> 留言板</a>
         </p>
         <p style="margin-top: 20px; font-size: 0.85rem;">
-            <i class="fas fa-heart" style="color: var(--edg-red);"></i> 
+            <i class="fas fa-heart" style="color: var(--edg-red);"></i>
             EDG牛逼！CN FPS 牛逼！
             <i class="fas fa-heart" style="color: var(--edg-red);"></i>
         </p>
@@ -630,5 +633,7 @@
     });
 </script>
 
+
+<script src="/static/js/page-navigation.js?v=20260911-1" defer></script>
 </body>
 </html>

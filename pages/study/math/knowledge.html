@@ -8,8 +8,8 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             line-height: 1.6;
-            color: #333;
-            background-color: #f4f6f8;
+            color: #333333;
+            background-color: #f6f7f2;
             padding: 20px;
             max-width: 920px;
             margin: 0 auto;
@@ -21,7 +21,7 @@
             margin-bottom: 30px;
         }
         .header h1 {
-            color: #2c3e50;
+            color: #263b32;
             margin-bottom: 5px;
         }
         .header p {
@@ -31,7 +31,7 @@
         .back-link {
             display: inline-block;
             margin-bottom: 20px;
-            color: #3498db;
+            color: #67824f;
             text-decoration: none;
             font-weight: bold;
         }
@@ -46,12 +46,12 @@
             flex-wrap: wrap;
         }
         .knowledge-card {
-            background: #fff;
+            background: #ffffff;
             border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            box-shadow: 0 2px 8px rgba(0, 0, 0,0.06);
             margin-bottom: 16px;
             padding: 18px 22px;
-            border-left: 5px solid #3498db;
+            border-left: 5px solid #67824f;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -59,7 +59,7 @@
         }
         .knowledge-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0,0.1);
         }
         .knowledge-card .info {
             flex: 1;
@@ -67,7 +67,7 @@
         .knowledge-card .info h3 {
             margin: 0 0 4px 0;
             font-size: 1.05em;
-            color: #2c3e50;
+            color: #263b32;
         }
         .knowledge-card .info .desc {
             color: #7f8c8d;
@@ -75,8 +75,8 @@
             margin: 0;
         }
         .knowledge-card .badge {
-            background: #e8f0fe;
-            color: #1967d2;
+            background: #f6f7f2;
+            color: #43684b;
             padding: 4px 12px;
             border-radius: 20px;
             font-size: 0.78em;
@@ -107,17 +107,22 @@
             padding-top: 20px;
         }
     </style>
+<link rel="stylesheet" href="/static/css/site-theme.css?v=20260911-centered-navigation">
+<meta name="theme-color" content="#f6f7f2">
 </head>
-<body>
+<body data-site-theme="garden" data-page-kind="study">
+<nav class="page-controls" aria-label="页面快捷导航"><a href="/pages/study/" data-page-back><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m10 5-7 7 7 7M3 12h18"/></svg><span>返回上一页</span></a><a href="/home/"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9"/></svg><span>首页</span></a></nav>
+<nav class="site-navigation" aria-label="全站导航"><a class="site-brand" href="/home/"><img src="/home/hyper.png" alt="" width="38" height="38"><span>hyper.</span></a><div class="site-nav-links"><a href="/home/#categories">探索分类</a><a href="/pages/resume/index.html">个人简介</a><a href="/talk/comment.html">留言板</a></div></nav>
+
 
     <div style="display:flex; gap:12px; margin-bottom:10px; font-size:0.9em; justify-content:center;">
-        <a href="javascript:history.back()" style="display:inline-flex; align-items:center; gap:4px; color:#666; text-decoration:none; padding:6px 14px; border-radius:6px; background:#f0f0f0; transition:background 0.2s;" onmouseover="this.style.background='#e0e0e0'" onmouseout="this.style.background='#f0f0f0'">⬅ 返回上一页</a>
-        <a href="/home/" style="display:inline-flex; align-items:center; gap:4px; color:#666; text-decoration:none; padding:6px 14px; border-radius:6px; background:#f0f0f0; transition:background 0.2s;" onmouseover="this.style.background='#e0e0e0'" onmouseout="this.style.background='#f0f0f0'">🏠 返回主页</a>
+        <a href="javascript:history.back()" style="display:inline-flex; align-items:center; gap:4px; color:#666666; text-decoration:none; padding:6px 14px; border-radius:6px; background:#f0f0f0; transition:background 0.2s;" onmouseover="this.style.background='#e0e0e0'" onmouseout="this.style.background='#f0f0f0'">⬅ 返回上一页</a>
+        <a href="/home/" style="display:inline-flex; align-items:center; gap:4px; color:#666666; text-decoration:none; padding:6px 14px; border-radius:6px; background:#f0f0f0; transition:background 0.2s;" onmouseover="this.style.background='#e0e0e0'" onmouseout="this.style.background='#f0f0f0'">🏠 返回主页</a>
     </div>
 
     <div class="nav-buttons">
         <a href="main.html"
-           style="display:flex; align-items:center; gap:8px; background:#f0f0f0; color:#555; text-decoration:none;
+           style="display:flex; align-items:center; gap:8px; background:#f0f0f0; color:#555555; text-decoration:none;
                   padding:12px 24px; border-radius:8px; font-weight:bold; font-size:0.95em;
                   transition:background 0.2s;"
            onmouseover="this.style.background='#e0e0e0'"
@@ -126,9 +131,9 @@
         </a>
         <a href="2026CQU_Advanced_Mathematics_II-2_Review_Questions.html"
            style="display:flex; align-items:center; gap:8px;
-                  background:linear-gradient(135deg,#667eea,#764ba2); color:#fff; text-decoration:none;
+                  background:linear-gradient(135deg,#67824f,#43684b); color:#ffffff; text-decoration:none;
                   padding:12px 24px; border-radius:8px; font-weight:bold; font-size:0.95em;
-                  box-shadow:0 3px 10px rgba(102,126,234,0.3); transition:transform 0.2s;"
+                  box-shadow:0 3px 10px rgba(103, 130, 79,0.3); transition:transform 0.2s;"
            onmouseover="this.style.transform='translateY(-1px)'"
            onmouseout="this.style.transform=''">
             📝 分类精选题
@@ -314,5 +319,7 @@
         知识点总结文档 | 高等数学II-2
     </div>
 
+
+<script src="/static/js/page-navigation.js?v=20260911-1" defer></script>
 </body>
 </html>

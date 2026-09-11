@@ -16,14 +16,14 @@
             }
 
             :root {
-                --primary: #0a4dff;
-                --primary-dark: #0037c1;
-                --accent: #ff6b2b;
-                --accent-glow: #ff8a4f;
-                --light: #f5f7fc;
-                --dark: #1a2634;
-                --gray: #4a5b6e;
-                --gray-light: #eef2f8;
+                --primary: #67824f;
+                --primary-dark: #43684b;
+                --accent: #67824f;
+                --accent-glow: #67824f;
+                --light: #f6f7f2;
+                --dark: #263b32;
+                --gray: #43684b;
+                --gray-light: #f6f7f2;
                 --white: #ffffff;
                 --shadow-sm: 0 8px 20px rgba(0, 0, 0, 0.05);
                 --shadow-md: 0 12px 28px rgba(0, 0, 0, 0.08);
@@ -75,7 +75,7 @@
             .logo {
                 font-size: 1.9rem;
                 font-weight: 800;
-                background: linear-gradient(135deg, var(--primary) 0%, #2b6eff 100%);
+                background: linear-gradient(135deg, var(--primary) 0%, #67824f 100%);
                 -webkit-background-clip: text;
                 background-clip: text;
                 color: transparent;
@@ -84,7 +84,7 @@
             }
 
             .logo span {
-                background: linear-gradient(135deg, var(--accent) 0%, #ff9940 100%);
+                background: linear-gradient(135deg, var(--accent) 0%, #67824f 100%);
                 -webkit-background-clip: text;
                 background-clip: text;
                 color: transparent;
@@ -133,7 +133,7 @@
             .home-link {
                 background: var(--white);
                 color: var(--primary);
-                border: 1px solid #dce5f0;
+                border: 1px solid #edf1e7;
             }
 
             .home-link:hover {
@@ -141,7 +141,7 @@
                 color: white;
                 border-color: var(--primary);
                 transform: translateY(-2px);
-                box-shadow: 0 6px 14px rgba(10, 77, 255, 0.2);
+                box-shadow: 0 6px 14px rgba(103, 130, 79, 0.2);
             }
 
             .github-link {
@@ -150,7 +150,7 @@
             }
 
             .github-link:hover {
-                background: #0f2c3f;
+                background: #263b32;
                 transform: translateY(-2px);
                 box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
             }
@@ -162,7 +162,7 @@
                 color: var(--dark);
                 margin: 36px 0 24px 0;
                 letter-spacing: -0.02em;
-                background: linear-gradient(to right, #0b2b3b, var(--primary));
+                background: linear-gradient(to right, #263b32, var(--primary));
                 -webkit-background-clip: text;
                 background-clip: text;
                 color: transparent;
@@ -181,7 +181,7 @@
             .dev-intro p {
                 font-size: 1.12rem;
                 margin-bottom: 24px;
-                color: #2c3e44;
+                color: #263b32;
             }
 
             .tech-stack {
@@ -202,7 +202,7 @@
                 gap: 10px;
                 color: var(--dark);
                 transition: 0.2s;
-                border: 1px solid #e2edf7;
+                border: 1px solid #edf1e7;
             }
 
             .tech-item i {
@@ -269,7 +269,7 @@
                 border: 3px solid var(--primary);
                 border-radius: 50%;
                 z-index: 2;
-                box-shadow: 0 0 0 4px rgba(10, 77, 255, 0.15);
+                box-shadow: 0 0 0 4px rgba(103, 130, 79, 0.15);
             }
 
             .timeline-date {
@@ -302,7 +302,7 @@
                 padding: 24px 28px;
                 margin-bottom: 20px;
                 transition: all 0.2s;
-                border: 1px solid #eef2f8;
+                border: 1px solid #f6f7f2;
             }
 
             .timeline-content h4 {
@@ -328,7 +328,7 @@
                 margin: 16px 0 8px 0;
                 border-radius: 20px;
                 overflow: hidden;
-                background: #0a0f14;
+                background: #263b32;
                 display: inline-block;
                 width: 100%;
                 max-width: 680px;
@@ -340,7 +340,7 @@
                 width: 100%;
                 max-height: 420px;
                 object-fit: contain;
-                background: #0a0f14;
+                background: #263b32;
                 display: block;
                 border-radius: 18px;
             }
@@ -355,12 +355,12 @@
             .media-group-item {
                 flex: 1;
                 min-width: 210px;
-                background: #fafcff;
+                background: #f6f7f2;
                 border-radius: 20px;
                 padding: 12px;
                 text-align: center;
                 transition: 0.2s;
-                border: 1px solid #eef2f8;
+                border: 1px solid #f6f7f2;
             }
 
             .media-group-item img {
@@ -368,22 +368,22 @@
                 max-height: 240px;
                 object-fit: contain;
                 border-radius: 16px;
-                background: #f0f2f5;
+                background: #f6f7f2;
             }
 
             .media-caption {
                 font-size: 0.8rem;
                 margin-top: 10px;
                 font-weight: 500;
-                color: #4a627a;
+                color: #43684b;
             }
 
             /* 新增大事件高亮 */
             .extra-highlight {
                 background: linear-gradient(
                     120deg,
-                    rgba(255, 107, 43, 0.08),
-                    rgba(10, 77, 255, 0.04)
+                    rgba(103, 130, 79, 0.08),
+                    rgba(103, 130, 79, 0.04)
                 );
                 border-left: 3px solid var(--accent);
                 padding: 20px 26px;
@@ -406,10 +406,10 @@
 
             /* 响应式 */
             .footer {
-                border-top: 1px solid #e0e8f0;
+                border-top: 1px solid #edf1e7;
                 padding: 32px 0;
                 text-align: center;
-                color: #5f6f82;
+                color: #43684b;
             }
 
             @media (max-width: 860px) {
@@ -457,23 +457,23 @@
             }
 
             ::selection {
-                background: rgba(10, 77, 255, 0.2);
+                background: rgba(103, 130, 79, 0.2);
             }
 
             .fallback-tip {
                 padding: 20px;
                 text-align: center;
-                background: #f0f3f9;
+                background: #f6f7f2;
                 border-radius: 16px;
                 margin: 8px 0;
                 font-size: 0.85rem;
-                color: #6c7e91;
+                color: #67824f;
             }
 
             /* 最新进度展示 */
             .latest-update {
                 display: inline-block;
-                background: #ff6b2b10;
+                background: #67824f10;
                 border-radius: 40px;
                 padding: 4px 12px;
                 font-size: 0.7rem;
@@ -501,7 +501,7 @@
                 display: inline-block;
                 color: var(--primary);
                 padding: 10px 16px;
-                border: 1px solid #dce5f0;
+                border: 1px solid #edf1e7;
                 border-radius: 12px;
                 text-decoration: none;
                 background: white;
@@ -530,7 +530,7 @@
                 height: auto;
                 max-height: 440px;
                 object-fit: contain;
-                background: #eef2f8;
+                background: #f6f7f2;
                 border-radius: 16px;
             }
             .archive-photo figcaption {
@@ -551,7 +551,7 @@
                 width: 100%;
                 height: auto;
                 display: block;
-                border: 1px solid #ead8b9;
+                border: 1px solid #cbd7bc;
                 border-radius: 8px;
                 margin-bottom: 16px;
             }
@@ -559,13 +559,13 @@
                 display: block;
                 width: 100%;
                 max-height: 650px;
-                background: #0a0f14;
+                background: #263b32;
                 border-radius: 16px;
                 margin: 20px 0;
             }
             .archive-nav a:hover,
             .archive-download:hover {
-                background: #eef2f8;
+                background: #f6f7f2;
             }
             a:focus-visible {
                 outline: 3px solid var(--accent);
@@ -590,12 +590,15 @@
                 max-height: 560px;
             }
         </style>
-    </head>
+    <link rel="stylesheet" href="/static/css/site-theme.css?v=20260911-centered-navigation">
+<meta name="theme-color" content="#f6f7f2">
+</head>
 
-    <body>
+    <body data-site-theme="garden" data-page-kind="page">
+<nav class="page-controls" aria-label="页面快捷导航"><a href="/pages/devlog/" data-page-back><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m10 5-7 7 7 7M3 12h18"/></svg><span>返回上一页</span></a><a href="/home/"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9"/></svg><span>首页</span></a></nav>
         <header class="header">
             <div class="container header-content">
-                <a href="http://0o0hyper0o0.cyou/home/" class="logo"
+                <a href="/home/" class="logo"
                     >Gsing<span>Team</span></a
                 >
                 <div class="header-actions">
@@ -603,7 +606,7 @@
                         <div class="project-name">⚡ 视觉 & 电控融合栈 · 全栈迭代</div>
                         <div class="project-dates">2025.11 → 2026.08 开发与赛事记录</div>
                     </div>
-                    <a href="http://0o0hyper0o0.cyou/home/" class="home-link">
+                    <a href="/home/" class="home-link">
                         <i class="fas fa-arrow-left"></i>
                         <span>返回首页</span>
                     </a>
@@ -922,7 +925,7 @@
                     <div class="timeline-item">
                         <div class="timeline-date">
                             2026.04.17
-                            <span class="timeline-tag" style="background: #ff6b2b"
+                            <span class="timeline-tag" style="background: #67824f"
                                 >🤖 视觉伺服抓取</span
                             >
                         </div>
@@ -956,7 +959,7 @@
                     <div class="timeline-item">
                         <div class="timeline-date">
                             2026.05.07
-                            <span class="timeline-tag" style="background: #2ecc71"
+                            <span class="timeline-tag" style="background: #67824f"
                                 >📦 物资搬运</span
                             >
                         </div>
@@ -981,7 +984,7 @@
                     <div class="timeline-item">
                         <div class="timeline-date">
                             2026.05.29
-                            <span class="timeline-tag" style="background: #9b59b6"
+                            <span class="timeline-tag" style="background: #67824f"
                                 >📍 雷达重定位</span
                             >
                         </div>
@@ -1336,9 +1339,9 @@
                 >
                     <i class="fab fa-github"></i> GitHub 完整记录
                 </a>
-                <span style="color: #aaa">|</span>
+                <span style="color: #aaaaaa">|</span>
                 <a
-                    href="http://0o0hyper0o0.cyou/home/"
+                    href="/home/"
                     style="color: var(--accent); text-decoration: none"
                 >
                     <i class="fas fa-globe"></i> Gsing 官网
@@ -1346,7 +1349,7 @@
             </p>
         </footer>
 
-        <script>
+<script>
             (function () {
                 // 媒体容错处理，优雅降级，若本地资源缺失则显示占位提示
                 const mediaElements = document.querySelectorAll("video, img");
@@ -1403,5 +1406,7 @@
                 );
             })();
         </script>
-    </body>
+
+<script src="/static/js/page-navigation.js?v=20260911-1" defer></script>
+</body>
 </html>

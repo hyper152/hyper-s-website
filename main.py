@@ -35,10 +35,10 @@ from src.storage import get_store
 # ===================== PROXY Protocol 解析器（纯Python实现） =====================
 class SimpleProxyProtocol:
     """简单的 PROXY Protocol v2 解析器"""
-    
+
     # PROXY Protocol v2 签名 (12字节)
     PROXY_SIGNATURE = b'\x0D\x0A\x0D\x0A\x00\x0D\x0A\x51\x55\x49\x54\x0A'
-    
+
     @classmethod
     def parse(cls, sock):
         """
@@ -51,28 +51,28 @@ class SimpleProxyProtocol:
             original_timeout = sock.gettimeout()
             # 设置短超时，避免阻塞
             sock.settimeout(0.1)
-            
+
             # 查看前 16 字节（不移除，只 peek）
             header = sock.recv(16, socket.MSG_PEEK)
             if len(header) < 16:
                 sock.settimeout(original_timeout)
                 return None
-            
+
             # 检查 PROXY 签名
             if header[:12] != cls.PROXY_SIGNATURE:
                 sock.settimeout(original_timeout)
                 return None
-            
+
             # 解析版本和命令（第13字节）- 高4位是版本，低4位是命令
             ver_cmd = header[12]
             # 解析协议族（第14字节）- 高4位是地址族，低4位是传输协议
             family = header[13]
             # 解析地址长度（第15-16字节）
             addr_len = struct.unpack('!H', header[14:16])[0]
-            
+
             # 读取完整的 PROXY 头部（包括前面16字节 + 地址信息）
             full_header = sock.recv(16 + addr_len)
-            
+
             # 根据协议族解析 IP
             if family & 0x10:  # TCP over IPv4 (0x11 或 0x12)
                 # IPv4 地址是 4 字节（源IP 4字节 + 目的IP 4字节 + 源端口 2字节 + 目的端口 2字节）
@@ -88,7 +88,7 @@ class SimpleProxyProtocol:
                 # 其他协议族，不支持
                 sock.settimeout(original_timeout)
                 return None
-                
+
         except socket.timeout:
             # 超时说明没有 PROXY 头部，是普通连接
             return None
@@ -121,24 +121,24 @@ class Config:
     EXCLUDE_COUNT_PATHS = ['/visit-count']
     EXCLUDE_STATIC_EXT = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.css', '.js', '.ico', '.svg']
     RESET_VISITS = False
-    
+
     # 敏感文件列表
     SENSITIVE_FILES = ['users.json', 'sessions.json', 'messages.json', 'visit_count.json']
     # 保护的数据目录
     PROTECTED_DIRS = ['/data/', '/data\\']
-    
+
     # 允许的路径白名单（防止扫描）
     ALLOWED_PATHS = [
         '/', '/talk', '/pages/', '/home/',
         '/static/', '/api/', '/visit-count', '/banner/',
         '/favicon.ico', '/dwcc/'
     ]
-    
+
     # 不记录日志的静态资源扩展名（图片、视频、CSS、JS等）
     SKIP_LOG_EXT = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.bmp', '.ico', '.svg',
                     '.mp4', '.avi', '.mov', '.wmv', '.flv', '.mkv', '.webm', '.mpeg', '.mpg',
                     '.css', '.js', '.map', '.woff', '.woff2', '.ttf', '.eot']
-    
+
     # site.db / visits 最大记录数（0表示不限制）
     MAX_VISITOR_RECORDS = 0
 
@@ -276,31 +276,31 @@ def get_session_id_from_request(request_handler):
         if '=' in cookie:
             key, value = cookie.strip().split('=', 1)
             cookies[key] = value
-    
+
     session_id = cookies.get('session_id', '')
     if session_id:
         return session_id
-    
+
     # 从Authorization头获取
     auth_header = request_handler.headers.get('Authorization', '')
     if auth_header.startswith('Session '):
         session_id = auth_header[8:].strip()
         return session_id
-    
+
     return ''
 
 def get_user_info_from_request(request_handler):
     """从请求中获取用户信息"""
     if not AUTH_AVAILABLE:
         return {}
-    
+
     session_id = get_session_id_from_request(request_handler)
     if not session_id:
         return {}
-    
+
     if not check_login_status(session_id):
         return {}
-    
+
     return get_current_user(session_id)
 
 def should_skip_log(path):
@@ -334,13 +334,13 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
         try:
             safe_path = os.path.abspath(path)
             server_root = os.path.abspath(self.directory)
-            
+
             # 安全检查：防止路径遍历
             if not safe_path.startswith(server_root):
                 self._log_access("🚫 非法路径", path, "403", "0.0")
                 self.send_error(403, "Forbidden")
                 return None
-                
+
             return safe_path
         except Exception as e:
             logger.error(f"路径校验异常：{e}")
@@ -368,19 +368,19 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
         # 如果是静态资源文件，直接放行
         if any(path.lower().endswith(ext) for ext in Config.EXCLUDE_STATIC_EXT):
             return True
-            
+
         # 检查是否以允许的路径开头
         for allowed in Config.ALLOWED_PATHS:
             if path.startswith(allowed):
                 return True
-        
+
         # 如果是目录浏览请求（以/结尾），检查父路径
         if path.endswith('/'):
             parent = path.rstrip('/')
             for allowed in Config.ALLOWED_PATHS:
                 if parent.startswith(allowed):
                     return True
-        
+
         return False
 
     def get_real_client_ip(self):
@@ -403,7 +403,7 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
             if peer_ip not in ('127.0.0.1', '::1'):
                 self.real_client_ip = peer_ip
                 return peer_ip
-        
+
         # 只有在有 headers 且是有效请求时才尝试获取真实IP
         if hasattr(self, 'headers') and self.headers and hasattr(self, 'command') and self.command:
             try:
@@ -413,19 +413,19 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
                     # 取第一个（最左边）的IP，即真实客户端IP
                     self.real_client_ip = x_forwarded.split(',')[0].strip()
                     return self.real_client_ip
-                
+
                 # 有些服务用 X-Real-IP
                 x_real_ip = self.headers.get('X-Real-IP', '')
                 if x_real_ip:
                     self.real_client_ip = x_real_ip.strip()
                     return self.real_client_ip
-                    
+
                 # CloudFlare 用的头
                 cf_connecting_ip = self.headers.get('CF-Connecting-IP', '')
                 if cf_connecting_ip:
                     self.real_client_ip = cf_connecting_ip.strip()
                     return self.real_client_ip
-                    
+
                 # Akamai 等用的头
                 true_client_ip = self.headers.get('True-Client-IP', '')
                 if true_client_ip:
@@ -433,13 +433,13 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
                     return self.real_client_ip
             except Exception as e:
                 pass
-        
+
         # 回退到原始 remote_addr
         if hasattr(self, 'client_address'):
             self.real_client_ip = self.client_address[0]
         else:
             self.real_client_ip = 'unknown'
-        
+
         return self.real_client_ip
 
     def _set_question_log(self, label, text):
@@ -457,29 +457,29 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
         """统一的访问日志输出 - 只记录路由，不记录静态资源"""
         # 解码路径显示中文
         decoded_path = decode_path(path)
-        
+
         # 跳过静态资源日志（图片、视频、CSS、JS等）
         if should_skip_log(decoded_path):
             return
-        
+
         # 日期时间格式化
         now = datetime.now()
         date_str = now.strftime("%Y-%m-%d")
         time_str = now.strftime("%H:%M:%S")
-        
+
         # 用户标识
         if username:
             user_part = f"👤 {username}"
         else:
             user_part = "👤 游客"
-        
+
         # 构建日志消息（带日期、IP和城市，使用解码后的路径）
         if client_ip:
             city = query_ip_city(client_ip)
             log_msg = f"{date_str} {time_str} {emoji} {user_part} [{client_ip}] [{city}] | {method} {decoded_path} | {status} | {duration}ms | 👁️ {visits}"
         else:
             log_msg = f"{date_str} {time_str} {emoji} {user_part} | {method} {decoded_path} | {status} | {duration}ms | 👁️ {visits}"
-        
+
         if getattr(self, '_question_log', ''):
             log_msg += f" | {self._question_log}"
 
@@ -508,25 +508,25 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
         request_path = '/'
         request_method = 'GET'
         status_code = 200
-        
+
         try:
             # 调用父类方法处理请求（这会设置 headers 等属性）
             super().handle_one_request()
-            
+
             # 请求处理成功后的统计
             process_time = (time.time() - start_time) * 1000
             request_path = getattr(self, 'path', '/')
             request_method = getattr(self, 'command', 'GET')
             status_code = getattr(self, 'status', 200)
-            
+
             # 获取真实IP（现在 headers 已经可用）
             client_ip = self.get_real_client_ip()
-            
+
             # 限流记录（使用真实 IP）
             now = time.time()
             self.ip_request_cache[client_ip] = [t for t in self.ip_request_cache[client_ip] if now - t < Config.RATE_LIMIT_WINDOW]
             self.ip_request_cache[client_ip].append(now)
-            
+
             # 获取用户信息
             username = ''
             if AUTH_AVAILABLE:
@@ -536,11 +536,11 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
                         username = user_info.get('username', '') if user_info else ''
                 except Exception as e:
                     logger.debug(f"获取用户信息失败: {e}")
-            
+
             # 计数访问
             is_static = any(request_path.lower().endswith(ext) for ext in Config.EXCLUDE_STATIC_EXT)
             is_exclude_path = any(request_path.startswith(path) for path in Config.EXCLUDE_COUNT_PATHS)
-            
+
             if not is_static and not is_exclude_path:
                 total_visits = count_visit()
             else:
@@ -550,7 +550,7 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
             try:
                 # 解码路径为中文
                 decoded_request_path = decode_path(request_path)
-                
+
                 # 构建访问记录
                 visit_record = {
                     "time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
@@ -560,16 +560,16 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
                     "method": request_method,
                     "status": status_code
                 }
-                
+
                 # 添加 User-Agent（如果存在）
                 if hasattr(self, 'headers') and self.headers:
                     ua = self.headers.get('User-Agent', '')
                     if ua:
                         visit_record["user_agent"] = ua[:300]  # 限制长度
-                
+
                 # 使用线程安全的 VisitorManager 保存
                 VisitorManager.add_record(visit_record)
-                    
+
             except Exception as e:
                 logger.debug(f"保存访问记录失败: {e}")
             # =============================================================
@@ -612,12 +612,12 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
                 visits=total_visits,
                 client_ip=client_ip
             )
-            
+
             # 限流警告（使用真实IP）
             request_count = len(self.ip_request_cache[client_ip])
             if request_count > Config.RATE_LIMIT:
                 logger.warning(f"⚠️ {client_ip} {request_count}次/{Config.RATE_LIMIT_WINDOW}秒")
-            
+
         except Exception as e:
             # 如果还没获取到 client_ip，重新获取一下
             if not client_ip:
@@ -625,9 +625,9 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
                     client_ip = self.get_real_client_ip()
                 except:
                     client_ip = 'unknown'
-            
+
             logger.error(f"请求处理异常 {client_ip} - {request_path} - {str(e)}")
-            
+
             # 如果还没有发送响应，尝试发送500错误
             if not hasattr(self, 'status') or self.status < 400:
                 try:
@@ -657,14 +657,21 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
         .folder i {{ color:#ffc107 }}
         .file i {{ color:#6a5acd }}
     </style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/static/css/site-theme.css?v=20260911-centered-navigation">
 </head>
-<body>
+<body data-site-theme="garden" data-page-kind="directory">
+<nav class="page-controls" aria-label="页面快捷导航"><a href="/home/" data-page-back><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m10 5-7 7 7 7M3 12h18"/></svg><span>返回上一页</span></a><a href="/home/"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9"/></svg><span>首页</span></a></nav>
+<nav class="site-navigation" aria-label="全站导航"><a class="site-brand" href="/home/"><img src="/home/hyper.png" alt="" width="38" height="38"><span>hyper.</span></a><div class="site-nav-links"><a href="/home/#categories">探索分类</a><a href="/pages/resume/index.html">个人简介</a><a href="/talk/comment.html">留言板</a></div></nav>
+
     <div class="container">
         <h1>📂 目录列表: {path}</h1>
         <div class="breadcrumb">{breadcrumb}</div>
         {back_button}
         <div class="items">{items}</div>
     </div>
+
+<script src="/static/js/page-navigation.js?v=20260911-1" defer></script>
 </body>
 </html>
         """
@@ -690,7 +697,7 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
         if path == '/talk':
             self._serve_talk_static_page()
             return
-        
+
         # 处理 AI 聊天页面
         if path == '/talk/ai-chat.html':
             self._serve_ai_chat_page()
@@ -774,22 +781,22 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
         """处理DELETE请求"""
         parsed = urlparse(self.path)
         path = parsed.path
-        
+
         # 路径白名单检查（防止扫描）
         if not self.is_allowed_path(path):
             logger.warning(f"拦截非法DELETE扫描: {path}")
             self.send_error(404, "Not Found")
             return
-            
+
         if self.is_protected_path(self.path):
             logger.warning(f"阻止DELETE访问受保护路径: {self.path}")
             self.send_error(403, "Forbidden")
             return
-            
+
         local = self.translate_path(self.path)
         if not self.validate_path(local):
             return
-        
+
         if FLASK_AVAILABLE and self.path.startswith('/api/'):
             self._forward_to_flask()
             return
@@ -873,12 +880,12 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
                     pass
 
             logger.debug(f"转发请求到 Flask: {self.command} {self.path}")
-            
+
             with message_board.app.test_client() as client:
                 headers = dict(self.headers)
                 # 移除可能导致问题的 Host 头
                 headers.pop('Host', None)
-                
+
                 if self.command == "GET":
                     resp = client.get(self.path, headers=headers)
                 elif self.command == "DELETE":
@@ -899,11 +906,14 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
             self.end_headers()
             error_html = """
             <html>
-            <head><title>500 服务器内部错误</title></head>
-            <body style='padding:40px'>
+            <head><title>500 服务器内部错误</title><link rel="stylesheet" href="/static/css/site-theme.css?v=20260911-centered-navigation"></head>
+            <body data-site-theme='garden' style='padding:40px'>
+<nav class="page-controls" aria-label="页面快捷导航"><a href="/home/" data-page-back><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m10 5-7 7 7 7M3 12h18"/></svg><span>返回上一页</span></a><a href="/home/"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9"/></svg><span>首页</span></a></nav>
                 <h1>500 接口请求处理失败</h1>
                 <p>请检查服务是否正常运行</p>
-            </body>
+
+<script src="/static/js/page-navigation.js?v=20260911-1" defer></script>
+</body>
             </html>
             """
             self.wfile.write(error_html.encode('utf-8'))
@@ -1048,7 +1058,7 @@ def run_server():
 
     local_ip = socket.gethostbyname(socket.gethostname())
     current_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    
+
     print("\n" + "="*60)
     print(f"🚀 服务启动成功！ {current_date}")
     print("="*60)
@@ -1090,11 +1100,11 @@ if __name__ == "__main__":
     for option, path in (("--certfile", args.certfile), ("--keyfile", args.keyfile)):
         if path and not os.path.isfile(path):
             parser.error(f"{option} 指定的文件不存在: {path}")
-    
+
     Config.PORT = args.port
     Config.HOST = args.host
     Config.CERT_FILE = os.path.abspath(args.certfile) if args.certfile else None
     Config.KEY_FILE = os.path.abspath(args.keyfile) if args.keyfile else None
     Config.RESET_VISITS = args.reset_visits 
-    
+
     run_server()

@@ -5,43 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>二元函数极限与泰勒公式速记版 — 高等数学II-2</title>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; line-height: 1.8; color: #333; background: #f4f6f8; padding: 20px; max-width: 880px; margin: 0 auto; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; line-height: 1.8; color: #333333; background: #f6f7f2; padding: 20px; max-width: 880px; margin: 0 auto; }
         .header { text-align: center; padding-bottom: 20px; border-bottom: 2px solid #e0e0e0; margin-bottom: 30px; }
-        .header h1 { color: #2c3e50; margin-bottom: 5px; font-size: 1.6em; }
+        .header h1 { color: #263b32; margin-bottom: 5px; font-size: 1.6em; }
         .header .subtitle { color: #7f8c8d; font-size: 0.9em; }
-        .download-link { display: inline-flex; align-items: center; gap: 8px; background: #3498db; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; margin: 15px 0; transition: background 0.2s; }
-        .download-link:hover { background: #2980b9; }
-        .nav-back { display: inline-flex; align-items: center; gap: 6px; color: #555; text-decoration: none; font-size: 0.9em; margin-bottom: 15px; }
-        .nav-back:hover { color: #3498db; }
-        .section { background: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 20px 25px; margin-bottom: 20px; border-left: 4px solid #3498db; }
-        .section h2 { color: #2980b9; margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 8px; font-size: 1.2em; }
-        .section h3 { color: #2c3e50; font-size: 1.05em; margin: 15px 0 8px; }
+        .download-link { display: inline-flex; align-items: center; gap: 8px; background: #67824f; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; margin: 15px 0; transition: background 0.2s; }
+        .download-link:hover { background: #43684b; }
+        .nav-back { display: inline-flex; align-items: center; gap: 6px; color: #555555; text-decoration: none; font-size: 0.9em; margin-bottom: 15px; }
+        .nav-back:hover { color: #67824f; }
+        .section { background: #ffffff; border-radius: 10px; box-shadow: 0 2px 8px rgba(0, 0, 0,0.06); padding: 20px 25px; margin-bottom: 20px; border-left: 4px solid #67824f; }
+        .section h2 { color: #43684b; margin-top: 0; border-bottom: 1px solid #eeeeee; padding-bottom: 8px; font-size: 1.2em; }
+        .section h3 { color: #263b32; font-size: 1.05em; margin: 15px 0 8px; }
         .math-tex { font-family: "Times New Roman", Times, serif; font-style: italic; background: #f9f9f9; padding: 2px 6px; border-radius: 3px; }
-        .formula-box { background: #f0f4ff; border: 1px solid #d0d8f0; border-radius: 6px; padding: 12px 16px; margin: 10px 0; text-align: center; font-size: 1.1em; }
-        .example-box { background: #f8f9fa; border-left: 3px solid #27ae60; padding: 10px 15px; margin: 10px 0; border-radius: 0 4px 4px 0; }
-        .note-box { background: #fff8e1; border-left: 3px solid #ffc107; padding: 10px 15px; margin: 10px 0; border-radius: 0 4px 4px 0; }
+        .formula-box { background: #f6f7f2; border: 1px solid #edf1e7; border-radius: 6px; padding: 12px 16px; margin: 10px 0; text-align: center; font-size: 1.1em; }
+        .example-box { background: #f6f7f2; border-left: 3px solid #43684b; padding: 10px 15px; margin: 10px 0; border-radius: 0 4px 4px 0; }
+        .note-box { background: #f6f7f2; border-left: 3px solid #67824f; padding: 10px 15px; margin: 10px 0; border-radius: 0 4px 4px 0; }
         .warning-box { background: #fdf0ef; border-left: 3px solid #e74c3c; padding: 10px 15px; margin: 10px 0; border-radius: 0 4px 4px 0; }
         table { width: 100%; border-collapse: collapse; margin: 10px 0; }
-        th, td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
-        th { background: #f0f4ff; font-weight: bold; }
+        th, td { border: 1px solid #dddddd; padding: 8px 12px; text-align: left; }
+        th { background: #f6f7f2; font-weight: bold; }
         ul, ol { padding-left: 20px; }
         li { margin-bottom: 6px; }
         .footer-note { text-align: center; color: #95a5a6; font-size: 0.85em; margin-top: 40px; border-top: 1px solid #e0e0e0; padding-top: 20px; }
         .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 10px 0; }
-        .comparison-grid .col { background: #f8f9fa; border-radius: 6px; padding: 12px; }
-        .comparison-grid .col h4 { margin: 0 0 8px; color: #2c3e50; }
-        .memory-tip { background: #eaf7ea; border-left: 3px solid #27ae60; padding: 10px 15px; margin: 10px 0; border-radius: 0 4px 4px 0; }
-        .memory-tip strong { color: #27ae60; }
+        .comparison-grid .col { background: #f6f7f2; border-radius: 6px; padding: 12px; }
+        .comparison-grid .col h4 { margin: 0 0 8px; color: #263b32; }
+        .memory-tip { background: #f6f7f2; border-left: 3px solid #43684b; padding: 10px 15px; margin: 10px 0; border-radius: 0 4px 4px 0; }
+        .memory-tip strong { color: #43684b; }
         .method-flow { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0; justify-content: center; }
-        .method-flow .step-box { background: #f0f4ff; border: 1px solid #d0d8f0; border-radius: 8px; padding: 8px 14px; text-align: center; min-width: 80px; font-size: 0.9em; }
+        .method-flow .step-box { background: #f6f7f2; border: 1px solid #edf1e7; border-radius: 8px; padding: 8px 14px; text-align: center; min-width: 80px; font-size: 0.9em; }
         .method-flow .arrow { align-self: center; font-size: 1.2em; color: #95a5a6; }
     </style>
+<link rel="stylesheet" href="/static/css/site-theme.css?v=20260911-centered-navigation">
+<meta name="theme-color" content="#f6f7f2">
 </head>
-<body>
+<body data-site-theme="garden" data-page-kind="study">
+<nav class="page-controls" aria-label="页面快捷导航"><a href="/pages/study/" data-page-back><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m10 5-7 7 7 7M3 12h18"/></svg><span>返回上一页</span></a><a href="/home/"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9"/></svg><span>首页</span></a></nav>
+<nav class="site-navigation" aria-label="全站导航"><a class="site-brand" href="/home/"><img src="/home/hyper.png" alt="" width="38" height="38"><span>hyper.</span></a><div class="site-nav-links"><a href="/home/#categories">探索分类</a><a href="/pages/resume/index.html">个人简介</a><a href="/talk/comment.html">留言板</a></div></nav>
+
     <div style="display:flex; gap:12px; margin-bottom:10px; font-size:0.9em;">
-  <a href="javascript:history.back()" style="display:inline-flex; align-items:center; gap:4px; color:#666; text-decoration:none; padding:6px 14px; border-radius:6px; background:#f0f0f0; transition:background 0.2s;" onmouseover="this.style.background='#e0e0e0'" onmouseout="this.style.background='#f0f0f0'">⬅ 返回上一页</a>
-  <a href="/home/" style="display:inline-flex; align-items:center; gap:4px; color:#666; text-decoration:none; padding:6px 14px; border-radius:6px; background:#f0f0f0; transition:background 0.2s;" onmouseover="this.style.background='#e0e0e0'" onmouseout="this.style.background='#f0f0f0'">🏠 返回主页</a>
-  <a href="../main.html" style="display:inline-flex; align-items:center; gap:4px; color:#3498db; text-decoration:none; padding:6px 14px; border-radius:6px; background:#e8f0fe; transition:background 0.2s;" onmouseover="this.style.background='#d0e0ff'" onmouseout="this.style.background='#e8f0fe'">📖 考点大纲</a>
+  <a href="javascript:history.back()" style="display:inline-flex; align-items:center; gap:4px; color:#666666; text-decoration:none; padding:6px 14px; border-radius:6px; background:#f0f0f0; transition:background 0.2s;" onmouseover="this.style.background='#e0e0e0'" onmouseout="this.style.background='#f0f0f0'">⬅ 返回上一页</a>
+  <a href="/home/" style="display:inline-flex; align-items:center; gap:4px; color:#666666; text-decoration:none; padding:6px 14px; border-radius:6px; background:#f0f0f0; transition:background 0.2s;" onmouseover="this.style.background='#e0e0e0'" onmouseout="this.style.background='#f0f0f0'">🏠 返回主页</a>
+  <a href="../main.html" style="display:inline-flex; align-items:center; gap:4px; color:#67824f; text-decoration:none; padding:6px 14px; border-radius:6px; background:#f6f7f2; transition:background 0.2s;" onmouseover="this.style.background='#d0e0ff'" onmouseout="this.style.background='#e8f0fe'">📖 考点大纲</a>
 </div>
     <div class="header">
         <h1>二元函数极限与泰勒公式速记版</h1>
@@ -324,5 +329,7 @@
     <div class="footer-note">
         二元函数极限与泰勒公式速记版 | 高等数学II-2 知识点
     </div>
+
+<script src="/static/js/page-navigation.js?v=20260911-1" defer></script>
 </body>
 </html>

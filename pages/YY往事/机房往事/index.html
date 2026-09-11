@@ -14,14 +14,14 @@
         }
 
         :root {
-            --primary: #6a5acd;
-            --accent: #ff6b6b;
-            --light: #f8f9fa;
+            --primary: #67824f;
+            --accent: #cbd7bc;
+            --light: #f6f7f2;
             --dark: #2d3436;
             --gray: #495057;
-            --light-gray: #e9ecef;
-            --shadow: 0 2px 12px rgba(0,0,0,0.08);
-            --shadow-hover: 0 8px 25px rgba(0,0,0,0.12);
+            --light-gray: #edf1e7;
+            --shadow: 0 2px 12px rgba(0, 0, 0,0.08);
+            --shadow-hover: 0 8px 25px rgba(0, 0, 0,0.12);
             --border: 1px solid var(--light-gray);
         }
 
@@ -106,7 +106,7 @@
 
         /* 头部横幅 */
         .page-hero {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            background: linear-gradient(135deg, #263b32 0%, #263b32 50%, #263b32 100%);
             color: white;
             padding: 60px 0;
             margin-bottom: 40px;
@@ -139,7 +139,7 @@
         .page-hero h1 {
             font-size: clamp(2rem, 5vw, 3.5rem);
             margin-bottom: 15px;
-            text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+            text-shadow: 2px 2px 0 rgba(0, 0, 0,0.3);
             position: relative;
             z-index: 2;
         }
@@ -251,7 +251,7 @@
             width: 100%;
             aspect-ratio: 16 / 9;
             overflow: hidden;
-            background: #1a1a2e;
+            background: #263b32;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -348,7 +348,7 @@
 
         /* 总结卡片 */
         .summary-card {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            background: linear-gradient(135deg, #263b32 0%, #263b32 100%);
             border-radius: 16px;
             padding: 40px;
             margin: 40px 0;
@@ -451,7 +451,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.9);
+            background: rgba(0, 0, 0,0.9);
             z-index: 2000;
             align-items: center;
             justify-content: center;
@@ -479,9 +479,12 @@
             color: var(--accent);
         }
     </style>
+<link rel="stylesheet" href="/static/css/site-theme.css?v=20260911-centered-navigation">
+<meta name="theme-color" content="#f6f7f2">
 </head>
 
-<body>
+<body data-site-theme="garden" data-page-kind="page">
+<nav class="page-controls" aria-label="页面快捷导航"><a href="/pages/YY往事/" data-page-back><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m10 5-7 7 7 7M3 12h18"/></svg><span>返回上一页</span></a><a href="/home/"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9"/></svg><span>首页</span></a></nav>
 
 <nav class="navbar">
     <div class="container navbar-content">
@@ -548,7 +551,7 @@
     </div>
 
     <div class="memory-grid" id="memoryGrid">
-        
+
         <!-- 2024.12.4 - 留言网站 -->
         <div class="memory-card" data-category="日常">
             <div class="memory-img">
@@ -872,9 +875,9 @@
         btn.addEventListener('click', () => {
             filterBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            
+
             const filter = btn.dataset.filter;
-            
+
             cards.forEach(card => {
                 if (filter === 'all') {
                     card.style.display = 'flex';
@@ -902,5 +905,7 @@
     });
 </script>
 
+
+<script src="/static/js/page-navigation.js?v=20260911-1" defer></script>
 </body>
 </html>

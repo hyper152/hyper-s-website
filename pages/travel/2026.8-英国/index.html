@@ -7,11 +7,11 @@
         <title>英国 · 城市、球场与夏日记忆 | hyper的Vlog</title>
         <style>
             :root {
-                --ink: #203b36;
-                --paper: #f7f6f0;
+                --ink: #263b32;
+                --paper: #f6f7f2;
                 --muted: #66736c;
-                --line: #dbdfd5;
-                --accent: #b55637;
+                --line: #edf1e7;
+                --accent: #43684b;
             }
             * {
                 box-sizing: border-box;
@@ -173,14 +173,14 @@
                 align-items: center;
             }
             .film .eyebrow {
-                color: #e7ba8e;
+                color: #cbd7bc;
             }
             .film h3 {
                 font-size: 24px;
                 margin: 12px 0;
             }
             .film p {
-                color: #c4d1c7;
+                color: #cbd7bc;
             }
             .film video {
                 width: 100%;
@@ -199,14 +199,14 @@
             dialog {
                 border: 0;
                 padding: 50px 16px 16px;
-                background: #15231f;
+                background: #263b32;
                 color: white;
                 max-width: 95vw;
                 max-height: 95vh;
                 border-radius: 8px;
             }
             dialog::backdrop {
-                background: #000c;
+                background: #000000cc;
             }
             dialog img {
                 display: block;
@@ -294,20 +294,23 @@
             .moment img {
                 max-height: 85vh;
                 object-fit: contain;
-                background: #eeeee7;
+                background: #edf1e7;
             }
             .moment video {
                 width: 100%;
                 max-height: 80vh;
-                background: #15231f;
+                background: #263b32;
             }
             section > h2 {
                 padding-bottom: 20px;
                 border-bottom: 1px solid var(--line);
             }
         </style>
-    </head>
-    <body>
+    <link rel="stylesheet" href="/static/css/site-theme.css?v=20260911-centered-navigation">
+<meta name="theme-color" content="#f6f7f2">
+</head>
+    <body data-site-theme="garden" data-page-kind="page">
+<nav class="page-controls" aria-label="页面快捷导航"><a href="/pages/travel/" data-page-back><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m10 5-7 7 7 7M3 12h18"/></svg><span>返回上一页</span></a><a href="/home/"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9"/></svg><span>首页</span></a></nav>
         <nav>
             <a href="/home/">hyper / 旅行手记</a
             ><a href="../index.html">← 全部旅行</a>
@@ -679,7 +682,7 @@
             <button type="button" aria-label="关闭照片预览">关闭 ✕</button><img alt="" />
             <p></p>
         </dialog>
-        <script>
+<script>
             const viewer = document.querySelector("#viewer");
             document.querySelectorAll(".photo").forEach((button) =>
                 button.addEventListener("click", () => {
@@ -704,5 +707,7 @@
                 }
             });
         </script>
-    </body>
+
+<script src="/static/js/page-navigation.js?v=20260911-1" defer></script>
+</body>
 </html>

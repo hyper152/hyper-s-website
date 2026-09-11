@@ -7,77 +7,77 @@
     <style>
         * { box-sizing: border-box; }
         body {
-            background-color: #f7f9fc;
+            background-color: #f6f7f2;
             font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
             margin: 0;
             padding: 2rem 1.5rem;
-            color: #1e293b;
+            color: #263b32;
         }
         .container { max-width: 1100px; margin: 0 auto; }
         h1 {
             font-size: 2.2rem; font-weight: 600;
-            border-left: 6px solid #2563eb; padding-left: 1rem;
+            border-left: 6px solid #67824f; padding-left: 1rem;
             margin-top: 0.2rem; margin-bottom: 0.5rem;
-            color: #0f172a; letter-spacing: -0.02em;
+            color: #263b32; letter-spacing: -0.02em;
         }
         .subhead {
-            color: #475569; margin-bottom: 2rem; font-size: 1rem;
-            border-bottom: 1px solid #e2e8f0; padding-bottom: 0.75rem;
+            color: #43684b; margin-bottom: 2rem; font-size: 1rem;
+            border-bottom: 1px solid #edf1e7; padding-bottom: 0.75rem;
         }
         .exam-card {
             background: white; border-radius: 20px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.04), 0 2px 6px rgba(0,0,0,0.02);
+            box-shadow: 0 8px 20px rgba(0, 0, 0,0.04), 0 2px 6px rgba(0, 0, 0,0.02);
             padding: 1.8rem 2rem; margin-bottom: 2.5rem;
-            border: 1px solid #e9edf4; transition: box-shadow 0.2s;
+            border: 1px solid #edf1e7; transition: box-shadow 0.2s;
         }
-        .exam-card:hover { box-shadow: 0 12px 28px rgba(0,0,0,0.06); }
+        .exam-card:hover { box-shadow: 0 12px 28px rgba(0, 0, 0,0.06); }
         .exam-title {
             display: flex; flex-wrap: wrap; align-items: baseline;
             justify-content: space-between; margin-bottom: 1.2rem;
-            border-bottom: 1px dashed #dce2ec; padding-bottom: 0.6rem;
+            border-bottom: 1px dashed #edf1e7; padding-bottom: 0.6rem;
         }
-        .exam-title h2 { font-size: 1.4rem; font-weight: 600; color: #1e293b; margin: 0; }
+        .exam-title h2 { font-size: 1.4rem; font-weight: 600; color: #263b32; margin: 0; }
         .exam-code {
-            background: #eef2f6; padding: 0.2rem 0.9rem; border-radius: 30px;
-            font-size: 0.85rem; font-weight: 500; color: #334155;
+            background: #f6f7f2; padding: 0.2rem 0.9rem; border-radius: 30px;
+            font-size: 0.85rem; font-weight: 500; color: #263b32;
         }
         .question-block { margin-top: 1.2rem; padding-left: 0.25rem; }
         .q-item {
-            background: #fafcff; border-left: 4px solid #3b82f6;
+            background: #f6f7f2; border-left: 4px solid #67824f;
             padding: 1rem 1.2rem; border-radius: 12px; margin-bottom: 1.4rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+            box-shadow: 0 1px 3px rgba(0, 0, 0,0.02);
         }
-        .q-item .q-label { font-weight: 600; color: #2563eb; font-size: 0.9rem; letter-spacing: 0.3px; margin-right: 0.5rem; }
-        .q-item .q-text { font-size: 1rem; line-height: 1.6; margin: 0.2rem 0 0.5rem 0; color: #0b1e33; }
+        .q-item .q-label { font-weight: 600; color: #67824f; font-size: 0.9rem; letter-spacing: 0.3px; margin-right: 0.5rem; }
+        .q-item .q-text { font-size: 1rem; line-height: 1.6; margin: 0.2rem 0 0.5rem 0; color: #263b32; }
         .q-item .q-text .math { font-family: 'Times New Roman', 'CMU Serif', serif; font-style: italic; }
         .q-item .q-answer {
-            background: #f1f5f9; border-radius: 30px; padding: 0.25rem 1rem;
+            background: #f6f7f2; border-radius: 30px; padding: 0.25rem 1rem;
             display: inline-block; font-size: 0.9rem; font-weight: 500;
-            color: #0b3b5c; margin-top: 0.5rem;
+            color: #263b32; margin-top: 0.5rem;
         }
-        .q-item .q-answer strong { font-weight: 700; color: #1e4a7a; }
+        .q-item .q-answer strong { font-weight: 700; color: #43684b; }
         .q-item .q-source {
-            font-size: 0.8rem; color: #64748b; margin-top: 0.5rem;
-            border-top: 1px dashed #e2e8f0; padding-top: 0.5rem;
+            font-size: 0.8rem; color: #43684b; margin-top: 0.5rem;
+            border-top: 1px dashed #edf1e7; padding-top: 0.5rem;
             display: flex; gap: 0.5rem; flex-wrap: wrap;
         }
-        .q-item .q-source span { background: #eef2f6; padding: 0.1rem 0.8rem; border-radius: 20px; }
+        .q-item .q-source span { background: #f6f7f2; padding: 0.1rem 0.8rem; border-radius: 20px; }
         .badge {
-            background: #dbeafe; color: #1e4a7a; font-size: 0.75rem; font-weight: 600;
+            background: #edf1e7; color: #43684b; font-size: 0.75rem; font-weight: 600;
             padding: 0.1rem 0.7rem; border-radius: 30px; display: inline-block; margin-left: 0.3rem;
         }
         .figure-box {
-            background: #f8faff; border: 1px dashed #8aa3c9; border-radius: 10px;
+            background: #f6f7f2; border: 1px dashed #67824f; border-radius: 10px;
             padding: 16px; margin: 12px 0; display: flex; flex-wrap: wrap;
             justify-content: center; align-items: center; gap: 20px;
         }
         .figure-box svg { max-width: 100%; height: auto; }
-        .fig-caption { text-align: center; font-size: 0.85rem; color: #475569; margin-top: 4px; }
+        .fig-caption { text-align: center; font-size: 0.85rem; color: #43684b; margin-top: 4px; }
         .footnote {
-            background: #f8fafc; border-radius: 16px; padding: 1rem 1.8rem;
-            margin-top: 2.2rem; border: 1px solid #dfe7f0; color: #334155;
+            background: #f6f7f2; border-radius: 16px; padding: 1rem 1.8rem;
+            margin-top: 2.2rem; border: 1px solid #edf1e7; color: #263b32;
         }
-        .footnote i { font-style: normal; background: #e6edf6; padding: 0.1rem 0.6rem; border-radius: 12px; }
+        .footnote i { font-style: normal; background: #edf1e7; padding: 0.1rem 0.6rem; border-radius: 12px; }
         @media (max-width: 640px) {
             body { padding: 1rem 0.8rem; }
             .exam-card { padding: 1.2rem 1rem; }
@@ -85,8 +85,13 @@
             .exam-title h2 { font-size: 1.2rem; }
         }
     </style>
+<link rel="stylesheet" href="/static/css/site-theme.css?v=20260911-centered-navigation">
+<meta name="theme-color" content="#f6f7f2">
 </head>
-<body>
+<body data-site-theme="garden" data-page-kind="study">
+<nav class="page-controls" aria-label="页面快捷导航"><a href="/pages/study/" data-page-back><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m10 5-7 7 7 7M3 12h18"/></svg><span>返回上一页</span></a><a href="/home/"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9"/></svg><span>首页</span></a></nav>
+<nav class="site-navigation" aria-label="全站导航"><a class="site-brand" href="/home/"><img src="/home/hyper.png" alt="" width="38" height="38"><span>hyper.</span></a><div class="site-nav-links"><a href="/home/#categories">探索分类</a><a href="/pages/resume/index.html">个人简介</a><a href="/talk/comment.html">留言板</a></div></nav>
+
 <div class="container">
     <h1>🧲 安培环路定理 · 相关题目</h1>
     <div class="subhead">📌 选自重庆大学《大学物理》历年试卷 · 标注"H安环" / 安培环路定理 / 磁场环路</div>
@@ -132,7 +137,7 @@
                         <div class="fig-caption">图：螺线环剖面 · 安培环路 L</div>
                     </div>
 
-                    <div style="display: flex; flex-wrap: wrap; gap: 0.8rem 1.8rem; background: #f2f6fc; padding: 0.4rem 1rem; border-radius: 40px; font-size: 0.95rem;">
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.8rem 1.8rem; background: #f6f7f2; padding: 0.4rem 1rem; border-radius: 40px; font-size: 0.95rem;">
                         <span>A. <span class="math">NI</span></span>
                         <span>B. <span class="math">–NI</span></span>
                         <span>C. <span class="math">μNI</span></span>
@@ -196,7 +201,7 @@
                         <div class="fig-caption">图(a)：螺线管剖面 · 矩形安培环路 abcd</div>
                     </div>
 
-                    <p style="font-size:0.95rem; color:#1e3a5f;">【管内磁场均匀，方向沿轴线；取矩形回路，<span class="math">∮B·dl = μ₀ n I l</span> ⇒ <span class="math">B = μ₀ n I</span>】</p>
+                    <p style="font-size:0.95rem; color:#263b32;">【管内磁场均匀，方向沿轴线；取矩形回路，<span class="math">∮B·dl = μ₀ n I l</span> ⇒ <span class="math">B = μ₀ n I</span>】</p>
                 </div>
                 <div class="q-answer"><strong>✓ 答案：</strong> <span class="math">B = μ₀ n I</span> （管内匀强磁场，方向与电流成右手螺旋）</div>
                 <div class="q-source"><span>📄 PHYS10013-2019春-A-试卷 答案.pdf</span><span>p.5 第25题(1)</span></div>
@@ -239,7 +244,7 @@
                         <div class="fig-caption">图：圆电流 I 与同心回路 L（L 不穿过电流）</div>
                     </div>
 
-                    <div style="display: flex; flex-direction: column; gap: 0.1rem; background: #f2f6fc; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.95rem;">
+                    <div style="display: flex; flex-direction: column; gap: 0.1rem; background: #f6f7f2; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.95rem;">
                         <span>A. <span class="math">∮<sub>L</sub>B·dl = 0</span> ，且环路上任意一点 <span class="math">B = 0</span></span>
                         <span>B. <span class="math">∮<sub>L</sub>B·dl = 0</span> ，但环路上任意一点 <span class="math">B ≠ 0</span></span>
                         <span>C. <span class="math">∮<sub>L</sub>B·dl ≠ 0</span> ，且环路上任意一点 <span class="math">B ≠ 0</span></span>
@@ -265,10 +270,10 @@
                 <div><span class="q-label">第19题</span> <span class="badge">安培环路定理 · 磁场性质</span></div>
                 <div class="q-text">
                     <p>用高速电子撞击氢原子的方法，激发氢原子使其发光。如果高速电子的能量为12.7eV，则基态氢原子可以被激发到的最高能级为（   ）</p>
-                    <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; background: #f2f6fc; padding: 0.2rem 1rem; border-radius: 30px;">
+                    <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; background: #f6f7f2; padding: 0.2rem 1rem; border-radius: 30px;">
                         <span>A. 4</span> <span>B. 3</span> <span>C. 2</span> <span>D. 1</span>
                     </div>
-                    <p style="margin-top: 0.3rem; color: #475569; font-size: 0.9rem;">（该题为原子物理，与安培环路无关，但试卷中另有安环题——见下方填空第30题）</p>
+                    <p style="margin-top: 0.3rem; color: #43684b; font-size: 0.9rem;">（该题为原子物理，与安培环路无关，但试卷中另有安环题——见下方填空第30题）</p>
                 </div>
                 <div class="q-answer"><strong>✓ 答案：</strong> B. 3 （能级跃迁）</div>
                 <div class="q-source"><span>📄 PHYS10016-2022春-A-试卷 答案.pdf</span><span>p.3 第19题</span></div>
@@ -304,7 +309,7 @@
                         <div class="fig-caption">图：<span class="math">¾</span> 圆弧导线 · 电流从 A 切向流入 B 切向流出</div>
                     </div>
 
-                    <p style="font-size:0.9rem; background:#eef4fa; padding:0.2rem 1rem; border-radius:20px; display:inline-block;">（利用毕奥-萨伐尔定律叠加，圆弧贡献 <span class="math">B = 3μ₀I/(8R)</span>，直线段贡献 <span class="math">B = μ₀I/(2πR)</span>，方向相反）</p>
+                    <p style="font-size:0.9rem; background:#f6f7f2; padding:0.2rem 1rem; border-radius:20px; display:inline-block;">（利用毕奥-萨伐尔定律叠加，圆弧贡献 <span class="math">B = 3μ₀I/(8R)</span>，直线段贡献 <span class="math">B = μ₀I/(2πR)</span>，方向相反）</p>
                 </div>
                 <div class="q-answer"><strong>✓ 答案：</strong> <span class="math">B = 3μ₀I/(8R) – μ₀I/(2πR)</span> ，方向向里</div>
                 <div class="q-source"><span>📄 PHYS10016-2022春-A-试卷 答案.pdf</span><span>p.4 第30题</span></div>
@@ -358,7 +363,7 @@
                         <div class="fig-caption">图：长直螺线管 · 矩形回路 abcd（cd 段为单位长度）</div>
                     </div>
 
-                    <div style="display: flex; flex-wrap: wrap; gap: 0.8rem 1.8rem; background: #f2f6fc; padding: 0.4rem 1rem; border-radius: 40px;">
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.8rem 1.8rem; background: #f6f7f2; padding: 0.4rem 1rem; border-radius: 40px;">
                         <span>A. <span class="math">μ₀NI</span></span>
                         <span>B. <span class="math">–μ₀NI</span></span>
                         <span>C. <span class="math">μ₀nI</span></span>
@@ -373,7 +378,7 @@
                 <div><span class="q-label">第19题</span> <span class="badge">安培环路定理 · 磁场性质</span></div>
                 <div class="q-text">
                     <p>恒定磁场中的安培环路定理表明恒定磁场是（   ）</p>
-                    <div style="display: flex; flex-wrap: wrap; gap: 0.8rem 1.8rem; background: #f2f6fc; padding: 0.4rem 1rem; border-radius: 40px;">
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.8rem 1.8rem; background: #f6f7f2; padding: 0.4rem 1rem; border-radius: 40px;">
                         <span>A. 有源场</span> <span>B. 无源场</span> <span>C. 有旋场</span> <span>D. 无旋场</span>
                     </div>
                 </div>
@@ -385,14 +390,16 @@
 
     <div class="footnote">
         <p style="margin: 0; display: flex; align-items: center; gap: 0.3rem; flex-wrap: wrap;">
-            <span style="background: #dbeafe; padding: 0.1rem 0.8rem; border-radius: 30px;">📘 说明</span>
+            <span style="background: #edf1e7; padding: 0.1rem 0.8rem; border-radius: 30px;">📘 说明</span>
             以上题目均围绕 <strong>安培环路定理</strong> 及其应用（螺线管、圆电流、磁场有旋性等）。所有答案均依据对应试卷官方参考答案整理。
         </p>
-        <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem; color: #475569;">
+        <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem; color: #43684b;">
             ⚡ 标记"H安环"为人工筛选，涵盖选择题、填空题及综合题。部分题目涉及 <span class="math">∮H·dl</span> 或 <span class="math">∮B·dl</span> 的环路计算。
         </p>
     </div>
 
 </div>
+
+<script src="/static/js/page-navigation.js?v=20260911-1" defer></script>
 </body>
 </html>

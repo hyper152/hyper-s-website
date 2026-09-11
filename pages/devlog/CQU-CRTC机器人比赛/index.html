@@ -14,13 +14,13 @@
         }
 
         :root {
-            --primary: #2c3e50;
-            --accent: #e74c3c;
-            --light: #f8f9fa;
+            --primary: #263b32;
+            --accent: #67824f;
+            --light: #f6f7f2;
             --dark: #2d3436;
             --gray: #495057;
-            --light-gray: #e9ecef;
-            --shadow: 0 2px 12px rgba(0,0,0,0.08);
+            --light-gray: #edf1e7;
+            --shadow: 0 2px 12px rgba(0, 0, 0,0.08);
         }
 
         body {
@@ -219,7 +219,7 @@
             border-radius: 8px;
             box-shadow: var(--shadow);
             object-fit: contain;
-            background: #000;
+            background: #000000;
         }
 
         .version-grid {
@@ -281,8 +281,8 @@
         }
 
         .note-box {
-            background: #e8f4f8;
-            border-left: 4px solid #4299e1;
+            background: #f6f7f2;
+            border-left: 4px solid #67824f;
             padding: 15px;
             border-radius: 4px;
         }
@@ -307,9 +307,12 @@
             }
         }
     </style>
+<link rel="stylesheet" href="/static/css/site-theme.css?v=20260911-centered-navigation">
+<meta name="theme-color" content="#f6f7f2">
 </head>
 
-<body>
+<body data-site-theme="garden" data-page-kind="page">
+<nav class="page-controls" aria-label="页面快捷导航"><a href="/pages/devlog/" data-page-back><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m10 5-7 7 7 7M3 12h18"/></svg><span>返回上一页</span></a><a href="/home/"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9"/></svg><span>首页</span></a></nav>
 
 <header class="header">
     <div class="container header-content">
@@ -504,5 +507,7 @@
     <p>&copy; 2025 CRTC 机器人比赛 | STM32F103C8T6 + CubeIDE</p>
 </footer>
 
+
+<script src="/static/js/page-navigation.js?v=20260911-1" defer></script>
 </body>
 </html>

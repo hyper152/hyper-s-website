@@ -7,13 +7,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #6a5acd;
-            --accent: #ff6b6b;
-            --light: #f8f9fa;
+            --primary: #67824f;
+            --accent: #cbd7bc;
+            --light: #f6f7f2;
             --white: #ffffff;
             --gray: #495057;
-            --light-gray: #e9ecef;
-            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --light-gray: #edf1e7;
+            --shadow: 0 2px 10px rgba(0, 0, 0,0.1);
         }
 
         * {
@@ -83,7 +83,7 @@
         .form-control:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(106, 90, 205, 0.1);
+            box-shadow: 0 0 0 3px rgba(103, 130, 79, 0.1);
         }
 
         .form-control.error {
@@ -115,7 +115,7 @@
         }
 
         .send-code-btn:disabled {
-            background: #ccc;
+            background: #cccccc;
             cursor: not-allowed;
         }
 
@@ -138,7 +138,7 @@
         }
 
         .btn-register:disabled {
-            background: #ccc;
+            background: #cccccc;
             cursor: not-allowed;
         }
 
@@ -179,15 +179,15 @@
         }
 
         .msg.info {
-            color: #17a2b8;
-            background: #d1ecf1;
+            color: #43684b;
+            background: #edf1e7;
         }
 
         .password-strength {
             height: 4px;
             margin-top: 8px;
             border-radius: 2px;
-            background: #eee;
+            background: #eeeeee;
             overflow: hidden;
         }
 
@@ -198,17 +198,17 @@
         }
 
         .strength-weak {
-            background: #dc3545;
+            background: #67824f;
             width: 33.33%;
         }
 
         .strength-medium {
-            background: #ffc107;
+            background: #67824f;
             width: 66.66%;
         }
 
         .strength-strong {
-            background: #28a745;
+            background: #43684b;
             width: 100%;
         }
 
@@ -218,8 +218,13 @@
             }
         }
     </style>
+<link rel="stylesheet" href="/static/css/site-theme.css?v=20260911-centered-navigation">
+<meta name="theme-color" content="#f6f7f2">
 </head>
-<body>
+<body data-site-theme="garden" data-page-kind="account">
+<nav class="page-controls" aria-label="页面快捷导航"><a href="/home/" data-page-back><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m10 5-7 7 7 7M3 12h18"/></svg><span>返回上一页</span></a><a href="/home/"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9"/></svg><span>首页</span></a></nav>
+<nav class="site-navigation" aria-label="全站导航"><a class="site-brand" href="/home/"><img src="/home/hyper.png" alt="" width="38" height="38"><span>hyper.</span></a><div class="site-nav-links"><a href="/home/#categories">探索分类</a><a href="/pages/resume/index.html">个人简介</a><a href="/talk/comment.html">留言板</a></div></nav>
+
     <div class="register-container">
         <div class="register-header">
             <h1><i class="fas fa-user-plus"></i> 账号注册</h1>
@@ -234,7 +239,7 @@
             <div class="form-group">
                 <label for="username">用户名</label>
                 <input type="text" id="username" class="form-control" placeholder="2-20个字符" maxlength="20" required>
-                <div style="font-size:12px; color:#999; margin-top:4px;">2-20个字符，可由中文、字母、数字组成</div>
+                <div style="font-size:12px; color:#999999; margin-top:4px;">2-20个字符，可由中文、字母、数字组成</div>
             </div>
 
             <div class="form-group">
@@ -256,7 +261,7 @@
                 <div class="password-strength">
                     <div class="strength-bar" id="strengthBar"></div>
                 </div>
-                <div style="font-size:12px; color:#999; margin-top:4px;">至少6位，建议使用字母+数字组合</div>
+                <div style="font-size:12px; color:#999999; margin-top:4px;">至少6位，建议使用字母+数字组合</div>
             </div>
 
             <div class="form-group">
@@ -272,13 +277,13 @@
         </div>
     </div>
 
-    <script>
+<script>
         // 获取元素
         const msg = document.getElementById('msg');
         const sendCodeBtn = document.getElementById('sendCodeBtn');
         const registerForm = document.getElementById('registerForm');
         const registerBtn = document.getElementById('registerBtn');
-        
+
         // 密码强度检测
         const passwordInput = document.getElementById('password');
         const confirmPasswordInput = document.getElementById('confirmPassword');
@@ -287,19 +292,19 @@
         // 检查密码强度
         function checkPasswordStrength(password) {
             let strength = 0;
-            
+
             if (password.length >= 6) strength += 1;
             if (password.length >= 8) strength += 1;
             if (/[a-z]/.test(password) && /[0-9]/.test(password)) strength += 1;
             if (/[A-Z]/.test(password)) strength += 1;
             if (/[!@#$%^&*]/.test(password)) strength += 1;
-            
+
             return Math.min(strength, 3); // 0-3级
         }
 
         passwordInput.addEventListener('input', function() {
             const strength = checkPasswordStrength(this.value);
-            
+
             strengthBar.className = 'strength-bar';
             if (strength === 1) {
                 strengthBar.classList.add('strength-weak');
@@ -316,45 +321,45 @@
 
         sendCodeBtn.addEventListener('click', async function() {
             const email = document.getElementById('email').value.trim();
-            
+
             if (!email) {
                 showMessage('请输入邮箱', 'error');
                 document.getElementById('email').focus();
                 return;
             }
-            
+
             if (!email.includes('@') || !email.includes('.')) {
                 showMessage('请输入有效的邮箱地址', 'error');
                 return;
             }
-            
+
             if (countdown > 0) return;
 
             try {
                 sendCodeBtn.disabled = true;
                 sendCodeBtn.textContent = '发送中...';
-                
+
                 const res = await fetch('../../api/register/send-code', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email })
                 });
-                
+
                 const data = await res.json();
-                
+
                 if (data.code === 200) {
                     showMessage(data.msg, 'success');
-                    
+
                     // 开始倒计时
                     countdown = 60;
                     sendCodeBtn.textContent = `重新发送(${countdown}s)`;
-                    
+
                     if (countdownTimer) clearInterval(countdownTimer);
-                    
+
                     countdownTimer = setInterval(() => {
                         countdown--;
                         sendCodeBtn.textContent = `重新发送(${countdown}s)`;
-                        
+
                         if (countdown <= 0) {
                             clearInterval(countdownTimer);
                             sendCodeBtn.disabled = false;
@@ -378,7 +383,7 @@
         function showMessage(text, type = 'info') {
             msg.textContent = text;
             msg.className = 'msg ' + type;
-            
+
             // 3秒后自动清除成功消息
             if (type === 'success') {
                 setTimeout(() => {
@@ -391,44 +396,44 @@
         // 表单提交
         registerForm.addEventListener('submit', async function(e) {
             e.preventDefault();
-            
+
             const username = document.getElementById('username').value.trim();
             const email = document.getElementById('email').value.trim();
             const code = document.getElementById('code').value.trim();
             const password = document.getElementById('password').value.trim();
             const confirmPassword = document.getElementById('confirmPassword').value.trim();
-            
+
             // 表单验证
             if (!username) {
                 showMessage('请输入用户名', 'error');
                 return;
             }
-            
+
             if (username.length < 2 || username.length > 20) {
                 showMessage('用户名长度为2-20个字符', 'error');
                 return;
             }
-            
+
             if (!email) {
                 showMessage('请输入邮箱', 'error');
                 return;
             }
-            
+
             if (!code || code.length !== 6) {
                 showMessage('请输入6位验证码', 'error');
                 return;
             }
-            
+
             if (!password) {
                 showMessage('请输入密码', 'error');
                 return;
             }
-            
+
             if (password.length < 6) {
                 showMessage('密码长度至少6位', 'error');
                 return;
             }
-            
+
             if (password !== confirmPassword) {
                 showMessage('两次输入的密码不一致', 'error');
                 return;
@@ -449,12 +454,12 @@
                         code
                     })
                 });
-                
+
                 const data = await res.json();
-                
+
                 if (data.code === 200) {
                     showMessage(data.msg, 'success');
-                    
+
                     // 注册成功，3秒后跳转到登录页
                     setTimeout(() => {
                         window.location.href = 'index.html';
@@ -472,5 +477,7 @@
             }
         });
     </script>
+
+<script src="/static/js/page-navigation.js?v=20260911-1" defer></script>
 </body>
 </html>

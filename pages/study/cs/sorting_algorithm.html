@@ -7,15 +7,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <style>
         :root {
-            --bg: #f5f0eb;
+            --bg: #f6f7f2;
             --card-bg: #ffffff;
-            --text: #2c2416;
-            --text-secondary: #5c5347;
-            --accent: #8b5e3c;
-            --accent-light: #c9a87c;
-            --border: #e0d5c7;
+            --text: #263b32;
+            --text-secondary: #43684b;
+            --accent: #43684b;
+            --accent-light: #67824f;
+            --border: #cbd7bc;
             --radius: 12px;
-            --shadow: 0 2px 12px rgba(0,0,0,0.06);
+            --shadow: 0 2px 12px rgba(0, 0, 0,0.06);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -58,7 +58,7 @@
         }
         .nav-btn:hover {
             background: var(--accent-light);
-            color: #fff;
+            color: #ffffff;
         }
 
         /* ── Header ── */
@@ -110,12 +110,12 @@
             justify-content: center;
             border-radius: 8px;
             font-size: 0.9rem;
-            color: #fff;
+            color: #ffffff;
         }
-        .stat-item .icon-blue  { background: #4f7eb3; }
-        .stat-item .icon-green { background: #5b8c5a; }
-        .stat-item .icon-amber { background: #b8863c; }
-        .stat-item .icon-rose  { background: #b3585a; }
+        .stat-item .icon-blue  { background: #67824f; }
+        .stat-item .icon-green { background: #43684b; }
+        .stat-item .icon-amber { background: #43684b; }
+        .stat-item .icon-rose  { background: #67824f; }
         .stat-item strong { color: var(--text); font-weight: 600; }
 
         /* ── Legend ── */
@@ -125,7 +125,7 @@
             flex-wrap: wrap;
             margin-bottom: 24px;
             padding: 12px 18px;
-            background: #faf8f5;
+            background: #f6f7f2;
             border-radius: 8px;
             border: 1px solid var(--border);
             align-items: center;
@@ -140,24 +140,24 @@
         /* ── Badges (shared) ── */
         .badge-stable {
             display: inline-block;
-            background: #e6f3e6;
-            color: #3d6b3d;
+            background: #edf1e7;
+            color: #43684b;
             padding: 0.2rem 1rem;
             border-radius: 30px;
             font-weight: 600;
             font-size: 0.82rem;
-            border: 1px solid #b8d9b8;
+            border: 1px solid #cbd7bc;
             white-space: nowrap;
         }
         .badge-unstable {
             display: inline-block;
-            background: #f5e4e4;
-            color: #8f4040;
+            background: #edf1e7;
+            color: #43684b;
             padding: 0.2rem 1rem;
             border-radius: 30px;
             font-weight: 600;
             font-size: 0.82rem;
-            border: 1px solid #e0baba;
+            border: 1px solid #cbd7bc;
             white-space: nowrap;
         }
 
@@ -184,7 +184,7 @@
             border: 1px solid var(--border);
         }
         .summary-table thead th {
-            background: #ede8e1;
+            background: #edf1e7;
             color: var(--text);
             font-weight: 600;
             padding: 0.7rem 0.8rem;
@@ -202,10 +202,10 @@
             transition: background 0.15s;
         }
         .summary-table tbody tr:nth-child(even) {
-            background: #fcfaf8;
+            background: #f6f7f2;
         }
         .summary-table tbody tr:hover {
-            background: #f5efe8;
+            background: #edf1e7;
         }
         .summary-table tbody tr:last-child td {
             border-bottom: none;
@@ -277,9 +277,9 @@
             border-radius: 4px;
             display: inline-block;
         }
-        .algo-card .speed-bar .bar-slow { width: 50px; background: #c9907a; }
-        .algo-card .speed-bar .bar-mid  { width: 34px; background: #c9a87c; }
-        .algo-card .speed-bar .bar-fast { width: 22px; background: #8faa7a; }
+        .algo-card .speed-bar .bar-slow { width: 50px; background: #67824f; }
+        .algo-card .speed-bar .bar-mid  { width: 34px; background: #67824f; }
+        .algo-card .speed-bar .bar-fast { width: 22px; background: #67824f; }
         .algo-card .speed-bar .label {
             font-size: 0.78rem;
             color: var(--text-secondary);
@@ -290,24 +290,24 @@
         .code-cell {
             font-family: 'Cascadia Code', 'JetBrains Mono', 'Fira Code', monospace;
             font-size: 0.85rem;
-            background: #1e1e2e;
-            color: #cdd6f4;
+            background: #263b32;
+            color: #edf1e7;
             padding: 0.9rem 1.2rem;
             border-radius: 10px;
             overflow-x: auto;
             white-space: pre;
             line-height: 1.65;
             tab-size: 4;
-            border: 1px solid #313244;
+            border: 1px solid #263b32;
             margin-top: 10px;
         }
         .code-cell .kw    { color: #cba6f7; }
-        .code-cell .type  { color: #89b4fa; }
+        .code-cell .type  { color: #cbd7bc; }
         .code-cell .fn    { color: #a6e3a1; }
         .code-cell .cm    { color: #7f8c9e; }
-        .code-cell .num   { color: #fab387; }
+        .code-cell .num   { color: #cbd7bc; }
         .code-cell .str   { color: #a6e3a1; }
-        .code-cell .macro { color: #f38ba8; }
+        .code-cell .macro { color: #cbd7bc; }
 
         /* ── Back to Top ── */
         .back-to-top {
@@ -318,11 +318,11 @@
             height: 48px;
             border-radius: 50%;
             background: var(--accent);
-            color: #fff;
+            color: #ffffff;
             border: none;
             font-size: 1.3rem;
             cursor: pointer;
-            box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 14px rgba(0, 0, 0,0.15);
             transition: opacity 0.3s, transform 0.3s;
             display: flex;
             align-items: center;
@@ -338,11 +338,11 @@
         }
         .back-to-top:hover {
             transform: translateY(-3px);
-            background: #7a5234;
+            background: #43684b;
         }
 
         .code-cell::-webkit-scrollbar { height: 4px; }
-        .code-cell::-webkit-scrollbar-thumb { background: #45475a; border-radius: 4px; }
+        .code-cell::-webkit-scrollbar-thumb { background: #43684b; border-radius: 4px; }
         .code-cell::-webkit-scrollbar-track { background: transparent; }
 
         /* ── Comparison Section ── */
@@ -392,10 +392,10 @@
             border-radius: 10px;
             margin-right: 4px;
         }
-        .tag-inplace { background: #e6f3e6; color: #3d6b3d; }
-        .tag-not-inplace { background: #f5e4e4; color: #8f4040; }
-        .tag-recursive { background: #e3edf5; color: #3d5a7a; }
-        .tag-adaptive { background: #f5f0d6; color: #8a7a3a; }
+        .tag-inplace { background: #edf1e7; color: #43684b; }
+        .tag-not-inplace { background: #edf1e7; color: #43684b; }
+        .tag-recursive { background: #edf1e7; color: #43684b; }
+        .tag-adaptive { background: #edf1e7; color: #43684b; }
 
         .footer-note {
             text-align: center;
@@ -424,8 +424,13 @@
             .compare-grid { grid-template-columns: 1fr; }
         }
     </style>
+<link rel="stylesheet" href="/static/css/site-theme.css?v=20260911-centered-navigation">
+<meta name="theme-color" content="#f6f7f2">
 </head>
-<body>
+<body data-site-theme="garden" data-page-kind="study">
+<nav class="page-controls" aria-label="页面快捷导航"><a href="/pages/study/" data-page-back><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m10 5-7 7 7 7M3 12h18"/></svg><span>返回上一页</span></a><a href="/home/"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9"/></svg><span>首页</span></a></nav>
+<nav class="site-navigation" aria-label="全站导航"><a class="site-brand" href="/home/"><img src="/home/hyper.png" alt="" width="38" height="38"><span>hyper.</span></a><div class="site-nav-links"><a href="/home/#categories">探索分类</a><a href="/pages/resume/index.html">个人简介</a><a href="/talk/comment.html">留言板</a></div></nav>
+
     <div class="container">
 
         <!-- ── Navigation ── -->
@@ -473,9 +478,9 @@
             <span class="legend-item"><span class="badge-unstable">❌ 不稳定</span></span>
             <span class="legend-item"><i class="fas fa-code"></i> 代码基于 C++17</span>
             <span class="legend-item" style="color:var(--text-secondary);">
-                <span class="bar bar-fast" style="display:inline-block;width:16px;height:7px;border-radius:4px;background:#8faa7a;vertical-align:middle;"></span> 快 &nbsp;
-                <span class="bar bar-mid" style="display:inline-block;width:26px;height:7px;border-radius:4px;background:#c9a87c;vertical-align:middle;"></span> 中 &nbsp;
-                <span class="bar bar-slow" style="display:inline-block;width:40px;height:7px;border-radius:4px;background:#c9907a;vertical-align:middle;"></span> 慢
+                <span class="bar bar-fast" style="display:inline-block;width:16px;height:7px;border-radius:4px;background:#67824f;vertical-align:middle;"></span> 快 &nbsp;
+                <span class="bar bar-mid" style="display:inline-block;width:26px;height:7px;border-radius:4px;background:#67824f;vertical-align:middle;"></span> 中 &nbsp;
+                <span class="bar bar-slow" style="display:inline-block;width:40px;height:7px;border-radius:4px;background:#67824f;vertical-align:middle;"></span> 慢
             </span>
             <span class="legend-item" style="color:var(--text-secondary);">
                 <i class="far fa-sticky-note"></i> 桶排序稳定性取决于桶内算法
@@ -941,11 +946,13 @@
     <!-- ── Back to Top ── -->
     <a href="#" class="back-to-top" id="backToTop" title="回到顶部">↑</a>
 
-    <script>
+<script>
         const btn = document.getElementById('backToTop');
         window.addEventListener('scroll', () => {
             btn.classList.toggle('show', window.scrollY > 400);
         });
     </script>
+
+<script src="/static/js/page-navigation.js?v=20260911-1" defer></script>
 </body>
 </html>

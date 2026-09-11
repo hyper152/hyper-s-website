@@ -6,48 +6,53 @@
 <title>高等数学II-2 期末复习 — 分类精选题目</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: #f5f6fa; font-family: 'Georgia', 'Times New Roman', '宋体', serif; color: #1e272e; line-height: 2; font-size: 18px; }
+  body { background: #f6f7f2; font-family: 'Georgia', 'Times New Roman', '宋体', serif; color: #263b32; line-height: 2; font-size: 18px; }
   .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
-  header { background: linear-gradient(135deg, #2c3e50, #3498db); color: #fff; padding: 48px 36px; border-radius: 14px; margin-bottom: 36px; text-align: center; }
+  header { background: linear-gradient(135deg, #263b32, #67824f); color: #ffffff; padding: 48px 36px; border-radius: 14px; margin-bottom: 36px; text-align: center; }
   header h1 { font-size: 34px; margin-bottom: 12px; letter-spacing: 2px; }
   header p { font-size: 18px; opacity: 0.85; }
-  .section { background: #fff; border-radius: 14px; margin-bottom: 28px; box-shadow: 0 2px 14px rgba(0,0,0,0.07); overflow: hidden; }
+  .section { background: #ffffff; border-radius: 14px; margin-bottom: 28px; box-shadow: 0 2px 14px rgba(0, 0, 0,0.07); overflow: hidden; }
   .section-header { padding: 22px 32px; font-size: 24px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: space-between; border-bottom: 3px solid; user-select: none; }
-  .section-header .num { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border-radius: 50%; color: #fff; font-size: 18px; margin-right: 16px; }
-  .section-header .arrow { transition: transform 0.3s; font-size: 14px; color: #999; }
+  .section-header .num { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border-radius: 50%; color: #ffffff; font-size: 18px; margin-right: 16px; }
+  .section-header .arrow { transition: transform 0.3s; font-size: 14px; color: #999999; }
   .section-header.collapsed .arrow { transform: rotate(-90deg); }
   .section-body { padding: 24px 32px; }
   .section-header.collapsed + .section-body { display: none; }
   .section-body p, .section-body .problem { margin-bottom: 16px; }
   .section-body ul, .section-body ol { padding-left: 24px; margin-bottom: 16px; }
   .section-body li { margin-bottom: 8px; }
-  .problem { background: #fafbfc; border-left: 5px solid #3498db; padding: 20px 24px; margin-bottom: 22px; border-radius: 0 10px 10px 0; }
+  .problem { background: #f6f7f2; border-left: 5px solid #67824f; padding: 20px 24px; margin-bottom: 22px; border-radius: 0 10px 10px 0; }
   .problem .source { font-size: 15px; color: #95a5a6; margin-bottom: 8px; }
   .problem .question { font-size: 18px; line-height: 2; }
-  .problem .answer { margin-top: 12px; padding: 12px 18px; background: #f0f7ff; border-radius: 8px; font-size: 17px; color: #2c3e50; line-height: 1.9; }
-  .problem .answer-label { font-weight: bold; color: #3498db; }
-  .tag { display: inline-block; background: #ecf0f1; color: #7f8c8d; font-size: 13px; padding: 3px 12px; border-radius: 12px; margin-left: 8px; }
+  .problem .answer { margin-top: 12px; padding: 12px 18px; background: #f6f7f2; border-radius: 8px; font-size: 17px; color: #263b32; line-height: 1.9; }
+  .problem .answer-label { font-weight: bold; color: #67824f; }
+  .tag { display: inline-block; background: #edf1e7; color: #7f8c8d; font-size: 13px; padding: 3px 12px; border-radius: 12px; margin-left: 8px; }
   .katex { font-size: 1.1em; }
   .formula { font-family: 'Times New Roman', serif; font-style: italic; }
-  .sec1 { border-color: #e74c3c; } .sec2 { border-color: #e67e22; } .sec3 { border-color: #2ecc71; }
-  .sec4 { border-color: #3498db; } .sec5 { border-color: #9b59b6; } .sec6 { border-color: #1abc9c; }
-  .color1 { background: #e74c3c; } .color2 { background: #e67e22; } .color3 { background: #2ecc71; }
-  .color4 { background: #3498db; } .color5 { background: #9b59b6; } .color6 { background: #1abc9c; }
-  .toc { background: #fff; border-radius: 14px; padding: 24px 32px; margin-bottom: 28px; box-shadow: 0 2px 14px rgba(0,0,0,0.07); }
-  .toc h3 { margin-bottom: 14px; color: #2c3e50; font-size: 20px; }
-  .toc a { display: block; padding: 8px 0; color: #3498db; text-decoration: none; font-size: 18px; }
-  .toc a:hover { color: #2980b9; text-decoration: underline; }
-  .toc .toc-num { display: inline-block; width: 30px; height: 30px; border-radius: 50%; color: #fff; text-align: center; line-height: 30px; font-size: 15px; margin-right: 12px; }
+  .sec1 { border-color: #67824f; } .sec2 { border-color: #67824f; } .sec3 { border-color: #67824f; }
+  .sec4 { border-color: #67824f; } .sec5 { border-color: #67824f; } .sec6 { border-color: #43684b; }
+  .color1 { background: #67824f; } .color2 { background: #67824f; } .color3 { background: #67824f; }
+  .color4 { background: #67824f; } .color5 { background: #67824f; } .color6 { background: #43684b; }
+  .toc { background: #ffffff; border-radius: 14px; padding: 24px 32px; margin-bottom: 28px; box-shadow: 0 2px 14px rgba(0, 0, 0,0.07); }
+  .toc h3 { margin-bottom: 14px; color: #263b32; font-size: 20px; }
+  .toc a { display: block; padding: 8px 0; color: #67824f; text-decoration: none; font-size: 18px; }
+  .toc a:hover { color: #43684b; text-decoration: underline; }
+  .toc .toc-num { display: inline-block; width: 30px; height: 30px; border-radius: 50%; color: #ffffff; text-align: center; line-height: 30px; font-size: 15px; margin-right: 12px; }
   footer { text-align: center; padding: 30px; color: #95a5a6; font-size: 15px; }
   @media (max-width: 640px) { .container { padding: 10px; } header { padding: 28px 18px; } .section-body { padding: 16px 18px; } }
 </style>
+<link rel="stylesheet" href="/static/css/site-theme.css?v=20260911-centered-navigation">
+<meta name="theme-color" content="#f6f7f2">
 </head>
-<body>
+<body data-site-theme="garden" data-page-kind="study">
+<nav class="page-controls" aria-label="页面快捷导航"><a href="/pages/study/" data-page-back><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m10 5-7 7 7 7M3 12h18"/></svg><span>返回上一页</span></a><a href="/home/"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9"/></svg><span>首页</span></a></nav>
+<nav class="site-navigation" aria-label="全站导航"><a class="site-brand" href="/home/"><img src="/home/hyper.png" alt="" width="38" height="38"><span>hyper.</span></a><div class="site-nav-links"><a href="/home/#categories">探索分类</a><a href="/pages/resume/index.html">个人简介</a><a href="/talk/comment.html">留言板</a></div></nav>
+
 
 <div style="max-width:1100px; margin:0 auto; padding:10px 20px 0; display:flex; gap:12px; font-size:0.9em;">
-  <a href="javascript:history.back()" style="display:inline-flex; align-items:center; gap:4px; color:#666; text-decoration:none; padding:6px 14px; border-radius:6px; background:#f0f0f0; transition:background 0.2s;" onmouseover="this.style.background='#e0e0e0'" onmouseout="this.style.background='#f0f0f0'">⬅ 返回上一页</a>
-  <a href="/home/" style="display:inline-flex; align-items:center; gap:4px; color:#666; text-decoration:none; padding:6px 14px; border-radius:6px; background:#f0f0f0; transition:background 0.2s;" onmouseover="this.style.background='#e0e0e0'" onmouseout="this.style.background='#f0f0f0'">🏠 返回主页</a>
-  <a href="main.html" style="display:inline-flex; align-items:center; gap:4px; color:#3498db; text-decoration:none; padding:6px 14px; border-radius:6px; background:#e8f0fe; transition:background 0.2s;" onmouseover="this.style.background='#d0e0ff'" onmouseout="this.style.background='#e8f0fe'">📖 考点大纲</a>
+  <a href="javascript:history.back()" style="display:inline-flex; align-items:center; gap:4px; color:#666666; text-decoration:none; padding:6px 14px; border-radius:6px; background:#f0f0f0; transition:background 0.2s;" onmouseover="this.style.background='#e0e0e0'" onmouseout="this.style.background='#f0f0f0'">⬅ 返回上一页</a>
+  <a href="/home/" style="display:inline-flex; align-items:center; gap:4px; color:#666666; text-decoration:none; padding:6px 14px; border-radius:6px; background:#f0f0f0; transition:background 0.2s;" onmouseover="this.style.background='#e0e0e0'" onmouseout="this.style.background='#f0f0f0'">🏠 返回主页</a>
+  <a href="main.html" style="display:inline-flex; align-items:center; gap:4px; color:#67824f; text-decoration:none; padding:6px 14px; border-radius:6px; background:#f6f7f2; transition:background 0.2s;" onmouseover="this.style.background='#d0e0ff'" onmouseout="this.style.background='#e8f0fe'">📖 考点大纲</a>
 </div>
 
 <div class="container">
@@ -525,5 +530,7 @@
   });
 </script>
 
+
+<script src="/static/js/page-navigation.js?v=20260911-1" defer></script>
 </body>
 </html>

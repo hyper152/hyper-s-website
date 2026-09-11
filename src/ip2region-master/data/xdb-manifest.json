@@ -1,0 +1,20 @@
+{
+  "upstream": "https://github.com/lionsoul2014/ip2region",
+  "commit": "c1a1fc7d5941760db3f8431dc05c48cf7f0e30a1",
+  "files": [
+    {
+      "file": "ip2region_v4.xdb",
+      "url": "https://raw.githubusercontent.com/lionsoul2014/ip2region/c1a1fc7d5941760db3f8431dc05c48cf7f0e30a1/data/ip2region_v4.xdb",
+      "bytes": 11122036,
+      "sha256": "8e31bbdccb5bf21028af10592d4312ec975da0bffa108c0c5d862a12190f9ad3",
+      "created_at_unix": 1787892181
+    },
+    {
+      "file": "ip2region_v6.xdb",
+      "url": "https://raw.githubusercontent.com/lionsoul2014/ip2region/c1a1fc7d5941760db3f8431dc05c48cf7f0e30a1/data/ip2region_v6.xdb",
+      "bytes": 37277813,
+      "sha256": "939f6b46bd2b8bec3cf7c5ceb8ba782266ae9b1f35b5ba7916700dec0b7506ed",
+      "created_at_unix": 1786685921
+    }
+  ]
+}

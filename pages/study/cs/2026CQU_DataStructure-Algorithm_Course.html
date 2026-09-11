@@ -8,8 +8,8 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans SC", sans-serif;
-    background: #f0f2f5;
-    color: #1a1a2e;
+    background: #f6f7f2;
+    color: #263b32;
     padding: 20px;
   }
   .container { max-width: 860px; margin: 0 auto; }
@@ -17,13 +17,13 @@
     text-align: center;
     font-size: 28px;
     margin: 20px 0 6px;
-    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    background: linear-gradient(135deg, #263b32, #263b32);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
   .subtitle {
     text-align: center;
-    color: #666;
+    color: #666666;
     font-size: 14px;
     margin-bottom: 24px;
   }
@@ -36,23 +36,23 @@
     justify-content: center;
     margin-bottom: 24px;
     padding: 12px;
-    background: #fff;
+    background: #ffffff;
     border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    box-shadow: 0 2px 8px rgba(0, 0, 0,.06);
   }
   .topic-btn {
     padding: 6px 14px;
-    border: 1px solid #d0d5dd;
+    border: 1px solid #edf1e7;
     border-radius: 20px;
     font-size: 13px;
     cursor: pointer;
-    background: #fff;
-    color: #444;
+    background: #ffffff;
+    color: #444444;
     transition: .15s;
   }
-  .topic-btn:hover { border-color: #4f46e5; color: #4f46e5; }
-  .topic-btn.active { background: #4f46e5; color: #fff; border-color: #4f46e5; }
-  .topic-btn.all-btn { background: #1a1a2e; color: #fff; border-color: #1a1a2e; }
+  .topic-btn:hover { border-color: #67824f; color: #67824f; }
+  .topic-btn.active { background: #67824f; color: #ffffff; border-color: #67824f; }
+  .topic-btn.all-btn { background: #263b32; color: #ffffff; border-color: #263b32; }
 
   /* Week filter bar */
   .week-bar {
@@ -62,38 +62,38 @@
     justify-content: center;
     margin-bottom: 12px;
     padding: 10px 12px;
-    background: #fff;
+    background: #ffffff;
     border-radius: 12px;
-    box-shadow: 0 1px 6px rgba(0,0,0,.05);
+    box-shadow: 0 1px 6px rgba(0, 0, 0,.05);
   }
   .week-bar-label {
     font-size: 13px;
     font-weight: 600;
-    color: #666;
+    color: #666666;
     padding: 4px 8px;
     align-self: center;
   }
   .week-btn {
     padding: 4px 12px;
-    border: 1px solid #e0d5c7;
+    border: 1px solid #cbd7bc;
     border-radius: 20px;
     font-size: 12px;
     cursor: pointer;
-    background: #fff;
-    color: #666;
+    background: #ffffff;
+    color: #666666;
     transition: .15s;
   }
-  .week-btn:hover { border-color: #8b5e3c; color: #8b5e3c; }
-  .week-btn.active { background: #8b5e3c; color: #fff; border-color: #8b5e3c; }
-  .week-btn.all-week-btn { background: #2c2416; color: #fff; border-color: #2c2416; }
+  .week-btn:hover { border-color: #43684b; color: #43684b; }
+  .week-btn.active { background: #43684b; color: #ffffff; border-color: #43684b; }
+  .week-btn.all-week-btn { background: #263b32; color: #ffffff; border-color: #263b32; }
 
   /* Question card */
   .q-card {
-    background: #fff;
+    background: #ffffff;
     border-radius: 14px;
     padding: 24px 28px;
     margin-bottom: 16px;
-    box-shadow: 0 2px 10px rgba(0,0,0,.06);
+    box-shadow: 0 2px 10px rgba(0, 0, 0,.06);
     transition: .2s;
     border-left: 4px solid transparent;
   }
@@ -110,22 +110,22 @@
   .q-topic {
     font-size: 13px;
     font-weight: 600;
-    background: #eef2ff;
-    color: #4f46e5;
+    background: #f6f7f2;
+    color: #67824f;
     padding: 3px 12px;
     border-radius: 10px;
   }
   .q-week {
     font-size: 13px;
     font-weight: 600;
-    background: #f0fdf4;
-    color: #15803d;
+    background: #f6f7f2;
+    color: #43684b;
     padding: 3px 12px;
     border-radius: 10px;
   }
   .q-num {
     font-size: 13px;
-    color: #1a1a2e;
+    color: #263b32;
     font-weight: 600;
   }
   .q-type {
@@ -134,15 +134,15 @@
     border-radius: 8px;
     font-weight: 500;
   }
-  .q-type.judge { background: #fef3c7; color: #b45309; }
-  .q-type.choice { background: #dbeafe; color: #1d4ed8; }
+  .q-type.judge { background: #edf1e7; color: #43684b; }
+  .q-type.choice { background: #edf1e7; color: #67824f; }
   .q-status {
     margin-left: auto;
     font-size: 12px;
     padding: 2px 10px;
     border-radius: 8px;
   }
-  .q-status.untouched { background: #f3f4f6; color: #9ca3af; }
+  .q-status.untouched { background: #f6f7f2; color: #9ca3af; }
   .q-status.correct { background: #d1fae5; color: #065f46; }
   .q-status.wrong { background: #fee2e2; color: #991b1b; }
 
@@ -151,12 +151,12 @@
     line-height: 1.8;
     margin-bottom: 16px;
     font-weight: 500;
-    color: #1a1a2e;
+    color: #263b32;
   }
   .q-text .code {
     font-family: "JetBrains Mono", "Fira Code", "Consolas", monospace;
     font-size: 16px;
-    background: #f3f4f6;
+    background: #f6f7f2;
     padding: 10px 14px;
     border-radius: 8px;
     display: block;
@@ -170,7 +170,7 @@
   .options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
   .option {
     padding: 12px 16px;
-    border: 2px solid #e5e7eb;
+    border: 2px solid #edf1e7;
     border-radius: 10px;
     cursor: pointer;
     font-size: 17px;
@@ -179,14 +179,14 @@
     align-items: flex-start;
     gap: 10px;
   }
-  .option:hover:not(.disabled) { border-color: #818cf8; background: #f5f3ff; }
+  .option:hover:not(.disabled) { border-color: #cbd7bc; background: #f6f7f2; }
   .option .label {
     font-weight: 600;
-    color: #4f46e5;
+    color: #67824f;
     min-width: 22px;
   }
   .option.disabled { cursor: default; opacity: .85; }
-  .option.selected:not(.reveal) { border-color: #4f46e5; background: #eef2ff; }
+  .option.selected:not(.reveal) { border-color: #67824f; background: #f6f7f2; }
   .option.correct-answer { border-color: #10b981 !important; background: #d1fae5 !important; }
   .option.wrong-answer { border-color: #ef4444 !important; background: #fee2e2 !important; }
 
@@ -216,23 +216,23 @@
     justify-content: center;
     gap: 30px;
     padding: 14px 20px;
-    background: #fff;
+    background: #ffffff;
     border-radius: 12px;
     margin-bottom: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    box-shadow: 0 2px 8px rgba(0, 0, 0,.06);
   }
   .stat-item { text-align: center; }
   .stat-num {
     font-size: 24px;
     font-weight: 700;
-    color: #1a1a2e;
+    color: #263b32;
   }
   .stat-label {
     font-size: 12px;
-    color: #999;
+    color: #999999;
   }
-  .stat-num.green { color: #10b981; }
-  .stat-num.red { color: #ef4444; }
+  .stat-num.green { color: #43684b; }
+  .stat-num.red { color: #67824f; }
   .stat-num.gray { color: #9ca3af; }
 
   @media (max-width: 600px) {
@@ -242,13 +242,18 @@
     .topic-btn { font-size: 12px; padding: 4px 10px; }
   }
 </style>
+<link rel="stylesheet" href="/static/css/site-theme.css?v=20260911-centered-navigation">
+<meta name="theme-color" content="#f6f7f2">
 </head>
-<body>
+<body data-site-theme="garden" data-page-kind="study">
+<nav class="page-controls" aria-label="页面快捷导航"><a href="/pages/study/" data-page-back><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m10 5-7 7 7 7M3 12h18"/></svg><span>返回上一页</span></a><a href="/home/"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9"/></svg><span>首页</span></a></nav>
+<nav class="site-navigation" aria-label="全站导航"><a class="site-brand" href="/home/"><img src="/home/hyper.png" alt="" width="38" height="38"><span>hyper.</span></a><div class="site-nav-links"><a href="/home/#categories">探索分类</a><a href="/pages/resume/index.html">个人简介</a><a href="/talk/comment.html">留言板</a></div></nav>
+
 <div class="container">
   <div style="display:flex; gap:12px; margin-bottom:16px; font-size:0.9rem; justify-content:center;">
-    <a href="javascript:history.back()" style="display:inline-flex; align-items:center; gap:4px; color:#666; text-decoration:none; padding:6px 16px; border-radius:20px; background:#f0f0f0; transition:background 0.2s;" onmouseover="this.style.background='#e0e0e0'" onmouseout="this.style.background='#f0f0f0'">⬅ 返回上一页</a>
-    <a href="/home/" style="display:inline-flex; align-items:center; gap:4px; color:#666; text-decoration:none; padding:6px 16px; border-radius:20px; background:#f0f0f0; transition:background 0.2s;" onmouseover="this.style.background='#e0e0e0'" onmouseout="this.style.background='#f0f0f0'">🏠 返回主页</a>
-    <a href="../../../pages/study/index.html" style="display:inline-flex; align-items:center; gap:4px; color:#666; text-decoration:none; padding:6px 16px; border-radius:20px; background:#f0f0f0; transition:background 0.2s;" onmouseover="this.style.background='#e0e0e0'" onmouseout="this.style.background='#f0f0f0'">📖 学习主页</a>
+    <a href="javascript:history.back()" style="display:inline-flex; align-items:center; gap:4px; color:#666666; text-decoration:none; padding:6px 16px; border-radius:20px; background:#f0f0f0; transition:background 0.2s;" onmouseover="this.style.background='#e0e0e0'" onmouseout="this.style.background='#f0f0f0'">⬅ 返回上一页</a>
+    <a href="/home/" style="display:inline-flex; align-items:center; gap:4px; color:#666666; text-decoration:none; padding:6px 16px; border-radius:20px; background:#f0f0f0; transition:background 0.2s;" onmouseover="this.style.background='#e0e0e0'" onmouseout="this.style.background='#f0f0f0'">🏠 返回主页</a>
+    <a href="../../../pages/study/index.html" style="display:inline-flex; align-items:center; gap:4px; color:#666666; text-decoration:none; padding:6px 16px; border-radius:20px; background:#f0f0f0; transition:background 0.2s;" onmouseover="this.style.background='#e0e0e0'" onmouseout="this.style.background='#f0f0f0'">📖 学习主页</a>
   </div>
   <h1>📚 数据结构与算法</h1>
   <p class="subtitle">选择题练习 · 点击选项查看答案与解析</p>
@@ -1660,5 +1665,7 @@ function filterWeek(week) {
 render();
 updateStats();
 </script>
+
+<script src="/static/js/page-navigation.js?v=20260911-1" defer></script>
 </body>
 </html>

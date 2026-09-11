@@ -6,13 +6,13 @@
     <title>大学物理 · 题目列表</title>
     <style>
         :root {
-            --bg: #f5f0eb;
+            --bg: #f6f7f2;
             --card-bg: #ffffff;
-            --text: #2c2416;
-            --text-secondary: #5c5347;
-            --accent: #8b5e3c;
-            --accent-light: #c9a87c;
-            --border: #e0d5c7;
+            --text: #263b32;
+            --text-secondary: #43684b;
+            --accent: #43684b;
+            --accent-light: #67824f;
+            --border: #cbd7bc;
             --radius: 12px;
         }
 
@@ -32,7 +32,7 @@
             margin: 0 auto;
             background: var(--card-bg);
             border-radius: var(--radius);
-            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            box-shadow: 0 2px 12px rgba(0, 0, 0,0.06);
             padding: 2rem 2.5rem;
         }
 
@@ -57,7 +57,7 @@
         }
         .nav-btn:hover {
             background: var(--accent-light);
-            color: #fff;
+            color: #ffffff;
         }
 
         /* ── Header ── */
@@ -97,11 +97,11 @@
             color: var(--text);
             transition: transform 0.2s, box-shadow 0.2s;
             background: var(--card-bg);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            box-shadow: 0 2px 8px rgba(0, 0, 0,0.03);
         }
         .type-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+            box-shadow: 0 8px 24px rgba(0, 0, 0,0.10);
             border-color: var(--accent-light);
         }
         .type-card .icon {
@@ -128,13 +128,13 @@
             opacity: 0.8;
         }
         .type-card.concept {
-            border-left: 5px solid #8b5e3c;
+            border-left: 5px solid #43684b;
         }
         .type-card.summary {
-            border-left: 5px solid #5a3e2b;
+            border-left: 5px solid #263b32;
         }
         .type-card.big-q {
-            border-left: 5px solid #1a3e6f;
+            border-left: 5px solid #263b32;
         }
 
         /* ── Footer ── */
@@ -157,8 +157,13 @@
             }
         }
     </style>
+<link rel="stylesheet" href="/static/css/site-theme.css?v=20260911-centered-navigation">
+<meta name="theme-color" content="#f6f7f2">
 </head>
-<body>
+<body data-site-theme="garden" data-page-kind="study">
+<nav class="page-controls" aria-label="页面快捷导航"><a href="/pages/study/" data-page-back><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m10 5-7 7 7 7M3 12h18"/></svg><span>返回上一页</span></a><a href="/home/"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9"/></svg><span>首页</span></a></nav>
+<nav class="site-navigation" aria-label="全站导航"><a class="site-brand" href="/home/"><img src="/home/hyper.png" alt="" width="38" height="38"><span>hyper.</span></a><div class="site-nav-links"><a href="/home/#categories">探索分类</a><a href="/pages/resume/index.html">个人简介</a><a href="/talk/comment.html">留言板</a></div></nav>
+
 <div class="container">
 
     <!-- ── Navigation ── -->
@@ -218,5 +223,7 @@
     </div>
 
 </div>
+
+<script src="/static/js/page-navigation.js?v=20260911-1" defer></script>
 </body>
 </html>

@@ -15,7 +15,7 @@
 
         body {
             font-family: 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #67824f 0%, #43684b 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -36,7 +36,7 @@
         }
 
         .chat-header {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #67824f, #43684b);
             color: white;
             padding: 18px 24px;
             display: flex;
@@ -101,7 +101,7 @@
             flex: 1;
             overflow-y: auto;
             padding: 24px;
-            background: #fafbfc;
+            background: #f6f7f2;
             display: flex;
             flex-direction: column;
             gap: 18px;
@@ -129,17 +129,17 @@
         }
 
         .message.user .message-avatar {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #67824f, #43684b);
             color: white;
         }
 
         .message.assistant .message-avatar {
-            background: linear-gradient(135deg, #f093fb, #f5576c);
+            background: linear-gradient(135deg, #cbd7bc, #67824f);
             color: white;
         }
 
         .message.system .message-avatar {
-            background: #8e9aaf;
+            background: #67824f;
             color: white;
         }
 
@@ -155,19 +155,19 @@
         }
 
         .message.user .message-content {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #67824f, #43684b);
             color: white;
         }
 
         .message.assistant .message-content {
             background: white;
             color: #2d3436;
-            border: 1px solid #edf2f7;
+            border: 1px solid #f6f7f2;
         }
 
         .message.system .message-content {
-            background: #edf2f7;
-            color: #4a5568;
+            background: #f6f7f2;
+            color: #43684b;
             font-size: 0.9rem;
             max-width: 100%;
             text-align: center;
@@ -175,7 +175,7 @@
 
         /* Markdown 样式 */
         .message-content a {
-            color: #667eea;
+            color: #67824f;
             text-decoration: none;
             word-break: break-all;
             font-weight: 500;
@@ -186,7 +186,7 @@
         }
 
         .message.user .message-content a {
-            color: #fff;
+            color: #ffffff;
             text-decoration: underline;
         }
 
@@ -199,8 +199,8 @@
         }
 
         .message-content pre {
-            background: #1e293b;
-            color: #e2e8f0;
+            background: #263b32;
+            color: #edf1e7;
             padding: 14px;
             border-radius: 12px;
             overflow-x: auto;
@@ -222,7 +222,7 @@
         .typing-indicator span {
             width: 8px;
             height: 8px;
-            background: #a0aec0;
+            background: #cbd7bc;
             border-radius: 50%;
             animation: typing 1.4s infinite;
         }
@@ -263,7 +263,7 @@
         .chat-input-area {
             padding: 18px 24px;
             background: white;
-            border-top: 1px solid #e2e8f0;
+            border-top: 1px solid #edf1e7;
             display: flex;
             gap: 12px;
             align-items: flex-end;
@@ -272,19 +272,19 @@
         .chat-input-area textarea {
             flex: 1;
             padding: 14px 18px;
-            border: 2px solid #e2e8f0;
+            border: 2px solid #edf1e7;
             border-radius: 28px;
             resize: none;
             font-size: 0.95rem;
             max-height: 120px;
             transition: border-color 0.2s;
             font-family: inherit;
-            background: #fafbfc;
+            background: #f6f7f2;
         }
 
         .chat-input-area textarea:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #67824f;
             background: white;
         }
 
@@ -292,7 +292,7 @@
             width: 48px;
             height: 48px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #67824f, #43684b);
             color: white;
             border: none;
             cursor: pointer;
@@ -306,7 +306,7 @@
 
         .send-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 8px 20px rgba(103, 130, 79, 0.4);
         }
 
         .send-btn:disabled {
@@ -320,12 +320,12 @@
         .quick-section {
             padding: 12px 24px 8px 24px;
             background: white;
-            border-top: 1px solid #e2e8f0;
+            border-top: 1px solid #edf1e7;
         }
 
         .quick-title {
             font-size: 0.8rem;
-            color: #718096;
+            color: #67824f;
             margin-bottom: 10px;
             display: flex;
             align-items: center;
@@ -333,7 +333,7 @@
         }
 
         .quick-title i {
-            color: #667eea;
+            color: #67824f;
         }
 
         .quick-questions {
@@ -345,11 +345,11 @@
 
         .quick-btn {
             padding: 6px 14px;
-            background: #f7fafc;
-            border: 1px solid #e2e8f0;
+            background: #f6f7f2;
+            border: 1px solid #edf1e7;
             border-radius: 24px;
             font-size: 0.8rem;
-            color: #4a5568;
+            color: #43684b;
             cursor: pointer;
             transition: all 0.2s;
             display: inline-flex;
@@ -358,14 +358,14 @@
         }
 
         .quick-btn i {
-            color: #667eea;
+            color: #67824f;
             font-size: 0.75rem;
         }
 
         .quick-btn:hover {
-            background: #667eea;
+            background: #67824f;
             color: white;
-            border-color: #667eea;
+            border-color: #67824f;
         }
 
         .quick-btn:hover i {
@@ -380,11 +380,11 @@
             justify-content: center;
             gap: 24px;
             flex-wrap: wrap;
-            border-top: 1px solid #e2e8f0;
+            border-top: 1px solid #edf1e7;
         }
 
         .footer-link {
-            color: #718096;
+            color: #67824f;
             text-decoration: none;
             font-size: 0.8rem;
             display: flex;
@@ -394,7 +394,7 @@
         }
 
         .footer-link:hover {
-            color: #667eea;
+            color: #67824f;
         }
 
         /* 响应式 */
@@ -461,19 +461,24 @@
             }
         }
     </style>
+<link rel="stylesheet" href="/static/css/site-theme.css?v=20260911-centered-navigation">
+<meta name="theme-color" content="#f6f7f2">
 </head>
 
-<body>
+<body data-site-theme="garden" data-page-kind="chat">
+<nav class="page-controls" aria-label="页面快捷导航"><a href="/home/" data-page-back><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m10 5-7 7 7 7M3 12h18"/></svg><span>返回上一页</span></a><a href="/home/"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9"/></svg><span>首页</span></a></nav>
+<nav class="site-navigation" aria-label="全站导航"><a class="site-brand" href="/home/"><img src="/home/hyper.png" alt="" width="38" height="38"><span>hyper.</span></a><div class="site-nav-links"><a href="/home/#categories">探索分类</a><a href="/pages/resume/index.html">个人简介</a><a href="/talk/comment.html">留言板</a></div></nav>
+
     <div class="chat-container">
         <div class="chat-header">
             <i class="fas fa-cloud-upload-alt"></i>
             <h2>Faze的hyper本人</h2>
             <div class="nav-buttons">
-                <a href="http://0o0hyper0o0.cyou/home/" class="nav-btn home-btn" target="_blank">
+                <a href="/home/" class="nav-btn home-btn" target="_blank">
                     <i class="fas fa-blog"></i>
                     <span>博客</span>
                 </a>
-                <a href="http://0o0hyper0o0.cyou/pages/resume/" class="nav-btn" target="_blank">
+                <a href="/pages/resume/" class="nav-btn" target="_blank">
                     <i class="fas fa-user"></i>
                     <span>简介</span>
                 </a>
@@ -541,16 +546,16 @@
 
         <!-- 底部快捷链接 -->
         <div class="footer-links">
-            <a href="http://0o0hyper0o0.cyou/pages/devlog/" class="footer-link" target="_blank">
+            <a href="/pages/devlog/" class="footer-link" target="_blank">
                 <i class="fas fa-code-branch"></i> 开发日志
             </a>
-            <a href="http://0o0hyper0o0.cyou/pages/games/mc/" class="footer-link" target="_blank">
+            <a href="/pages/games/mc/" class="footer-link" target="_blank">
                 <i class="fas fa-cube"></i> MC育英重建
             </a>
-            <a href="http://0o0hyper0o0.cyou/pages/diy/" class="footer-link" target="_blank">
+            <a href="/pages/diy/" class="footer-link" target="_blank">
                 <i class="fas fa-desktop"></i> 装机记录
             </a>
-            <a href="http://0o0hyper0o0.cyou/talk/" class="footer-link" target="_blank">
+            <a href="/talk/comment.html" class="footer-link" target="_blank">
                 <i class="fas fa-comments"></i> 留言板
             </a>
             <a href="https://github.com/hyper152" class="footer-link" target="_blank">
@@ -559,7 +564,7 @@
         </div>
     </div>
 
-    <script>
+<script>
         // ==================== 配置 ====================
         const MODEL_NAME = 'qwen2.5-3b-hyper';
 
@@ -608,13 +613,13 @@
             const minutes = String(now.getMinutes()).padStart(2, '0');
             const seconds = String(now.getSeconds()).padStart(2, '0');
             const time = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-            
+
             const data = {
                 time: time,
                 question: question,
                 user: userName || '游客'
             };
-            
+
             fetch('../api/ollama/save-ai-question', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -825,6 +830,8 @@
             console.log('✅ AI 助手已就绪');
         })();
     </script>
+
+<script src="/static/js/page-navigation.js?v=20260911-1" defer></script>
 </body>
 
 </html>

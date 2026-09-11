@@ -9,77 +9,82 @@
   * { margin:0; padding:0; box-sizing:border-box; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans SC", "Microsoft YaHei", sans-serif;
-    background: #f8f6f0;
+    background: #f6f7f2;
     color: #2c2c2c;
     padding: 20px;
   }
   .container { max-width: 860px; margin:0 auto; }
-  .back { display:inline-flex; align-items:center; gap:6px; color:#b91c1c; text-decoration:none; margin-bottom:12px; font-size:14px; }
+  .back { display:inline-flex; align-items:center; gap:6px; color:#43684b; text-decoration:none; margin-bottom:12px; font-size:14px; }
   .back:hover { text-decoration:underline; }
   h1 {
     text-align:center; font-size:28px; margin:20px 0 4px;
-    color: #b91c1c;
+    color: #43684b;
   }
-  .subtitle { text-align:center; color:#888; font-size:13px; margin-bottom:24px; }
+  .subtitle { text-align:center; color:#888888; font-size:13px; margin-bottom:24px; }
   .badge-group { text-align:center; margin-bottom:24px; display:flex; gap:8px; justify-content:center; flex-wrap:wrap; }
   .badge { display:inline-block; font-size:12px; font-weight:600; padding:3px 12px; border-radius:20px; }
-  .badge.must { background:#fee2e2; color:#991b1b; }
-  .badge.often { background:#fef3c7; color:#b45309; }
-  .badge.optional { background:#e0e7ff; color:#3730a3; }
+  .badge.must { background:#f6f7f2; color:#43684b; }
+  .badge.often { background:#edf1e7; color:#43684b; }
+  .badge.optional { background:#edf1e7; color:#43684b; }
 
   /* TOC */
   .toc {
-    background:#fff; border-radius:12px; padding:20px 24px; margin-bottom:20px;
-    box-shadow:0 2px 8px rgba(0,0,0,.06);
+    background:#ffffff; border-radius:12px; padding:20px 24px; margin-bottom:20px;
+    box-shadow:0 2px 8px rgba(0, 0, 0,.06);
   }
-  .toc h3 { font-size:15px; color:#b91c1c; margin-bottom:10px; }
+  .toc h3 { font-size:15px; color:#43684b; margin-bottom:10px; }
   .toc-list { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:4px; }
   .toc-list a { color:#4a4a4a; text-decoration:none; font-size:13px; padding:3px 6px; border-radius:4px; }
-  .toc-list a:hover { background:#fef2f2; color:#b91c1c; }
+  .toc-list a:hover { background:#f6f7f2; color:#43684b; }
 
   /* Chapter */
   .chapter {
-    background:#fff; border-radius:12px; padding:24px 28px; margin-bottom:16px;
-    box-shadow:0 2px 8px rgba(0,0,0,.06);
+    background:#ffffff; border-radius:12px; padding:24px 28px; margin-bottom:16px;
+    box-shadow:0 2px 8px rgba(0, 0, 0,.06);
     border-left: 4px solid transparent;
     scroll-margin-top:12px;
   }
-  .chapter.must { border-left-color:#dc2626; }
-  .chapter.often { border-left-color:#f59e0b; }
+  .chapter.must { border-left-color:#67824f; }
+  .chapter.often { border-left-color:#67824f; }
   .chapter h2 {
-    font-size:18px; color:#1a1a2e; margin-bottom:14px;
+    font-size:18px; color:#263b32; margin-bottom:14px;
     display:flex; align-items:center; gap:8px;
   }
   .chapter h2 .badge { font-size:11px; }
   .chapter h3 {
-    font-size:15px; color:#b91c1c; margin:12px 0 6px;
+    font-size:15px; color:#43684b; margin:12px 0 6px;
   }
   .chapter ul, .chapter ol { padding-left:20px; margin:6px 0 10px; }
   .chapter li { font-size:14px; line-height:1.8; }
   .chapter p { font-size:14px; line-height:1.8; margin:6px 0; }
 
   .point {
-    background:#fef2f2; border-left:3px solid #dc2626;
+    background:#f6f7f2; border-left:3px solid #67824f;
     padding:8px 14px; border-radius:0 8px 8px 0; margin:10px 0;
     font-size:14px; line-height:1.7;
   }
-  .point .label { font-weight:700; color:#991b1b; }
+  .point .label { font-weight:700; color:#43684b; }
 
   table {
     width:100%; border-collapse:collapse; margin:10px 0 14px; font-size:14px;
   }
-  th { background:#fef2f2; color:#991b1b; font-weight:600; padding:8px 12px; border:1px solid #fecaca; text-align:left; }
-  td { padding:8px 12px; border:1px solid #fecaca; }
+  th { background:#f6f7f2; color:#43684b; font-weight:600; padding:8px 12px; border:1px solid #edf1e7; text-align:left; }
+  td { padding:8px 12px; border:1px solid #edf1e7; }
 
   .template-box {
-    background:#f0fdf4; border-left:3px solid #16a34a;
+    background:#f6f7f2; border-left:3px solid #43684b;
     padding:12px 16px; border-radius:0 8px 8px 0; margin:10px 0;
   }
-  .template-box h3 { color:#15803d; margin-top:0; }
+  .template-box h3 { color:#43684b; margin-top:0; }
   .template-box p { font-size:14px; line-height:1.7; }
 </style>
+<link rel="stylesheet" href="/static/css/site-theme.css?v=20260911-centered-navigation">
+<meta name="theme-color" content="#f6f7f2">
 </head>
-<body>
+<body data-site-theme="garden" data-page-kind="study">
+<nav class="page-controls" aria-label="页面快捷导航"><a href="/pages/study/" data-page-back><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m10 5-7 7 7 7M3 12h18"/></svg><span>返回上一页</span></a><a href="/home/"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9"/></svg><span>首页</span></a></nav>
+<nav class="site-navigation" aria-label="全站导航"><a class="site-brand" href="/home/"><img src="/home/hyper.png" alt="" width="38" height="38"><span>hyper.</span></a><div class="site-nav-links"><a href="/home/#categories">探索分类</a><a href="/pages/resume/index.html">个人简介</a><a href="/talk/comment.html">留言板</a></div></nav>
+
 <div class="container">
   <a href="../../../pages/study/" class="back"><i class="fas fa-arrow-left"></i> 返回学习目录</a>
   <h1><i class="fas fa-gavel"></i> 思想道德与法治</h1>
@@ -551,9 +556,11 @@
     </div>
   </div>
 
-  <div style="text-align:center;padding:24px 0 10px;color:#999;font-size:13px">
+  <div style="text-align:center;padding:24px 0 10px;color:#999999;font-size:13px">
     基于教材（2023版）及多份复习资料整理 · 祝考试顺利 🎯
   </div>
 </div>
+
+<script src="/static/js/page-navigation.js?v=20260911-1" defer></script>
 </body>
 </html>

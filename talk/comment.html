@@ -7,20 +7,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #6a5acd;
-            --primary-light: #8a7adc;
-            --primary-dark: #4a3a9a;
-            --accent: #ff6b6b;
-            --accent-light: #ff8a8a;
-            --accent-dark: #e04a4a;
-            --light: #f8f9fa;
+            --primary: #67824f;
+            --primary-light: #67824f;
+            --primary-dark: #43684b;
+            --accent: #cbd7bc;
+            --accent-light: #cbd7bc;
+            --accent-dark: #67824f;
+            --light: #f6f7f2;
             --dark: #2d3436;
             --gray: #495057;
-            --light-gray: #e9ecef;
+            --light-gray: #edf1e7;
             --white: #ffffff;
-            --shadow-sm: 0 2px 8px rgba(0,0,0,0.05);
-            --shadow-md: 0 5px 15px rgba(0,0,0,0.08);
-            --shadow-lg: 0 10px 25px rgba(0,0,0,0.12);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0,0.05);
+            --shadow-md: 0 5px 15px rgba(0, 0, 0,0.08);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0,0.12);
             --radius-sm: 8px;
             --radius-md: 12px;
             --radius-lg: 20px;
@@ -35,7 +35,7 @@
         }
 
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+            background: linear-gradient(135deg, #f6f7f2 0%, #edf1e7 100%);
             color: var(--gray);
             line-height: 1.6;
             padding: 30px 20px;
@@ -321,13 +321,13 @@
             outline: none;
             border-color: var(--primary);
             background: white;
-            box-shadow: 0 0 0 4px rgba(106, 90, 205, 0.1);
+            box-shadow: 0 0 0 4px rgba(103, 130, 79, 0.1);
         }
 
         .input-group input:read-only {
-            background: #e8f5e9;
-            border-color: #4caf50;
-            color: #2e7d32;
+            background: #edf1e7;
+            border-color: #67824f;
+            color: #43684b;
         }
 
         .input-group textarea {
@@ -430,7 +430,7 @@
 
         .message-time {
             font-size: 0.85rem;
-            color: #888;
+            color: #888888;
             background: white;
             padding: 4px 10px;
             border-radius: 20px;
@@ -446,7 +446,7 @@
         .empty-state {
             text-align: center;
             padding: 50px 20px;
-            color: #888;
+            color: #888888;
         }
 
         .empty-state i {
@@ -459,7 +459,7 @@
         .footer {
             text-align: center;
             padding: 30px 0;
-            color: #888;
+            color: #888888;
             font-size: 0.95rem;
         }
 
@@ -469,8 +469,11 @@
             .page-title h1 { font-size: 1.6rem; }
         }
     </style>
+<link rel="stylesheet" href="/static/css/site-theme.css?v=20260911-centered-navigation">
+<meta name="theme-color" content="#f6f7f2">
 </head>
-<body>
+<body data-site-theme="garden" data-page-kind="page">
+<nav class="page-controls" aria-label="页面快捷导航"><a href="/home/" data-page-back><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m10 5-7 7 7 7M3 12h18"/></svg><span>返回上一页</span></a><a href="/home/"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9"/></svg><span>首页</span></a></nav>
     <div class="container">
         <div class="header-bar">
             <div class="logo-area">
@@ -533,7 +536,7 @@
                         <span>提交留言</span>
                         <i class="fas fa-paper-plane"></i>
                     </button>
-                    <div class="login-tip" id="loginTip" style="background:linear-gradient(135deg,#fff3cd,#ffe69b);color:#856404;border-left:4px solid #ff6b6b;">
+                    <div class="login-tip" id="loginTip" style="background:linear-gradient(135deg,#edf1e7,#cbd7bc);color:#263b32;border-left:4px solid #cbd7bc;">
                         <i class="fas fa-info-circle"></i>
                         <span>当前为游客模式，可以自定义昵称留言，建议<a href="../pages/login/index.html" style="color:var(--primary-dark);">登录</a>后使用</span>
                     </div>
@@ -553,8 +556,8 @@
         </div>
     </div>
 
-    <script src="../static/js/auth.js"></script>
-    <script>
+<script src="../static/js/auth.js"></script>
+<script>
         // 全局状态
         let isLogin = false;
         let currentUser = null;
@@ -565,7 +568,7 @@
             // 1. 从 localStorage 获取
             const localSession = localStorage.getItem('session_id');
             if (localSession) return localSession;
-            
+
             // 2. 从 cookie 获取
             const cookies = document.cookie.split(';');
             for (let cookie of cookies) {
@@ -574,7 +577,7 @@
                     return value;
                 }
             }
-            
+
             return null;
         }
 
@@ -584,7 +587,7 @@
                 // 先从 localStorage 恢复 session
                 const localSession = localStorage.getItem('session_id');
                 const localUserStr = localStorage.getItem('user_info');
-                
+
                 if (localSession && localUserStr) {
                     try {
                         const localUser = JSON.parse(localUserStr);
@@ -597,7 +600,7 @@
                         }
                     } catch (e) {}
                 }
-                
+
                 // 然后向服务器验证（携带 session_id）
                 const requestSession = getSessionId();
                 const res = await fetch('../api/check-login', {
@@ -608,13 +611,13 @@
                     },
                     credentials: 'include'
                 });
-                
+
                 const data = await res.json();
-                
+
                 if (data.isLogin && data.user && data.user.username) {
                     isLogin = true;
                     currentUser = data.user;
-                    
+
                     // 同步到 localStorage
                     if (requestSession) {
                         localStorage.setItem('session_id', requestSession);
@@ -631,7 +634,7 @@
                     localStorage.removeItem('user_info');
                     console.log('⚠️ 未登录状态');
                 }
-                
+
                 updateUI();
             } catch (error) {
                 console.error('检查登录状态失败:', error);
@@ -713,19 +716,19 @@
             } catch (e) {
                 console.error('退出请求失败:', e);
             }
-            
+
             // 清除本地存储
             localStorage.removeItem('session_id');
             localStorage.removeItem('user_info');
-            
+
             // 清除状态
             isLogin = false;
             currentUser = null;
             sessionId = null;
-            
+
             updateUI();
             alert('已退出登录');
-            
+
             // 可选：刷新页面重置状态
             // window.location.reload();
         };
@@ -735,9 +738,9 @@
             try {
                 const res = await fetch('../api/talk/list');
                 const data = await res.json();
-                
+
                 const messageList = document.getElementById('messageList');
-                
+
                 if (data.code === 200 && data.data && data.data.length > 0) {
                     messageList.innerHTML = data.data.map(msg => `
                         <div class="message-item">
@@ -770,7 +773,7 @@
                 `;
             }
         }
-        
+
         // XSS 防护
         function escapeHtml(text) {
             if (!text) return '';
@@ -782,15 +785,15 @@
         // 提交留言
         document.getElementById('messageForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            
+
             const nickname = document.getElementById('username').value.trim();
             const content = document.getElementById('messageContent').value.trim();
-            
+
             if (!content) {
                 alert('请输入留言内容');
                 return;
             }
-            
+
             if (!isLogin) {
                 if (!nickname) {
                     alert('请输入昵称');
@@ -801,17 +804,17 @@
                     return;
                 }
             }
-            
+
             const btn = document.getElementById('submitBtn');
             btn.disabled = true;
             btn.innerHTML = '<span>提交中...</span> <i class="fas fa-spinner fa-spin"></i>';
-            
+
             try {
                 const requestBody = { content: content };
                 if (!isLogin) {
                     requestBody.nickname = nickname;
                 }
-                
+
                 const currentSession = getSessionId();
                 const res = await fetch('../api/talk/add', {
                     method: 'POST',
@@ -822,9 +825,9 @@
                     credentials: 'include',
                     body: JSON.stringify(requestBody)
                 });
-                
+
                 const data = await res.json();
-                
+
                 if (data.code === 200) {
                     alert('留言成功！');
                     document.getElementById('messageContent').value = '';
@@ -847,14 +850,14 @@
         // 下拉菜单
         const userBtn = document.getElementById('userBtn');
         const dropdownMenu = document.getElementById('dropdownMenu');
-        
+
         if (userBtn) {
             userBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
                 dropdownMenu.classList.toggle('show');
             });
         }
-        
+
         document.addEventListener('click', function() {
             dropdownMenu.classList.remove('show');
         });
@@ -864,8 +867,10 @@
             await checkLoginStatus();
             await loadMessages();
         }
-        
+
         document.addEventListener('DOMContentLoaded', init);
     </script>
+
+<script src="/static/js/page-navigation.js?v=20260911-1" defer></script>
 </body>
 </html>

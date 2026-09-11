@@ -6,17 +6,17 @@
     <title>大学物理概念题 - 交互式选择题自测</title>
     <style>
         :root {
-            --bg: #f5f0eb;
+            --bg: #f6f7f2;
             --card-bg: #ffffff;
-            --text: #2c2416;
-            --text-secondary: #5c5347;
-            --accent: #8b5e3c;
-            --accent-light: #c9a87c;
-            --correct: #3a7d44;
-            --correct-bg: #e8f5e9;
-            --incorrect: #c0392b;
-            --incorrect-bg: #fdecea;
-            --border: #e0d5c7;
+            --text: #263b32;
+            --text-secondary: #43684b;
+            --accent: #43684b;
+            --accent-light: #67824f;
+            --correct: #43684b;
+            --correct-bg: #edf1e7;
+            --incorrect: #43684b;
+            --incorrect-bg: #f6f7f2;
+            --border: #cbd7bc;
             --shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
             --shadow-hover: 0 6px 24px rgba(0, 0, 0, 0.10);
             --radius: 12px;
@@ -42,8 +42,8 @@
 
         /* Header */
         .header {
-            background: linear-gradient(135deg, #3e2d1f 0%, #5a3e2b 40%, #6b4c34 100%);
-            color: #f5e6d3;
+            background: linear-gradient(135deg, #263b32 0%, #263b32 40%, #43684b 100%);
+            color: #edf1e7;
             padding: 28px 20px 24px;
             text-align: center;
             box-shadow: 0 2px 20px rgba(0, 0, 0, 0.25);
@@ -68,7 +68,7 @@
             justify-content: center;
             align-items: center;
             padding: 14px 20px;
-            background: #fff;
+            background: #ffffff;
             border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
@@ -82,7 +82,7 @@
             gap: 6px;
             padding: 6px 14px;
             border-radius: 20px;
-            background: #faf7f2;
+            background: #f6f7f2;
             font-weight: 500;
             white-space: nowrap;
         }
@@ -93,10 +93,10 @@
             display: inline-block;
         }
         .stat-dot.total {
-            background: #6b4c34;
+            background: #43684b;
         }
         .stat-dot.done {
-            background: #3a7d44;
+            background: #43684b;
         }
         .stat-dot.correct {
             background: #27ae60;
@@ -105,13 +105,13 @@
             background: #e74c3c;
         }
         .stat-dot.remaining {
-            background: #ccc;
+            background: #cccccc;
         }
         .btn {
             padding: 8px 18px;
             border-radius: 20px;
             border: 1.5px solid var(--accent);
-            background: #fff;
+            background: #ffffff;
             color: var(--accent);
             cursor: pointer;
             font-size: 0.85rem;
@@ -122,21 +122,21 @@
         }
         .btn:hover {
             background: var(--accent);
-            color: #fff;
-            box-shadow: 0 4px 14px rgba(139, 94, 60, 0.3);
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(67, 104, 75, 0.3);
         }
         .btn.active-filter {
             background: var(--accent);
-            color: #fff;
+            color: #ffffff;
         }
         .btn.reset-btn {
-            background: #fdecea;
-            border-color: #c0392b;
-            color: #c0392b;
+            background: #f6f7f2;
+            border-color: #43684b;
+            color: #43684b;
         }
         .btn.reset-btn:hover {
-            background: #c0392b;
-            color: #fff;
+            background: #43684b;
+            color: #ffffff;
         }
 
         /* Filter Row */
@@ -146,30 +146,30 @@
             gap: 8px;
             justify-content: center;
             padding: 10px 20px;
-            background: #fff;
+            background: #ffffff;
             border-bottom: 1px solid var(--border);
             box-shadow: var(--shadow);
         }
         .filter-btn {
             padding: 6px 14px;
             border-radius: 16px;
-            border: 1.5px solid #d5c9b8;
-            background: #fdfaf6;
+            border: 1.5px solid #cbd7bc;
+            background: #f6f7f2;
             cursor: pointer;
             font-size: 0.8rem;
             font-weight: 500;
             transition: all var(--transition);
             font-family: var(--font-main);
-            color: #5c5347;
+            color: #43684b;
         }
         .filter-btn:hover {
             border-color: var(--accent);
             color: var(--accent);
-            background: #fdf5ec;
+            background: #f6f7f2;
         }
         .filter-btn.active {
             background: var(--accent);
-            color: #fff;
+            color: #ffffff;
             border-color: var(--accent);
             font-weight: 700;
         }
@@ -186,9 +186,9 @@
         .file-section-header {
             font-size: 1rem;
             font-weight: 700;
-            color: #3e2d1f;
+            color: #263b32;
             padding: 10px 16px;
-            background: #f0e8db;
+            background: #edf1e7;
             border-radius: 8px;
             margin-bottom: 14px;
             letter-spacing: 0.02em;
@@ -202,7 +202,7 @@
         .file-section-header .count {
             font-weight: 400;
             font-size: 0.8rem;
-            color: #6b5d4a;
+            color: #43684b;
             margin-left: auto;
         }
 
@@ -220,7 +220,7 @@
         }
         .question-card:hover {
             box-shadow: var(--shadow-hover);
-            border-color: #ccc0ad;
+            border-color: #cbd7bc;
         }
         .question-card.answered-correct {
             border-left: 4px solid var(--correct);
@@ -248,28 +248,28 @@
             letter-spacing: 0.02em;
         }
         .q-tag.single {
-            background: #e8f0fe;
-            color: #1a56b8;
+            background: #f6f7f2;
+            color: #43684b;
         }
         .q-tag.judge {
-            background: #fef3e0;
-            color: #b85c1a;
+            background: #edf1e7;
+            color: #43684b;
         }
         .q-tag.multi {
-            background: #f0e6f6;
-            color: #6b2d8b;
+            background: #edf1e7;
+            color: #43684b;
         }
         .q-source {
             font-family: var(--font-mono);
             font-size: 0.73rem;
-            background: #f5f0eb;
+            background: #f6f7f2;
             padding: 2px 8px;
             border-radius: 4px;
-            color: #6b5d4a;
+            color: #43684b;
         }
         .q-concept {
             font-size: 0.73rem;
-            color: #8b7355;
+            color: #43684b;
             font-style: italic;
         }
         .q-text {
@@ -287,29 +287,29 @@
         }
         .option-item {
             padding: 10px 14px;
-            border: 1.5px solid #e8e0d5;
+            border: 1.5px solid #edf1e7;
             border-radius: 8px;
             cursor: pointer;
             transition: all var(--transition);
             font-size: 0.97rem;
             position: relative;
-            background: #fdfcf9;
+            background: #f6f7f2;
             user-select: none;
             display: flex;
             align-items: flex-start;
             gap: 10px;
         }
         .option-item:hover {
-            border-color: #b8956e;
-            background: #fdf7ef;
+            border-color: #67824f;
+            background: #f6f7f2;
             transform: translateX(2px);
         }
         .option-item:active {
             transform: scale(0.985);
         }
         .option-item.selected {
-            border-color: #6b4c34;
-            background: #f5ede0;
+            border-color: #43684b;
+            background: #edf1e7;
             font-weight: 600;
         }
         .option-item.show-correct {
@@ -335,11 +335,11 @@
             width: 28px;
             height: 28px;
             border-radius: 50%;
-            background: #e8e0d5;
+            background: #edf1e7;
             font-weight: 700;
             font-size: 0.85rem;
             flex-shrink: 0;
-            color: #5c4a30;
+            color: #263b32;
         }
         .option-item.show-correct .option-letter {
             background: #27ae60;
@@ -375,10 +375,10 @@
             padding: 14px 16px;
             border-radius: 8px;
             border-left: 4px solid var(--accent);
-            background: #fcf8f2;
+            background: #f6f7f2;
             font-size: 0.9rem;
             line-height: 1.7;
-            color: #3a2e1e;
+            color: #263b32;
             display: none;
             animation: fadeIn 0.4s ease;
         }
@@ -424,12 +424,12 @@
         /* Dont-Know Button */
         .dontknow-btn {
             padding: 10px 14px;
-            border: 1.5px dashed #c9a87c;
+            border: 1.5px dashed #67824f;
             border-radius: 8px;
             cursor: pointer;
             font-size: 0.88rem;
-            color: #8b7355;
-            background: #fdfaf6;
+            color: #43684b;
+            background: #f6f7f2;
             margin-top: 8px;
             text-align: center;
             transition: all var(--transition);
@@ -437,14 +437,14 @@
             font-family: var(--font-main);
         }
         .dontknow-btn:hover {
-            background: #f5ede0;
+            background: #edf1e7;
             border-color: var(--accent);
             color: var(--accent);
         }
         .dontknow-btn.answered-dk {
-            background: #fef8e7;
-            border-color: #d4a843;
-            color: #8d6e00;
+            background: #f6f7f2;
+            border-color: #67824f;
+            color: #263b32;
             cursor: default;
             pointer-events: none;
         }
@@ -452,10 +452,10 @@
         @keyframes pulse-green {
             0%,
             100% {
-                box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.4);
+                box-shadow: 0 0 0 0 rgba(67, 104, 75, 0.4);
             }
             50% {
-                box-shadow: 0 0 0 10px rgba(39, 174, 96, 0);
+                box-shadow: 0 0 0 10px rgba(67, 104, 75, 0);
             }
         }
         @keyframes shake {
@@ -496,7 +496,7 @@
             height: 44px;
             border-radius: 50%;
             background: var(--accent);
-            color: #fff;
+            color: #ffffff;
             border: none;
             cursor: pointer;
             font-size: 1.3rem;
@@ -508,7 +508,7 @@
             justify-content: center;
         }
         .scroll-top-btn:hover {
-            background: #6b3e1f;
+            background: #263b32;
             transform: translateY(-3px);
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
         }
@@ -595,8 +595,13 @@
             }
         }
     </style>
+<link rel="stylesheet" href="/static/css/site-theme.css?v=20260911-centered-navigation">
+<meta name="theme-color" content="#f6f7f2">
 </head>
-<body>
+<body data-site-theme="garden" data-page-kind="study">
+<nav class="page-controls" aria-label="页面快捷导航"><a href="/pages/study/" data-page-back><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m10 5-7 7 7 7M3 12h18"/></svg><span>返回上一页</span></a><a href="/home/"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9"/></svg><span>首页</span></a></nav>
+<nav class="site-navigation" aria-label="全站导航"><a class="site-brand" href="/home/"><img src="/home/hyper.png" alt="" width="38" height="38"><span>hyper.</span></a><div class="site-nav-links"><a href="/home/#categories">探索分类</a><a href="/pages/resume/index.html">个人简介</a><a href="/talk/comment.html">留言板</a></div></nav>
+
 
     <div style="display:flex; gap:12px; margin-bottom:12px; font-size:0.9rem; justify-content:center; padding-top:16px;">
         <a href="javascript:history.back()" style="display:inline-flex; align-items:center; gap:4px; color:var(--text-secondary); text-decoration:none; padding:6px 16px; border-radius:20px; background:var(--bg); transition:background 0.2s;" onmouseover="this.style.background='var(--accent-light)';this.style.color='#fff'" onmouseout="this.style.background='var(--bg)';this.style.color='var(--text-secondary)'">⬅ 返回上一页</a>
@@ -617,7 +622,7 @@
         <span class="stat-item"><span class="stat-dot correct"></span> 正确：<strong id="correctCount">0</strong></span>
         <span class="stat-item"><span class="stat-dot incorrect"></span> 错误：<strong id="incorrectCount">0</strong></span>
         <span class="stat-item"><span class="stat-dot remaining"></span> 剩余：<strong id="remainingCount">0</strong></span>
-        <span class="stat-item" style="background:#fef8e7;"><span style="width:10px;height:10px;border-radius:50%;display:inline-block;background:#d4a843;"></span> 跳过：<strong id="dontknowCount">0</strong></span>
+        <span class="stat-item" style="background:#f6f7f2;"><span style="width:10px;height:10px;border-radius:50%;display:inline-block;background:#67824f;"></span> 跳过：<strong id="dontknowCount">0</strong></span>
         <button class="btn reset-btn" onclick="resetAll()" title="清除所有答案重新开始">🔄 全部重置</button>
     </div>
 
@@ -642,7 +647,7 @@
 
     <button class="scroll-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="回到顶部">⬆</button>
 
-    <script>
+<script>
         // ==================== QUESTION DATABASE ====================
         // type: 'single' | 'judge' | 'multi'
         // For 'judge', options are always ['正确', '错误'] and answer is 0 (正确) or 1 (错误)
@@ -3002,5 +3007,7 @@
         console.log('  点击选项即可作答，绿色=正确，红色=错误');
         console.log('  使用顶部筛选栏按文件来源或答题状态筛选');
     </script>
+
+<script src="/static/js/page-navigation.js?v=20260911-1" defer></script>
 </body>
 </html>

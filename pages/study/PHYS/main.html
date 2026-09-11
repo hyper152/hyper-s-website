@@ -6,13 +6,13 @@
     <title>大学物理 · 考点大纲</title>
     <style>
         :root {
-            --bg: #f5f0eb;
+            --bg: #f6f7f2;
             --card-bg: #ffffff;
-            --text: #2c2416;
-            --text-secondary: #5c5347;
-            --accent: #8b5e3c;
-            --accent-light: #c9a87c;
-            --border: #e0d5c7;
+            --text: #263b32;
+            --text-secondary: #43684b;
+            --accent: #43684b;
+            --accent-light: #67824f;
+            --border: #cbd7bc;
             --radius: 12px;
         }
 
@@ -31,7 +31,7 @@
             margin: 0 auto;
             background: var(--card-bg);
             border-radius: var(--radius);
-            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            box-shadow: 0 2px 12px rgba(0, 0, 0,0.06);
             padding: 2rem 2.5rem;
         }
 
@@ -56,7 +56,7 @@
         }
         .nav-btn:hover {
             background: var(--accent-light);
-            color: #fff;
+            color: #ffffff;
         }
 
         /* ── Quick Links ── */
@@ -74,7 +74,7 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            color: #fff;
+            color: #ffffff;
             text-decoration: none;
             padding: 20px 28px;
             border-radius: var(--radius);
@@ -86,18 +86,18 @@
             transform: translateY(-3px);
         }
         .quick-link.concept {
-            background: linear-gradient(135deg, #8b5e3c, #c9a87c);
-            box-shadow: 0 4px 15px rgba(139,94,60,0.4);
+            background: linear-gradient(135deg, #43684b, #67824f);
+            box-shadow: 0 4px 15px rgba(67, 104, 75,0.4);
         }
         .quick-link.concept:hover {
-            box-shadow: 0 6px 20px rgba(139,94,60,0.6);
+            box-shadow: 0 6px 20px rgba(67, 104, 75,0.6);
         }
         .quick-link.summary {
-            background: linear-gradient(135deg, #5a3e2b, #8b7355);
-            box-shadow: 0 4px 15px rgba(90,62,43,0.4);
+            background: linear-gradient(135deg, #263b32, #43684b);
+            box-shadow: 0 4px 15px rgba(38, 59, 50,0.4);
         }
         .quick-link.summary:hover {
-            box-shadow: 0 6px 20px rgba(90,62,43,0.6);
+            box-shadow: 0 6px 20px rgba(38, 59, 50,0.6);
         }
 
         /* ── Header ── */
@@ -121,7 +121,7 @@
         .section-card {
             background: var(--card-bg);
             border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            box-shadow: 0 2px 8px rgba(0, 0, 0,0.04);
             margin-bottom: 22px;
             padding: 18px 22px;
             border-left: 5px solid var(--accent);
@@ -157,8 +157,8 @@
             display: inline-block;
             font-size: 0.75rem;
             font-weight: 700;
-            color: #1a6b3c;
-            background: #e8f5e9;
+            color: #263b32;
+            background: #edf1e7;
             padding: 1px 8px;
             border-radius: 10px;
             margin-left: 4px;
@@ -167,8 +167,8 @@
             display: inline-block;
             font-size: 0.75rem;
             font-weight: 700;
-            color: #b91c1c;
-            background: #fdecea;
+            color: #43684b;
+            background: #f6f7f2;
             padding: 1px 8px;
             border-radius: 10px;
             margin-left: 4px;
@@ -177,8 +177,8 @@
             display: inline-block;
             font-size: 0.75rem;
             font-weight: 700;
-            color: #1a0dab;
-            background: #e8f0fe;
+            color: #43684b;
+            background: #f6f7f2;
             padding: 1px 8px;
             border-radius: 10px;
             margin-left: 4px;
@@ -194,8 +194,13 @@
             opacity: 0.7;
         }
     </style>
+<link rel="stylesheet" href="/static/css/site-theme.css?v=20260911-centered-navigation">
+<meta name="theme-color" content="#f6f7f2">
 </head>
-<body>
+<body data-site-theme="garden" data-page-kind="study">
+<nav class="page-controls" aria-label="页面快捷导航"><a href="/pages/study/" data-page-back><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m10 5-7 7 7 7M3 12h18"/></svg><span>返回上一页</span></a><a href="/home/"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9"/></svg><span>首页</span></a></nav>
+<nav class="site-navigation" aria-label="全站导航"><a class="site-brand" href="/home/"><img src="/home/hyper.png" alt="" width="38" height="38"><span>hyper.</span></a><div class="site-nav-links"><a href="/home/#categories">探索分类</a><a href="/pages/resume/index.html">个人简介</a><a href="/talk/comment.html">留言板</a></div></nav>
+
 <div class="container">
 
     <!-- ── Navigation ── -->
@@ -358,5 +363,7 @@
     </div>
 
 </div>
+
+<script src="/static/js/page-navigation.js?v=20260911-1" defer></script>
 </body>
 </html>

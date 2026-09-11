@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-SQLite visits 表 分析工具 - 极速离线版（集成 ip2region.db，0.0x毫秒查询，永不封禁）
+SQLite visits 表分析工具（官方 ip2region XDB，支持 IPv4 / IPv6 离线查询）
 用法：
   python analyze_visitor.py                        # 完整分析所有记录
   python analyze_visitor.py 2026.4.23              # 只分析 2026-04-23 当天的记录
@@ -20,38 +20,11 @@ from src.storage import get_store
 from collections import Counter, defaultdict
 from datetime import datetime
 
-# 导入本地的 ip2Region 库
-try:
-    from src.ip2Region import Ip2Region
-except ImportError:
-    print("❌ 未找到 ip2Region.py，请确保它和 analyze_visitor.py 在同一目录！")
-    sys.exit(1)
+from src.ip_location import is_internal_ip, query_ip_location
 
-# 路径配置
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(os.path.dirname(SCRIPT_DIR), 'data')
 VISITOR_FILE = str(get_store().path)
-
-# ip2region.db 数据库文件的精确路径配置
-DB_PATH = os.path.join(SCRIPT_DIR, 'ip2region-master', 'data', 'ip2region.db')
-
-# 全局初始化 IP 查询库
-ip_searcher = None
-if os.path.exists(DB_PATH):
-    ip_searcher = Ip2Region(DB_PATH)
-else:
-    print(f"⚠️ 警告: 未找到 IP 数据库文件: {DB_PATH}")
-
-
-def is_internal_ip(ip):
-    """判断是否为内网 IP"""
-    internal_prefixes = (
-        '127.', '192.168.', '10.', '172.16.', '172.17.', '172.18.',
-        '172.19.', '172.20.', '172.21.', '172.22.', '172.23.',
-        '172.24.', '172.25.', '172.26.', '172.27.', '172.28.',
-        '172.29.', '172.30.', '172.31.'
-    )
-    return any(ip.startswith(prefix) for prefix in internal_prefixes)
 
 
 def is_logged_in_user(user):
@@ -60,39 +33,6 @@ def is_logged_in_user(user):
         return False
     user_lower = user.lower()
     return user_lower not in ('游客', 'guest')
-
-
-def query_ip_location(ip):
-    """使用本地 ip2region.db 离线查询 IP (0.0x毫秒极速查询)"""
-    if is_internal_ip(ip):
-        return {"country": "本地网络", "region": "内网", "city": "本地", "isp": ""}
-    
-    if not ip_searcher:
-        return {"country": "未配置IP库", "region": "未知", "city": "未知", "isp": ""}
-
-    try:
-        # 使用 btreeSearch 算法查询
-        result = ip_searcher.btreeSearch(ip)
-        
-        if isinstance(result, dict) and "region" in result:
-            # Python3 读取二进制文件返回 bytes，需要解码成字符串
-            region_data = result["region"]
-            if isinstance(region_data, bytes):
-                region_str = region_data.decode('utf-8', errors='ignore')
-            else:
-                region_str = region_data
-                
-            # 数据格式：国家|区域|省份|城市|ISP
-            parts = region_str.split('|')
-            return {
-                "country": parts[0] if len(parts) > 0 and parts[0] != '0' else '未知',
-                "region": parts[2] if len(parts) > 2 and parts[2] != '0' else '未知',
-                "city": parts[3] if len(parts) > 3 and parts[3] != '0' else '未知',
-                "isp": parts[4] if len(parts) > 4 and parts[4] != '0' else '未知'
-            }
-        return {"country": "未知", "region": "未知", "city": "未知", "isp": ""}
-    except Exception as e:
-        return {"country": "查询出错", "region": "未知", "city": "未知", "isp": ""}
 
 
 def parse_date_arg(date_str):
@@ -424,10 +364,4 @@ def main():
 
 
 if __name__ == "__main__":
-    if ip_searcher is not None:
-        try:
-            main()
-        finally:
-            ip_searcher.close()
-    else:
-        main()
+    main()

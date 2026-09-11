@@ -1,9 +1,9 @@
 :root {
-    --ink: #203b36;
-    --paper: #f7f6f0;
+    --ink: #263b32;
+    --paper: #f6f7f2;
     --muted: #66736c;
-    --line: #dbdfd5;
-    --accent: #b55637;
+    --line: #edf1e7;
+    --accent: #43684b;
 }
 * {
     box-sizing: border-box;
@@ -165,14 +165,14 @@ figcaption {
     align-items: center;
 }
 .film .eyebrow {
-    color: #e7ba8e;
+    color: #cbd7bc;
 }
 .film h3 {
     font-size: 24px;
     margin: 12px 0;
 }
 .film p {
-    color: #c4d1c7;
+    color: #cbd7bc;
 }
 .film video {
     width: 100%;
@@ -191,14 +191,14 @@ footer a {
 dialog {
     border: 0;
     padding: 50px 16px 16px;
-    background: #15231f;
+    background: #263b32;
     color: white;
     max-width: 95vw;
     max-height: 95vh;
     border-radius: 8px;
 }
 dialog::backdrop {
-    background: #000c;
+    background: #000000cc;
 }
 dialog img {
     display: block;
@@ -286,12 +286,12 @@ dialog p {
 .moment img {
     max-height: 85vh;
     object-fit: contain;
-    background: #eeeee7;
+    background: #edf1e7;
 }
 .moment video {
     width: 100%;
     max-height: 80vh;
-    background: #15231f;
+    background: #263b32;
 }
 section > h2 {
     padding-bottom: 20px;

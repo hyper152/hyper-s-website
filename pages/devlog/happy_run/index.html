@@ -7,14 +7,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #165DFF;
-            --accent: #FF7D00;
-            --light: #f8f9fa;
+            --primary: #67824f;
+            --accent: #67824f;
+            --light: #f6f7f2;
             --dark: #2d3436;
             --gray: #495057;
-            --light-gray: #e9ecef;
-            --shadow: 0 2px 12px rgba(0,0,0,0.08);
-            --shadow-hover: 0 8px 25px rgba(0,0,0,0.12);
+            --light-gray: #edf1e7;
+            --shadow: 0 2px 12px rgba(0, 0, 0,0.08);
+            --shadow-hover: 0 8px 25px rgba(0, 0, 0,0.12);
             --border: 1px solid var(--light-gray);
         }
 
@@ -103,7 +103,7 @@
         }
 
         .github-link:hover {
-            background: #444;
+            background: #444444;
             transform: translateY(-2px);
         }
 
@@ -296,16 +296,16 @@
         }
 
         .info-box {
-            background: #d1ecf1;
-            border-left: 4px solid #17a2b8;
+            background: #edf1e7;
+            border-left: 4px solid #43684b;
             padding: 15px 20px;
             border-radius: 4px;
             margin: 15px 0;
-            color: #0c5460;
+            color: #263b32;
         }
 
         .info-box i {
-            color: #17a2b8;
+            color: #43684b;
             margin-right: 8px;
         }
 
@@ -326,7 +326,7 @@
         /* 视频容器 */
         .video-container {
             margin: 20px 0;
-            background: #000;
+            background: #000000;
             border-radius: 10px;
             overflow: hidden;
             box-shadow: var(--shadow);
@@ -439,8 +439,11 @@
             }
         }
     </style>
+<link rel="stylesheet" href="/static/css/site-theme.css?v=20260911-centered-navigation">
+<meta name="theme-color" content="#f6f7f2">
 </head>
-<body>
+<body data-site-theme="garden" data-page-kind="page">
+<nav class="page-controls" aria-label="页面快捷导航"><a href="/pages/devlog/" data-page-back><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m10 5-7 7 7 7M3 12h18"/></svg><span>返回上一页</span></a><a href="/home/"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9"/></svg><span>首页</span></a></nav>
     <!-- 头部 -->
     <header class="header">
         <div class="container header-content">
@@ -471,7 +474,7 @@
         <!-- 项目简介 -->
         <section class="dev-intro">
             <p>本项目提供一套完整的步道乐跑自动化方案，核心逻辑为：<strong>真机运行 Fake Location（提供模拟位置） + 虚拟机运行步道乐跑（躲避应用检测）</strong>。通过这种双层隔离方案，可以有效避免乐跑检测到模拟软件，实现稳定、安全的自动跑步。</p>
-            
+
             <div class="tech-stack">
                 <div class="tech-item"><i class="fas fa-mobile-alt"></i> 真机运行 Fake Location</div>
                 <div class="tech-item"><i class="fas fa-box"></i> 虚拟机运行步道乐跑</div>
@@ -500,7 +503,7 @@
         <!-- 准备工作 -->
         <section class="dev-card">
             <h3><i class="fas fa-download"></i> 一、准备工作（安装与权限）</h3>
-            
+
             <div class="step-item">
                 <div class="step-title">
                     <i class="fas fa-map-marked-alt"></i>
@@ -549,7 +552,7 @@
         <!-- 真机环境配置 -->
         <section class="dev-card">
             <h3><i class="fas fa-cog"></i> 二、真机环境配置（宿主机）</h3>
-            
+
             <div class="step-item">
                 <div class="step-title">
                     <i class="fas fa-code"></i>
@@ -579,7 +582,7 @@
         <!-- 虚拟位移设置 -->
         <section class="dev-card">
             <h3><i class="fas fa-route"></i> 三、虚拟位移设置（Fake Location）</h3>
-            
+
             <div class="step-item">
                 <div class="step-title">
                     <i class="fas fa-draw-polygon"></i>
@@ -629,7 +632,7 @@
         <!-- 虚拟机实战 -->
         <section class="dev-card">
             <h3><i class="fas fa-running"></i> 四、虚拟机实战（乐跑端）</h3>
-            
+
             <div class="step-item">
                 <div class="step-title">
                     <i class="fas fa-upload"></i>
@@ -686,7 +689,7 @@
         <!-- 步频与上传 -->
         <section class="dev-card">
             <h3><i class="fas fa-cloud-upload-alt"></i> 五、步频与上传（最终步骤）</h3>
-            
+
             <div class="step-item">
                 <div class="step-title">
                     <i class="fas fa-heartbeat"></i>
@@ -725,7 +728,7 @@
         <!-- 常见问题 -->
         <section class="dev-card">
             <h3><i class="fas fa-question-circle"></i> 常见问题 FAQ</h3>
-            
+
             <table class="config-table">
                 <thead>
                     <tr>
@@ -763,7 +766,7 @@
 
             <div class="info-box" style="margin-top: 20px;">
                 <i class="fas fa-github"></i>
-                <strong>项目地址：</strong> 
+                <strong>项目地址：</strong>
                 <a href="https://github.com/hyper152/happy_run" target="_blank" style="color: var(--primary);">
                     https://github.com/hyper152/happy_run
                 </a>
@@ -771,7 +774,7 @@
         </section>
 
         <!-- 免责声明 -->
-        <section class="dev-card" style="background: #faf8ff;">
+        <section class="dev-card" style="background: #f6f7f2;">
             <h3><i class="fas fa-scale-balanced"></i> 免责声明</h3>
             <div style="padding: 20px; background: white; border-radius: 8px;">
                 <p>本教程仅供学习交流使用，旨在分享 Android 虚拟化技术和位置模拟的原理。</p>
@@ -786,10 +789,10 @@
     <!-- 页脚 -->
     <footer class="footer">
         <div class="container">
-            <p>© 2026 happy_run | 
+            <p>© 2026 happy_run |
                 <a href="https://github.com/hyper152/happy_run" target="_blank">
                     <i class="fab fa-github"></i> hyper152/happy_run
-                </a> | 
+                </a> |
                 步道乐跑自动化教程
             </p>
             <p style="margin-top: 10px;">
@@ -798,7 +801,7 @@
         </div>
     </footer>
 
-    <script>
+<script>
         document.addEventListener('DOMContentLoaded', () => {
             document.body.style.opacity = '0';
             document.body.style.transition = 'opacity 0.5s ease-out';
@@ -819,5 +822,7 @@
             });
         });
     </script>
+
+<script src="/static/js/page-navigation.js?v=20260911-1" defer></script>
 </body>
 </html>

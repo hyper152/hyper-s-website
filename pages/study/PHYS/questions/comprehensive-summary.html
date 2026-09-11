@@ -7,15 +7,15 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <style>
   :root {
-    --bg: #f5f0eb;
+    --bg: #f6f7f2;
     --card-bg: #ffffff;
-    --text: #2c2416;
-    --text-secondary: #5c5347;
-    --accent: #8b5e3c;
-    --accent-light: #c9a87c;
-    --border: #e0d5c7;
-    --shadow: 0 2px 12px rgba(0,0,0,0.06);
-    --shadow-hover: 0 6px 24px rgba(0,0,0,0.10);
+    --text: #263b32;
+    --text-secondary: #43684b;
+    --accent: #43684b;
+    --accent-light: #67824f;
+    --border: #cbd7bc;
+    --shadow: 0 2px 12px rgba(0, 0, 0,0.06);
+    --shadow-hover: 0 6px 24px rgba(0, 0, 0,0.10);
     --radius: 12px;
     --font-main: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', system-ui, sans-serif;
     --font-serif: 'Times New Roman', 'CMU Serif', 'Noto Serif CJK SC', serif;
@@ -72,16 +72,16 @@
     padding-left: 1.2rem;
   }
   .toc li { font-size: 1.15rem; }
-  .toc a { color: #1a0dab; text-decoration: none; }
+  .toc a { color: #43684b; text-decoration: none; }
   .toc a:hover { text-decoration: underline; }
-  .toc .toc-hs { color: #1a6b3c; }
-  .toc .toc-univ { color: #b91c1c; }
+  .toc .toc-hs { color: #263b32; }
+  .toc .toc-univ { color: #43684b; }
 
   /* ── Inline difficulty labels ── */
-  .label-hs { font-size: 0.9rem; font-weight: 700; color: #1a6b3c; }
-  .label-univ { font-size: 0.9rem; font-weight: 700; color: #b91c1c; }
-  .label-key { font-size: 0.9rem; font-weight: 700; color: #1a0dab; }
-  .label-hard { font-size: 0.82rem; font-weight: 700; color: #c0392b; background: #fde8e8; padding: 2px 10px; border-radius: 20px; margin-left: 8px; vertical-align: middle; white-space: nowrap; }
+  .label-hs { font-size: 0.9rem; font-weight: 700; color: #263b32; }
+  .label-univ { font-size: 0.9rem; font-weight: 700; color: #43684b; }
+  .label-key { font-size: 0.9rem; font-weight: 700; color: #43684b; }
+  .label-hard { font-size: 0.82rem; font-weight: 700; color: #43684b; background: #f6f7f2; padding: 2px 10px; border-radius: 20px; margin-left: 8px; vertical-align: middle; white-space: nowrap; }
 
   /* ── Section headings ── */
   .section-h1 {
@@ -139,7 +139,7 @@
     position: absolute;
     right: 0;
     top: 0.3rem;
-    color: #888;
+    color: #888888;
     font-size: 0.85rem;
     font-family: 'Times New Roman', serif;
   }
@@ -218,7 +218,7 @@
   .compare-table th {
     font-weight: 700;
     color: var(--text);
-    background: #f5f0eb;
+    background: #f6f7f2;
   }
 
   /* ── Callout / Notes ── */
@@ -228,13 +228,13 @@
     font-size: 1.2rem;
     color: var(--text);
     border-left: 3px solid var(--accent-light);
-    background: #faf7f2;
+    background: #f6f7f2;
     border-radius: 0 6px 6px 0;
   }
-  .callout-blue { border-left-color: #5b8dd9; }
-  .callout-green { border-left-color: #16a34a; }
-  .callout-yellow { border-left-color: #ca8a04; }
-  .callout-red { border-left-color: #dc2626; }
+  .callout-blue { border-left-color: #67824f; }
+  .callout-green { border-left-color: #43684b; }
+  .callout-yellow { border-left-color: #43684b; }
+  .callout-red { border-left-color: #67824f; }
 
   /* ── Exam problem box ── */
   .exam-box {
@@ -242,7 +242,7 @@
     padding: 0.6rem 0.8rem;
     border: 1px solid var(--border);
     border-radius: 8px;
-    background: #fdfcf9;
+    background: #f6f7f2;
   }
   .exam-box .title {
     font-weight: 700;
@@ -265,7 +265,7 @@
   .maxwell-grid .eq-box, .maxwell-grid-4 .eq-box {
     padding: 0.5rem 0.8rem;
     border-left: 3px solid var(--accent-light);
-    background: #faf7f2;
+    background: #f6f7f2;
     border-radius: 0 6px 6px 0;
     font-family: var(--font-serif);
     font-size: 1.2rem;
@@ -302,7 +302,7 @@
     transition: all 0.2s ease;
   }
   .btt a:hover {
-    color: #fff;
+    color: #ffffff;
     background: var(--accent);
     border-color: var(--accent);
   }
@@ -318,12 +318,17 @@
 
   /* ── Print ── */
   @media print {
-    body { background: #fff; padding: 0; }
+    body { background: #ffffff; padding: 0; }
     .container { box-shadow: none; border-radius: 0; }
     @page { margin: 2cm; }
   }</style>
+<link rel="stylesheet" href="/static/css/site-theme.css?v=20260911-centered-navigation">
+<meta name="theme-color" content="#f6f7f2">
 </head>
-<body>
+<body data-site-theme="garden" data-page-kind="study">
+<nav class="page-controls" aria-label="页面快捷导航"><a href="/pages/study/" data-page-back><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m10 5-7 7 7 7M3 12h18"/></svg><span>返回上一页</span></a><a href="/home/"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9"/></svg><span>首页</span></a></nav>
+<nav class="site-navigation" aria-label="全站导航"><a class="site-brand" href="/home/"><img src="/home/hyper.png" alt="" width="38" height="38"><span>hyper.</span></a><div class="site-nav-links"><a href="/home/#categories">探索分类</a><a href="/pages/resume/index.html">个人简介</a><a href="/talk/comment.html">留言板</a></div></nav>
+
 <div class="container">
 
   <!-- ═══ 导航 ═══ -->
@@ -799,10 +804,10 @@
       <strong>🌟 难点：断开电源后插入电介质</strong><br>
       电容器充电后断开电源，两极板间<strong>电荷 Q 保持不变</strong>（Q 不变）。<br>
       插入电介质（ε<sub>r</sub> &gt; 1）后的变化：<br>
-      • <strong>电容</strong> C = ε<sub>r</sub>C₀ <strong style="color:#c0392b;">增大</strong>（ε 增大，C ∝ ε）<br>
-      • <strong>场强</strong> E = Q/(εS) <strong style="color:#2980b9;">减小</strong>（ε 增大，E 减小）<br>
-      • <strong>电位移</strong> D = σ = Q/S <strong style="color:#27ae60;">不变</strong>（D 只由自由电荷面密度决定）<br>
-      • <strong>能量</strong> W = Q²/(2C) <strong style="color:#2980b9;">减小</strong>（C 增大，W 减小）<br>
+      • <strong>电容</strong> C = ε<sub>r</sub>C₀ <strong style="color:#43684b;">增大</strong>（ε 增大，C ∝ ε）<br>
+      • <strong>场强</strong> E = Q/(εS) <strong style="color:#43684b;">减小</strong>（ε 增大，E 减小）<br>
+      • <strong>电位移</strong> D = σ = Q/S <strong style="color:#43684b;">不变</strong>（D 只由自由电荷面密度决定）<br>
+      • <strong>能量</strong> W = Q²/(2C) <strong style="color:#43684b;">减小</strong>（C 增大，W 减小）<br>
       <br><strong>📌 对比：不断电源的情况</strong>（电压 U 不变）：C ↑、E ↑、D ↑、W ↑（全部增大）<br>
       <strong>💡 记忆口诀：断电 Q 不变，D 不变，E/C/W 看 ε；不断电 U 不变，全增大。</strong>
     </div>
@@ -1820,5 +1825,7 @@
   </footer>
 
 </div>
+
+<script src="/static/js/page-navigation.js?v=20260911-1" defer></script>
 </body>
 </html>

@@ -14,13 +14,13 @@
         }
 
         :root {
-            --primary: #165DFF;
-            --accent: #FF7D00;
-            --light: #f8f9fa;
+            --primary: #67824f;
+            --accent: #67824f;
+            --light: #f6f7f2;
             --dark: #2d3436;
             --gray: #495057;
-            --light-gray: #e9ecef;
-            --shadow: 0 2px 12px rgba(0,0,0,0.08);
+            --light-gray: #edf1e7;
+            --shadow: 0 2px 12px rgba(0, 0, 0,0.08);
         }
 
         body {
@@ -212,7 +212,7 @@
             border-radius: 8px;
             box-shadow: var(--shadow);
             object-fit: contain;
-            background: #000;
+            background: #000000;
         }
 
         .footer {
@@ -239,9 +239,12 @@
             }
         }
     </style>
+<link rel="stylesheet" href="/static/css/site-theme.css?v=20260911-centered-navigation">
+<meta name="theme-color" content="#f6f7f2">
 </head>
 
-<body>
+<body data-site-theme="garden" data-page-kind="page">
+<nav class="page-controls" aria-label="页面快捷导航"><a href="/pages/devlog/" data-page-back><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m10 5-7 7 7 7M3 12h18"/></svg><span>返回上一页</span></a><a href="/home/"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9"/></svg><span>首页</span></a></nav>
 
 <header class="header">
     <div class="container header-content">
@@ -293,5 +296,7 @@
     <p>&copy; 2025 声控电机控制寝室大灯项目 | 智能寝室硬件开发</p>
 </footer>
 
+
+<script src="/static/js/page-navigation.js?v=20260911-1" defer></script>
 </body>
 </html>

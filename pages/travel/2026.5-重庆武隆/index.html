@@ -12,14 +12,14 @@
     >
     <style>
         :root {
-            --primary: #6a5acd;
-            --accent: #ff6b6b;
+            --primary: #67824f;
+            --accent: #cbd7bc;
             --dark: #2d3436;
-            --light: #f8f9fa;
+            --light: #f6f7f2;
             --white: #ffffff;
             --gray: #495057;
-            --light-gray: #e9ecef;
-            --shadow: 0 2px 15px rgba(0,0,0,0.08);
+            --light-gray: #edf1e7;
+            --shadow: 0 2px 15px rgba(0, 0, 0,0.08);
             --transition: all 0.3s ease;
         }
 
@@ -88,7 +88,7 @@
 
         .article-header {
             padding: 60px 0;
-            background: linear-gradient(135deg, #2d9cdb 0%, #27ae60 100%);
+            background: linear-gradient(135deg, #67824f 0%, #43684b 100%);
             color: var(--white);
             text-align: center;
             margin-bottom: 40px;
@@ -98,7 +98,7 @@
         .article-title {
             font-size: clamp(1.8rem, 4vw, 2.8rem);
             margin-bottom: 15px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            text-shadow: 0 2px 10px rgba(0, 0, 0,0.2);
         }
 
         .article-meta {
@@ -133,7 +133,7 @@
         }
 
         .content-block:hover {
-            box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+            box-shadow: 0 5px 20px rgba(0, 0, 0,0.12);
         }
 
         .content-block h2 {
@@ -165,7 +165,7 @@
             padding: 25px;
             margin-bottom: 25px;
             border-left: 5px solid var(--primary);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            box-shadow: 0 4px 12px rgba(0, 0, 0,0.04);
             transition: var(--transition);
         }
 
@@ -207,7 +207,7 @@
         }
 
         .spot-desc .highlight {
-            background: rgba(255,107,107,0.1);
+            background: rgba(203, 215, 188,0.1);
             padding: 2px 8px;
             border-radius: 20px;
             font-weight: 500;
@@ -253,7 +253,7 @@
         }
 
         .quote {
-            background-color: rgba(106, 90, 205, 0.05);
+            background-color: rgba(103, 130, 79, 0.05);
             border-left: 4px solid var(--primary);
             padding: 20px;
             margin: 25px 0;
@@ -267,7 +267,7 @@
         }
 
         .summary {
-            background: linear-gradient(135deg, rgba(45, 156, 219, 0.1) 0%, rgba(39, 174, 96, 0.1) 100%);
+            background: linear-gradient(135deg, rgba(103, 130, 79, 0.1) 0%, rgba(67, 104, 75, 0.1) 100%);
             border-radius: 15px;
             padding: 30px;
             margin: 40px 0;
@@ -293,7 +293,7 @@
             background-color: var(--white);
             padding: 30px 0;
             text-align: center;
-            box-shadow: 0 -5px 15px rgba(0,0,0,0.02);
+            box-shadow: 0 -5px 15px rgba(0, 0, 0,0.02);
             margin-top: 60px;
         }
 
@@ -326,8 +326,11 @@
             }
         }
     </style>
+<link rel="stylesheet" href="/static/css/site-theme.css?v=20260911-centered-navigation">
+<meta name="theme-color" content="#f6f7f2">
 </head>
-<body>
+<body data-site-theme="garden" data-page-kind="page">
+<nav class="page-controls" aria-label="页面快捷导航"><a href="/pages/travel/" data-page-back><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m10 5-7 7 7 7M3 12h18"/></svg><span>返回上一页</span></a><a href="/home/"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9"/></svg><span>首页</span></a></nav>
     <!-- 导航栏 -->
     <nav class="navbar">
         <div class="container nav-content">
@@ -361,7 +364,7 @@
             <!-- 1. 重庆北站出发 -->
             <div class="timeline-item">
                 <h3>
-                    <i class="fas fa-train" style="color: #2d9cdb;"></i>
+                    <i class="fas fa-train" style="color: #67824f;"></i>
                     下午 · 重庆北站出发
                     <span class="time-badge">16:51</span>
                 </h3>
@@ -377,7 +380,7 @@
             <!-- 2. 绿皮火车 -->
             <div class="timeline-item">
                 <h3>
-                    <i class="fas fa-train" style="color: #27ae60;"></i>
+                    <i class="fas fa-train" style="color: #43684b;"></i>
                     绿皮火车 · 摇摇晃晃的浪漫
                     <span class="time-badge">16:47</span>
                 </h3>
@@ -397,7 +400,7 @@
             <!-- 3. 抵达武隆站 -->
             <div class="timeline-item">
                 <h3>
-                    <i class="fas fa-flag-checkered" style="color: #f39c12;"></i>
+                    <i class="fas fa-flag-checkered" style="color: #67824f;"></i>
                     晚上 · 抵达武隆
                     <span class="time-badge">19:33</span>
                 </h3>
@@ -427,7 +430,7 @@
             <!-- 5. 仙女山游客中心 -->
             <div class="timeline-item">
                 <h3>
-                    <i class="fas fa-mountain" style="color: #2ecc71;"></i>
+                    <i class="fas fa-mountain" style="color: #67824f;"></i>
                     上午 · 仙女山游客中心
                     <span class="time-badge">10:18</span>
                 </h3>
@@ -443,7 +446,7 @@
             <!-- 6. 喀斯特地貌 -->
             <div class="timeline-item">
                 <h3>
-                    <i class="fas fa-mountain" style="color: #8e44ad;"></i>
+                    <i class="fas fa-mountain" style="color: #43684b;"></i>
                     上午 · 武隆喀斯特地貌
                     <span class="time-badge">10:37 - 11:30</span>
                 </h3>
@@ -474,7 +477,7 @@
             <!-- 7. 大拇指打卡 -->
             <div class="timeline-item">
                 <h3>
-                    <i class="fas fa-thumbs-up" style="color: #f1c40f;"></i>
+                    <i class="fas fa-thumbs-up" style="color: #67824f;"></i>
                     中午 · 打卡留念
                     <span class="time-badge">11:08</span>
                 </h3>
@@ -494,7 +497,7 @@
             <!-- 8. 武隆南站返程 -->
             <div class="timeline-item">
                 <h3>
-                    <i class="fas fa-flag-checkered" style="color: #e67e22;"></i>
+                    <i class="fas fa-flag-checkered" style="color: #67824f;"></i>
                     下午 · 武隆南站返程
                     <span class="time-badge">15:05</span>
                 </h3>
@@ -517,7 +520,7 @@
         </div>
 
         <!-- 图片索引 -->
-        <div class="content-block" style="background: #e8f8f0;">
+        <div class="content-block" style="background: #f6f7f2;">
             <h2>📸 完整图集</h2>
             <div class="gallery-grid">
                 <div class="image-container">
@@ -570,10 +573,12 @@
         <div class="container">
             <p>© 2026 hyper的个人Vlog | 记录生活，分享成长</p>
             <p style="margin-top: 10px;">
-                <a href="/home/" style="color: #ff6b6b; text-decoration: none;">返回首页</a> |
-                <a href="../../../talk/" style="color: #ff6b6b; text-decoration: none;">留言交流</a>
+                <a href="/home/" style="color: #cbd7bc; text-decoration: none;">返回首页</a> |
+                <a href="../../../talk/" style="color: #cbd7bc; text-decoration: none;">留言交流</a>
             </p>
         </div>
     </footer>
+
+<script src="/static/js/page-navigation.js?v=20260911-1" defer></script>
 </body>
 </html>
