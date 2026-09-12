@@ -3,9 +3,9 @@
 基于 Python 的个人博客与数字花园，包含文章、旅行与项目记录、用户系统、留言板、访问统计、Ollama AI 助手。
 
 - 在线网站：[https://hyp.asia/](https://hyp.asia/)
-- 本地首页：[http://127.0.0.1:8000/home/](http://127.0.0.1:8000/home/)
+- 本地首页：[http://127.0.0.1:8000/pages/home/](http://127.0.0.1:8000/pages/home/)
 
-根路径 `/`、`/home` 和旧路径 `/pages/home/` 会重定向至 `/home/`。
+根路径 `/`、`/home` 和旧路径 `/home/` 会重定向至 `/pages/home/`。
 
 ## 功能
 
@@ -97,7 +97,7 @@ SQLite 由 Python 标准库提供，无需安装数据库服务。采用 WAL、�
 python -c "import sqlite3; from datetime import datetime; from pathlib import Path; p=Path('data/backups'); p.mkdir(exist_ok=True); src=sqlite3.connect('data/site.db'); dst=sqlite3.connect(str(p / ('site-' + datetime.now().strftime('%Y%m%d-%H%M%S') + '.db'))); src.backup(dst); dst.close(); src.close()"
 ```
 
-验证存储与迁移：`python -m unittest discover -s tests -p test_storage.py -v`。
+验证存储与迁移：`python -m unittest discover -s src/tests -p test_storage.py -v`。
 
 ## 访客分析
 
@@ -112,9 +112,9 @@ python src\analyze_visitor.py 2026.5.1-
 ```text
 ├── main.py                       # Web 服务入口
 ├── requirements.txt              # Python 依赖
-├── home/                         # 首页
+├── pages/home/                         # 首页
 ├── pages/                        # 内容页面
-├── talk/
+├── pages/talk/
 │   ├── ai-chat.html              # Ollama AI 助手
 │   └── comment.html              # 留言板
 ├── src/
@@ -152,3 +152,27 @@ Get-Content .\logs\server-stderr.log -Tail 100
 ## 许可
 
 MIT © 2026 CQU.hyper
+
+
+## HTTP 文件访问安全（2026-09-12）
+
+只公开 `pages/`、`static/`、`media/`、`banner/`、`dwcc/` 和明确列出的入口。
+根路径精确匹配，不再作为全站放行前缀；GET/HEAD 共用文件保护。
+隐藏路径、源码、证书、数据库、备份及越界链接禁止下载，公开目录列表过滤敏感文件。
+`robots.txt` 只约束守规矩的爬虫，访问控制由服务端执行。
+
+验证：`python -m unittest discover -s src/tests -v`。
+修改 `main.py` 后需要重启网站进程；如果另有静态文件代理，必须确保代理也不公开项目根目录。
+
+### 已暴露凭据的处置
+
+`src/qqmail.py` 和 `src/test_email.py` 曾包含 SMTP 授权码。
+必须在 QQ 邮箱端撤销旧码并生成新码，保存在 `data/qq_mail_auth_code.txt`（仅授权码一行），再重启服务。
+也可通过 `QQ_MAIL_AUTH_CODE` 环境变量覆盖文件配置。凭据文件已被 Git 忽略，禁止 HTTP 下载。
+不要将新码写入源码、提交或访问日志。未配置时邮件验证码服务明确返回未配置错误。
+密码登录不依赖此授权码。移除源码中的旧值不会删除 Git 历史，也无法撤回攻击者已下载的数据。
+
+本次有限 Git 历史检查未发现 `certs/`、`.env`、`data/users.json`、`data/sessions.json` 的提交记录；
+这不代表运行目录从未被直接下载，也不是完整的密钥审计。
+保留访问日志，检查这些路径及 `logs/`、`src/` 的成功下载记录。
+如确认私钥、账户数据或会话泄露，应更换对应证书/凭据并使相关会话失效。

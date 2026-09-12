@@ -168,7 +168,7 @@ body[data-page-kind="account"], body[data-page-kind="chat"] { flex-direction: co
     width: 34px;
     height: 34px;
     border-radius: 50%;
-    background: url('/home/hyper.png') center / cover;
+    background: url('/pages/home/hyper.png') center / cover;
     border: 2px solid var(--site-line);
     vertical-align: middle;
     margin-right: 9px;

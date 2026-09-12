@@ -27,7 +27,7 @@ from functools import partial
 from datetime import datetime
 from collections import defaultdict
 from http.server import CGIHTTPRequestHandler, ThreadingHTTPServer
-from urllib.parse import unquote, urlparse
+from urllib.parse import unquote, urlparse, quote
 import posixpath
 from src.ip_location import query_ip_city
 from src.storage import get_store
@@ -129,9 +129,9 @@ class Config:
 
     # 允许的路径白名单（防止扫描）
     ALLOWED_PATHS = [
-        '/', '/talk', '/pages/', '/home/',
+        '/', '/home', '/home/', '/talk', '/talk/', '/pages/',
         '/static/', '/api/', '/visit-count', '/banner/',
-        '/favicon.ico', '/dwcc/'
+        '/favicon.ico', '/robots.txt', '/dwcc/', '/media/'
     ]
 
     # 不记录日志的静态资源扩展名（图片、视频、CSS、JS等）
@@ -193,8 +193,8 @@ logger = init_logging()
 current_script_dir = os.path.dirname(os.path.abspath(__file__))
 data_dir = os.path.join(current_script_dir, 'data')
 src_dir = os.path.join(current_script_dir, 'src')
-home_dir = os.path.join(current_script_dir, 'home')
-talk_dir = os.path.join(current_script_dir, 'talk')
+home_dir = os.path.join(current_script_dir, 'pages', 'home')
+talk_dir = os.path.join(current_script_dir, 'pages', 'talk')
 
 for d in [data_dir, src_dir, home_dir, talk_dir]:
     try:
@@ -332,11 +332,11 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
     def validate_path(self, path):
         """路径校验"""
         try:
-            safe_path = os.path.abspath(path)
-            server_root = os.path.abspath(self.directory)
+            safe_path = os.path.realpath(path)
+            server_root = os.path.realpath(self.directory)
 
             # 安全检查：防止路径遍历
-            if not safe_path.startswith(server_root):
+            if os.path.commonpath([safe_path, server_root]) != server_root:
                 self._log_access("🚫 非法路径", path, "403", "0.0")
                 self.send_error(403, "Forbidden")
                 return None
@@ -347,41 +347,78 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
             self.send_error(400, "Bad Request")
             return None
 
+    @staticmethod
+    def _safe_url_path(path):
+        # Decode once, as translate_path does; reject ambiguous encodings and
+        # Windows aliases before any filesystem normalization.
+        decoded = unquote(urlparse(path).path, errors='strict')
+        parts = decoded.replace('\\', '/').split('/')
+        if any(part.startswith('.') or part.endswith((' ', '.')) or
+               ':' in part or '%' in part or any(ord(c) < 32 for c in part)
+               for part in parts if part):
+            raise ValueError('Unsafe path')
+        return '/'.join(parts)
+
     def is_protected_path(self, path):
-        """数据库、WAL、备份及旧 JSON 均不能通过 HTTP 下载。"""
-        normalized = posixpath.normpath('/' + unquote(urlparse(path).path).replace('\\', '/').lstrip('/')).lower()
-        if normalized == '/data' or normalized.startswith('/data/'):
+        """Only public trees may resolve to files, including symlink targets."""
+        try:
+            normalized = self._safe_url_path(path)
+            root = os.path.realpath(self.directory)
+            local = os.path.realpath(self.translate_path(path))
+            if os.path.commonpath([local, root]) != root:
+                return True
+            relative = os.path.relpath(local, root).replace('\\', '/')
+            if relative == '.':
+                return False
+            parts = relative.lower().split('/')
+            public = {'pages', 'static', 'media', 'banner', 'dwcc'}
+            if parts[0] not in public and relative not in ('robots.txt', 'favicon.ico'):
+                # Virtual routes are checked separately and never served here.
+                if os.path.exists(local):
+                    return True
+                return normalized not in ('/', '/home', '/home/', '/home/index.html',
+                                          '/talk', '/talk/', '/talk/comment.html',
+                                          '/talk/ai-chat.html', '/visit-count') and not normalized.startswith('/api/')
+            private_names = {'users.json', 'sessions.json', 'messages.json',
+                             'visit_count.json', 'appsettings.json', 'config.json',
+                             'credentials', '__pycache__'}
+            private_suffixes = ('.py', '.pyc', '.php', '.key', '.pem', '.pfx', '.p12',
+                                '.db', '.sqlite', '.sqlite3', '.db-wal', '.db-shm',
+                                '.bak', '.backup', '.old', '.save', '.yml', '.yaml', '.toml')
+            return any(part.startswith('.') or part in private_names or
+                       part.endswith(private_suffixes) for part in parts)
+        except (ValueError, OSError, UnicodeError):
             return True
-        local = os.path.realpath(self.translate_path(path))
-        private = os.path.realpath(data_dir)
-        return os.path.commonpath([local, private]) == private
 
     def send_head(self):
-        # GET 和 HEAD 都经过此入口，防止继承的 HEAD 绕过路径保护。
+        # Shared by GET and HEAD: neither may fall back to private files.
         if self.is_protected_path(self.path):
-            self.send_error(403, "Forbidden")
+            self.send_error(403, 'Forbidden')
+            return None
+        if not self.is_allowed_path(self.path):
+            self.send_error(404, 'Not Found')
+            return None
+        normalized = self._safe_url_path(self.path)
+        if normalized == '/':
+            self.send_response(301)
+            self.send_header('Location', '/pages/home/')
+            self.end_headers()
+            return None
+        if normalized.startswith(('/api/', '/home', '/talk')) or normalized == '/visit-count':
+            self.send_error(404, 'Not Found')
             return None
         return super().send_head()
 
     def is_allowed_path(self, path):
-        """检查路径是否在白名单内（防止扫描）"""
-        # 如果是静态资源文件，直接放行
-        if any(path.lower().endswith(ext) for ext in Config.EXCLUDE_STATIC_EXT):
-            return True
-
-        # 检查是否以允许的路径开头
-        for allowed in Config.ALLOWED_PATHS:
-            if path.startswith(allowed):
-                return True
-
-        # 如果是目录浏览请求（以/结尾），检查父路径
-        if path.endswith('/'):
-            parent = path.rstrip('/')
-            for allowed in Config.ALLOWED_PATHS:
-                if parent.startswith(allowed):
-                    return True
-
-        return False
+        """Match complete routes or directory boundaries, never '/' as a prefix."""
+        try:
+            normalized = self._safe_url_path(path)
+        except (ValueError, UnicodeError):
+            return False
+        return any(normalized == allowed or
+                   (allowed != '/' and allowed.endswith('/') and
+                    (normalized == allowed.rstrip('/') or normalized.startswith(allowed)))
+                   for allowed in Config.ALLOWED_PATHS)
 
     def get_real_client_ip(self):
         """
@@ -661,8 +698,8 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
 <link rel="stylesheet" href="/static/css/site-theme.css?v=20260911-centered-navigation">
 </head>
 <body data-site-theme="garden" data-page-kind="directory">
-<nav class="page-controls" aria-label="页面快捷导航"><a href="/home/" data-page-back><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m10 5-7 7 7 7M3 12h18"/></svg><span>返回上一页</span></a><a href="/home/"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9"/></svg><span>首页</span></a></nav>
-<nav class="site-navigation" aria-label="全站导航"><a class="site-brand" href="/home/"><img src="/home/hyper.png" alt="" width="38" height="38"><span>hyper.</span></a><div class="site-nav-links"><a href="/home/#categories">探索分类</a><a href="/pages/resume/index.html">个人简介</a><a href="/talk/comment.html">留言板</a></div></nav>
+<nav class="page-controls" aria-label="页面快捷导航"><a href="/pages/home/" data-page-back><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m10 5-7 7 7 7M3 12h18"/></svg><span>返回上一页</span></a><a href="/pages/home/"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9"/></svg><span>首页</span></a></nav>
+<nav class="site-navigation" aria-label="全站导航"><a class="site-brand" href="/pages/home/"><img src="/pages/home/hyper.png" alt="" width="38" height="38"><span>hyper.</span></a><div class="site-nav-links"><a href="/pages/home/#categories">探索分类</a><a href="/pages/resume/index.html">个人简介</a><a href="/pages/talk/comment.html">留言板</a></div></nav>
 
     <div class="container">
         <h1>📂 目录列表: {path}</h1>
@@ -681,6 +718,12 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
         parsed = urlparse(self.path)
         path = parsed.path
 
+        if path.startswith('/home/') and path not in ('/home/', '/home/index.html'):
+            self.send_response(302)
+            self.send_header('Location', '/pages' + path + ('?' + parsed.query if parsed.query else ''))
+            self.end_headers()
+            return
+
         # 路径白名单检查（防止扫描）
         if not self.is_allowed_path(path):
             logger.warning(f"拦截非法路径扫描: {path}")
@@ -694,12 +737,12 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
             return
 
         # 处理/talk路径，返回静态页面
-        if path == '/talk':
+        if path in ('/talk', '/talk/', '/talk/comment.html', '/pages/talk', '/pages/talk/', '/pages/talk/comment.html'):
             self._serve_talk_static_page()
             return
 
         # 处理 AI 聊天页面
-        if path == '/talk/ai-chat.html':
+        if path in ('/talk/ai-chat.html', '/pages/talk/ai-chat.html'):
             self._serve_ai_chat_page()
             return
 
@@ -714,9 +757,9 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
             return
 
         # 首页重定向
-        if path in ('', '/', '/home', '/home/index.html', '/pages/home', '/pages/home/', '/pages/home/index.html'):
+        if path in ('', '/', '/home', '/home/', '/home/index.html', '/pages/home', '/pages/home/index.html'):
             self.send_response(301)
-            self.send_header('Location', '/home/' + ('?' + parsed.query if parsed.query else ''))
+            self.send_header('Location', '/pages/home/' + ('?' + parsed.query if parsed.query else ''))
             self.end_headers()
             return
 
@@ -804,7 +847,7 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
 
     def _serve_talk_static_page(self):
         """返回留言板静态页面"""
-        talk_html_path = os.path.join(current_script_dir, 'talk', 'comment.html')
+        talk_html_path = os.path.join(current_script_dir, 'pages', 'talk', 'comment.html')
         try:
             with open(talk_html_path, 'rb') as f:
                 self.send_response(200)
@@ -820,7 +863,7 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
 
     def _serve_ai_chat_page(self):
         """返回 AI 聊天静态页面"""
-        ai_chat_path = os.path.join(current_script_dir, 'talk', 'ai-chat.html')
+        ai_chat_path = os.path.join(current_script_dir, 'pages', 'talk', 'ai-chat.html')
         try:
             with open(ai_chat_path, 'rb') as f:
                 self.send_response(200)
@@ -908,7 +951,7 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
             <html>
             <head><title>500 服务器内部错误</title><link rel="stylesheet" href="/static/css/site-theme.css?v=20260911-centered-navigation"></head>
             <body data-site-theme='garden' style='padding:40px'>
-<nav class="page-controls" aria-label="页面快捷导航"><a href="/home/" data-page-back><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m10 5-7 7 7 7M3 12h18"/></svg><span>返回上一页</span></a><a href="/home/"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9"/></svg><span>首页</span></a></nav>
+<nav class="page-controls" aria-label="页面快捷导航"><a href="/pages/home/" data-page-back><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m10 5-7 7 7 7M3 12h18"/></svg><span>返回上一页</span></a><a href="/pages/home/"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9"/></svg><span>首页</span></a></nav>
                 <h1>500 接口请求处理失败</h1>
                 <p>请检查服务是否正常运行</p>
 
@@ -929,6 +972,8 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
             self.send_error(404)
             return None
 
+        lst = [name for name in lst if not self.is_protected_path(
+            urlparse(self.path).path.rstrip('/') + '/' + quote(name))]
         lst.sort(key=lambda x: (not os.path.isdir(os.path.join(path, x)), x.lower()))
         cur = unquote(self.path)
         if not cur.endswith('/'):
@@ -1064,8 +1109,8 @@ def run_server():
     print("="*60)
     print(f"📌 本地访问: {scheme}://localhost:{Config.PORT}")
     print(f"📌 外网访问: {scheme}://{local_ip}:{Config.PORT}")
-    print(f"📌 留言板: {scheme}://localhost:{Config.PORT}/talk")
-    print(f"📌 AI 助手: {scheme}://localhost:{Config.PORT}/talk/ai-chat.html")
+    print(f"📌 留言板: {scheme}://localhost:{Config.PORT}/pages/talk/comment.html")
+    print(f"📌 AI 助手: {scheme}://localhost:{Config.PORT}/pages/talk/ai-chat.html")
     print(f"📌 计数查询: {scheme}://localhost:{Config.PORT}/visit-count")
     if scheme == "https":
         print(f"📌 TLS 证书: {os.path.abspath(Config.CERT_FILE)}")

@@ -27,3 +27,6 @@ media/
 # SQLite runtime and migration backups
 data/site.db*
 data/backups/
+
+# Local SMTP credential
+data/qq_mail_auth_code.txt

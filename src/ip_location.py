@@ -1,4 +1,4 @@
-"""共享的 IPv4/IPv6 离线归属地查询（官方 ip2region XDB）。"""
+"""共享的 IPv4/IPv6 离线归属地查询（ip2region XDB）。"""
 import ipaddress
 import logging
 from functools import lru_cache
@@ -53,9 +53,12 @@ def _get_searcher(version):
         return _searchers[version]
 
 
-def _parse_region(raw):
+def _parse_region(raw, version=4):
     # XDB：国家|省份|城市|ISP|ISO 国家代码，不能沿用旧 DB 的字段下标。
     parts = raw.split("|")
+    if version == 6:
+        # GeoCN/GeoLite2 融合库：洲|国家|省份|城市|区县|ISP|网络类型。
+        parts = [parts[i] if len(parts) > i else "" for i in (1, 2, 3, 5)]
     return tuple(parts[i].strip() if len(parts) > i and parts[i].strip() not in ("", "0")
                  else ("" if i == 3 else "未知") for i in range(4))
 
@@ -71,7 +74,7 @@ def _lookup(ip):
     searcher = _get_searcher(address.version)
     if searcher is not None:
         try:
-            return _parse_region(searcher.search(str(address)))
+            return _parse_region(searcher.search(str(address)), address.version)
         except Exception:
             logging.getLogger(__name__).warning("IP 归属地查询失败", exc_info=True)
     return ("未知", "未知", "未知", "")

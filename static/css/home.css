@@ -857,7 +857,7 @@ footer p {
     .home-info { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 30px; }
 }
 @media (max-width: 650px) {
-    .header nav a[href="#about"], .header nav a[href="#contact"], .header nav a[href="/talk/comment.html"] { display: none; }
+    .header nav a[href="#about"], .header nav a[href="#contact"], .header nav a[href="/pages/talk/comment.html"] { display: none; }
     .header nav a[href="/pages/resume/index.html"] { display: block; }
     .home-info { gap: 28px 18px; }
     .about-panel, #contact { grid-column: 1 / -1; }

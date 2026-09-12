@@ -9,7 +9,7 @@
 ollama serve
 
 # 3. 访客分析
-& python projects\web\hyper-s-website-master\src\analyze_visitor.py ip=111.33.227.247
+& python projects\web\hyper-s-website-master\src\analyze_visitor.py ip=42.81.251.36
 & python projects\web\hyper-s-website-master\src\analyze_visitor.py 2026.9.1-
 
 # 4. 更新代码

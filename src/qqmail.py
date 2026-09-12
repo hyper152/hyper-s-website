@@ -10,10 +10,24 @@ from email.mime.text import MIMEText
 from email.utils import formataddr
 
 import os
+from pathlib import Path
+
+
+def load_mail_auth_code():
+    """Environment override, otherwise a private local credential file."""
+    override = os.environ.get("QQ_MAIL_AUTH_CODE", "").strip()
+    if override:
+        return override
+    credential = Path(__file__).resolve().parent.parent / "data" / "qq_mail_auth_code.txt"
+    try:
+        return credential.read_text(encoding="utf-8-sig").strip()
+    except OSError:
+        return ""
+
 
 # ===================== 配置 =====================
 QQ_MAIL_USER = os.environ.get("QQ_MAIL_USER", "2361542526@qq.com")           # 你的QQ邮箱（优先使用环境变量）
-QQ_MAIL_AUTH_CODE = os.environ.get("QQ_MAIL_AUTH_CODE", "omelrirsldmsdhha")  # QQ邮箱SMTP授权码（优先使用环境变量）
+QQ_MAIL_AUTH_CODE = load_mail_auth_code()
 SMTP_SERVER = "smtp.qq.com"
 SMTP_PORT = 465                          # SSL端口
 
@@ -32,6 +46,9 @@ def send_verify_code(to_email, code=None):
     发送验证码到指定邮箱（使用SSL连接）
     返回：(success, message, code)
     """
+    if not QQ_MAIL_AUTH_CODE:
+        return False, '邮件服务未配置授权码', None
+
     if not to_email or '@' not in to_email:
         return False, "邮箱地址无效", None
     
@@ -72,7 +89,7 @@ def send_verify_code(to_email, code=None):
         # 关闭连接
         server.quit()
         
-        logger.info(f"✅ 验证码 {code} 发送至 {to_email} 成功")
+        logger.info("验证码邮件发送成功")
         return True, "验证码发送成功，请查收邮箱", code
         
     except smtplib.SMTPAuthenticationError as e:

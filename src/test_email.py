@@ -21,7 +21,11 @@ def test_send_email():
     
     # 配置
     QQ_MAIL_USER = "2361542526@qq.com"
-    QQ_MAIL_AUTH_CODE = "jpzeajbnlmhyechd"  # 请确认这个授权码是否正确
+    from qqmail import load_mail_auth_code
+    QQ_MAIL_AUTH_CODE = load_mail_auth_code()
+    if not QQ_MAIL_AUTH_CODE:
+        print("请先配置 data/qq_mail_auth_code.txt 或 QQ_MAIL_AUTH_CODE 环境变量")
+        return False
     SMTP_SERVER = "smtp.qq.com"
     
     # 生成验证码
@@ -46,7 +50,6 @@ def test_send_email():
     connection_methods = [
         {"port": 587, "use_tls": True, "name": "TLS"},
         {"port": 465, "use_ssl": True, "name": "SSL"},
-        {"port": 25, "use_tls": False, "name": "普通连接"}
     ]
     
     for method in connection_methods:
@@ -71,7 +74,7 @@ def test_send_email():
                     server.starttls()
             
             # 设置调试级别（可看到详细通信过程）
-            server.set_debuglevel(1)
+            server.set_debuglevel(0)
             
             print("3. 登录邮箱...")
             server.login(QQ_MAIL_USER, QQ_MAIL_AUTH_CODE)
