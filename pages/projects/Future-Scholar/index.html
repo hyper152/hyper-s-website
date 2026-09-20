@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Future Scholar 项目中心</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0d1117;
+      --panel: #161b22;
+      --panel-soft: #10161e;
+      --line: #30363d;
+      --text: #e6edf3;
+      --muted: #9da7b3;
+      --blue: #2f81f7;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 16px/1.65 system-ui, "Microsoft YaHei", sans-serif;
+    }
+    a { color: #58a6ff; text-decoration: none; }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 14px max(20px, calc((100% - 1050px) / 2));
+      border-bottom: 1px solid var(--line);
+      background: rgba(13, 17, 23, .96);
+    }
+    .topbar a { color: var(--muted); font-size: 14px; }
+    .topbar a:hover { color: var(--text); }
+    .access-badge {
+      padding: 5px 10px;
+      border: 1px solid #31553b;
+      border-radius: 6px;
+      background: #13251a;
+      color: #7ee787;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    header { padding: 54px 22px 34px; text-align: center; border-bottom: 1px solid var(--line); }
+    header .eyebrow { color: #7ee787; font-size: 12px; font-weight: 700; }
+    h1 { margin: 7px 0 8px; font-size: 40px; line-height: 1.2; }
+    header p { max-width: 720px; margin: 0 auto; color: var(--muted); }
+    main { max-width: 1050px; margin: auto; padding: 30px 20px 50px; }
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+    .project {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--panel);
+    }
+    .project-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .project h2 { margin: 0; font-size: 27px; }
+    .project-index { color: #4b5563; font-size: 13px; font-weight: 800; }
+    .project p { margin: 12px 0 0; color: #c4ccd5; }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 20px 0 22px; }
+    .tag {
+      padding: 4px 9px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 9px 15px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      background: var(--blue);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .button:hover { background: #4c94f8; }
+    .button.secondary { border-color: var(--line); background: #263244; }
+    .button.secondary:hover { background: #303d52; }
+    .notice {
+      padding: 15px 18px;
+      margin-top: 24px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel-soft);
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+    @media (max-width: 720px) {
+      .topbar { align-items: flex-start; flex-direction: column; }
+      header { padding-top: 38px; }
+      h1 { font-size: 32px; }
+      .project-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="topbar" aria-label="项目导航">
+    <a href="/pages/projects/">← 返回开发项目</a>
+    <span class="access-badge" title="caibo / hyper / admin / JerryLiiiiii">受限访问 · 4 个授权账号</span>
+  </nav>
+  <header>
+    <div class="eyebrow">FUTURE SCHOLAR / RESEARCH WORKSPACE</div>
+    <h1>Future Scholar</h1>
+    <p>肌少症多模态诊断与脑血管三维分割研究入口。</p>
+  </header>
+  <main>
+    <section class="project-grid" aria-label="Future Scholar 项目">
+      <article class="project">
+        <div class="project-head">
+          <h2>Sarcopia</h2>
+          <span class="project-index">01</span>
+        </div>
+        <p>联合临床表格与腹部 CT，覆盖代表序列筛选、L3 定位、骨骼肌分割、人工质控和多模态建模。</p>
+        <div class="tags"><span class="tag">腹部 CT</span><span class="tag">肌少症</span><span class="tag">多模态</span><span class="tag">人工质控</span></div>
+        <div class="actions">
+          <a class="button" href="/pages/projects/Future-Scholar/ct-qc.html">质检与修正</a>
+          <a class="button secondary" href="https://github.com/hyper152/Sarcopia" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+        </div>
+      </article>
+      <article class="project">
+        <div class="project-head">
+          <h2>MFFE</h2>
+          <span class="project-index">02</span>
+        </div>
+        <p>面向 TOF-MRA 脑血管三维分割与狭窄评估，研究动态卷积、拓扑损失和多尺度特征融合。</p>
+        <div class="tags"><span class="tag">TOF-MRA</span><span class="tag">三维分割</span><span class="tag">血管拓扑</span><span class="tag">论文返修</span></div>
+        <div class="actions">
+          <a class="button" href="https://github.com/hyper152/MFFE" target="_blank" rel="noopener noreferrer">打开 GitHub ↗</a>
+        </div>
+      </article>
+    </section>
+    <p class="notice">网页仅提供项目入口和匿名化质控工作流，不提供患者资料、原始医学影像、模型权重或本地目录下载。</p>
+  </main>
+</body>
+</html>

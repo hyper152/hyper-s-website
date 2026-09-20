@@ -110,15 +110,32 @@ a:focus-visible,button:focus-visible,summary:focus-visible {
 }
 .account {
     position:relative;
-    font-size:13px;
+    font-size:15px;
     border-left:1px solid var(--line);
     padding-left:28px
 }
 .account summary {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:44px;
+    padding:10px 16px;
     cursor:pointer;
     list-style:none;
-    max-width:140px;
-    overflow-wrap:anywhere
+    max-width:180px;
+    overflow-wrap:anywhere;
+    border:2px solid var(--green);
+    border-radius:12px;
+    background:var(--green);
+    color:#fff;
+    font-weight:700;
+    box-shadow:0 6px 16px rgba(67,104,75,.2);
+    transition:transform .2s ease,box-shadow .2s ease,background .2s ease
+}
+.account summary:hover {
+    background:#365b3f;
+    box-shadow:0 8px 20px rgba(67,104,75,.28);
+    transform:translateY(-1px)
 }
 .account summary::-webkit-details-marker {
     display:none
@@ -693,7 +710,12 @@ footer p {
     }
     .account {
         padding-left:12px;
-        font-size:11px
+        font-size:13px
+    }
+    .account summary {
+        min-height:40px;
+        padding:8px 11px;
+        white-space:nowrap
     }
     .account summary span {
         margin-left:3px

@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Future Scholar 质检与修正</title>
+  <style>
+    :root{color-scheme:dark;--bg:#0d1117;--card:#161b22;--panel:#10161e;--line:#30363d;--text:#e6edf3;--muted:#9da7b3;--accent:#2f81f7;--good:#3fb950;--bad:#f85149;--warn:#d29922}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 system-ui,"Microsoft YaHei",sans-serif}
+    header{position:sticky;top:0;z-index:5;display:flex;gap:18px;align-items:center;justify-content:space-between;padding:13px 20px;background:rgba(13,17,23,.96);border-bottom:1px solid var(--line)}
+    h1{margin:0;font-size:20px}
+    a{color:#58a6ff}
+    main{max-width:1100px;margin:auto;padding:18px}
+    .notice{padding:12px 14px;margin-bottom:14px;border:1px solid var(--line);border-radius:9px;color:var(--muted);background:var(--panel)}
+    .view-bar{display:grid;grid-template-columns:1fr;gap:12px;padding:14px;margin-bottom:14px;background:var(--card);border:1px solid var(--line);border-radius:10px}
+    .view-tabs{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+    .view-actions{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+    .view-tab{border:1px solid var(--line);border-radius:7px;padding:9px 14px;background:#0d1117;color:var(--muted);font:inherit;font-weight:700;cursor:pointer}
+    .view-tab.active{border-color:var(--accent);background:var(--accent);color:#fff}
+    .reload{border:1px solid var(--line);border-radius:7px;padding:9px 12px;background:#0d1117;color:var(--text);font:inherit}
+    .reload{border:0;background:var(--accent);color:#fff;font-weight:700;cursor:pointer}
+    .reload:disabled{opacity:.5;cursor:wait}
+    .status-message{color:#7ee787;font-size:13px}
+    .workspace{display:block}
+    .tools{display:none;position:sticky;top:57px;z-index:4;margin-bottom:16px;padding:14px;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.22)}
+    .workspace.sidebar-visible .tools{display:block}
+    .toolbar{display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap}
+    .toolbar label{display:flex;gap:6px;align-items:center}
+    .toolbar button,.case-actions button{border:0;border-radius:8px;padding:10px 16px;background:#263244;color:#fff;font-weight:700;cursor:pointer}
+    .toolbar button.active,.save{background:var(--accent)}
+    button:disabled{opacity:.5;cursor:wait}
+    .hint{color:var(--muted);text-align:center;margin:12px 0 0}
+    .case{display:grid;gap:18px}
+    .case-card{display:grid;gap:12px;align-content:start;padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+    .meta,.review{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px}
+    .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:8px 16px}
+    .meta span{color:var(--muted)}
+    .images{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+    figure{margin:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#000}
+    figure img{display:block;width:100%;height:260px;object-fit:contain}
+    figcaption{padding:8px 10px;background:var(--card);color:var(--muted)}
+    .review fieldset{border:0;border-bottom:1px solid var(--line);padding:10px 0 14px;margin:0 0 10px;text-align:center}
+    .review fieldset:last-of-type{border-bottom:0}
+    .review legend{width:100%;text-align:center;font-weight:700;margin-bottom:8px}
+    .review label{display:inline-block;margin:0 14px;cursor:pointer}
+    .review .submit-row{text-align:center;margin:14px 0 0}
+    .review-summary{text-align:center;padding:12px;background:var(--card);border:1px solid var(--line);border-radius:9px}
+    .review-summary strong{display:inline-block;margin:3px 10px}
+    .review-summary .pass{color:var(--good)}
+    .review-summary .fail{color:var(--bad)}
+    .review-summary .uncertain{color:var(--warn)}
+    .canvas-stage{position:relative;margin:0 auto;width:100%;max-width:768px;min-height:260px;background:#000;line-height:0;overflow:hidden;border:1px solid var(--line);border-radius:10px;touch-action:none}
+    .base-image{display:block;width:100%;height:auto;min-height:260px;object-fit:contain;background:#000}
+    .mask-canvas{position:absolute;inset:0;display:block;width:100%;height:100%;cursor:crosshair;touch-action:none}
+    .mask-canvas.readonly{cursor:default;pointer-events:none}
+    .stage-loader{position:absolute;inset:0;display:grid;place-items:center;padding:20px;background:rgba(13,17,23,.82);color:var(--muted);text-align:center;line-height:1.5}
+    .stage-loader[hidden]{display:none}
+    .stage-badge{position:absolute;left:10px;top:10px;z-index:2;padding:4px 8px;border-radius:6px;background:rgba(13,17,23,.82);color:#7ee787;font-size:12px;line-height:1.4}
+    .case-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+    .case-actions .save{min-width:210px;font-size:16px}
+    .inline-action{text-align:center}
+    .empty{text-align:center;padding:70px 20px;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+    .error{color:#ffb3ad}
+    @media(max-width:760px){
+      header{align-items:flex-start;flex-direction:column}
+      .status-message{margin-left:0}
+      .images{grid-template-columns:1fr}
+      figure img{height:auto;max-height:70vh}
+      .tools{position:static;box-shadow:none}
+    }
+  </style>
+</head>
+<body>
+<header><h1>Future Scholar 质检与修正</h1><div><a href="/pages/projects/Future-Scholar/">项目中心</a>　<span id="stats">正在加载…</span></div></header>
+<main>
+  <div class="notice">仅用于研究质控。病例已匿名化；原始 DICOM、NIfTI 和临床信息不会通过此页面提供。</div>
+  <section class="view-bar">
+    <nav class="view-tabs" aria-label="病例状态">
+      <button type="button" class="view-tab active" data-view="unreviewed" aria-pressed="true">待质检</button>
+      <button type="button" class="view-tab" data-view="pass" aria-pressed="false">已通过</button>
+      <button type="button" class="view-tab" data-view="fail" aria-pressed="false">已失败</button>
+      <button type="button" class="view-tab" data-view="corrected" aria-pressed="false">已修正</button>
+    </nav>
+    <div class="view-actions">
+      <button type="button" id="reload" class="reload">重新载入全部</button>
+      <span id="statusMessage" class="status-message"></span>
+    </div>
+  </section>
+  <div id="workspace" class="workspace">
+    <aside id="maskTools" class="tools">
+      <div class="toolbar">
+        <button type="button" id="brush" class="active">画笔（补充）</button><button type="button" id="eraser">橡皮擦（删除）</button>
+        <label>笔刷 <input id="size" type="range" min="2" max="60" value="16"><output id="sizeOut">16</output> px</label>
+        <label>Mask 透明度 <input id="opacity" type="range" min="10" max="90" value="48"><output id="opacityOut">48</output>%</label>
+      </div>
+      <p class="hint">“已失败”中可直接修正 Mask；保存后病例会进入“已修正”。滚动到病例附近才加载影像。</p>
+    </aside>
+    <section id="content" class="empty">正在读取全部病例…</section>
+  </div>
+</main>
+<script>
+const content=document.querySelector('#content'),statsBox=document.querySelector('#stats');
+const viewButtons=[...document.querySelectorAll('[data-view]')],reload=document.querySelector('#reload');
+const statusMessage=document.querySelector('#statusMessage'),workspace=document.querySelector('#workspace');
+const brush=document.querySelector('#brush'),eraser=document.querySelector('#eraser');
+const size=document.querySelector('#size'),opacity=document.querySelector('#opacity');
+const sizeOut=document.querySelector('#sizeOut'),opacityOut=document.querySelector('#opacityOut');
+const session=()=>localStorage.getItem('session_id')||'';
+const api=async(url,options={})=>{const headers=Object.assign({'Authorization':'Session '+session()},options.headers||{});const response=await fetch(url,Object.assign({},options,{headers,cache:'no-store'}));const data=await response.json().catch(()=>({error:'服务器返回格式错误'}));if(!response.ok)throw new Error(data.error||('HTTP '+response.status));return data};
+const esc=value=>String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+const waitForImage=img=>img.complete&&img.naturalWidth?Promise.resolve(img):new Promise((resolve,reject)=>{img.addEventListener('load',()=>resolve(img),{once:true});img.addEventListener('error',reject,{once:true})});
+const loadImage=url=>new Promise((resolve,reject)=>{const image=new Image();image.onload=()=>resolve(image);image.onerror=reject;image.src=url});
+const decisionText=value=>({pass:'通过',fail:'失败',uncertain:'待定'}[value]||value||'');
+let currentView='unreviewed',mode='brush',messageTimer=null,editorObserver=null;
+const editors=[];
+
+async function refreshStats(){
+  const [qc,mask]=await Promise.all([api('/api/future-scholar/stats'),api('/api/future-scholar/mask-correction/stats')]);
+  statsBox.textContent=`未标 ${qc.remaining}｜已通过 ${qc.pass}｜已失败 ${qc.fail}｜待定 ${qc.uncertain}｜已修正 ${mask.corrected}`;
+}
+function showStatus(message){
+  statusMessage.textContent=message;
+  clearTimeout(messageTimer);
+  messageTimer=setTimeout(()=>statusMessage.textContent='',3500);
+}
+function setMode(next){mode=next;brush.classList.toggle('active',next==='brush');eraser.classList.toggle('active',next==='eraser')}
+function setActiveView(view){viewButtons.forEach(button=>{const active=button.dataset.view===view;button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active))})}
+function meta(item){
+  return `<div class="meta"><div class="meta-grid"><div><span>匿名病例</span><br>${esc(item.case_id)}</div><div><span>处理状态</span><br>${esc(item.status)}</div><div><span>期相</span><br>${esc(item.scan_phase)}</div><div><span>定位方式</span><br>${esc(item.localization_method)}</div><div><span>层厚</span><br>${esc(item.slice_thickness_mm)} mm</div><div><span>SMA</span><br>${esc(item.sma_cm2)} cm²</div><div><span>平均 HU</span><br>${esc(item.muscle_hu_mean)}</div></div>${item.message?`<p class="error">${esc(item.message)}</p>`:''}</div>`;
+}
+function image(url,title){
+  return url?`<figure><a href="${esc(url)}" target="_blank"><img src="${esc(url)}" alt="${esc(title)}" loading="lazy" decoding="async" fetchpriority="low"></a><figcaption>${esc(title)}（点击查看原图）</figcaption></figure>`:`<figure><div class="empty">无${esc(title)}</div><figcaption>${esc(title)}</figcaption></figure>`;
+}
+function images(item){return `<div class="images">${image(item.l3,'L3横断面')}${image(item.mask,'肌肉掩膜')}${image(item.overlay,'叠加图')}</div>`}
+function reviewSummary(review){
+  return `<div class="review-summary"><strong class="${esc(review.localization_qc)}">L3定位：${esc(decisionText(review.localization_qc))}</strong><strong class="${esc(review.segmentation_qc)}">骨骼肌检测：${esc(decisionText(review.segmentation_qc))}</strong><br><span>标注人：${esc(review.reviewer)}　标注时间：${esc(review.reviewed_at)}</span></div>`;
+}
+function correctionSummary(correction){
+  return `<div class="review-summary"><strong class="pass">已修正</strong><br><span>修正人：${esc(correction.reviewer)}　修正时间：${esc(correction.corrected_at)}</span></div>`;
+}
+function radios(name,title){
+  return `<fieldset><legend>${title}</legend>${['pass','fail','uncertain'].map((value,index)=>`<label><input type="radio" name="${name}" value="${value}" ${index===0?'checked':''}> ${decisionText(value)}</label>`).join('')}</fieldset>`;
+}
+function cardUnreviewed(item){
+  return `<article class="case-card">${meta(item)}${images(item)}<form class="review" data-case-id="${esc(item.case_id)}">${radios('localization_qc','L3定位')}${radios('segmentation_qc','骨骼肌检测')}<p class="submit-row"><button type="submit">保存此例</button></p></form></article>`;
+}
+function cardPassed(item){
+  return `<article class="case-card">${meta(item)}${images(item)}${reviewSummary(item.review)}</article>`;
+}
+function cardFailed(item){
+  const summary=reviewSummary(item.review);
+  if(item.corrected){
+    return `<article class="case-card">${meta(item)}${summary}<div class="review-summary"><strong class="pass">该病例已经修正</strong></div><p class="inline-action"><button type="button" class="reload" data-open-corrected>查看已修正</button></p></article>`;
+  }
+  if(!item.mask_correction_eligible){
+    return `<article class="case-card">${meta(item)}${images(item)}${summary}<p class="inline-action error">该病例不符合 Mask 修正条件。</p></article>`;
+  }
+  return `<article class="case-card" data-index="__INDEX__">${meta(item)}${summary}<div class="canvas-stage"><img class="base-image" data-role="base" src="${esc(item.l3)}" alt="${esc(item.case_id)} L3横断面" loading="lazy" decoding="async" fetchpriority="low"><canvas class="mask-canvas" data-role="mask" aria-label="${esc(item.case_id)} 肌肉Mask"></canvas><div class="stage-loader" data-role="loader">滚动到此处加载 Mask…</div><span class="stage-badge">正在修正</span></div><div class="case-actions"><button type="button" data-action="undo" disabled>撤销</button><button type="button" data-action="reset" disabled>恢复原 Mask</button><button type="button" class="save" data-action="save" disabled>保存修正</button></div></article>`;
+}
+function cardCorrected(item){
+  return `<article class="case-card" data-index="__INDEX__">${meta(item)}${correctionSummary(item.correction)}<div class="canvas-stage"><img class="base-image" data-role="base" src="${esc(item.l3)}" alt="${esc(item.case_id)} L3横断面" loading="lazy" decoding="async" fetchpriority="low"><canvas class="mask-canvas readonly" data-role="mask" aria-label="${esc(item.case_id)} 修正后肌肉Mask"></canvas><div class="stage-loader" data-role="loader">滚动到此处加载修正后的 Mask…</div><span class="stage-badge">修正后 Mask</span></div></article>`;
+}
+
+class MaskEditor{
+  constructor(article,item,readonly=false){
+    this.article=article;this.item=item;this.readonly=readonly;this.ready=false;this.drawing=false;this.undoStack=[];
+    this.base=article.querySelector('[data-role="base"]');
+    this.canvas=article.querySelector('[data-role="mask"]');
+    this.loader=article.querySelector('[data-role="loader"]');
+    this.saveButton=article.querySelector('[data-action="save"]');
+    this.undoButton=article.querySelector('[data-action="undo"]');
+    this.resetButton=article.querySelector('[data-action="reset"]');
+    this.canvas.hidden=true;
+    if(!readonly){
+      this.canvas.addEventListener('pointerdown',event=>this.start(event));
+      this.canvas.addEventListener('pointermove',event=>this.stroke(event));
+      this.canvas.addEventListener('pointerup',event=>this.stop(event));
+      this.canvas.addEventListener('pointercancel',event=>this.stop(event));
+      this.saveButton.addEventListener('click',()=>this.save());
+      this.undoButton.addEventListener('click',()=>this.undo());
+      this.resetButton.addEventListener('click',()=>{if(this.ready){this.snapshot();this.restore(false)}});
+    }
+  }
+  async init(){
+    try{
+      this.base.loading='eager';
+      const maskUrl=this.item.corrected_mask||this.item.mask;
+      const [baseImage,sourceMask]=await Promise.all([waitForImage(this.base),loadImage(maskUrl)]);
+      this.sourceMask=sourceMask;
+      this.canvas.width=baseImage.naturalWidth;this.canvas.height=baseImage.naturalHeight;
+      this.context=this.canvas.getContext('2d',{willReadFrequently:true});
+      this.canvas.style.opacity=Number(opacity.value)/100;
+      this.restore(true);this.canvas.hidden=false;this.loader.hidden=true;this.ready=true;
+      if(!this.readonly){this.saveButton.disabled=false;this.undoButton.disabled=false;this.resetButton.disabled=false}
+    }catch(error){
+      this.loader.textContent='影像加载失败';
+      if(this.saveButton)this.saveButton.disabled=true;
+    }
+  }
+  snapshot(){this.undoStack.push(this.context.getImageData(0,0,this.canvas.width,this.canvas.height));if(this.undoStack.length>20)this.undoStack.shift()}
+  restore(clearHistory=true){
+    if(clearHistory)this.undoStack=[];
+    this.context.clearRect(0,0,this.canvas.width,this.canvas.height);
+    const temp=document.createElement('canvas');temp.width=this.canvas.width;temp.height=this.canvas.height;
+    const context=temp.getContext('2d',{willReadFrequently:true});context.drawImage(this.sourceMask,0,0,temp.width,temp.height);
+    const pixels=context.getImageData(0,0,temp.width,temp.height),output=this.context.createImageData(temp.width,temp.height);
+    for(let i=0;i<pixels.data.length;i+=4){if(pixels.data[i]>127){output.data[i]=255;output.data[i+1]=30;output.data[i+2]=30;output.data[i+3]=255}}
+    this.context.putImageData(output,0,0);
+  }
+  point(event){const rect=this.canvas.getBoundingClientRect();return{x:(event.clientX-rect.left)*this.canvas.width/rect.width,y:(event.clientY-rect.top)*this.canvas.height/rect.height}}
+  start(event){
+    if(!this.ready||event.button!==0)return;
+    event.preventDefault();this.canvas.setPointerCapture(event.pointerId);this.snapshot();this.drawing=true;
+    const point=this.point(event);this.context.beginPath();this.context.moveTo(point.x,point.y);this.stroke(event);
+  }
+  stroke(event){
+    if(!this.drawing)return;event.preventDefault();
+    const point=this.point(event),rect=this.canvas.getBoundingClientRect();
+    this.context.lineTo(point.x,point.y);this.context.lineWidth=Number(size.value)*this.canvas.width/Math.max(rect.width,1);
+    this.context.lineCap='round';this.context.lineJoin='round';this.context.globalCompositeOperation=mode==='brush'?'source-over':'destination-out';
+    this.context.strokeStyle='rgba(255,30,30,1)';this.context.stroke();
+  }
+  stop(event){if(!this.drawing)return;if(this.canvas.hasPointerCapture(event.pointerId))this.canvas.releasePointerCapture(event.pointerId);this.drawing=false;this.context.closePath()}
+  undo(){if(this.ready&&this.undoStack.length)this.context.putImageData(this.undoStack.pop(),0,0)}
+  exportMask(){
+    const output=document.createElement('canvas');output.width=this.canvas.width;output.height=this.canvas.height;
+    const context=output.getContext('2d');context.fillStyle='#000';context.fillRect(0,0,output.width,output.height);
+    const pixels=this.context.getImageData(0,0,output.width,output.height),binary=context.getImageData(0,0,output.width,output.height);
+    for(let i=0;i<pixels.data.length;i+=4){const value=pixels.data[i+3]>127?255:0;binary.data[i]=binary.data[i+1]=binary.data[i+2]=value;binary.data[i+3]=255}
+    context.putImageData(binary,0,0);return output.toDataURL('image/png');
+  }
+  async save(){
+    if(!this.ready)return;this.saveButton.disabled=true;this.saveButton.textContent='正在保存…';
+    try{
+      await api('/api/future-scholar/mask-correction/save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({case_id:this.item.case_id,mask_png:this.exportMask()})});
+      editorObserver?.unobserve(this.article);this.article.remove();await refreshStats();showStatus('修正已保存，可在“已修正”中查看');
+      if(!content.querySelector('.case-card'))showEmpty('当前没有待处理病例');
+    }catch(error){alert(error.message);this.saveButton.disabled=false;this.saveButton.textContent='保存修正'}
+  }
+}
+
+async function saveReview(event){
+  event.preventDefault();const form=event.currentTarget,button=form.querySelector('button');button.disabled=true;
+  const body=Object.fromEntries(new FormData(form).entries());body.case_id=form.dataset.caseId;
+  const decisions=[body.localization_qc,body.segmentation_qc];body.qc_status=decisions.includes('fail')?'fail':(decisions.includes('uncertain')?'uncertain':'pass');
+  try{
+    await api('/api/future-scholar/review',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+    form.closest('.case-card').remove();await refreshStats();showStatus('质检结果已保存');
+    if(!content.querySelector('.case-card'))showEmpty('当前没有待质检病例');
+  }catch(error){alert(error.message);button.disabled=false}
+}
+function showEmpty(message){editorObserver?.disconnect();editors.length=0;content.className='empty';content.innerHTML=`<h2>${esc(message)}</h2>`}
+function resetEditorObserver(){editorObserver?.disconnect();editorObserver=null;editors.length=0}
+function startEditorObserver(){
+  if(!('IntersectionObserver' in window)){
+    editors.forEach(editor=>editor.init());
+    return;
+  }
+  editorObserver=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(!entry.isIntersecting)return;
+      editorObserver.unobserve(entry.target);
+      const index=Number(entry.target.dataset.index);
+      editors[index]?.init();
+    });
+  },{rootMargin:'500px 0px'});
+  [...content.querySelectorAll('.case-card[data-index]')].forEach(card=>editorObserver.observe(card));
+}
+function renderUnreviewed(items){
+  content.className='case';content.innerHTML=items.map(cardUnreviewed).join('');
+  content.querySelectorAll('form.review').forEach(form=>form.addEventListener('submit',saveReview));
+}
+function renderReviewed(items,status){
+  if(status==='pass')content.innerHTML=items.map(cardPassed).join('');
+  else content.innerHTML=items.map((item,index)=>cardFailed(item).replace('__INDEX__',index)).join('');
+  content.className='case';
+  content.querySelectorAll('[data-open-corrected]').forEach(button=>button.addEventListener('click',()=>{currentView='corrected';setActiveView(currentView);loadView()}));
+  const editorItems=[];
+  [...content.querySelectorAll('.case-card[data-index]')].forEach(card=>{
+    const originalIndex=Number(card.dataset.index);
+    const item=items[originalIndex];
+    const editor=new MaskEditor(card,item,false);editors.push(editor);editorItems.push(editor);
+  });
+  if(editorItems.length)startEditorObserver();
+}
+function renderCorrected(items){
+  content.className='case';content.innerHTML=items.map((item,index)=>cardCorrected(item).replace('__INDEX__',index)).join('');
+  [...content.querySelectorAll('.case-card[data-index]')].forEach((card,index)=>{
+    const item=items[index];editors.push(new MaskEditor(card,item,true));
+  });
+  if(editors.length)startEditorObserver();
+}
+async function loadView(){
+  const view=currentView;
+  const url=new URL(window.location.href);if(view==='unreviewed')url.searchParams.delete('view');else url.searchParams.set('view',view);
+  window.history.replaceState(null,'',url);
+  resetEditorObserver();
+  const showTools=view==='fail'||view==='corrected';
+  workspace.classList.toggle('sidebar-visible',showTools);
+  reload.disabled=true;content.className='empty';content.textContent='正在读取全部病例…';
+  try{
+    if(view==='unreviewed'){
+      const [result]=await Promise.all([api('/api/future-scholar/next?limit=0'),refreshStats()]);
+      const items=result.cases||(result.case?[result.case]:[]);
+      if(items.length)renderUnreviewed(items);else showEmpty('当前没有待质检病例');
+    }else if(view==='pass'||view==='fail'){
+      const requests=[api('/api/future-scholar/reviews?status='+view),refreshStats()];
+      if(view==='fail')requests.push(api('/api/future-scholar/mask-correction/corrected'));
+      const [result,,correctedResult]=await Promise.all(requests);
+      let items=result.cases||[];
+      if(view==='fail'){
+        const correctedIds=new Set((correctedResult?.cases||[]).map(item=>item.case_id));
+        items=items.map(item=>({...item,corrected:correctedIds.has(item.case_id)}));
+        const pending=items.filter(item=>item.mask_correction_eligible&&!item.corrected);
+        const ineligible=items.filter(item=>!item.mask_correction_eligible&&!item.corrected);
+        const corrected=items.filter(item=>item.corrected);
+        items=[...pending,...ineligible,...corrected];
+      }
+      if(items.length)renderReviewed(items,view);else showEmpty(view==='pass'?'当前没有已通过病例':'当前没有已失败病例');
+    }else{
+      const [result]=await Promise.all([api('/api/future-scholar/mask-correction/corrected'),refreshStats()]);
+      const items=result.cases||[];
+      if(items.length)renderCorrected(items);else showEmpty('当前没有已修正病例');
+    }
+  }catch(error){
+    content.className='empty error';content.innerHTML=`<h2>无法加载</h2><p>${esc(error.message)}</p><p><a href="/pages/login/index.html">重新登录</a></p>`;
+  }finally{reload.disabled=false}
+}
+
+brush.addEventListener('click',()=>setMode('brush'));
+eraser.addEventListener('click',()=>setMode('eraser'));
+size.addEventListener('input',()=>sizeOut.value=size.value);
+opacity.addEventListener('input',()=>{opacityOut.value=opacity.value;editors.forEach(editor=>{if(editor.canvas)editor.canvas.style.opacity=Number(opacity.value)/100})});
+reload.addEventListener('click',loadView);
+viewButtons.forEach(button=>button.addEventListener('click',()=>{currentView=button.dataset.view;setActiveView(currentView);loadView()}));
+const requestedView=new URLSearchParams(window.location.search).get('view');
+if(['unreviewed','pass','fail','corrected'].includes(requestedView))currentView=requestedView;
+setActiveView(currentView);
+loadView();
+</script>
+</body>
+</html>

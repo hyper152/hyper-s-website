@@ -30,3 +30,7 @@ data/backups/
 
 # Local SMTP credential
 data/qq_mail_auth_code.txt
+
+# Future Scholar CT review runtime data and generated previews
+data/future_scholar_*
+pages/projects/Future-Scholar/assets/
