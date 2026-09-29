@@ -38,10 +38,10 @@ from src.future_scholar_qc import reviewed_cases as future_scholar_reviewed_case
 from src.future_scholar_mask_correction import pending_cases as mask_correction_pending_cases
 from src.future_scholar_mask_correction import corrected_cases as mask_correction_corrected_cases
 from src.future_scholar_mask_correction import corrected_mask_bytes
-from src.future_scholar_mask_correction import save_mask as mask_correction_save_mask
+from src.future_scholar_mask_correction import save_mask_png as mask_correction_save_mask_png
 from src.future_scholar_mask_correction import stats as mask_correction_stats
 
-FUTURE_SCHOLAR_ALLOWED_USERS = {'caibo', 'hyper', 'admin', 'jerryliiiiii'}
+FUTURE_SCHOLAR_ALLOWED_USERS = {'caibo', 'hyper', 'admin'}
 
 # ===================== PROXY Protocol 解析器（纯Python实现） =====================
 class SimpleProxyProtocol:
@@ -313,6 +313,19 @@ def get_user_info_from_request(request_handler):
         return {}
 
     return get_current_user(session_id)
+
+
+def _read_exactly(stream, expected_length):
+    """从可能分段到达的请求流中读取完整的 Content-Length 字节。"""
+    chunks = []
+    remaining = expected_length
+    while remaining > 0:
+        chunk = stream.read(remaining)
+        if not chunk:
+            break
+        chunks.append(chunk)
+        remaining -= len(chunk)
+    return b''.join(chunks)
 
 def should_skip_log(path):
     """判断是否应该跳过该请求的日志记录"""
@@ -916,7 +929,7 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
         self.send_response(200)
         self.send_header('Content-Type', 'image/png')
         self.send_header('Content-Length', str(len(payload)))
-        self.send_header('Cache-Control', 'private, max-age=300')
+        self.send_header('Cache-Control', 'no-store')
         self.end_headers()
         self.wfile.write(payload)
 
@@ -1003,12 +1016,24 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
         if user is None:
             return
         try:
-            content_length = int(self.headers.get('Content-Length', '0'))
-            if content_length <= 0 or content_length > 3 * 1024 * 1024:
-                self._send_json(400, {'error': '请求内容为空或过大'})
+            query = parse_qs(urlparse(self.path).query)
+            case_id = query.get('case_id', [''])[0]
+            content_type = self.headers.get('Content-Type', '').split(';', 1)[0].strip().lower()
+            if content_type != 'image/png':
+                self._send_json(415, {'error': '请以 image/png 格式上传 Mask'})
                 return
-            payload = json.loads(self.rfile.read(content_length).decode('utf-8'))
-            correction = mask_correction_save_mask(payload, user)
+            content_length = int(self.headers.get('Content-Length', '0'))
+            if content_length <= 0 or content_length > 2 * 1024 * 1024:
+                self._send_json(400, {'error': 'PNG 内容为空或超过 2 MiB'})
+                return
+            png = _read_exactly(self.rfile, content_length)
+            if len(png) != content_length:
+                self._send_json(
+                    400,
+                    {'error': f'PNG 上传不完整：收到 {len(png)} / {content_length} 字节'},
+                )
+                return
+            correction = mask_correction_save_mask_png(case_id, png, user)
             self._send_json(200, {'status': 'ok', 'correction': correction})
         except (ValueError, json.JSONDecodeError) as exc:
             self._send_json(400, {'error': str(exc)})

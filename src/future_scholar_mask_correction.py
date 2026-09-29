@@ -59,28 +59,35 @@ def _cases() -> dict[str, dict]:
     return {row["case_id"]: row for row in rows if row.get("case_id")}
 
 
-def _eligible_ids() -> list[str]:
+def _reviews_by_case() -> dict[str, dict]:
     if not REVIEWS_DB.is_file():
-        return []
+        return {}
     db = sqlite3.connect(str(REVIEWS_DB), timeout=30)
+    db.row_factory = sqlite3.Row
     try:
-        return [
-            row[0]
-            for row in db.execute(
-                "SELECT case_id FROM reviews "
-                "WHERE localization_qc='pass' AND segmentation_qc='fail' "
-                "ORDER BY reviewed_at,case_id"
-            )
-        ]
+        rows = db.execute(
+            "SELECT case_id,localization_qc,segmentation_qc,qc_status,"
+            "reviewer,reviewed_at FROM reviews"
+        ).fetchall()
+        return {row["case_id"]: dict(row) for row in rows}
+    except sqlite3.OperationalError:
+        return {}
     finally:
         db.close()
 
 
 def pending_cases() -> list[dict]:
     cases = _cases()
+    reviews = _reviews_by_case()
     with connection() as db:
         done = {row[0] for row in db.execute("SELECT case_id FROM corrections")}
-    return [cases[case_id] for case_id in _eligible_ids() if case_id in cases and case_id not in done]
+    pending = [
+        {**case, "review": reviews.get(case_id)}
+        for case_id, case in cases.items() if case_id not in done
+    ]
+    return [case for case in pending if case.get("l3") and case.get("mask")] + [
+        case for case in pending if not case.get("l3") or not case.get("mask")
+    ]
 
 
 def next_case() -> dict | None:
@@ -89,18 +96,25 @@ def next_case() -> dict | None:
 
 
 def stats() -> dict:
-    eligible = _eligible_ids()
+    cases = _cases()
     with connection() as db:
-        corrected = db.execute("SELECT COUNT(*) FROM corrections").fetchone()[0]
+        corrected_ids = {row[0] for row in db.execute("SELECT case_id FROM corrections")}
+    corrected = len(cases.keys() & corrected_ids)
     return {
-        "eligible": len(eligible),
+        "queue_mode": "all_cases",
+        "eligible": len(cases),
         "corrected": corrected,
-        "remaining": max(len(eligible) - corrected, 0),
+        "remaining": len(cases) - corrected,
+        "missing_images": sum(
+            not case.get("l3") or not case.get("mask")
+            for case_id, case in cases.items() if case_id not in corrected_ids
+        ),
     }
 
 
 def corrected_cases() -> list[dict]:
     cases = _cases()
+    reviews = _reviews_by_case()
     with connection() as db:
         rows = db.execute(
             "SELECT case_id,reviewer,reviewer_email,corrected_at "
@@ -113,6 +127,7 @@ def corrected_cases() -> list[dict]:
             continue
         result.append({
             **case,
+            "review": reviews.get(row["case_id"]),
             "correction": dict(row),
             "corrected_mask": (
                 "/api/future-scholar/mask-correction/file?case_id="
@@ -170,9 +185,6 @@ def _export(db) -> None:
 
 def save_mask(payload: dict, user: dict) -> dict:
     case_id = str(payload.get("case_id", "")).strip()
-    cases = _cases()
-    if case_id not in cases or case_id not in set(_eligible_ids()):
-        raise ValueError("Case is not eligible for mask correction")
     encoded = str(payload.get("mask_png", ""))
     prefix = "data:image/png;base64,"
     if not encoded.startswith(prefix):
@@ -181,6 +193,19 @@ def save_mask(payload: dict, user: dict) -> dict:
         png = base64.b64decode(encoded[len(prefix):], validate=True)
     except Exception as exc:
         raise ValueError("Invalid base64 mask") from exc
+    return save_mask_png(case_id, png, user)
+
+
+def save_mask_png(case_id: str, png: bytes, user: dict) -> dict:
+    case_id = str(case_id).strip()
+    cases = _cases()
+    if case_id not in cases:
+        raise ValueError("Unknown case_id")
+    if not cases[case_id].get("l3") or not cases[case_id].get("mask"):
+        raise ValueError("Case is missing an L3 image or source mask")
+    if not isinstance(png, (bytes, bytearray)):
+        raise ValueError("Mask must be PNG bytes")
+    png = bytes(png)
     if len(png) > 2 * 1024 * 1024:
         raise ValueError("Mask PNG is too large")
     if _png_dimensions(png) != _source_dimensions(cases[case_id]):
