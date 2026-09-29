@@ -21,7 +21,9 @@ data/seekdb-server/run/
 data/seekdb-server/**/*.db-shm
 data/seekdb-server/**/*.db-wal
 
-media/
+# Keep the media path index in Git while leaving media files local.
+media/*
+!media/README.md
 *.pyc
 
 # SQLite runtime and migration backups

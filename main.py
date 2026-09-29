@@ -423,6 +423,21 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
             self.send_error(404, 'Not Found')
             return None
         normalized = self._safe_url_path(self.path)
+        for old_prefix, new_prefix in (
+            ('/media/pages/devlog/', '/media/pages/projects/'),
+            ('/media/resume/', '/media/pages/resume/'),
+            ('/media/home/', '/media/pages/home/'),
+        ):
+            if normalized.startswith(old_prefix):
+                suffix = normalized[len(old_prefix):]
+                query = urlparse(self.path).query
+                location = new_prefix + quote(suffix, safe='/-._~')
+                if query:
+                    location += '?' + query
+                self.send_response(301)
+                self.send_header('Location', location)
+                self.end_headers()
+                return None
         if normalized == '/':
             self.send_response(301)
             self.send_header('Location', '/pages/home/')
