@@ -427,17 +427,22 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
             ('/media/pages/devlog/', '/media/pages/projects/'),
             ('/media/resume/', '/media/pages/resume/'),
             ('/media/home/', '/media/pages/home/'),
+            ('/pages/devlog/', '/pages/projects/'),
         ):
-            if normalized.startswith(old_prefix):
+            if normalized == old_prefix.rstrip('/'):
+                suffix = ''
+            elif normalized.startswith(old_prefix):
                 suffix = normalized[len(old_prefix):]
-                query = urlparse(self.path).query
-                location = new_prefix + quote(suffix, safe='/-._~')
-                if query:
-                    location += '?' + query
-                self.send_response(301)
-                self.send_header('Location', location)
-                self.end_headers()
-                return None
+            else:
+                continue
+            query = urlparse(self.path).query
+            location = new_prefix + quote(suffix, safe='/-._~')
+            if query:
+                location += '?' + query
+            self.send_response(301)
+            self.send_header('Location', location)
+            self.end_headers()
+            return None
         if normalized == '/':
             self.send_response(301)
             self.send_header('Location', '/pages/home/')
