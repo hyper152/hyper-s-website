@@ -7,10 +7,10 @@
 <meta content="Hyper 的个人空间。探索开发、旅行、学习、装机、游戏与校园往事。" name="description"/>
 <meta content="#f6f7f2" name="theme-color"/>
 <title>Hyper · 认真折腾，好好生活</title>
-<link href="/static/css/home.css?v=20260917-login-cta" rel="stylesheet"/>
-<script defer="" src="/static/js/auth.js"></script>
-<script defer="" src="/static/js/home.js?v=20260911-visits-2"></script>
-<link rel="stylesheet" href="/static/css/site-theme.css?v=20260911-centered-navigation">
+<link href="/pages/home/home.css?v=20260917-login-cta" rel="stylesheet"/>
+<script defer="" src="/pages/login/auth.js"></script>
+<script defer="" src="/pages/home/home.js?v=20260911-visits-2"></script>
+<link rel="stylesheet" href="/pages/_shared/site-theme.css?v=20260911-centered-navigation">
 <meta name="theme-color" content="#f6f7f2">
 </head>
 <body id="home" data-site-theme="garden" data-page-kind="page">
@@ -23,7 +23,7 @@
 </header>
 <main>
 <section aria-labelledby="intro-title" class="intro">
-<div><p class="eyebrow"><span class="status-dot"></span> HYPER'S PERSONAL SPACE</p><h1 id="intro-title">认真折腾，<br class="mobile-break"/>也<span class="handwritten">好好生活。</span></h1><p class="intro-text">写代码，去远方，把好奇心留在日常里。<br/>欢迎来到我的小天地，选一个感兴趣的地方逛逛。</p><p aria-live="polite" class="visit-badge"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"></path><circle cx="12" cy="12" r="3"></circle></svg><span>总访问次数</span><strong id="heroVisitNumber">加载中…</strong><span hidden="" id="heroVisitUnit">次</span><button hidden="" id="retryVisitCount" type="button">重试</button></p></div>
+<div><p class="eyebrow"><span class="status-dot"></span> HYPER'S PERSONAL SPACE</p><h1 id="intro-title">认真折腾，<br class="mobile-break"/>也<span class="handwritten">好好生活。</span></h1><p class="intro-text">写代码，去远方，把好奇心留在日常里。<br/>欢迎来到我的小天地，选一个感兴趣的地方逛逛。</p><p aria-live="polite" class="visit-badge"><a class="visit-badge-link" href="/pages/visit/" title="查看访问分析"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"></path><circle cx="12" cy="12" r="3"></circle></svg><span>总访问次数</span><strong id="heroVisitNumber">加载中…</strong><span hidden="" id="heroVisitUnit">次</span><span aria-hidden="true" class="visit-badge-arrow">→</span></a><button hidden="" id="retryVisitCount" type="button">重试</button></p></div>
 <div aria-hidden="true" class="intro-note"><span class="orbit">✳</span><span>保持好奇<br/>一直在路上</span><svg viewbox="0 0 100 50"><path d="M5 8 Q30 48 83 20 M70 15 L85 20 L77 34"></path></svg></div>
 </section>
 <section aria-labelledby="category-title" id="categories">
@@ -54,7 +54,7 @@
 <a class="profile-link" href="/pages/resume/index.html">查看个人简介 ↗</a>
 <div class="social-links"><a href="https://github.com/hyper152/personal-blog" rel="noopener noreferrer" target="_blank">GitHub ↗</a><a href="https://space.bilibili.com/1689598128" rel="noopener noreferrer" target="_blank">Bilibili ↗</a><a href="mailto:2361542526@qq.com">邮箱 ↗</a></div>
 </div>
-<nav aria-label="快速链接" class="info-column"><h2>快速链接</h2><a href="#home">首页</a><a href="#categories">内容分类</a><a href="/pages/talk/comment.html">留言板</a><a href="/pages/talk/ai-chat.html">AI 助手</a><a href="/pages/resume/index.html">个人简介</a><a href="https://github.com/hyper152/personal-blog" rel="noopener noreferrer" target="_blank">开源代码 ↗</a></nav>
+<nav aria-label="快速链接" class="info-column"><h2>快速链接</h2><a href="#home">首页</a><a href="#categories">内容分类</a><a href="/pages/talk/comment.html">留言板</a><a href="/pages/talk/ai-chat.html">AI 助手</a><a href="/pages/resume/index.html">个人简介</a><a href="/pages/visit/">访问分析</a><a href="https://github.com/hyper152/personal-blog" rel="noopener noreferrer" target="_blank">开源代码 ↗</a></nav>
 <nav aria-label="页尾内容分类" class="info-column"><h2>内容分类</h2><a href="/pages/travel/">旅游记录</a><a href="/pages/projects/">开发项目</a><a href="/pages/study/">学习</a><a href="/pages/diy/">装机记录</a><a href="/pages/games/">游戏栏</a><a href="/pages/YY往事/">YY 往事</a></nav>
 <div class="info-column" id="contact"><h2>联系我</h2><a href="tencent://message/?uin=2361542526">QQ：2361542526 ↗</a><span>微信：hyper20070129</span><a href="mailto:2361542526@qq.com">2361542526@qq.com ↗</a><p class="contact-note">欢迎交流，一起分享生活里的新发现。</p></div>
 </section>
@@ -62,6 +62,6 @@
 <footer><div><a class="footer-brand" href="/pages/home/">hyper.</a><span>生活有迹，好奇无界。</span></div><div class="footer-links"><a href="https://github.com/hyper152/hyper-s-website" rel="noopener noreferrer" target="_blank">GitHub ↗</a><a href="https://space.bilibili.com/1689598128" rel="noopener noreferrer" target="_blank">Bilibili ↗</a><a href="mailto:2361542526@qq.com">联系我 ↗</a></div><p>© <span id="year">2026</span> Hyper · 保留所有权利 <span hidden="" id="visitCount"></span></p></footer>
 <button aria-label="返回页面顶部" class="back-to-top" hidden="" id="backToTopBtn">↑</button>
 
-<script src="/static/js/page-navigation.js?v=20260911-1" defer></script>
+<script src="/pages/_shared/page-navigation.js?v=20260911-1" defer></script>
 </body>
 </html>

@@ -856,6 +856,25 @@ footer p {
     font-size: 15px;
     font-variant-numeric: tabular-nums;
 }
+/* 总访问次数整块可点，进入 /pages/visit/ 访问分析页面。 */
+.visit-badge-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: inherit;
+    text-decoration: none;
+}
+.visit-badge-link:hover strong {
+    color: var(--green);
+}
+.visit-badge-arrow {
+    color: var(--green);
+    font-size: 13px;
+    transition: transform .18s ease;
+}
+.visit-badge-link:hover .visit-badge-arrow {
+    transform: translateX(3px);
+}
 
 .home-info {
     display: grid;

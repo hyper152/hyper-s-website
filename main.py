@@ -43,6 +43,13 @@ from src.future_scholar_mask_correction import stats as mask_correction_stats
 
 FUTURE_SCHOLAR_ALLOWED_USERS = {'caibo', 'hyper', 'admin'}
 
+# 访问分析页面（/pages/visit/）数据接口：访客 IP 属于隐私数据，默认仅登录账号可见。
+VISIT_STATS_REQUIRE_LOGIN = True
+# 留空表示任意已登录账号；填写则只允许名单内的账号（小写）。
+VISIT_STATS_ALLOWED_USERS = set()
+# 单个 IP 的详细记录只对这些账号开放（小写），默认仅站长本人。
+VISIT_DETAIL_ALLOWED_USERS = {'hyper'}
+
 # ===================== PROXY Protocol 解析器（纯Python实现） =====================
 class SimpleProxyProtocol:
     """简单的 PROXY Protocol v2 解析器"""
@@ -145,6 +152,25 @@ class Config:
         '/favicon.ico', '/robots.txt', '/dwcc/', '/media/'
     ]
 
+    # Relocated page assets: keep cached HTML and old links working.
+    LEGACY_ASSET_PATHS = {
+        '/static/css/home.css': '/pages/home/home.css',
+        '/static/js/home.js': '/pages/home/home.js',
+        '/static/css/resume.css': '/pages/resume/resume.css',
+        '/static/css/ai-chat.css': '/pages/talk/ai-chat.css',
+        '/static/js/ai-log.js': '/pages/talk/ai-log.js',
+        '/static/js/auth.js': '/pages/login/auth.js',
+        '/static/js/auth-interceptor.js': '/pages/login/auth-interceptor.js',
+        '/static/css/hardware-article.css': '/pages/diy/hardware-article.css',
+        '/static/travel/journal.css': '/pages/travel/journal.css',
+        '/static/travel/journal.js': '/pages/travel/journal.js',
+        '/static/css/visit-stats.css': '/pages/visit/visit-stats.css',
+        '/static/js/visit-stats.js': '/pages/visit/visit-stats.js',
+        '/static/css/category.css': '/pages/_shared/category.css',
+        '/static/css/site-theme.css': '/pages/_shared/site-theme.css',
+        '/static/js/page-navigation.js': '/pages/_shared/page-navigation.js',
+    }
+
     # 不记录日志的静态资源扩展名（图片、视频、CSS、JS等）
     SKIP_LOG_EXT = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.bmp', '.ico', '.svg',
                     '.mp4', '.avi', '.mov', '.wmv', '.flv', '.mkv', '.webm', '.mpeg', '.mpg',
@@ -152,6 +178,9 @@ class Config:
 
     # site.db / visits 最大记录数（0表示不限制）
     MAX_VISITOR_RECORDS = 0
+
+    # 访客分析报告：启动时若文件已过期则覆盖生成，--force-report 强制立即重生成
+    FORCE_REPORT = False
 
 
 def decode_path(path: str) -> str:
@@ -423,6 +452,15 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
             self.send_error(404, 'Not Found')
             return None
         normalized = self._safe_url_path(self.path)
+        asset_location = Config.LEGACY_ASSET_PATHS.get(normalized)
+        if asset_location:
+            query = urlparse(self.path).query
+            if query:
+                asset_location += '?' + query
+            self.send_response(301)
+            self.send_header('Location', asset_location)
+            self.end_headers()
+            return None
         for old_prefix, new_prefix in (
             ('/media/pages/devlog/', '/media/pages/projects/'),
             ('/media/resume/', '/media/pages/resume/'),
@@ -751,7 +789,7 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
         .file i {{ color:#6a5acd }}
     </style>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="/static/css/site-theme.css?v=20260911-centered-navigation">
+<link rel="stylesheet" href="/pages/_shared/site-theme.css?v=20260911-centered-navigation">
 </head>
 <body data-site-theme="garden" data-page-kind="directory">
 <nav class="page-controls" aria-label="页面快捷导航"><a href="/pages/home/" data-page-back><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m10 5-7 7 7 7M3 12h18"/></svg><span>返回上一页</span></a><a href="/pages/home/"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9"/></svg><span>首页</span></a></nav>
@@ -764,7 +802,7 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
         <div class="items">{items}</div>
     </div>
 
-<script src="/static/js/page-navigation.js?v=20260911-1" defer></script>
+<script src="/pages/_shared/page-navigation.js?v=20260911-1" defer></script>
 </body>
 </html>
         """
@@ -857,6 +895,14 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
             self._handle_future_scholar_get(path)
             return
 
+        # 访问分析页面数据（/pages/visit/）
+        if path in ('/api/visit-stats', '/api/visit-stats/'):
+            self._handle_visit_stats()
+            return
+        if path in ('/api/visit-detail', '/api/visit-detail/'):
+            self._handle_visit_detail()
+            return
+
         # 转发API请求到Flask
         if FLASK_AVAILABLE and path.startswith('/api/'):
             self._forward_to_flask()
@@ -936,7 +982,8 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
 
     def _send_json(self, status, payload):
         """发送 UTF-8 JSON 响应。"""
-        body = json.dumps(payload, ensure_ascii=False, allow_nan=False).encode('utf-8')
+        body = json.dumps(payload, ensure_ascii=False, allow_nan=False,
+                          separators=(',', ':')).encode('utf-8')
         self.send_response(status)
         self.send_header('Content-Type', 'application/json; charset=utf-8')
         self.send_header('Content-Length', str(len(body)))
@@ -963,6 +1010,65 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
             self._send_json(403, {'error': '当前账号无权访问 Future Scholar'})
             return None
         return user
+
+    def _handle_visit_stats(self):
+        """返回访问分析页面所需数据（默认要求登录，避免公开访客 IP）。"""
+        user = get_user_info_from_request(self)
+        if VISIT_STATS_REQUIRE_LOGIN:
+            if not user:
+                self._send_json(401, {'need_login': True, 'error': '请先登录后再查看访问分析'})
+                return
+            if VISIT_STATS_ALLOWED_USERS:
+                username = str(user.get('username', '')).strip().lower()
+                if username not in VISIT_STATS_ALLOWED_USERS:
+                    self._send_json(403, {'error': '当前账号无权查看访问分析'})
+                    return
+        try:
+            from src.analyze_visitor import get_stats_payload
+            refresh = 'refresh=1' in urlparse(self.path).query
+            payload = get_stats_payload(refresh=refresh)
+        except Exception as exc:
+            logger.exception("生成访问分析数据失败")
+            self._send_json(500, {'error': f'生成访问分析失败：{exc}'})
+            return
+        # 逐个请求注入查看者信息，不写进共享缓存。
+        username = str(user.get('username', '')).strip() if user else ''
+        payload = dict(payload)
+        payload['viewer'] = {
+            'username': username,
+            'can_view_detail': username.lower() in VISIT_DETAIL_ALLOWED_USERS,
+        }
+        self._send_json(200, payload)
+
+    def _handle_visit_detail(self):
+        """单个 IP 的详细访问记录，仅 VISIT_DETAIL_ALLOWED_USERS 内的账号可见。"""
+        user = get_user_info_from_request(self)
+        if not user:
+            self._send_json(401, {'need_login': True, 'error': '请先登录后再查看详细记录'})
+            return
+        username = str(user.get('username', '')).strip().lower()
+        if username not in VISIT_DETAIL_ALLOWED_USERS:
+            self._send_json(403, {'error': '只有 hyper 账号可以查看访客详细记录'})
+            return
+
+        query = parse_qs(urlparse(self.path).query)
+        ip = (query.get('ip') or [''])[0]
+        try:
+            limit = int((query.get('limit') or ['200'])[0])
+            offset = int((query.get('offset') or ['0'])[0])
+        except ValueError:
+            limit, offset = 200, 0
+        try:
+            from src.analyze_visitor import build_ip_detail
+            detail = build_ip_detail(ip, limit=limit, offset=offset)
+        except Exception as exc:
+            logger.exception("生成 IP 详细记录失败")
+            self._send_json(500, {'error': f'生成 IP 详细记录失败：{exc}'})
+            return
+        if detail is None:
+            self._send_json(400, {'error': 'IP 地址无效'})
+            return
+        self._send_json(200, detail)
 
     def _handle_future_scholar_get(self, path):
         user = self._future_scholar_user()
@@ -1190,13 +1296,13 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
             self.end_headers()
             error_html = """
             <html>
-            <head><title>500 服务器内部错误</title><link rel="stylesheet" href="/static/css/site-theme.css?v=20260911-centered-navigation"></head>
+            <head><title>500 服务器内部错误</title><link rel="stylesheet" href="/pages/_shared/site-theme.css?v=20260911-centered-navigation"></head>
             <body data-site-theme='garden' style='padding:40px'>
 <nav class="page-controls" aria-label="页面快捷导航"><a href="/pages/home/" data-page-back><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m10 5-7 7 7 7M3 12h18"/></svg><span>返回上一页</span></a><a href="/pages/home/"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9"/></svg><span>首页</span></a></nav>
                 <h1>500 接口请求处理失败</h1>
                 <p>请检查服务是否正常运行</p>
 
-<script src="/static/js/page-navigation.js?v=20260911-1" defer></script>
+<script src="/pages/_shared/page-navigation.js?v=20260911-1" defer></script>
 </body>
             </html>
             """
@@ -1315,9 +1421,27 @@ class DualStackServer(ThreadingHTTPServer):
 
 
 # ===================== 启动 =====================
+def start_visitor_report(force=False):
+    """启动访客分析后台任务：启动时生成一次，之后每 24 小时覆盖同一个文件。
+
+    force=True 时忽略文件时间戳，启动后立刻重新生成。
+    设置环境变量 DISABLE_VISITOR_REPORT=1 可关闭（自动化测试用）。
+    """
+    if os.environ.get('DISABLE_VISITOR_REPORT') == '1':
+        return None
+    try:
+        from src.analyze_visitor import DEFAULT_REPORT_FILE, start_daily_report_thread
+    except Exception as exc:
+        logger.error(f"访客分析模块加载失败：{exc}")
+        return None
+    start_daily_report_thread(force=force)
+    return DEFAULT_REPORT_FILE
+
+
 def run_server():
     """启动服务器"""
     get_store()
+    report_file = start_visitor_report(force=Config.FORCE_REPORT)
     if Config.RESET_VISITS:
         try:
             get_store().counter(reset=True)
@@ -1357,6 +1481,8 @@ def run_server():
         print(f"📌 TLS 证书: {os.path.abspath(Config.CERT_FILE)}")
     print(f"📌 根目录: {os.path.abspath(server_dir)}")
     print(f"📌 真实IP获取: ✅ X-Forwarded-For / X-Real-IP / PROXY Protocol (自动识别)")
+    if report_file:
+        print(f"📄 访客分析报告: {os.path.relpath(report_file, server_dir)}（启动时生成，每 24 小时覆盖）")
     print("="*60)
     print("📊 访问日志格式: [日期 时间] 图标 用户 [真实IP] | 方法 路径 | 状态 | 耗时 | 访问量")
     print("📊 静态资源过滤: 不记录图片/视频/CSS/JS等文件")
@@ -1379,6 +1505,8 @@ if __name__ == "__main__":
     parser.add_argument("--certfile", help="TLS 证书文件（PEM 格式，必须与 --keyfile 同时使用）")
     parser.add_argument("--keyfile", help="TLS 私钥文件（PEM 格式，必须与 --certfile 同时使用）")
     parser.add_argument("--reset-visits", action="store_true", help="重置访问次数")
+    parser.add_argument("--force-report", action="store_true",
+                        help="启动时立即重新生成访客分析报告（默认每天最多生成一次）")
     args = parser.parse_args()
 
     if bool(args.certfile) != bool(args.keyfile):
@@ -1392,5 +1520,6 @@ if __name__ == "__main__":
     Config.CERT_FILE = os.path.abspath(args.certfile) if args.certfile else None
     Config.KEY_FILE = os.path.abspath(args.keyfile) if args.keyfile else None
     Config.RESET_VISITS = args.reset_visits 
+    Config.FORCE_REPORT = args.force_report
 
     run_server()

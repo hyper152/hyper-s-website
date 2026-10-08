@@ -29,6 +29,8 @@ media/*
 # SQLite runtime and migration backups
 data/site.db*
 data/backups/
+# analyze_visitor.py 生成的分析报告
+data/reports/
 
 # Local SMTP credential
 data/qq_mail_auth_code.txt

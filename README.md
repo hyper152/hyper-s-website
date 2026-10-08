@@ -59,6 +59,7 @@ C:\Users\23615\.conda\envs\web_env\python.exe -u main.py `
 
 ```powershell
 python main.py --reset-visits
+python main.py --force-report      # 启动时立即重新生成访客分析报告
 python main.py -H 0.0.0.0 -p 8000
 ```
 
@@ -102,21 +103,45 @@ python -c "import sqlite3; from datetime import datetime; from pathlib import Pa
 ## 访客分析
 
 ```powershell
+python src\analyze_visitor.py                 # 概要输出，完整报告覆盖写入 data/reports/visitor_report.txt
+python src\analyze_visitor.py --full          # 直接在控制台打印完整报告
+python src\analyze_visitor.py --top 20        # 每个地区只列出请求最多的前 20 个 IP
 python src\analyze_visitor.py ip=39.144.109.183
 python src\analyze_visitor.py 2026.4.27
 python src\analyze_visitor.py 2026.5.1-
 ```
+
+默认只打印地区排名、请求最多的 IP 等概要（约 30 行），完整明细覆盖写入 `data/reports/visitor_report.txt`（已被 .gitignore 忽略），用 VS Code 打开即可搜索。单 IP 查询默认只显示最近 200 条记录、前 50 个路径和前 10 个 User-Agent，加 `--full` 查看全部。
+
+报告排序为：国内省份（按访问次数降序）→ 国外地区（按访问次数降序）→ 内网。
+
+主程序（`main.py`）启动时会确保该文件存在：文件缺失或距上次生成超过 24 小时才重新覆盖生成，之后由后台线程每 30 分钟检查一次，因此全程只保留这一个文件。加 `--force-report` 启动可强制立即重新生成；设置环境变量 `DISABLE_VISITOR_REPORT=1` 可关闭该后台任务。
+
+### 访问分析页面
+
+页面地址 `/pages/visit/`，首页“总访问次数”徽标和“快速链接”都能进入。页面展示总请求、独立 IP、国内 / 国外占比、异常请求、最近 30 天趋势、国内省份与国外地区分布（可点开看具体 IP）、请求最多的 IP 和热门路径。
+
+数据来自 `/api/visit-stats`，由 `src/analyze_visitor.py` 的 `get_stats_payload()` 生成并缓存 5 分钟；页面“刷新数据”按钮会带 `?refresh=1` 强制重新分析。
+
+访客 IP 属于隐私数据，接口默认要求登录（`main.py` 顶部的 `VISIT_STATS_REQUIRE_LOGIN = True`）。未登录打开页面会看到登录提示并跳转登录页。想公开该页面就把它改成 `False`；想只允许特定账号查看，就填写 `VISIT_STATS_ALLOWED_USERS = {'hyper'}`。
+
+点击任意 IP 会弹出详细记录：归属地、总请求、错误请求、登录用户、首次 / 最后访问、请求方法、访问路径排行，以及最新的访问明细（每页 200 条，“加载更多”继续翻）。该功能只对 `main.py` 里的 `VISIT_DETAIL_ALLOWED_USERS`（默认 `{'hyper'}`）开放，接口 `/api/visit-detail?ip=<IP>` 会独立校验账号，其他账号点击只会看到提示。
 
 ## 项目结构
 
 ```text
 ├── main.py                       # Web 服务入口
 ├── requirements.txt              # Python 依赖
-├── pages/home/                         # 首页
-├── pages/                        # 内容页面
-├── pages/talk/
-│   ├── ai-chat.html              # Ollama AI 助手
-│   └── comment.html              # 留言板
+├── pages/                        # 内容页面及对应的 CSS、JS
+│   ├── _shared/                  # 全站主题、分类样式、返回导航
+│   ├── home/                     # 首页、home.css、home.js
+│   ├── login/                    # 登录页面与认证脚本
+│   ├── resume/                   # 个人简介与样式
+│   ├── talk/                     # AI 助手、留言板及对应资源
+│   ├── diy/                      # 装机记录与文章样式
+│   ├── travel/                   # 旅行页面、journal.css、journal.js
+│   ├── visit/                    # 访问分析页面及对应资源
+│   └── ...                       # 其他内容分类
 ├── src/
 │   ├── storage.py                # SQLite 存储与原子读写
 │   ├── migrate_data.py           # JSON 备份、导入及一致性校验
@@ -125,10 +150,11 @@ python src\analyze_visitor.py 2026.5.1-
 │   ├── message_board.py          # 留言板后端
 │   └── ollama.py                 # Ollama API
 ├── data/                         # 运行数据
-├── static/                       # 静态资源
 ├── logs/                         # 运行日志
 └── certs/                        # HTTPS 证书
 ```
+
+页面专用 CSS、JS 与 HTML 放在对应目录；跨页面共用资源放在 `pages/_shared/`。原 `/static/` 资源地址由服务端跳转到新地址（修改服务端后需重启）。
 
 ## 常见问题
 

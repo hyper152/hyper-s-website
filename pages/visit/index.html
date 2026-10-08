@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="网站访问分析：国内省份、国外地区、访问趋势与访客分布。" name="description"/>
+<meta content="#f6f7f2" name="theme-color"/>
+<title>访问分析 · hyper的Vlog</title>
+<link href="/pages/visit/visit-stats.css?v=20261005-2" rel="stylesheet"/>
+<link href="/pages/_shared/site-theme.css?v=20260911-centered-navigation" rel="stylesheet"/>
+</head>
+<body data-site-theme="garden" data-page-kind="page">
+<nav class="page-controls" aria-label="页面快捷导航"><a href="/pages/home/" data-page-back><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m10 5-7 7 7 7M3 12h18"/></svg><span>返回上一页</span></a><a href="/pages/home/"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9"/></svg><span>首页</span></a></nav>
+<main class="container visit-shell">
+<nav aria-label="面包屑" class="category-nav">
+<a href="/pages/home/">hyper / Vlog</a><a href="/pages/home/#categories">← 返回首页</a>
+</nav>
+<header class="page-heading">
+<span class="eyebrow">HYPER / VISITOR ANALYTICS</span>
+<h1>访问分析<span id="headingRecords">—</span></h1>
+<p class="subtitle">国内省份优先 · 按访问次数降序 · 数据来自本站访问记录</p>
+</header>
+
+<div class="visit-toolbar">
+<p class="visit-meta">
+<span id="generatedAt">正在加载…</span>
+<span class="meta-sep">·</span>
+<span id="visitRange">—</span>
+<span class="meta-sep" hidden="" id="detailHintSep">·</span>
+<span id="detailHint" hidden=""></span>
+</p>
+<div class="visit-actions">
+<label class="visit-search">
+<svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+<input aria-label="搜索访客" autocomplete="off" id="visitFilter" placeholder="搜索 IP / 省份 / 国家" type="search"/>
+</label>
+<button class="visit-btn" id="refreshStats" type="button">刷新数据</button>
+</div>
+</div>
+
+<p class="visit-filter-status" hidden="" id="filterStatus"></p>
+<p class="visit-alert" hidden="" id="visitAlert"></p>
+
+<section aria-label="访问总览" class="stat-cards" id="statCards">
+<article class="stat-card">
+<span class="stat-label">总请求</span>
+<strong id="cardRecords">—</strong>
+<small id="cardRange">—</small>
+</article>
+<article class="stat-card">
+<span class="stat-label">独立 IP</span>
+<strong id="cardIps">—</strong>
+<small id="cardIpsSplit">—</small>
+</article>
+<article class="stat-card">
+<span class="stat-label">国内访问</span>
+<strong id="cardDomestic">—</strong>
+<small id="cardDomesticShare">—</small>
+</article>
+<article class="stat-card">
+<span class="stat-label">异常请求</span>
+<strong id="cardErrors">—</strong>
+<small id="cardErrorShare">4xx / 5xx</small>
+</article>
+</section>
+
+<section class="visit-panel">
+<header class="panel-head"><h2>最近 30 天</h2><span class="panel-note" id="trendNote">每日访问量</span></header>
+<div aria-label="最近 30 天每日访问量" class="trend-chart" id="trendChart" role="img"></div>
+</section>
+
+<section class="visit-panel">
+<header class="panel-head"><h2>国内省份</h2><span class="panel-note" id="domesticNote">按访问次数降序</span></header>
+<div class="region-list" id="domesticList"></div>
+</section>
+
+<section class="visit-panel">
+<header class="panel-head"><h2>国外地区</h2><span class="panel-note" id="overseasNote">按访问次数降序</span></header>
+<div class="region-list" id="overseasList"></div>
+</section>
+
+<section class="visit-panel">
+<header class="panel-head"><h2>内网 / 本地</h2><span class="panel-note" id="internalNote">—</span></header>
+<div class="region-list" id="internalList"></div>
+</section>
+
+<section class="visit-panel">
+<header class="panel-head"><h2>请求最多的 IP</h2><span class="panel-note">前 20 个</span></header>
+<div class="table-wrap">
+<table class="visit-table">
+<thead><tr><th scope="col">#</th><th scope="col">IP</th><th scope="col">地区</th><th scope="col">请求</th><th scope="col">用户</th><th scope="col">最后访问</th></tr></thead>
+<tbody id="topIpBody"></tbody>
+</table>
+</div>
+</section>
+
+<section class="visit-panel">
+<header class="panel-head"><h2>热门路径</h2><span class="panel-note">前 12 个</span></header>
+<ol class="path-list" id="pathList"></ol>
+</section>
+
+<section class="visit-panel visit-locked" hidden="" id="lockedPanel">
+<h2 id="lockedTitle">需要登录</h2>
+<p id="lockedMessage">访客 IP 属于隐私数据，请登录后查看。</p>
+<a class="visit-btn" href="/pages/login/index.html?redirect=%2Fpages%2Fvisit%2F" id="loginLink">去登录</a>
+</section>
+</main>
+<footer>© <span id="visitYear">2026</span> hyper的Vlog · <a href="/pages/home/">返回首页</a></footer>
+
+<dialog aria-labelledby="detailTitle" class="visit-dialog" id="visitDialog">
+<header class="dialog-head">
+<div>
+<h2 id="detailTitle">—</h2>
+<p class="dialog-sub" id="detailSub">—</p>
+</div>
+<div class="dialog-actions">
+<button class="visit-btn ghost" id="detailCopy" type="button">复制 IP</button>
+<button class="visit-btn ghost" id="detailClose" type="button">关闭</button>
+</div>
+</header>
+<div class="dialog-body" id="detailBody"><p class="dialog-note">正在加载…</p></div>
+</dialog>
+
+<p aria-live="polite" class="visit-toast" hidden="" id="visitToast"></p>
+<script src="/pages/_shared/page-navigation.js?v=20260911-1" defer></script>
+<script src="/pages/visit/visit-stats.js?v=20261005-3" defer></script>
+</body>
+</html>

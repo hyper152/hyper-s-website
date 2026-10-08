@@ -16,6 +16,7 @@ ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_SUMMARY = Path(
     r"E:\projects\Future-Scholar\Sarcopia\runs\ct_corrected_2026-09-17\summary.csv"
 )
+ODIASP_SUMMARY = Path(r"E:\projects\Future-Scholar\Sarcopia\runs\odiasp_2026-10-08\summary.csv")
 DEFAULT_WEB_DIR = ROOT / "pages" / "projects" / "Future-Scholar"
 SALT_PATH = ROOT / "data" / "future_scholar_salt.txt"
 MANIFEST_PATH = ROOT / "data" / "future_scholar_cases.json"
@@ -51,7 +52,10 @@ def sync(summary: Path, web_dir: Path) -> dict:
     with summary.open("r", encoding="utf-8-sig", newline="") as handle:
         rows = list(csv.DictReader(handle))
     secret = salt()
+    model_names = {row.get("model", "") for row in rows if row.get("status") == "success"}
     assets = web_dir / "assets"
+    if model_names == {"ODIASP_UNET_muscle"}:
+        assets = assets / "odiasp_2026-10-08"
     cases = []
     for row in rows:
         identifier = case_id(row, secret)
@@ -63,6 +67,8 @@ def sync(summary: Path, web_dir: Path) -> dict:
         cases.append(
             {
                 "case_id": identifier,
+                "model": row.get("model", ""),
+                "prediction_version": "2026-10-08" if row.get("model") else "2026-09-17",
                 "status": row.get("status", ""),
                 "scan_phase": row.get("scan_phase", ""),
                 "phase_confidence": row.get("phase_confidence", ""),
@@ -87,13 +93,16 @@ def sync(summary: Path, web_dir: Path) -> dict:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--summary", default=str(DEFAULT_SUMMARY))
+    parser.add_argument("--summary", default=None)
     parser.add_argument("--web-dir", default=str(DEFAULT_WEB_DIR))
     parser.add_argument("--watch", action="store_true")
     parser.add_argument("--interval", type=int, default=60)
     args = parser.parse_args()
     while True:
-        result = sync(Path(args.summary), Path(args.web_dir))
+        selected = Path(args.summary) if args.summary else (
+            ODIASP_SUMMARY if ODIASP_SUMMARY.with_name("report.json").is_file() else DEFAULT_SUMMARY
+        )
+        result = sync(selected, Path(args.web_dir))
         print(json.dumps(result, ensure_ascii=False), flush=True)
         if not args.watch:
             return 0

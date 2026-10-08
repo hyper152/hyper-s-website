@@ -1,4 +1,4 @@
-// static/js/auth-interceptor.js
+// pages/login/auth-interceptor.js
 // 登录状态拦截器，自动处理401未授权
 
 (function() {

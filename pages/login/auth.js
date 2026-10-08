@@ -1,4 +1,4 @@
-// static/js/auth.js
+// pages/login/auth.js
 // 统一的登录状态管理
 
 const Auth = {

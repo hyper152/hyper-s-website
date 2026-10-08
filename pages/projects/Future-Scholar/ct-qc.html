@@ -114,7 +114,7 @@ function showStatus(message){
 function setMode(next){mode=next;brush.classList.toggle('active',next==='brush');eraser.classList.toggle('active',next==='eraser')}
 function setActiveView(view){viewButtons.forEach(button=>{const active=button.dataset.view===view;button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active))})}
 function meta(item){
-  return `<div class="meta"><div class="meta-grid"><div><span>匿名病例</span><br>${esc(item.case_id)}</div><div><span>处理状态</span><br>${esc(item.status)}</div><div><span>期相</span><br>${esc(item.scan_phase)}</div><div><span>定位方式</span><br>${esc(item.localization_method)}</div><div><span>层厚</span><br>${esc(item.slice_thickness_mm)} mm</div><div><span>SMA</span><br>${esc(item.sma_cm2)} cm²</div><div><span>平均 HU</span><br>${esc(item.muscle_hu_mean)}</div></div>${item.message?`<p class="error">${esc(item.message)}</p>`:''}</div>`;
+  return `<div class="meta">${item.model?`<p>分割模型：${esc(item.model)} · ${esc(item.prediction_version)}${item.corrected_mask?'｜当前编辑人工修正 Mask；下方指标来自模型预测':'｜当前编辑新模型预测 Mask'}</p>`:''}<div class="meta-grid"><div><span>匿名病例</span><br>${esc(item.case_id)}</div><div><span>处理状态</span><br>${esc(item.status)}</div><div><span>期相</span><br>${esc(item.scan_phase)}</div><div><span>定位方式</span><br>${esc(item.localization_method)}</div><div><span>层厚</span><br>${esc(item.slice_thickness_mm)} mm</div><div><span>SMA</span><br>${esc(item.sma_cm2)} cm²</div><div><span>平均 HU</span><br>${esc(item.muscle_hu_mean)}</div></div>${item.message?`<p class="error">${esc(item.message)}</p>`:''}</div>`;
 }
 function reviewSummary(review){
   return `<div class="review-summary"><strong class="${esc(review.localization_qc)}">L3定位：${esc(decisionText(review.localization_qc))}</strong><strong class="${esc(review.segmentation_qc)}">骨骼肌检测：${esc(decisionText(review.segmentation_qc))}</strong><br><span>标注人：${esc(review.reviewer)}　标注时间：${esc(review.reviewed_at)}</span></div>`;
@@ -122,7 +122,7 @@ function reviewSummary(review){
 function correctionSummary(correction){
   return `<div class="review-summary correction-summary"><strong class="pass">已完成</strong><br><span>修正人：${esc(correction.reviewer)}　修正时间：${esc(correction.corrected_at)}</span></div>`;
 }
-const priorReview=item=>item.review?reviewSummary(item.review):'<div class="review-summary"><strong class="uncertain">尚未质检</strong></div>';
+  const priorReview=item=>item.review?`${item.model?'<p class="hint">以下为原模型的历史质检记录</p>':''}${reviewSummary(item.review)}`:'<div class="review-summary"><strong class="uncertain">尚未质检</strong></div>';
 function editStage(item,completed){
   return `<div class="canvas-stage"><img class="base-image" data-role="base" src="${esc(item.l3)}" alt="${esc(item.case_id)} L3横断面" loading="lazy" decoding="async" fetchpriority="low"><canvas class="mask-canvas" data-role="mask" aria-label="${esc(item.case_id)} 肌肉 Mask"></canvas><div class="stage-loader" data-role="loader">滚动到此处加载 Mask…</div><span class="stage-badge">${completed?'已完成，可继续修改':'未完成'}</span></div><div class="case-actions"><button type="button" data-action="undo" disabled>撤销</button><button type="button" data-action="reset" disabled>恢复打开时的 Mask</button><button type="button" class="save" data-action="save" disabled>${completed?'保存修改':'完成'}</button></div>`;
 }
@@ -134,7 +134,7 @@ function cardPending(item){
   return `<article class="case-card" data-index="__INDEX__">${meta(item)}${summary}${editStage(item,false)}</article>`;
 }
 function cardCompleted(item){
-  return `<article class="case-card" data-index="__INDEX__">${meta(item)}${priorReview(item)}${correctionSummary(item.correction)}${editStage(item,true)}</article>`;
+  return `<article class="case-card" data-index="__INDEX__">${meta(item)}${priorReview(item)}${correctionSummary(item.correction)}${item.model&&item.overlay?`<p class="inline-action"><a href="${esc(item.overlay)}" target="_blank" rel="noopener">查看 ODIASP 新预测叠加图</a></p>`:''}${editStage(item,true)}</article>`;
 }
 
 class MaskEditor{
