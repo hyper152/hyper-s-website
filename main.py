@@ -9,7 +9,7 @@
 ✅ 日志带日期显示
 ✅ URL解码，显示中文路径
 ✅ 过滤静态资源日志（图片/视频/CSS/JS等）
-✅ 访问记录保存到 site.db / visits（线程安全，保留所有记录）
+✅ 页面及接口访问记录保存到 site.db / visits（线程安全）
 """
 import socket
 import ssl
@@ -129,6 +129,7 @@ class Config:
     RATE_LIMIT = 60  # 60秒内允许的最大请求数
     RATE_LIMIT_WINDOW = 60  # 时间窗口（秒）
     MAX_POST_SIZE = 1 * 1024 * 1024  # 1MB
+    MAX_MASK_POST_SIZE = 2 * 1024 * 1024  # 修正 Mask 的 PNG 上传上限
     ALLOWED_EXTENSIONS = None
 
     LOG_DIR = "logs"
@@ -357,12 +358,15 @@ def _read_exactly(stream, expected_length):
     return b''.join(chunks)
 
 def should_skip_log(path):
-    """判断是否应该跳过该请求的日志记录"""
-    path_lower = path.lower()
-    for ext in Config.SKIP_LOG_EXT:
-        if path_lower.endswith(ext):
-            return True
-    return False
+    """只记录页面和接口路由；资源文件及其查询参数不进入访问日志。"""
+    path_only = unquote(urlparse(path).path).lower()
+    if any(path_only == prefix or path_only.startswith(prefix + '/')
+           for prefix in ('/static', '/media', '/banner')):
+        return True
+    if path_only.endswith('/'):
+        return False
+    extension = posixpath.splitext(path_only.rstrip('/'))[1]
+    return bool(extension and extension not in ('.html', '.htm'))
 
 # ===================== HTTP 处理器 =====================
 class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
@@ -378,9 +382,77 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
         """完全禁用默认日志"""
         pass
 
+    def _reject_request(self, status, reason):
+        self._security_blocked = True
+        self.close_connection = True
+        # repr 防止换行/控制字符伪造日志，不记录查询参数中的凭据。
+        target = self.path.split('?', 1)[0][:400]
+        logger.warning("🛡️ 拦截请求 IP=%s 方法=%s 路径=%r 原因=%s",
+                       self.get_real_client_ip(), self.command, target, reason)
+        self.send_error(status)
+        return False
+
+    def parse_request(self):
+        """在路由、重定向或文件读取之前统一校验所有 HTTP 请求。"""
+        if not super().parse_request():
+            return False
+        self._security_blocked = False
+        try:
+            normalized = self._safe_url_path(self.path)
+        except (ValueError, UnicodeError):
+            return self._reject_request(403, '不安全的路径编码或路径穿越')
+        if self.is_protected_path(self.path):
+            return self._reject_request(403, '敏感文件或非公开目录')
+        if not self.is_allowed_path(self.path):
+            return self._reject_request(404, '路径不在公开路由范围内')
+        if self.command not in ('GET', 'HEAD', 'POST', 'DELETE'):
+            return self._reject_request(405, '不支持的 HTTP 方法')
+        if self.command in ('POST', 'DELETE') and not normalized.startswith('/api/'):
+            return self._reject_request(405, '只允许接口路由接收写入请求')
+
+        # 此服务不支持 chunked 请求体；拒绝歧义长度，避免转发解析不一致。
+        if self.headers.get_all('Transfer-Encoding'):
+            return self._reject_request(400, '不支持 Transfer-Encoding 请求体')
+        lengths = self.headers.get_all('Content-Length', [])
+        if len(lengths) > 1 or (lengths and
+                               (not lengths[0].isascii() or not lengths[0].isdigit())):
+            return self._reject_request(400, '无效或重复的 Content-Length')
+        if lengths:
+            # 先比较字符串长度，避免超长整数转换异常。
+            length_text = lengths[0].lstrip('0') or '0'
+            body_limit = (Config.MAX_MASK_POST_SIZE
+                          if normalized == '/api/future-scholar/mask-correction/save'
+                          else Config.MAX_POST_SIZE)
+            if len(length_text) > len(str(body_limit)) or int(length_text) > body_limit:
+                return self._reject_request(413, '请求体超过大小限制')
+            if self.command in ('GET', 'HEAD') and int(length_text):
+                return self._reject_request(400, '页面读取不接受请求体')
+            self.headers.replace_header('Content-Length', length_text)
+
+        if self.command == 'HEAD' and self._is_restricted_project(self.path):
+            user = get_user_info_from_request(self)
+            username = str(user.get('username', '')).strip().lower() if user else ''
+            if username not in FUTURE_SCHOLAR_ALLOWED_USERS:
+                return self._reject_request(403 if user else 401, '项目访问需要授权账号')
+        return True
+
+    def is_cgi(self):
+        """本站只提供静态文件和明确的 API，不执行磁盘上的 CGI。"""
+        return False
+
     def send_response(self, code, message=None):
         self.status = code
         super().send_response(code, message)
+
+    def send_header(self, keyword, value):
+        if keyword.lower() == 'content-type':
+            content_type = value.split(';', 1)[0].strip().lower()
+            if content_type.startswith(('image/', 'video/', 'audio/', 'font/')) or content_type in (
+                'text/css', 'text/javascript', 'application/javascript',
+                'application/pdf', 'application/octet-stream', 'application/zip',
+            ):
+                self._response_is_asset = True
+        super().send_header(keyword, value)
 
     def validate_path(self, path):
         """路径校验"""
@@ -404,13 +476,31 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
     def _safe_url_path(path):
         # Decode once, as translate_path does; reject ambiguous encodings and
         # Windows aliases before any filesystem normalization.
+        if not path.startswith('/') or path.startswith('//') or '#' in path:
+            raise ValueError('Unsafe request target')
         decoded = unquote(urlparse(path).path, errors='strict')
-        parts = decoded.replace('\\', '/').split('/')
+        if '\\' in decoded or '//' in decoded:
+            raise ValueError('Ambiguous path separators')
+        parts = decoded.split('/')
         if any(part.startswith('.') or part.endswith((' ', '.')) or
-               ':' in part or '%' in part or any(ord(c) < 32 for c in part)
+               any(c in part for c in ':%<>|"?*#') or
+               any(ord(c) < 32 or ord(c) == 127 for c in part) or
+               part.split('.')[0].upper() in {
+                   'CON', 'PRN', 'AUX', 'NUL', 'COM1', 'COM2', 'COM3', 'COM4',
+                   'COM5', 'COM6', 'COM7', 'COM8', 'COM9', 'LPT1', 'LPT2',
+                   'LPT3', 'LPT4', 'LPT5', 'LPT6', 'LPT7', 'LPT8', 'LPT9',
+               }
                for part in parts if part):
             raise ValueError('Unsafe path')
         return '/'.join(parts)
+
+    def _is_restricted_project(self, path):
+        normalized = self._safe_url_path(path).lower()
+        relative = os.path.relpath(os.path.realpath(self.translate_path(path)),
+                                   os.path.realpath(self.directory)).replace('\\', '/').lower()
+        return any(candidate == prefix or candidate.startswith(prefix + '/')
+                   for candidate in (normalized, '/' + relative)
+                   for prefix in ('/pages/future-scholar', '/pages/projects/future-scholar'))
 
     def is_protected_path(self, path):
         """Only public trees may resolve to files, including symlink targets."""
@@ -434,10 +524,15 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
                                           '/talk/ai-chat.html', '/visit-count') and not normalized.startswith('/api/')
             private_names = {'users.json', 'sessions.json', 'messages.json',
                              'visit_count.json', 'appsettings.json', 'config.json',
-                             'credentials', '__pycache__'}
-            private_suffixes = ('.py', '.pyc', '.php', '.key', '.pem', '.pfx', '.p12',
+                             'credentials', '__pycache__', 'web.config', 'dockerfile',
+                             'id_rsa', 'id_ed25519', 'authorized_keys'}
+            private_suffixes = ('.py', '.pyc', '.php', '.phtml', '.asp', '.aspx', '.jsp',
+                                '.cgi', '.pl', '.sh', '.bat', '.cmd', '.ps1', '.exe', '.dll',
+                                '.key', '.pem', '.pfx', '.p12', '.crt', '.cer', '.jks',
                                 '.db', '.sqlite', '.sqlite3', '.db-wal', '.db-shm',
-                                '.bak', '.backup', '.old', '.save', '.yml', '.yaml', '.toml')
+                                '.bak', '.backup', '.old', '.save', '.orig', '.swp', '.swo',
+                                '.log', '.sql', '.dump', '.ini', '.conf', '.config',
+                                '.yml', '.yaml', '.toml')
             return any(part.startswith('.') or part in private_names or
                        part.endswith(private_suffixes) for part in parts)
         except (ValueError, OSError, UnicodeError):
@@ -451,6 +546,12 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
         if not self.is_allowed_path(self.path):
             self.send_error(404, 'Not Found')
             return None
+        if self._is_restricted_project(self.path):
+            user = get_user_info_from_request(self)
+            username = str(user.get('username', '')).strip().lower() if user else ''
+            if username not in FUTURE_SCHOLAR_ALLOWED_USERS:
+                self._reject_request(403 if user else 401, '项目访问需要授权账号')
+                return None
         normalized = self._safe_url_path(self.path)
         asset_location = Config.LEGACY_ASSET_PATHS.get(normalized)
         if asset_location:
@@ -575,10 +676,10 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
     def _log_access(self, emoji, path, status, duration, username="", method="GET", visits=0, client_ip=""):
         """统一的访问日志输出 - 只记录路由，不记录静态资源"""
         # 解码路径显示中文
-        decoded_path = decode_path(path)
+        decoded_path = decode_path(urlparse(path).path)
 
         # 跳过静态资源日志（图片、视频、CSS、JS等）
-        if should_skip_log(decoded_path):
+        if should_skip_log(path) or getattr(self, '_response_is_asset', False):
             return
 
         # 日期时间格式化
@@ -638,6 +739,12 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
             request_method = getattr(self, 'command', 'GET')
             status_code = getattr(self, 'status', 200)
 
+            # 无效请求只写安全告警；资源下载不进入页面访问日志、记录及计数。
+            if not getattr(self, 'command', None) or getattr(self, '_security_blocked', False):
+                return
+            if should_skip_log(request_path) or getattr(self, '_response_is_asset', False):
+                return
+
             # 获取真实IP（现在 headers 已经可用）
             client_ip = self.get_real_client_ip()
 
@@ -646,7 +753,7 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
             path_only = urlparse(request_path).path
             path_lower = path_only.lower()
             is_api_request = path_lower == '/api' or path_lower.startswith('/api/')
-            is_static_request = any(path_lower.endswith(ext) for ext in Config.SKIP_LOG_EXT)
+            is_static_request = should_skip_log(request_path)
             is_page_visit = request_method == 'GET' and not is_api_request and not is_static_request
 
             request_count = 0
@@ -681,7 +788,7 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
             # ========== 保存访问记录到 site.db / visits（线程安全） ==========
             try:
                 # 解码路径为中文
-                decoded_request_path = decode_path(request_path)
+                decoded_request_path = decode_path(path_only)
 
                 # 构建访问记录
                 visit_record = {
@@ -812,6 +919,7 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
         parsed = urlparse(self.path)
         path = parsed.path
         access_path = decode_path(path)
+        access_path_lower = access_path.lower()
 
         if path.startswith('/home/') and path not in ('/home/', '/home/index.html'):
             self.send_response(302)
@@ -832,12 +940,12 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
             return
 
         future_scholar_new = (
-            access_path == '/pages/projects/Future-Scholar'
-            or access_path.startswith('/pages/projects/Future-Scholar/')
+            access_path_lower == '/pages/projects/future-scholar'
+            or access_path_lower.startswith('/pages/projects/future-scholar/')
         )
         future_scholar_old = (
-            access_path == '/pages/Future-Scholar'
-            or access_path.startswith('/pages/Future-Scholar/')
+            access_path_lower == '/pages/future-scholar'
+            or access_path_lower.startswith('/pages/future-scholar/')
         )
         if future_scholar_new or future_scholar_old:
             user = get_user_info_from_request(self)
@@ -1149,7 +1257,7 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
                 self._send_json(415, {'error': '请以 image/png 格式上传 Mask'})
                 return
             content_length = int(self.headers.get('Content-Length', '0'))
-            if content_length <= 0 or content_length > 2 * 1024 * 1024:
+            if content_length <= 0 or content_length > Config.MAX_MASK_POST_SIZE:
                 self._send_json(400, {'error': 'PNG 内容为空或超过 2 MiB'})
                 return
             png = _read_exactly(self.rfile, content_length)
@@ -1322,7 +1430,7 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
         lst = [name for name in lst if not self.is_protected_path(
             urlparse(self.path).path.rstrip('/') + '/' + quote(name))]
         lst.sort(key=lambda x: (not os.path.isdir(os.path.join(path, x)), x.lower()))
-        cur = unquote(self.path)
+        cur = unquote(urlparse(self.path).path)
         if not cur.endswith('/'):
             cur += '/'
 
@@ -1332,17 +1440,17 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
         for part in cur.strip('/').split('/'):
             if part:
                 p += part + '/'
-                bread.append(f'<span>/</span><a href="/{p}">{part}</a>')
+                bread.append(f'<span>/</span><a href="/{quote(p, safe="/")}">{html.escape(part)}</a>')
 
         back = ''
         if cur != '/':
             parent = os.path.dirname(cur.rstrip('/')).replace('\\', '/') or '/'
-            back = f'<a href="{parent}" class="back-btn"><i class="fas fa-arrow-left"></i> 返回上一级</a>'
+            back = f'<a href="{quote(parent, safe="/")}" class="back-btn"><i class="fas fa-arrow-left"></i> 返回上一级</a>'
 
         items = []
         for name in lst:
             fp = os.path.join(path, name)
-            url = self.path + name
+            url = quote(cur, safe='/') + quote(name, safe='')
             safe_name = html.escape(name)
             if os.path.isdir(fp):
                 items.append(f'''
@@ -1363,8 +1471,8 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
                 </a>''')
 
         page_html = self.get_template().format(
-            title=f"目录列表 - {cur}",
-            path=cur,
+            title=f"目录列表 - {html.escape(cur)}",
+            path=html.escape(cur),
             breadcrumb=''.join(bread),
             back_button=back,
             items=''.join(items)
