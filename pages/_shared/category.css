@@ -147,24 +147,6 @@ h1 span {
     padding: 3px 7px;
     border-radius: 5px;
 }
-.topic-cover {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(125deg, #f6f7f2, #f6f7f2);
-    color: var(--accent, #67824f);
-}
-.topic-cover strong {
-    font-size: 40px;
-    font-weight: 650;
-}
-.topic-cover small {
-    font-size: 12px;
-    letter-spacing: 2px;
-    margin-top: 8px;
-}
 footer {
     border-top: 1px solid #edf1e7;
     color: #8c94a0;

@@ -33,8 +33,6 @@ from src.ip_location import query_ip_city
 from src.storage import get_store
 from src.admin_db import is_admin, overview as admin_overview, browse as admin_browse
 
-FUTURE_SCHOLAR_ALLOWED_USERS = {'caibo', 'hyper', 'admin'}
-
 # 访问分析页面（/pages/visit/）数据接口：访客 IP 属于隐私数据，默认仅登录账号可见。
 VISIT_STATS_REQUIRE_LOGIN = True
 # 留空表示任意已登录账号；填写则只允许名单内的账号（小写）。
@@ -385,20 +383,6 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
             return self._reject_request(403, '敏感文件或非公开目录')
         if not self.is_allowed_path(self.path):
             return self._reject_request(404, '路径不在公开路由范围内')
-        # Sarcopia's manual annotation workflow has moved to the project archive.
-        retired_path = normalized.lower()
-        retired_pages = (
-            '/pages/projects/future-scholar/ct-qc.html',
-            '/pages/projects/future-scholar/mask-editor.html',
-            '/pages/future-scholar/ct-qc.html',
-            '/pages/future-scholar/mask-editor.html',
-        )
-        if (retired_path.rstrip('/') == '/api/future-scholar'
-                or retired_path.startswith('/api/future-scholar/')
-                or retired_path.rstrip('/') in retired_pages
-                or retired_path.startswith('/pages/projects/future-scholar/assets/')
-                or retired_path.startswith('/pages/future-scholar/assets/')):
-            return self._reject_request(410, 'Sarcopia manual annotation has been retired')
         if self.command not in ('GET', 'HEAD', 'POST', 'DELETE'):
             return self._reject_request(405, '不支持的 HTTP 方法')
         if self.command in ('POST', 'DELETE') and not normalized.startswith('/api/'):
@@ -443,11 +427,6 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
                 return self._reject_request(400, '页面读取不接受请求体')
             self.headers.replace_header('Content-Length', length_text)
 
-        if self.command == 'HEAD' and self._is_restricted_project(self.path):
-            user = get_user_info_from_request(self)
-            username = str(user.get('username', '')).strip().lower() if user else ''
-            if username not in FUTURE_SCHOLAR_ALLOWED_USERS:
-                return self._reject_request(403 if user else 401, '项目访问需要授权账号')
         return True
 
     def is_cgi(self):
@@ -508,14 +487,6 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
             raise ValueError('Unsafe path')
         return '/'.join(parts)
 
-    def _is_restricted_project(self, path):
-        normalized = self._safe_url_path(path).lower()
-        relative = os.path.relpath(os.path.realpath(self.translate_path(path)),
-                                   os.path.realpath(self.directory)).replace('\\', '/').lower()
-        return any(candidate == prefix or candidate.startswith(prefix + '/')
-                   for candidate in (normalized, '/' + relative)
-                   for prefix in ('/pages/future-scholar', '/pages/projects/future-scholar'))
-
     def is_protected_path(self, path):
         """Only public trees may resolve to files, including symlink targets."""
         try:
@@ -560,12 +531,6 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
         if not self.is_allowed_path(self.path):
             self.send_error(404, 'Not Found')
             return None
-        if self._is_restricted_project(self.path):
-            user = get_user_info_from_request(self)
-            username = str(user.get('username', '')).strip().lower() if user else ''
-            if username not in FUTURE_SCHOLAR_ALLOWED_USERS:
-                self._reject_request(403 if user else 401, '项目访问需要授权账号')
-                return None
         normalized = self._safe_url_path(self.path)
         asset_location = Config.LEGACY_ASSET_PATHS.get(normalized)
         if asset_location:
@@ -932,8 +897,6 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
         """处理GET请求"""
         parsed = urlparse(self.path)
         path = parsed.path
-        access_path = decode_path(path)
-        access_path_lower = access_path.lower()
 
         if path.startswith('/home/') and path not in ('/home/', '/home/index.html'):
             self.send_response(302)
@@ -952,42 +915,6 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
             logger.warning(f"阻止访问受保护路径: {path}")
             self.send_error(403, "Forbidden")
             return
-
-        future_scholar_new = (
-            access_path_lower == '/pages/projects/future-scholar'
-            or access_path_lower.startswith('/pages/projects/future-scholar/')
-        )
-        future_scholar_old = (
-            access_path_lower == '/pages/future-scholar'
-            or access_path_lower.startswith('/pages/future-scholar/')
-        )
-        if future_scholar_new or future_scholar_old:
-            user = get_user_info_from_request(self)
-            username = str(user.get('username', '')).strip().lower() if user else ''
-            if username not in FUTURE_SCHOLAR_ALLOWED_USERS:
-                status = 401 if not user else 403
-                message = '请先登录授权账号' if not user else '当前账号无权访问此项目'
-                body = (
-                    '<!doctype html><meta charset="utf-8"><title>访问受限</title>'
-                    '<body style="font:18px system-ui;text-align:center;padding:12vh 20px">'
-                    f'<h1>{status}</h1><p>{html.escape(message)}</p>'
-                    '<p><a href="/pages/login/index.html">前往登录</a></p></body>'
-                ).encode('utf-8')
-                self.send_response(status)
-                self.send_header('Content-Type', 'text/html; charset=utf-8')
-                self.send_header('Content-Length', str(len(body)))
-                self.end_headers()
-                self.wfile.write(body)
-                return
-            if future_scholar_old:
-                suffix = access_path[len('/pages/Future-Scholar'):]
-                location = '/pages/projects/Future-Scholar' + suffix
-                if parsed.query:
-                    location += '?' + parsed.query
-                self.send_response(301)
-                self.send_header('Location', location)
-                self.end_headers()
-                return
 
         # 处理/talk路径，返回静态页面
         if path in ('/talk', '/talk/', '/talk/comment.html', '/pages/talk', '/pages/talk/', '/pages/talk/comment.html'):

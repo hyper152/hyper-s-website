@@ -233,7 +233,3 @@ MIT © 2026 CQU.hyper
 这不代表运行目录从未被直接下载，也不是完整的密钥审计。
 保留访问日志，检查这些路径及 `logs/`、`src/` 的成功下载记录。
 如确认私钥、账户数据或会话泄露，应更换对应证书/凭据并使相关会话失效。
-
-## Sarcopia 手动标注已迁出（2026-10-13）
-
-项目专用页面、服务模块、病例数据和图像已剪切到 `E:/projects/Future-Scholar/Sarcopia`。旧标注 API 和页面入口返回 410；Future Scholar 入口保留 MFFE 项目。历史内容见 Sarcopia 的 `src/legacy/manual_annotation/README.md`，网站不再提供 Sarcopia 手动标注。

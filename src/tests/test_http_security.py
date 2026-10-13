@@ -20,8 +20,7 @@ class StaticSecurityTests(unittest.TestCase):
                      'media/photo.webp', 'robots.txt', 'pages/list/visible.html',
                      'pages/list/.env', 'pages/list/secret.key', 'pages/list/server.log',
                      'pages/list/web.config', 'pages/list/backup.sql', 'pages/list/test.cgi',
-                     'pages/list/config.ini', 'pages/list/data.pdf',
-                     'pages/projects/Future-Scholar/private.html']:
+                     'pages/list/config.ini', 'pages/list/data.pdf']:
             path = self.root / name
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text('fixture', encoding='utf-8')
@@ -121,30 +120,6 @@ class StaticSecurityTests(unittest.TestCase):
                     response.read()
                 finally:
                     conn.close()
-
-    def test_project_auth_cannot_be_bypassed_by_head_or_case(self):
-        with patch.object(main, 'get_user_info_from_request', return_value={}):
-            for method in ('GET', 'HEAD'):
-                for path in ('/pages/projects/Future-Scholar/private.html',
-                             '/pages/projects/future-scholar/private.html',
-                             '/pages/projects/%46uture-Scholar/private.html'):
-                    with self.subTest(method=method, path=path):
-                        self.assertEqual(401, self.request(path, method)[0])
-        with patch.object(main, 'get_user_info_from_request', return_value={'username': 'hyper'}):
-            self.assertEqual(200, self.request('/pages/projects/Future-Scholar/private.html', 'HEAD')[0])
-
-    def test_retired_annotation_endpoints_are_unavailable(self):
-        paths = ('/api/future-scholar/stats', '/api/future-scholar/review',
-                 '/api/future-scholar/mask-correction/save?case_id=test',
-                 '/api/Future-Scholar/mask-correction/file',
-                 '/pages/projects/Future-Scholar/ct-qc.html',
-                 '/pages/projects/%46uture-Scholar/mask-editor.html',
-                 '/pages/Future-Scholar/ct-qc.html',
-                 '/pages/projects/Future-Scholar/assets/test/l3.png')
-        for method in ('GET', 'HEAD', 'POST'):
-            for path in paths:
-                with self.subTest(method=method, path=path):
-                    self.assertEqual(410, self.request(path, method)[0])
 
     def test_static_requests_do_not_enter_logs_visits_or_frequency_counts(self):
         # Run the real accounting wrapper with all storage/network effects mocked.
