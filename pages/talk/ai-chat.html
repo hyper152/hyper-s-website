@@ -464,6 +464,7 @@
 <link href="/pages/_shared/site-theme.css?v=20260911-centered-navigation" rel="stylesheet"/>
 <link href="/pages/talk/ai-chat.css?v=20260911-sidebar" rel="stylesheet"/>
 <meta content="#f6f7f2" name="theme-color"/>
+<script src="/pages/talk/chat-stream.js?v=20261012-1" defer></script>
 </head>
 <body data-page-kind="chat" data-site-theme="garden"><aside aria-label="聊天导航" class="chat-sidebar" id="chatSidebar"><nav aria-label="全站导航" class="site-navigation"><a class="site-brand" href="/pages/home/"><img alt="" height="38" src="/pages/home/hyper.png" width="38"/><span>hyper.</span></a><div class="site-nav-links"><a href="/pages/home/#categories">探索分类</a><a href="/pages/resume/index.html">个人简介</a><a href="/pages/talk/comment.html">留言板</a></div></nav><nav aria-label="页面快捷导航" class="page-controls"><a data-page-back="" href="/pages/home/"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="m10 5-7 7 7 7M3 12h18"></path></svg><span>返回上一页</span></a><a href="/pages/home/"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9"></path></svg><span>首页</span></a></nav><div class="chat-header">
 <i class="fas fa-cloud-upload-alt"></i>
@@ -543,68 +544,7 @@
 
         let isGenerating = false;
         let conversationHistory = [];
-
-        // ==================== 获取用户名（从登录系统） ====================
-        let userName = '游客';
-
-        try {
-            // 方法1：从 Auth 模块获取（如果已加载）
-            if (typeof Auth !== 'undefined' && Auth.getLocalUser) {
-                const localUser = Auth.getLocalUser();
-                if (localUser && localUser.username) {
-                    userName = localUser.username;
-                    console.log('✅ 从 Auth 获取用户名:', userName);
-                }
-            }
-
-            // 方法2：如果 Auth 未加载，直接从 localStorage 读取
-            if (userName === '游客') {
-                const userInfo = localStorage.getItem('user_info');
-                if (userInfo) {
-                    try {
-                        const user = JSON.parse(userInfo);
-                        if (user && user.username) {
-                            userName = user.username;
-                            console.log('✅ 从 localStorage 获取用户名:', userName);
-                        }
-                    } catch (e) { }
-                }
-            }
-        } catch (e) {
-            console.warn('获取用户名失败，使用默认值:', e);
-        }
-
-        console.log('👤 当前用户:', userName);
-
-        // ==================== AI提问保存函数 ====================
-        function saveAIQuestion(question, userName) {
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const day = String(now.getDate()).padStart(2, '0');
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            const time = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-
-            const data = {
-                time: time,
-                question: question,
-                user: userName || '游客'
-            };
-
-            fetch('/api/ollama/save-ai-question', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            }).then(res => res.json()).then(res => {
-                if (res && res.status === 'ok') {
-                    console.log('✅ AI问题已保存:', question.substring(0, 30) + '...');
-                }
-            }).catch(e => {
-                console.warn('⚠️ AI问题保存失败:', e);
-            });
-        }
+        const conversationId = window.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(36).slice(2)}`;
 
         // ==================== 工具函数 ====================
         function renderMarkdown(text) {
@@ -708,9 +648,6 @@
             conversationHistory.push({ role: 'user', content: message });
             addMessage('user', message);
 
-            // ========== 保存AI提问记录（包括游客） ==========
-            saveAIQuestion(message, userName);
-
             const assistantMsgDiv = addMessage('assistant', '');
             const contentDiv = assistantMsgDiv.querySelector('.message-content');
 
@@ -719,11 +656,14 @@
             typingDiv.innerHTML = '<span></span><span></span><span></span>';
             contentDiv.appendChild(typingDiv);
 
+            let fullContent = '';
             try {
                 const res = await fetch('/api/ollama/chat', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json', ...(localStorage.getItem('session_id') ? { Authorization: 'Session ' + localStorage.getItem('session_id') } : {}) },
                     body: JSON.stringify({
+                        conversation_id: conversationId,
                         model: MODEL_NAME,
                         messages: conversationHistory,
                         stream: true
@@ -735,29 +675,17 @@
                 }
 
                 contentDiv.innerHTML = '';
-                let fullContent = '';
-
-                const reader = res.body.getReader();
-                const decoder = new TextDecoder();
-
-                while (true) {
-                    const { done, value } = await reader.read();
-                    if (done) break;
-
-                    const chunk = decoder.decode(value, { stream: true });
-                    const lines = chunk.split('\n').filter(line => line.trim());
-
-                    for (const line of lines) {
-                        try {
-                            const data = JSON.parse(line);
-                            if (data.message?.content) {
-                                fullContent += data.message.content;
-                                contentDiv.innerHTML = renderMarkdown(fullContent);
-                                document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
-                            }
-                        } catch (e) { }
+                let completed = false;
+                await readChatStream(res.body, (data) => {
+                    if (data.error) throw new Error(data.error);
+                    if (data.message?.content) {
+                        fullContent += data.message.content;
+                        contentDiv.innerHTML = renderMarkdown(fullContent);
+                        document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
                     }
-                }
+                    if (data.done === true) completed = true;
+                });
+                if (!completed) throw new Error('回答生成中断，已保留收到的内容');
 
                 if (!fullContent) {
                     contentDiv.innerHTML = '（模型没有返回内容）';
@@ -766,7 +694,14 @@
                 }
             } catch (err) {
                 console.error('发送失败:', err);
-                contentDiv.innerHTML = `❌ 错误: ${err.message}`;
+                if (fullContent) {
+                    conversationHistory.push({ role: 'assistant', content: fullContent });
+                    const errorNote = document.createElement('p');
+                    errorNote.textContent = `❌ ${err.message}`;
+                    contentDiv.appendChild(errorNote);
+                } else {
+                    contentDiv.textContent = `❌ 错误: ${err.message}`;
+                }
                 addSystemMessage(`❌ 请求失败，请稍后重试`, 4000);
             } finally {
                 isGenerating = false;

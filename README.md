@@ -136,6 +136,27 @@ python src\analyze_visitor.py 2026.5.1-
 
 点击任意 IP 会弹出详细记录：归属地、总请求、错误请求、登录用户、首次 / 最后访问、请求方法、访问路径排行，以及最新的访问明细（每页 200 条，“加载更多”继续翻）。该功能只对 `main.py` 里的 `VISIT_DETAIL_ALLOWED_USERS`（默认 `{'hyper'}`）开放，接口 `/api/visit-detail?ip=<IP>` 会独立校验账号，其他账号点击只会看到提示。
 
+## hyper 管理后台
+
+地址 `/pages/admin/`。用原有 `hyper` 账号登录后，首页账号菜单会显示“管理后台”。页面和接口均由服务端校验账号，后来注册的同名账号不会获得权限。
+
+后台只读浏览 `data/site.db` 的留言、访问记录、用户、会话、AI 问答、计数器和元数据，支持搜索、分页、字段结构和完整记录查看。密码与会话令牌会隐藏，不提供任意 SQL、修改或删除接口。
+
+账号注册禁止同名：忽略大小写与首尾空格，服务端检查和 SQLite 唯一索引共同处理，包括同时提交的注册请求。
+
+新留言把主服务识别的客户端 IP 保存在记录的 `ip` 字段中，IP 和补录证据只在后台展示，不通过公共留言接口返回。
+
+AI 问答由 `/api/ollama/chat` 在服务端自动记录，每轮保存完整提问、回答、模型返回的思考内容、多轮上下文、模型、账号、IP 和会话编号。流式与非流式调用都会保存，生成中定期写入已收到的内容，完成、失败和中断状态均可在后台“AI 问答”查看；“查看记录”展示完整内容。旧记录此前只保存了问题，无法恢复当时没有记录的回答。
+
+历史留言可根据提交时间、账号及访问记录 / 日志补录 IP。只处理两秒内且能唯一匹配的记录，冲突、缺少证据或仅有 localhost 代理地址时保持未知；再次执行不会覆盖已有 IP。
+
+```powershell
+python -m src.backfill_message_ips           # 预览匹配结果
+python -m src.backfill_message_ips --apply   # 先备份数据库，再补录
+```
+
+备份保存在 `data/backups/message-ip-before-*.db`。完成部署后重启 `main.py`，后台接口和新留言 IP 记录才会生效。
+
 ## 项目结构
 
 ```text
@@ -143,6 +164,7 @@ python src\analyze_visitor.py 2026.5.1-
 ├── requirements.txt              # Python 依赖
 ├── pages/                        # 内容页面及对应的 CSS、JS
 │   ├── _shared/                  # 全站主题、分类样式、返回导航
+│   ├── admin/                    # hyper 管理后台及对应资源
 │   ├── home/                     # 首页、home.css、home.js
 │   ├── login/                    # 登录页面与认证脚本
 │   ├── resume/                   # 个人简介与样式
@@ -211,3 +233,7 @@ MIT © 2026 CQU.hyper
 这不代表运行目录从未被直接下载，也不是完整的密钥审计。
 保留访问日志，检查这些路径及 `logs/`、`src/` 的成功下载记录。
 如确认私钥、账户数据或会话泄露，应更换对应证书/凭据并使相关会话失效。
+
+## Sarcopia 手动标注已迁出（2026-10-13）
+
+项目专用页面、服务模块、病例数据和图像已剪切到 `E:/projects/Future-Scholar/Sarcopia`。旧标注 API 和页面入口返回 410；Future Scholar 入口保留 MFFE 项目。历史内容见 Sarcopia 的 `src/legacy/manual_annotation/README.md`，网站不再提供 Sarcopia 手动标注。

@@ -31,15 +31,7 @@ from urllib.parse import parse_qs, unquote, urlparse, quote
 import posixpath
 from src.ip_location import query_ip_city
 from src.storage import get_store
-from src.future_scholar_qc import next_cases as future_scholar_next_cases
-from src.future_scholar_qc import save_review as future_scholar_save_review
-from src.future_scholar_qc import stats as future_scholar_stats
-from src.future_scholar_qc import reviewed_cases as future_scholar_reviewed_cases
-from src.future_scholar_mask_correction import pending_cases as mask_correction_pending_cases
-from src.future_scholar_mask_correction import corrected_cases as mask_correction_corrected_cases
-from src.future_scholar_mask_correction import corrected_mask_bytes
-from src.future_scholar_mask_correction import save_mask_png as mask_correction_save_mask_png
-from src.future_scholar_mask_correction import stats as mask_correction_stats
+from src.admin_db import is_admin, overview as admin_overview, browse as admin_browse
 
 FUTURE_SCHOLAR_ALLOWED_USERS = {'caibo', 'hyper', 'admin'}
 
@@ -129,7 +121,6 @@ class Config:
     RATE_LIMIT = 60  # 60秒内允许的最大请求数
     RATE_LIMIT_WINDOW = 60  # 时间窗口（秒）
     MAX_POST_SIZE = 1 * 1024 * 1024  # 1MB
-    MAX_MASK_POST_SIZE = 2 * 1024 * 1024  # 修正 Mask 的 PNG 上传上限
     ALLOWED_EXTENSIONS = None
 
     LOG_DIR = "logs"
@@ -345,17 +336,6 @@ def get_user_info_from_request(request_handler):
     return get_current_user(session_id)
 
 
-def _read_exactly(stream, expected_length):
-    """从可能分段到达的请求流中读取完整的 Content-Length 字节。"""
-    chunks = []
-    remaining = expected_length
-    while remaining > 0:
-        chunk = stream.read(remaining)
-        if not chunk:
-            break
-        chunks.append(chunk)
-        remaining -= len(chunk)
-    return b''.join(chunks)
 
 def should_skip_log(path):
     """只记录页面和接口路由；资源文件及其查询参数不进入访问日志。"""
@@ -405,10 +385,46 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
             return self._reject_request(403, '敏感文件或非公开目录')
         if not self.is_allowed_path(self.path):
             return self._reject_request(404, '路径不在公开路由范围内')
+        # Sarcopia's manual annotation workflow has moved to the project archive.
+        retired_path = normalized.lower()
+        retired_pages = (
+            '/pages/projects/future-scholar/ct-qc.html',
+            '/pages/projects/future-scholar/mask-editor.html',
+            '/pages/future-scholar/ct-qc.html',
+            '/pages/future-scholar/mask-editor.html',
+        )
+        if (retired_path.rstrip('/') == '/api/future-scholar'
+                or retired_path.startswith('/api/future-scholar/')
+                or retired_path.rstrip('/') in retired_pages
+                or retired_path.startswith('/pages/projects/future-scholar/assets/')
+                or retired_path.startswith('/pages/future-scholar/assets/')):
+            return self._reject_request(410, 'Sarcopia manual annotation has been retired')
         if self.command not in ('GET', 'HEAD', 'POST', 'DELETE'):
             return self._reject_request(405, '不支持的 HTTP 方法')
         if self.command in ('POST', 'DELETE') and not normalized.startswith('/api/'):
             return self._reject_request(405, '只允许接口路由接收写入请求')
+
+        admin_page = normalized == '/pages/admin' or normalized.startswith('/pages/admin/')
+        admin_api = normalized == '/api/admin' or normalized.startswith('/api/admin/')
+        if admin_page or admin_api:
+            user = get_user_info_from_request(self)
+            if not is_admin(user):
+                if admin_page and not user and self.command in ('GET', 'HEAD'):
+                    self.send_response(302)
+                    self.send_header('Location', '/pages/login/index.html?redirect=' + quote(self.path, safe=''))
+                    self.send_header('Cache-Control', 'no-store')
+                    self.end_headers()
+                elif admin_api:
+                    self._send_json(403 if user else 401, {'error': '仅 hyper 账号可访问管理后台', 'need_login': not bool(user)})
+                else:
+                    self.send_error(403, 'Forbidden')
+                self._security_blocked = True
+                self.close_connection = True
+                return False
+            if admin_api and self.command != 'GET':
+                self._send_json(405, {'error': '此后台仅支持读取数据'})
+                self.close_connection = True
+                return False
 
         # 此服务不支持 chunked 请求体；拒绝歧义长度，避免转发解析不一致。
         if self.headers.get_all('Transfer-Encoding'):
@@ -420,9 +436,7 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
         if lengths:
             # 先比较字符串长度，避免超长整数转换异常。
             length_text = lengths[0].lstrip('0') or '0'
-            body_limit = (Config.MAX_MASK_POST_SIZE
-                          if normalized == '/api/future-scholar/mask-correction/save'
-                          else Config.MAX_POST_SIZE)
+            body_limit = Config.MAX_POST_SIZE
             if len(length_text) > len(str(body_limit)) or int(length_text) > body_limit:
                 return self._reject_request(413, '请求体超过大小限制')
             if self.command in ('GET', 'HEAD') and int(length_text):
@@ -990,18 +1004,10 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
             self._handle_visit_count()
             return
 
-        # Future Scholar CT 质控接口：病例采用匿名编号，且必须登录后访问。
-        if path in (
-            '/api/future-scholar/next',
-            '/api/future-scholar/stats',
-            '/api/future-scholar/reviews',
-            '/api/future-scholar/mask-correction/next',
-            '/api/future-scholar/mask-correction/stats',
-            '/api/future-scholar/mask-correction/corrected',
-            '/api/future-scholar/mask-correction/file',
-        ):
-            self._handle_future_scholar_get(path)
+        if path.startswith('/api/admin/'):
+            self._handle_admin_get(path)
             return
+
 
         # 访问分析页面数据（/pages/visit/）
         if path in ('/api/visit-stats', '/api/visit-stats/'):
@@ -1045,39 +1051,7 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
             self.send_error(403, "Forbidden")
             return
 
-        if path == '/api/future-scholar/review':
-            self._handle_future_scholar_review()
-            return
 
-        if path == '/api/future-scholar/mask-correction/save':
-            self._handle_mask_correction_save()
-            return
-
-        # 直接处理 AI 问题保存接口
-        if path == '/api/ollama/save-ai-question':
-            content_length = int(self.headers.get('Content-Length', 0))
-            body = self.rfile.read(content_length)
-            try:
-                data = json.loads(body.decode('utf-8'))
-                # 获取IP
-                ip = self.headers.get('X-Forwarded-For', None)
-                if ip:
-                    ip = ip.split(',')[0].strip()
-                else:
-                    ip = self.client_address[0]
-                data['ip'] = ip
-                get_store().append('ai_questions', data)
-
-                self.send_response(200)
-                self.send_header('Content-Type', 'application/json; charset=utf-8')
-                self.end_headers()
-                self.wfile.write(json.dumps({'status': 'ok'}).encode('utf-8'))
-            except Exception as e:
-                self.send_response(500)
-                self.send_header('Content-Type', 'application/json; charset=utf-8')
-                self.end_headers()
-                self.wfile.write(json.dumps({'status': 'fail', 'msg': str(e)}).encode('utf-8'))
-            return
 
         local = self.translate_path(self.path)
         if not self.validate_path(local):
@@ -1097,27 +1071,36 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
         self.send_header('Content-Length', str(len(body)))
         self.send_header('Cache-Control', 'no-store')
         self.end_headers()
-        self.wfile.write(body)
+        if self.command != 'HEAD':
+            self.wfile.write(body)
 
-    def _send_png(self, payload):
-        """发送受保护的 PNG 图片。"""
-        self.send_response(200)
-        self.send_header('Content-Type', 'image/png')
-        self.send_header('Content-Length', str(len(payload)))
-        self.send_header('Cache-Control', 'no-store')
-        self.end_headers()
-        self.wfile.write(payload)
-
-    def _future_scholar_user(self):
+    def _handle_admin_get(self, path):
         user = get_user_info_from_request(self)
-        if not user:
-            self._send_json(401, {'error': '请先登录后再进行标注'})
-            return None
-        username = str(user.get('username', '')).strip().lower()
-        if username not in FUTURE_SCHOLAR_ALLOWED_USERS:
-            self._send_json(403, {'error': '当前账号无权访问 Future Scholar'})
-            return None
-        return user
+        if not is_admin(user):
+            self._send_json(403 if user else 401, {'error': '仅 hyper 账号可访问管理后台'})
+            return
+        try:
+            if path == '/api/admin/tables':
+                payload = admin_overview()
+            elif path == '/api/admin/rows':
+                params = parse_qs(urlparse(self.path).query)
+                payload = admin_browse(
+                    (params.get('table') or ['messages'])[0],
+                    page=int((params.get('page') or ['1'])[0]),
+                    page_size=int((params.get('page_size') or ['50'])[0]),
+                    query=(params.get('q') or [''])[0].strip(),
+                )
+            else:
+                self._send_json(404, {'error': '接口不存在'})
+                return
+            self._send_json(200, payload)
+        except ValueError as exc:
+            self._send_json(400, {'error': str(exc)})
+        except Exception:
+            logger.exception('读取管理后台数据失败')
+            self._send_json(500, {'error': '数据暂时不可用，请重试'})
+
+
 
     def _handle_visit_stats(self):
         """返回访问分析页面所需数据（默认要求登录，避免公开访客 IP）。"""
@@ -1178,102 +1161,8 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
             return
         self._send_json(200, detail)
 
-    def _handle_future_scholar_get(self, path):
-        user = self._future_scholar_user()
-        if user is None:
-            return
-        try:
-            if path.endswith('/mask-correction/file'):
-                query = parse_qs(urlparse(self.path).query)
-                case_id = query.get('case_id', [''])[0]
-                payload = corrected_mask_bytes(case_id)
-                if payload is None:
-                    self._send_json(404, {'error': '修正 Mask 不存在'})
-                else:
-                    self._send_png(payload)
-            elif path.endswith('/mask-correction/corrected'):
-                self._send_json(
-                    200,
-                    {'cases': mask_correction_corrected_cases()},
-                )
-            elif path.endswith('/mask-correction/stats'):
-                self._send_json(200, mask_correction_stats())
-            elif path.endswith('/mask-correction/next'):
-                cases = mask_correction_pending_cases()
-                self._send_json(
-                    200,
-                    {'cases': cases, 'case': cases[0] if cases else None},
-                )
-            elif path.endswith('/stats'):
-                self._send_json(200, future_scholar_stats())
-            elif path.endswith('/reviews'):
-                query = parse_qs(urlparse(self.path).query)
-                status = query.get('status', ['pass'])[0]
-                self._send_json(
-                    200, {'cases': future_scholar_reviewed_cases(status)}
-                )
-            else:
-                query = parse_qs(urlparse(self.path).query)
-                try:
-                    limit = int(query.get('limit', ['1000'])[0])
-                except ValueError:
-                    limit = 1000
-                cases = future_scholar_next_cases(limit)
-                self._send_json(
-                    200,
-                    {'cases': cases, 'case': cases[0] if cases else None},
-                )
-        except Exception as exc:
-            logger.exception('Future Scholar 读取失败')
-            self._send_json(500, {'error': f'读取病例失败: {exc}'})
 
-    def _handle_future_scholar_review(self):
-        user = self._future_scholar_user()
-        if user is None:
-            return
-        try:
-            content_length = int(self.headers.get('Content-Length', '0'))
-            if content_length <= 0 or content_length > Config.MAX_POST_SIZE:
-                self._send_json(400, {'error': '请求内容为空或过大'})
-                return
-            payload = json.loads(self.rfile.read(content_length).decode('utf-8'))
-            review = future_scholar_save_review(payload, user)
-            self._send_json(200, {'status': 'ok', 'review': review})
-        except (ValueError, json.JSONDecodeError) as exc:
-            self._send_json(400, {'error': str(exc)})
-        except Exception as exc:
-            logger.exception('Future Scholar 保存标注失败')
-            self._send_json(500, {'error': f'保存标注失败: {exc}'})
 
-    def _handle_mask_correction_save(self):
-        user = self._future_scholar_user()
-        if user is None:
-            return
-        try:
-            query = parse_qs(urlparse(self.path).query)
-            case_id = query.get('case_id', [''])[0]
-            content_type = self.headers.get('Content-Type', '').split(';', 1)[0].strip().lower()
-            if content_type != 'image/png':
-                self._send_json(415, {'error': '请以 image/png 格式上传 Mask'})
-                return
-            content_length = int(self.headers.get('Content-Length', '0'))
-            if content_length <= 0 or content_length > Config.MAX_MASK_POST_SIZE:
-                self._send_json(400, {'error': 'PNG 内容为空或超过 2 MiB'})
-                return
-            png = _read_exactly(self.rfile, content_length)
-            if len(png) != content_length:
-                self._send_json(
-                    400,
-                    {'error': f'PNG 上传不完整：收到 {len(png)} / {content_length} 字节'},
-                )
-                return
-            correction = mask_correction_save_mask_png(case_id, png, user)
-            self._send_json(200, {'status': 'ok', 'correction': correction})
-        except (ValueError, json.JSONDecodeError) as exc:
-            self._send_json(400, {'error': str(exc)})
-        except Exception as exc:
-            logger.exception('Future Scholar 保存修正 mask 失败')
-            self._send_json(500, {'error': f'保存修正 mask 失败: {exc}'})
 
     def do_DELETE(self):
         """处理DELETE请求"""
@@ -1383,14 +1272,15 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
                 headers = dict(self.headers)
                 # 移除可能导致问题的 Host 头
                 headers.pop('Host', None)
+                environ = {'REMOTE_ADDR': self.get_real_client_ip()}
 
                 if self.command == "GET":
-                    resp = client.get(self.path, headers=headers)
+                    resp = client.get(self.path, headers=headers, environ_overrides=environ)
                 elif self.command == "DELETE":
-                    resp = client.delete(self.path, headers=headers)
+                    resp = client.delete(self.path, headers=headers, environ_overrides=environ)
                 else:
                     content_type = self.headers.get('Content-Type', 'application/x-www-form-urlencoded')
-                    resp = client.post(self.path, data=data, headers=headers, content_type=content_type)
+                    resp = client.post(self.path, data=data, headers=headers, content_type=content_type, environ_overrides=environ)
 
             self.send_response(resp.status_code)
             for k, v in resp.headers.items():

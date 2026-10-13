@@ -1,5 +1,6 @@
 import json
 import os
+import sqlite3
 from pathlib import Path
 import tempfile
 import time
@@ -76,6 +77,21 @@ class StorageTests(unittest.TestCase):
         self.assertEqual(len(store.records('messages')), 80)
         self.assertEqual(len(store.records('ai_questions')), 80)
         self.assertEqual(sum(created), 1)
+
+    def test_username_uniqueness_handles_case_spaces_and_concurrent_registration(self):
+        store = Store(self.db)
+        names = ['Hyper', 'hyper', 'HYPER', ' Hyper '] * 5
+        def create(i):
+            return store.create_user(f'{i}@example.invalid', {'username': names[i], 'password': 'test'})
+        with ThreadPoolExecutor(max_workers=8) as executor:
+            created = list(executor.map(create, range(len(names))))
+        self.assertEqual(sum(created), 1)
+        self.assertTrue(store.username_exists('  HYPER  '))
+        self.assertTrue(store.create_user('different@example.invalid', {'username': 'Different'}))
+        with self.assertRaises(sqlite3.IntegrityError):
+            with store.connection(write=True) as db:
+                db.execute('INSERT INTO users VALUES (?,?,?,?)',
+                           ('raw@example.invalid', ' hyper ', 'test', '{"username":"hyper"}'))
 
     def test_login_sessions_message_and_ai_routes(self):
         self.write_legacy()

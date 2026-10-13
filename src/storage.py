@@ -26,6 +26,9 @@ class Store:
                 CREATE TABLE IF NOT EXISTS users (
                     email TEXT PRIMARY KEY, username TEXT, password TEXT, record TEXT NOT NULL);
                 CREATE INDEX IF NOT EXISTS users_username ON users(username COLLATE NOCASE);
+                CREATE UNIQUE INDEX IF NOT EXISTS users_unique_username
+                    ON users(trim(username) COLLATE NOCASE)
+                    WHERE username IS NOT NULL AND trim(username) != '';
                 CREATE TABLE IF NOT EXISTS sessions (
                     session_id TEXT PRIMARY KEY, email TEXT, expire_time REAL, record TEXT NOT NULL);
                 CREATE INDEX IF NOT EXISTS sessions_expiry ON sessions(expire_time);
@@ -70,10 +73,18 @@ class Store:
             return json.loads(row[0]) if row else None
 
     def create_user(self, email, user):
+        user = dict(user)
+        if isinstance(user.get('username'), str):
+            user['username'] = user['username'].strip()
         with self.connection(write=True) as db:
             cursor = db.execute('INSERT OR IGNORE INTO users VALUES (?,?,?,?)',
                                 (email, user.get('username'), user.get('password'), encode(user)))
             return cursor.rowcount == 1
+
+    def username_exists(self, username):
+        with self.connection() as db:
+            return db.execute('SELECT 1 FROM users WHERE trim(username)=? COLLATE NOCASE LIMIT 1',
+                              (username.strip(),)).fetchone() is not None
 
     def put_session(self, session_id, session):
         with self.connection(write=True) as db:
@@ -97,16 +108,25 @@ class Store:
             'ai_questions': ('time', 'user', 'ip', 'question'),
         }[table]
         values = [item.get('id' if field == 'message_id' else field) for field in columns]
-        db.execute(f"INSERT INTO {table} ({','.join(columns)},record) VALUES ({','.join('?' for _ in range(len(columns)+1))})",
-                   (*values, encode(item)))
+        cursor = db.execute(f"INSERT INTO {table} ({','.join(columns)},record) VALUES ({','.join('?' for _ in range(len(columns)+1))})",
+                            (*values, encode(item)))
+        return cursor.lastrowid
 
     def append(self, table, item, max_records=0):
         if not isinstance(item, dict):
             raise ValueError('记录必须是 JSON 对象')
         with self.connection(write=True) as db:
-            self._insert_record(db, table, item)
+            row_id = self._insert_record(db, table, item)
             if table == 'visits' and max_records > 0:
                 db.execute('DELETE FROM visits WHERE row_id NOT IN (SELECT row_id FROM visits ORDER BY row_id DESC LIMIT ?)', (max_records,))
+            return row_id
+
+    def update_ai_question(self, row_id, item):
+        with self.connection(write=True) as db:
+            cursor = db.execute('UPDATE ai_questions SET time=?,user=?,ip=?,question=?,record=? WHERE row_id=?',
+                                (item.get('time'), item.get('user'), item.get('ip'), item.get('question'), encode(item), row_id))
+            if cursor.rowcount != 1:
+                raise ValueError('AI 问答记录不存在')
 
     def records(self, table):
         if table not in ('messages', 'visits', 'ai_questions'):

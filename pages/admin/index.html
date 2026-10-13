@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#f6f7f2">
+<title>管理后台 · hyper</title>
+<link rel="stylesheet" href="/pages/_shared/site-theme.css?v=20260911-centered-navigation">
+<link rel="stylesheet" href="/pages/admin/admin.css?v=20261012-1">
+<script src="/pages/_shared/page-navigation.js?v=20260911-1" defer></script>
+<script src="/pages/admin/admin.js?v=20261012-3" defer></script>
+</head>
+<body data-site-theme="garden" data-page-kind="page">
+<nav class="page-controls" aria-label="页面快捷导航">
+<a href="/pages/home/" data-page-back>← 返回上一页</a><a href="/pages/home/">⌂ 首页</a>
+</nav>
+<main class="admin-shell">
+<header class="admin-heading">
+<div><a class="admin-brand" href="/pages/home/"><img src="/pages/home/hyper.png" width="36" height="36" alt="Hyper 的头像"> hyper.</a>
+<p class="eyebrow">YOUR SITE, AT A GLANCE</p><h1>管理后台<span>hyper 专属</span></h1>
+<p class="intro">看看大家留下了什么，也看看网站发生了什么。</p></div>
+<a class="admin-link" href="/pages/visit/">访问分析 ↗</a>
+</header>
+<p id="adminAlert" class="admin-alert" role="alert" hidden></p>
+<a id="loginLink" class="admin-link" href="/pages/login/index.html?redirect=%2Fpages%2Fadmin%2F" hidden>登录 hyper 账号 →</a>
+<section class="overview" aria-label="数据总览">
+<article><span>数据库记录</span><strong id="totalRecords">—</strong><small>site.db · 实时读取</small></article>
+<article><span>留言</span><strong id="messageCount">—</strong><small id="ipSummary">正在检查 IP 记录…</small></article>
+<article><span>用户</span><strong id="userCount">—</strong><small>已注册账号</small></article>
+<article><span>访问记录</span><strong id="visitCount">—</strong><small>页面与接口请求</small></article>
+</section>
+<div class="admin-layout">
+<aside class="table-sidebar"><p class="eyebrow">DATABASE</p><h2>数据表</h2><nav id="tableList" aria-label="选择数据表"></nav>
+<p class="sidebar-note">数据按最新记录优先排列。密码和会话令牌已隐藏。</p></aside>
+<section class="data-panel" aria-labelledby="tableTitle">
+<header class="panel-heading"><div><p id="tableName" class="eyebrow">MESSAGES</p><h2 id="tableTitle">留言</h2><p id="rowCount">正在加载数据…</p></div>
+<div class="panel-actions"><button id="schemaButton" aria-expanded="false" type="button">表结构</button><button id="refreshButton" type="button">刷新</button></div></header>
+<form id="searchForm" class="search-bar"><label class="search-input"><span>⌕</span><input id="searchInput" type="search" placeholder="搜索内容、账号、IP 或路径" aria-label="搜索当前数据表" maxlength="200"></label><button type="submit">搜索</button>
+<label class="page-size">每页 <select id="pageSize" aria-label="每页记录数"><option value="25">25</option><option value="50" selected>50</option><option value="100">100</option></select></label></form>
+<div id="schemaPanel" class="schema-panel" hidden></div>
+<div class="table-scroll" id="tableScroll" tabindex="0" role="region" aria-label="数据记录" aria-busy="true"><table><thead id="dataHead"></thead><tbody id="dataBody"></tbody></table></div>
+<p id="emptyState" class="empty-state" hidden>没有找到匹配的记录，试试其他关键词。</p>
+<footer class="pagination"><span id="pageLabel" aria-live="polite">—</span><div><button id="previousPage" type="button" disabled>← 上一页</button><button id="nextPage" type="button" disabled>下一页 →</button></div></footer>
+</section>
+</div>
+<footer class="admin-footer">hyper. / 所有细节，都值得被好好记录。</footer>
+</main>
+<dialog id="recordDialog"><header><div><p class="eyebrow">RECORD DETAIL</p><h2>完整记录</h2></div><button id="closeDialog" type="button" aria-label="关闭记录详情">关闭 ×</button></header><pre id="recordDetail"></pre></dialog>
+</body>
+</html>

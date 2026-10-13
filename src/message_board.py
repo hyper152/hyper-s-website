@@ -8,7 +8,9 @@ import time
 import logging
 import random
 import string
+import ipaddress
 from src.storage import get_store
+from src.admin_db import is_admin
 from flask import Flask, request, jsonify, make_response
 from email.mime.text import MIMEText
 from email.utils import formataddr
@@ -195,6 +197,10 @@ def register():
         
         if not all([username, email, password, code]):
             return jsonify({"code": 400, "msg": "请填写完整注册信息"})
+        if not 2 <= len(username) <= 20:
+            return jsonify({"code": 400, "msg": "用户名长度为2-20个字符"})
+        if get_store().username_exists(username):
+            return jsonify({"code": 400, "msg": "用户名已被使用，请换一个"})
         
         if email not in VERIFY_CACHE:
             return jsonify({"code": 400, "msg": "验证码已过期，请重新获取"})
@@ -226,7 +232,9 @@ def register():
             logger.info(f"用户注册成功: {username}({email})")
             return jsonify({"code": 200, "msg": "注册成功，请登录"})
         else:
-            return jsonify({"code": 500, "msg": "保存用户信息失败"})
+            # 数据库唯一约束也会阻止并发请求同时抢注同名账号。
+            message = "用户名已被使用，请换一个" if get_store().username_exists(username) else "该邮箱已注册"
+            return jsonify({"code": 400, "msg": message})
             
     except Exception as e:
         logger.error(f"注册异常：{e}")
@@ -375,7 +383,8 @@ def check_login():
         
         response = make_response(jsonify({
             "isLogin": is_login,
-            "user": user
+            "user": user,
+            "can_admin": is_admin(user) if is_login else False
         }))
         if is_login:
             # 当会话来自 Authorization/localStorage 时同步恢复 Cookie，
@@ -412,6 +421,9 @@ def get_message_list():
     """获取留言列表"""
     try:
         messages = load_messages()
+        # IP 与补录证据仅在管理后台查看，公共留言列表沿用公开字段。
+        public_fields = ('id', 'username', 'content', 'create_time', 'create_time_str', 'is_guest')
+        messages = [{key: message[key] for key in public_fields if key in message} for message in messages]
         messages.sort(key=lambda x: x.get("create_time", 0), reverse=True)
         return jsonify({"code": 200, "msg": "获取成功", "data": messages})
     except Exception as e:
@@ -463,6 +475,13 @@ def add_message():
             "create_time_str": time.strftime("%Y-%m-%d %H:%M:%S"),
             "is_guest": not is_login  # 标记是否为游客留言
         }
+        # 主服务通过 REMOTE_ADDR 传入已经识别的真实 IP；忽略提交内容中的 ip 字段。
+        try:
+            message['ip'] = str(ipaddress.ip_address(request.remote_addr))
+            message['ip_source'] = 'request'
+        except (ValueError, TypeError):
+            message['ip'] = None
+            message['ip_source'] = 'unavailable'
         
         get_store().append('messages', message)
         return jsonify({"code": 200, "msg": "留言成功"})

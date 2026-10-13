@@ -18,6 +18,7 @@ async function initAccount() {
             document.getElementById("loginItem").hidden = true;
             document.getElementById("registerItem").hidden = true;
             document.getElementById("logoutItem").hidden = false;
+            document.getElementById("adminItem").hidden = status.canAdmin !== true;
         }
     } catch (error) {
         console.warn("登录状态暂时不可用", error);

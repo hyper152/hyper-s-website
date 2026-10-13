@@ -50,7 +50,8 @@ const Auth = {
             
             return {
                 isLogin: data.isLogin || false,
-                user: data.user || {}
+                user: data.user || {},
+                canAdmin: data.can_admin === true
             };
         } catch (error) {
             console.error('检查登录状态失败:', error);

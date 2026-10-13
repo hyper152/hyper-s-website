@@ -133,20 +133,18 @@ class StaticSecurityTests(unittest.TestCase):
         with patch.object(main, 'get_user_info_from_request', return_value={'username': 'hyper'}):
             self.assertEqual(200, self.request('/pages/projects/Future-Scholar/private.html', 'HEAD')[0])
 
-    def test_mask_upload_retains_its_two_mib_limit(self):
-        png = b'x' * (main.Config.MAX_POST_SIZE + 1)
-        with patch.object(main, 'get_user_info_from_request', return_value={'username': 'hyper'}), \
-             patch.object(main, 'mask_correction_save_mask_png', return_value={}) as save:
-            conn = http.client.HTTPConnection(*self.server.server_address, timeout=3)
-            try:
-                conn.request('POST', '/api/future-scholar/mask-correction/save?case_id=test',
-                             body=png, headers={'Content-Type': 'image/png'})
-                response = conn.getresponse()
-                self.assertEqual(200, response.status)
-                response.read()
-                self.assertEqual(png, save.call_args.args[1])
-            finally:
-                conn.close()
+    def test_retired_annotation_endpoints_are_unavailable(self):
+        paths = ('/api/future-scholar/stats', '/api/future-scholar/review',
+                 '/api/future-scholar/mask-correction/save?case_id=test',
+                 '/api/Future-Scholar/mask-correction/file',
+                 '/pages/projects/Future-Scholar/ct-qc.html',
+                 '/pages/projects/%46uture-Scholar/mask-editor.html',
+                 '/pages/Future-Scholar/ct-qc.html',
+                 '/pages/projects/Future-Scholar/assets/test/l3.png')
+        for method in ('GET', 'HEAD', 'POST'):
+            for path in paths:
+                with self.subTest(method=method, path=path):
+                    self.assertEqual(410, self.request(path, method)[0])
 
     def test_static_requests_do_not_enter_logs_visits_or_frequency_counts(self):
         # Run the real accounting wrapper with all storage/network effects mocked.

@@ -114,6 +114,9 @@ def logout_user(session_id):
 def register(username, email, password):
     """用户注册（密码加密存储）"""
     init_files()
+    username = username.strip()
+    if get_store().username_exists(username):
+        return {"code": 1, "msg": "用户名已被使用"}
     user = {
         "username": username,
         "password": hash_password(password),
@@ -123,7 +126,8 @@ def register(username, email, password):
     }
     
     if not get_store().create_user(email, user):
-        return {"code": 1, "msg": "邮箱已存在"}
+        message = "用户名已被使用" if get_store().username_exists(username) else "邮箱已存在"
+        return {"code": 1, "msg": message}
 
     logger.info(f"新用户注册: {username}({email})")
     return {"code": 0, "msg": "注册成功"}
