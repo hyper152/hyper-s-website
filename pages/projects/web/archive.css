@@ -1,0 +1,31 @@
+/* 旧版入口沿用当前配色，旧网页保留各自原有视觉。 */
+.legacy-versions { padding: 28px; background: #fafbf7; border: 1px solid #e0e5da; border-radius: 20px; margin: 0 0 36px; }
+.archive-section-head { display: flex; gap: 20px; align-items: flex-end; justify-content: space-between; margin-bottom: 22px; }
+.archive-eyebrow { color: #67824f; font-size: 11px; letter-spacing: .15em; font-weight: 600; margin-bottom: 8px; }
+.archive-section-head h2 { font-size: 27px; margin: 0; color: #263b32; }
+.archive-section-head p:last-child { font-size: 13px; color: #7c847c; line-height: 1.8; margin: 0; }
+.legacy-site-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; }
+.legacy-site-card { padding: 24px; background: #f1f4e9; border: 1px solid #e0e5da; border-radius: 16px; display: flex; flex-direction: column; gap: 12px; }
+.legacy-site-card:nth-child(2) { background: #f2eee4; }.legacy-site-card:nth-child(3) { background: #f3e9e5; }.legacy-site-card:nth-child(4) { background: #e9efed; }
+.legacy-card-top { display: flex; justify-content: space-between; color: #6b7968; font-size: 12px; letter-spacing: .08em; }
+.legacy-site-card h3 { font-size: 21px; color: #263b32; word-break: break-word; margin: 0; }
+.legacy-site-card p { font-size: 13px; color: #687568; line-height: 1.8; margin: 0; }
+.legacy-card-links { display: flex; gap: 18px; flex-wrap: wrap; margin-top: auto; padding-top: 8px; }
+.legacy-card-links a { font-size: 13px; color: #43684b; font-weight: 600; text-decoration: none; }
+.legacy-card-links a:hover { text-decoration: underline; }
+body[data-legacy-snapshot] { display: block !important; height: auto !important; min-height: 100vh; margin: 0; }
+body[data-legacy-snapshot] img, body[data-legacy-snapshot] video { max-width: 100%; height: auto; }
+body[data-legacy-snapshot] .login-container { margin: 60px auto; box-sizing: content-box; max-width: calc(100vw - 100px); }
+#legacy-toolbar { position: relative !important; inset: auto !important; display: flex !important; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px; width: auto !important; height: auto !important; margin: 0 !important; padding: 18px 16px !important; box-sizing: border-box; z-index: 110; background: #f6f7f2; color: #263b32; border-bottom: 1px solid #e0e5da; font: 13px/1.5 "Segoe UI","Microsoft YaHei",sans-serif; }
+#legacy-toolbar a { position: static !important; display: inline-flex !important; padding: 8px 13px !important; border: 1px solid #d7dfcf; border-radius: 9px; color: #43684b !important; background: #fafbf7; text-decoration: none !important; font: 600 12px/1.5 "Segoe UI","Microsoft YaHei",sans-serif; text-shadow: none !important; transform: none !important; }
+#legacy-toolbar a:hover { background: #edf1e7; }
+#legacy-toolbar small { display: block; flex-basis: 100%; text-align: center; font: 11px/1.5 "Segoe UI","Microsoft YaHei",sans-serif; color: #7c847c; margin-top: 3px; }
+.archive-catalog { max-width: 1050px; padding: 40px 24px 60px; margin: auto; }
+.archive-catalog h1 { font-size: clamp(26px,4vw,42px); word-break: break-word; color: #263b32; margin: 0 0 12px; }
+.archive-intro { font-size: 13px; color: #7c847c; }
+.archive-catalog-actions { display: flex; gap: 20px; margin: 24px 0 32px; }.archive-catalog-actions a { color: #43684b; text-decoration: none; font-size: 13px; }
+.archive-group { background: #fafbf7; border: 1px solid #e0e5da; border-radius: 16px; padding: 22px; margin: 0 0 18px; }
+.archive-group h2 { font-size: 18px; color: #263b32; margin: 0 0 16px; }
+.archive-links { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px 24px; }.archive-links a { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid #e8ede1; font-size: 13px; text-decoration: none; color: #43684b; overflow-wrap: anywhere; }
+.archive-links a span { flex-shrink: 0; }
+@media(max-width:700px) { .legacy-versions { padding: 20px; }.archive-section-head { display: block; }.archive-section-head p:last-child { margin-top: 12px; }.legacy-site-grid,.archive-links { grid-template-columns: 1fr; }.legacy-site-card { padding: 20px; } }

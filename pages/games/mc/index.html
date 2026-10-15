@@ -350,162 +350,6 @@
             color: var(--color-accent);
         }
 
-        /* 模组介绍卡片 (Words Mod) */
-        .mod-card {
-            background: linear-gradient(145deg, #f6f7f2, #edf1e7);
-            border-radius: var(--radius-lg);
-            padding: 40px 35px;
-            margin: 40px 0 20px;
-            border: 2px solid #43684b;
-            box-shadow: var(--shadow-lg);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .mod-card::before {
-            content: "✍️";
-            font-size: 10rem;
-            position: absolute;
-            bottom: -20px;
-            right: 0;
-            opacity: 0.1;
-            transform: rotate(-10deg);
-        }
-
-        .mod-header {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-        }
-
-        .mod-header h3 {
-            font-size: 2.4rem;
-            color: #263b32;
-            font-weight: 700;
-        }
-
-        .mod-header i {
-            font-size: 3rem;
-            color: #67824f;
-            background: #263b32;
-            padding: 15px;
-            border-radius: 60px;
-        }
-
-        .mod-description {
-            font-size: 1.15rem;
-            color: #263b32;
-            margin-bottom: 25px;
-            max-width: 80%;
-        }
-
-        .mod-features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin: 30px 0 20px;
-        }
-
-        .feature-item {
-            background: white;
-            padding: 15px 20px;
-            border-radius: 60px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            box-shadow: var(--shadow-sm);
-            border-left: 5px solid #67824f;
-            font-weight: 500;
-            color: #263b32;
-        }
-
-        .feature-item i {
-            color: #67824f;
-            font-size: 1.5rem;
-            width: 30px;
-            text-align: center;
-        }
-
-        .mod-tag {
-            background: #67824f;
-            color: #263b32;
-            padding: 8px 25px;
-            border-radius: 40px;
-            display: inline-block;
-            font-weight: bold;
-            margin-top: 15px;
-            font-size: 1.1rem;
-        }
-
-        /* 下载卡片样式 */
-        .download-card {
-            background: linear-gradient(145deg, #ffffff, #f6f7f2);
-            border: 2px dashed #43684b;
-            border-radius: var(--radius-lg);
-            padding: 40px 30px;
-            text-align: center;
-            max-width: 650px;
-            margin: 30px auto;
-            box-shadow: var(--shadow-md);
-        }
-
-        .download-icon {
-            font-size: 4rem;
-            color: #43684b;
-            margin-bottom: 15px;
-        }
-
-        .download-card h3 {
-            font-size: 2rem;
-            color: #263b32;
-            margin-bottom: 10px;
-        }
-
-        .download-card .version {
-            background: #263b32;
-            color: #edf1e7;
-            display: inline-block;
-            padding: 5px 20px;
-            border-radius: 40px;
-            font-weight: 500;
-            margin-bottom: 25px;
-        }
-
-        .download-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            background: #67824f;
-            color: #263b32;
-            font-size: 1.4rem;
-            font-weight: bold;
-            padding: 15px 40px;
-            border-radius: 60px;
-            text-decoration: none;
-            transition: var(--transition-base);
-            box-shadow: 0 8px 0 #43684b;
-            margin: 15px 0 10px;
-            border: 2px solid #cbd7bc;
-        }
-
-        .download-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 11px 0 #43684b;
-            background: #67824f;
-        }
-
-        .download-btn i {
-            font-size: 1.8rem;
-        }
-
-        .download-note {
-            font-size: 0.9rem;
-            color: #43684b;
-            margin-top: 15px;
-        }
-
         .join-instruction {
             background: #edf1e7;
             border-radius: var(--radius-md);
@@ -610,9 +454,6 @@
             .screenshot-grid {
                 grid-template-columns: 1fr;
             }
-            .mod-description {
-                max-width: 100%;
-            }
         }
     </style>
 <link rel="stylesheet" href="/pages/_shared/site-theme.css?v=20260911-centered-navigation">
@@ -664,7 +505,7 @@
             <!-- 服务器地址卡片 -->
             <div class="server-address-card">
                 <i class="fas fa-server"></i>
-                <span id="mcServerAddress">mc.0o0hyper0o0.cyou</span>
+                <span id="mcServerAddress">mc.hyp.asia</span>
                 <button class="copy-btn" onclick="copyServerAddress()">
                     <i class="far fa-copy"></i> 复制地址
                 </button>
@@ -744,68 +585,18 @@
         </div>
     </section>
 
-    <!-- Words Mod 详细介绍区域（新增） -->
-    <section class="mc-section light" style="padding-top: 0;">
-        <div class="container">
-            <div class="mod-card">
-                <div class="mod-header">
-                    <i class="fas fa-pen-fancy"></i>
-                    <h3>hyper自研 · Words Mod · 墙面写字模组</h3>
-                </div>
-                <div class="mod-description">
-                    一个简单好用的 Minecraft Fabric 模组，让你可以在墙面上写字！拿着写字笔右键点击墙面，输入文字后就会永久显示在墙上。
-                </div>
-
-                <div class="mod-tag">
-                    <i class="fas fa-tag"></i> 已加入整合包 · Fabric 1.21.1
-                </div>
-                <p style="margin-top: 20px; font-size: 1rem; color: #263b32;">
-                    <i class="fas fa-check-circle" style="color:#43684b;"></i> 现在你可以在育英校园的任意墙面留下回忆了！
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- 下载区 + 加入引导 -->
+    <!-- 加入服务器引导 -->
     <section class="mc-section dark">
         <div class="container">
-            <div class="section-header">
-                <h2><i class="fas fa-download"></i> 客户端整合包 <i class="fas fa-cube"></i></h2>
-                <p>一键下载 · 包含所需Mod和配置（已集成Words Mod）</p>
-            </div>
-
-            <!-- 下载卡片：1.21.1-Fabric 0.16.10.zip -->
-            <div class="download-card">
-                <div class="download-icon">
-                    <i class="fas fa-archive"></i>
-                </div>
-                <h3>育英重建 · 专属客户端</h3>
-                <div class="version">版本：1.21.1-Fabric 0.16.10 + Words Mod</div>
-
-                <!-- 下载链接 -->
-                <a href="1.21.1-Fabric%200.16.10.zip" class="download-btn" download>
-                    <i class="fas fa-file-zipper"></i> 点击下载整合包
-                    <i class="fas fa-arrow-down"></i>
-                </a>
-
-                <p class="download-note">
-                    <i class="fas fa-check-circle" style="color: #43684b;"></i> 包含Fabric 0.16.10 + Words Mod + 常用建筑模组 · 解压即玩
-                </p>
-                <p style="font-size: 0.85rem; color: #67824f;">
-                    （需要正版账号才能进入）
-                </p>
-            </div>
-
             <!-- 加入服务器引导 -->
             <div class="join-instruction">
                 <h3><i class="fas fa-plug"></i> 加入共建</h3>
-                <p>服务器版本：<strong>1.21.1-Fabric 0.16.10</strong><br>直接输入地址 <strong style="background: #263b32; color: white; padding: 3px 10px; border-radius: 20px;">mc.0o0hyper0o0.cyou</strong> 即可加入</p>
-                <p style="margin-top: 10px; font-size: 0.95rem;"><i class="fas fa-lightbulb"></i> 推荐使用上方整合包，已配置好所有模组（包括Words Mod）</p>
+                <p>服务器版本：<strong>1.21.1-Fabric 0.16.10</strong><br>直接输入地址 <strong style="background: #263b32; color: white; padding: 3px 10px; border-radius: 20px;">mc.hyp.asia</strong> 即可加入</p>
+                <p style="margin-top: 10px; font-size: 0.95rem;">需要正版账号才能进入。</p>
                 <div class="join-steps">
-                    <div class="step"><span>1️⃣</span><span>下载包</span></div>
-                    <div class="step"><span>2️⃣</span><span>解压</span></div>
-                    <div class="step"><span>3️⃣</span><span>启动MC</span></div>
-                    <div class="step"><span>4️⃣</span><span>输地址</span></div>
+                    <div class="step"><span>1️⃣</span><span>启动MC</span></div>
+                    <div class="step"><span>2️⃣</span><span>多人游戏</span></div>
+                    <div class="step"><span>3️⃣</span><span>输地址</span></div>
                 </div>
                 <p style="margin-top: 25px;">
                     <!-- 修复：给复制链接添加正确的事件调用，并阻止默认跳转 -->
@@ -827,7 +618,7 @@
         <div class="container">
             <div class="footer-content">
                 <p><i class="fas fa-cube"></i> 温州育英重建计划 · 我的世界</p>
-                <p>服务器地址: mc.0o0hyper0o0.cyou | 版本: 1.21.1-Fabric 0.16.10 (集成Words Mod)</p>
+                <p>服务器地址: mc.hyp.asia | 版本: 1.21.1-Fabric 0.16.10</p>
                 <p style="font-size: 0.85rem;">&copy; 2026 hyper的Vlog · 记录每一个方块中的回忆</p>
             </div>
         </div>
@@ -843,7 +634,7 @@
         function copyServerAddress() {
             // 直接获取地址文本（去除可能的空白）
             const addressElement = document.getElementById('mcServerAddress');
-            const address = addressElement ? addressElement.innerText.trim() : 'mc.0o0hyper0o0.cyou';
+            const address = addressElement ? addressElement.innerText.trim() : 'mc.hyp.asia';
 
             // 使用现代 clipboard API 如果可用
             if (navigator.clipboard && navigator.clipboard.writeText) {

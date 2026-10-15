@@ -1,6 +1,54 @@
 # 媒体文件路径清单
 
-共 439 个文件，按目录分组。路径相对于项目根目录；网站访问路径在前面加 `/`。
+共 649 个文件，按目录分组。路径相对于项目根目录；网站访问路径在前面加 `/`。
+
+## `media/pages/YY往事/EDG夺冠/`（3 个）
+
+- `media/pages/YY往事/EDG夺冠/kskbl.webp`
+- `media/pages/YY往事/EDG夺冠/赢下决赛图二.mov`
+- `media/pages/YY往事/EDG夺冠/赢下半决.mov`
+
+## `media/pages/YY往事/机房往事/`（15 个）
+
+- `media/pages/YY往事/机房往事/2024.10.1-LOL双排.webp`
+- `media/pages/YY往事/机房往事/2024.10.1国庆留校机房五排瓦.webp`
+- `media/pages/YY往事/机房往事/2024.11.1-BLG加油.webp`
+- `media/pages/YY往事/机房往事/2024.11.13-csmajor.webp`
+- `media/pages/YY往事/机房往事/2024.11.3-BLG决赛惜败T1.webp`
+- `media/pages/YY往事/机房往事/2024.12.4-hyper在机房的留言网站.webp`
+- `media/pages/YY往事/机房往事/2024.6.23-ALGS.webp`
+- `media/pages/YY往事/机房往事/2024.7.5-机房CS1.6.webp`
+- `media/pages/YY往事/机房往事/2024.8.26-EDG牛逼.webp`
+- `media/pages/YY往事/机房往事/2024.9.2-购买黑神话悟空.webp`
+- `media/pages/YY往事/机房往事/74404.webp`
+- `media/pages/YY往事/机房往事/mc-2024.6.24.webp`
+- `media/pages/YY往事/机房往事/最后一个假期-距离高考还有6天.jpg`
+- `media/pages/YY往事/机房往事/机房双排.webp`
+- `media/pages/YY往事/机房往事/英雄联盟定级铂金.webp`
+
+## `media/pages/YY往事/觉醒年代/`（2 个）
+
+- `media/pages/YY往事/觉醒年代/cover.webp`
+- `media/pages/YY往事/觉醒年代/lhn版觉醒年代.mp4`
+
+## `media/pages/YY往事/返校宣讲/`（16 个）
+
+- `media/pages/YY往事/返校宣讲/danking贴纸的传承.webp`
+- `media/pages/YY往事/返校宣讲/ktv.mp4`
+- `media/pages/YY往事/返校宣讲/ktv.webp`
+- `media/pages/YY往事/返校宣讲/凌晨的电影.webp`
+- `media/pages/YY往事/返校宣讲/出发.jpg`
+- `media/pages/YY往事/返校宣讲/合影.webp`
+- `media/pages/YY往事/返校宣讲/夜晚的YY.webp`
+- `media/pages/YY往事/返校宣讲/宣讲.webp`
+- `media/pages/YY往事/返校宣讲/录取榜.webp`
+- `media/pages/YY往事/返校宣讲/怀旧外卖.webp`
+- `media/pages/YY往事/返校宣讲/海报.webp`
+- `media/pages/YY往事/返校宣讲/给语文老师的礼物.webp`
+- `media/pages/YY往事/返校宣讲/警察拿外卖.mp4`
+- `media/pages/YY往事/返校宣讲/足球.webp`
+- `media/pages/YY往事/返校宣讲/跟zbh的离别.webp`
+- `media/pages/YY往事/返校宣讲/高中去的网吧.webp`
 
 ## `media/pages/diy/`（20 个）
 
@@ -77,10 +125,6 @@
 - `media/pages/projects/2026电赛TI杯省赛/video_20260729_213108.mp4`
 - `media/pages/projects/2026电赛TI杯省赛/video_20260801_063550.mp4`
 
-## `media/pages/projects/CQU-coursehelper/`（1 个）
-
-- `media/pages/projects/CQU-coursehelper/CQU-coursehelper.webp`
-
 ## `media/pages/projects/CQU-CRTC机器人比赛/`（7 个）
 
 - `media/pages/projects/CQU-CRTC机器人比赛/2025-10-08-第一次遥控电机转动.mp4`
@@ -90,6 +134,10 @@
 - `media/pages/projects/CQU-CRTC机器人比赛/2025-10-25-车4.0-可以捡球.mp4`
 - `media/pages/projects/CQU-CRTC机器人比赛/2025-10-27-车5.0-完成双车配合捡球.mp4`
 - `media/pages/projects/CQU-CRTC机器人比赛/2025-11-09-比赛实录.mp4`
+
+## `media/pages/projects/CQU-coursehelper/`（1 个）
+
+- `media/pages/projects/CQU-coursehelper/CQU-coursehelper.webp`
 
 ## `media/pages/projects/Gsing/`（15 个）
 
@@ -155,22 +203,6 @@
 - `media/pages/projects/Gsing/精选/比赛照片.jpg`
 - `media/pages/projects/Gsing/精选/比赛照片.webp`
 
-## `media/pages/projects/happy_run/`（2 个）
-
-- `media/pages/projects/happy_run/happy_run.mp4`
-- `media/pages/projects/happy_run/happy_run.webp`
-
-## `media/pages/projects/personal-blog/`（8 个）
-
-- `media/pages/projects/personal-blog/2023-10-02-第一版网站.webp`
-- `media/pages/projects/personal-blog/2023-10-02-第一版网站样式.webp`
-- `media/pages/projects/personal-blog/2024-12-20-的简易留言板.webp`
-- `media/pages/projects/personal-blog/2024-12-20-的简易留言板1.webp`
-- `media/pages/projects/personal-blog/2024-12-20-的简易留言板2.webp`
-- `media/pages/projects/personal-blog/2024-12-20-的简易留言板后台.webp`
-- `media/pages/projects/personal-blog/2025-09-24-第二版网站.webp`
-- `media/pages/projects/personal-blog/2025-09-24-第二版网站封面.webp`
-
 ## `media/pages/projects/SRTP/`（12 个）
 
 - `media/pages/projects/SRTP/control-pcb-20260915.webp`
@@ -185,6 +217,430 @@
 - `media/pages/projects/SRTP/prototype-control-20260628.webp`
 - `media/pages/projects/SRTP/prototype-test-20260603.mp4`
 - `media/pages/projects/SRTP/workbench-20260630.webp`
+
+## `media/pages/projects/happy_run/`（2 个）
+
+- `media/pages/projects/happy_run/happy_run.mp4`
+- `media/pages/projects/happy_run/happy_run.webp`
+
+## `media/pages/projects/web/`（8 个）
+
+- `media/pages/projects/web/2023-10-02-第一版网站.webp`
+- `media/pages/projects/web/2023-10-02-第一版网站样式.webp`
+- `media/pages/projects/web/2024-12-20-的简易留言板.webp`
+- `media/pages/projects/web/2024-12-20-的简易留言板1.webp`
+- `media/pages/projects/web/2024-12-20-的简易留言板2.webp`
+- `media/pages/projects/web/2024-12-20-的简易留言板后台.webp`
+- `media/pages/projects/web/2025-09-24-第二版网站.webp`
+- `media/pages/projects/web/2025-09-24-第二版网站封面.webp`
+
+## `media/pages/projects/web/hyper152.cn/data/2班战狼班班务日志/`（6 个）
+
+- `media/pages/projects/web/hyper152.cn/data/2班战狼班班务日志/成绩单.pdf`
+- `media/pages/projects/web/hyper152.cn/data/2班战狼班班务日志/战狼班班务日志-2023.10——2024.4.pdf`
+- `media/pages/projects/web/hyper152.cn/data/2班战狼班班务日志/战狼班班务日志-2023.2——2023.10.pdf`
+- `media/pages/projects/web/hyper152.cn/data/2班战狼班班务日志/战狼班班务日志-2024.4——2025.3.pdf`
+- `media/pages/projects/web/hyper152.cn/data/2班战狼班班务日志/战狼班班务日志-2025.3-end.pdf`
+- `media/pages/projects/web/hyper152.cn/data/2班战狼班班务日志/积分记录.pdf`
+
+## `media/pages/projects/web/hyper152.cn/data/人物志/高中/cxp/`（1 个）
+
+- `media/pages/projects/web/hyper152.cn/data/人物志/高中/cxp/cxp.JPG`
+
+## `media/pages/projects/web/hyper152.cn/data/人物志/高中/drk/`（3 个）
+
+- `media/pages/projects/web/hyper152.cn/data/人物志/高中/drk/P1050762.JPG`
+- `media/pages/projects/web/hyper152.cn/data/人物志/高中/drk/P1060383.JPG`
+- `media/pages/projects/web/hyper152.cn/data/人物志/高中/drk/P1060894.JPG`
+
+## `media/pages/projects/web/hyper152.cn/data/人物志/高中/fxk/`（1 个）
+
+- `media/pages/projects/web/hyper152.cn/data/人物志/高中/fxk/P1050119.JPG`
+
+## `media/pages/projects/web/hyper152.cn/data/人物志/高中/hou老师/`（1 个）
+
+- `media/pages/projects/web/hyper152.cn/data/人物志/高中/hou老师/P1050645.JPG`
+
+## `media/pages/projects/web/hyper152.cn/data/人物志/高中/hyl/`（2 个）
+
+- `media/pages/projects/web/hyper152.cn/data/人物志/高中/hyl/02df55fda72a7c361c47dceb000757db.jpg`
+- `media/pages/projects/web/hyper152.cn/data/人物志/高中/hyl/P1060601.JPG`
+
+## `media/pages/projects/web/hyper152.cn/data/人物志/高中/jcy/`（3 个）
+
+- `media/pages/projects/web/hyper152.cn/data/人物志/高中/jcy/P1060103.JPG`
+- `media/pages/projects/web/hyper152.cn/data/人物志/高中/jcy/P1060141.JPG`
+- `media/pages/projects/web/hyper152.cn/data/人物志/高中/jcy/P1060965.JPG`
+
+## `media/pages/projects/web/hyper152.cn/data/人物志/高中/ksp/`（1 个）
+
+- `media/pages/projects/web/hyper152.cn/data/人物志/高中/ksp/ksp.png`
+
+## `media/pages/projects/web/hyper152.cn/data/人物志/高中/lhn/`（2 个）
+
+- `media/pages/projects/web/hyper152.cn/data/人物志/高中/lhn/P1060061.JPG`
+- `media/pages/projects/web/hyper152.cn/data/人物志/高中/lhn/P1060120.JPG`
+
+## `media/pages/projects/web/hyper152.cn/data/人物志/高中/lq/`（1 个）
+
+- `media/pages/projects/web/hyper152.cn/data/人物志/高中/lq/P1060725.JPG`
+
+## `media/pages/projects/web/hyper152.cn/data/人物志/高中/lwx/`（1 个）
+
+- `media/pages/projects/web/hyper152.cn/data/人物志/高中/lwx/P1060372.JPG`
+
+## `media/pages/projects/web/hyper152.cn/data/人物志/高中/ninja/`（3 个）
+
+- `media/pages/projects/web/hyper152.cn/data/人物志/高中/ninja/P1050097.JPG`
+- `media/pages/projects/web/hyper152.cn/data/人物志/高中/ninja/P1060914.JPG`
+- `media/pages/projects/web/hyper152.cn/data/人物志/高中/ninja/P1060948.JPG`
+
+## `media/pages/projects/web/hyper152.cn/data/人物志/高中/pwz/`（1 个）
+
+- `media/pages/projects/web/hyper152.cn/data/人物志/高中/pwz/P1060798.JPG`
+
+## `media/pages/projects/web/hyper152.cn/data/人物志/高中/qj/`（2 个）
+
+- `media/pages/projects/web/hyper152.cn/data/人物志/高中/qj/P1050795.JPG`
+- `media/pages/projects/web/hyper152.cn/data/人物志/高中/qj/P1460681.JPG`
+
+## `media/pages/projects/web/hyper152.cn/data/人物志/高中/szy/`（1 个）
+
+- `media/pages/projects/web/hyper152.cn/data/人物志/高中/szy/P1050118.JPG`
+
+## `media/pages/projects/web/hyper152.cn/data/人物志/高中/wcl/`（1 个）
+
+- `media/pages/projects/web/hyper152.cn/data/人物志/高中/wcl/P1060821.JPG`
+
+## `media/pages/projects/web/hyper152.cn/data/人物志/高中/wyx/`（1 个）
+
+- `media/pages/projects/web/hyper152.cn/data/人物志/高中/wyx/P1050139.JPG`
+
+## `media/pages/projects/web/hyper152.cn/data/人物志/高中/wyz/`（1 个）
+
+- `media/pages/projects/web/hyper152.cn/data/人物志/高中/wyz/P1060356.JPG`
+
+## `media/pages/projects/web/hyper152.cn/data/人物志/高中/wzh/`（1 个）
+
+- `media/pages/projects/web/hyper152.cn/data/人物志/高中/wzh/P1060802.JPG`
+
+## `media/pages/projects/web/hyper152.cn/data/人物志/高中/xsz/`（1 个）
+
+- `media/pages/projects/web/hyper152.cn/data/人物志/高中/xsz/P1080028.JPG`
+
+## `media/pages/projects/web/hyper152.cn/data/人物志/高中/zbh/`（2 个）
+
+- `media/pages/projects/web/hyper152.cn/data/人物志/高中/zbh/P1050894.JPG`
+- `media/pages/projects/web/hyper152.cn/data/人物志/高中/zbh/P1060262.JPG`
+
+## `media/pages/projects/web/hyper152.cn/data/人物志/高中/zhao8/`（2 个）
+
+- `media/pages/projects/web/hyper152.cn/data/人物志/高中/zhao8/P1060607.JPG`
+- `media/pages/projects/web/hyper152.cn/data/人物志/高中/zhao8/P1060893.JPG`
+
+## `media/pages/projects/web/hyper152.cn/data/人物志/高中/zzk/`（1 个）
+
+- `media/pages/projects/web/hyper152.cn/data/人物志/高中/zzk/P1060659.JPG`
+
+## `media/pages/projects/web/hyper152.cn/data/人物志/高中/吴xy/`（1 个）
+
+- `media/pages/projects/web/hyper152.cn/data/人物志/高中/吴xy/P1060547.JPG`
+
+## `media/pages/projects/web/hyper152.cn/data/旅游记录/2024.7.28-2024.7.30上海旅游/`（9 个）
+
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2024.7.28-2024.7.30上海旅游/shanghai (1).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2024.7.28-2024.7.30上海旅游/shanghai (11).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2024.7.28-2024.7.30上海旅游/shanghai (3).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2024.7.28-2024.7.30上海旅游/shanghai (4).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2024.7.28-2024.7.30上海旅游/shanghai (5).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2024.7.28-2024.7.30上海旅游/shanghai (6).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2024.7.28-2024.7.30上海旅游/shanghai (7).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2024.7.28-2024.7.30上海旅游/shanghai (8).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2024.7.28-2024.7.30上海旅游/shanghai (9).jpg`
+
+## `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.6.14杭州支持浙江队/`（6 个）
+
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.6.14杭州支持浙江队/zj (1).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.6.14杭州支持浙江队/zj (2).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.6.14杭州支持浙江队/zj (3).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.6.14杭州支持浙江队/zj (4).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.6.14杭州支持浙江队/裁判sb.mp4`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.6.14杭州支持浙江队/赛前游行.mp4`
+
+## `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.6.15-2025.6.16南京大学强基记/`（11 个）
+
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.6.15-2025.6.16南京大学强基记/nj (1).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.6.15-2025.6.16南京大学强基记/nj (10).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.6.15-2025.6.16南京大学强基记/nj (2).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.6.15-2025.6.16南京大学强基记/nj (3).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.6.15-2025.6.16南京大学强基记/nj (4).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.6.15-2025.6.16南京大学强基记/nj (5).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.6.15-2025.6.16南京大学强基记/nj (6).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.6.15-2025.6.16南京大学强基记/nj (7).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.6.15-2025.6.16南京大学强基记/nj (8).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.6.15-2025.6.16南京大学强基记/nj (9).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.6.15-2025.6.16南京大学强基记/nj.jpg`
+
+## `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.6.16-2025.6.18上海交通大学面试记/`（10 个）
+
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.6.16-2025.6.18上海交通大学面试记/shanghai (1).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.6.16-2025.6.18上海交通大学面试记/shanghai (2).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.6.16-2025.6.18上海交通大学面试记/shanghai (3).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.6.16-2025.6.18上海交通大学面试记/shanghai (4).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.6.16-2025.6.18上海交通大学面试记/shanghai (5).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.6.16-2025.6.18上海交通大学面试记/shanghai (6).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.6.16-2025.6.18上海交通大学面试记/shanghai (7).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.6.16-2025.6.18上海交通大学面试记/shanghai (8).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.6.16-2025.6.18上海交通大学面试记/shanghai (9).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.6.16-2025.6.18上海交通大学面试记/shanghai.jpg`
+
+## `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.7.24百丈漈/`（10 个）
+
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.7.24百丈漈/bzj (1).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.7.24百丈漈/bzj (2).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.7.24百丈漈/bzj (3).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.7.24百丈漈/bzj (4).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.7.24百丈漈/bzj (5).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.7.24百丈漈/bzj (6).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.7.24百丈漈/bzj (7).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.7.24百丈漈/bzj (8).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.7.24百丈漈/bzj (9).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.7.24百丈漈/bzj.mp4`
+
+## `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.8.17雁荡山/`（8 个）
+
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.8.17雁荡山/yds (1).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.8.17雁荡山/yds (2).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.8.17雁荡山/yds (3).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.8.17雁荡山/yds (4).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.8.17雁荡山/yds (5).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.8.17雁荡山/yds (6).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.8.17雁荡山/yds (7).jpg`
+- `media/pages/projects/web/hyper152.cn/data/旅游记录/2025.8.17雁荡山/yds (8).jpg`
+
+## `media/pages/projects/web/hyper152.cn/data/装机记录/`（7 个）
+
+- `media/pages/projects/web/hyper152.cn/data/装机记录/zj (1).jpg`
+- `media/pages/projects/web/hyper152.cn/data/装机记录/zj (1).png`
+- `media/pages/projects/web/hyper152.cn/data/装机记录/zj (2).jpg`
+- `media/pages/projects/web/hyper152.cn/data/装机记录/zj (3).jpg`
+- `media/pages/projects/web/hyper152.cn/data/装机记录/zj (4).jpg`
+- `media/pages/projects/web/hyper152.cn/data/装机记录/zj (5).jpg`
+- `media/pages/projects/web/hyper152.cn/data/装机记录/zj (6).jpg`
+
+## `media/pages/projects/web/hyper152.cn/data/觉醒年代/`（1 个）
+
+- `media/pages/projects/web/hyper152.cn/data/觉醒年代/觉醒年代2.0.mp4`
+
+## `media/pages/projects/web/hyper152.cn/hyp/hyper152.cn/assets/img/`（15 个）
+
+- `media/pages/projects/web/hyper152.cn/hyp/hyper152.cn/assets/img/1.jpg`
+- `media/pages/projects/web/hyper152.cn/hyp/hyper152.cn/assets/img/2.jpg`
+- `media/pages/projects/web/hyper152.cn/hyp/hyper152.cn/assets/img/3.jpg`
+- `media/pages/projects/web/hyper152.cn/hyp/hyper152.cn/assets/img/4.jpg`
+- `media/pages/projects/web/hyper152.cn/hyp/hyper152.cn/assets/img/5.jpg`
+- `media/pages/projects/web/hyper152.cn/hyp/hyper152.cn/assets/img/AliPay.png`
+- `media/pages/projects/web/hyper152.cn/hyp/hyper152.cn/assets/img/bg.jpg`
+- `media/pages/projects/web/hyper152.cn/hyp/hyper152.cn/assets/img/bg1.jpg`
+- `media/pages/projects/web/hyper152.cn/hyp/hyper152.cn/assets/img/cxp.JPG`
+- `media/pages/projects/web/hyper152.cn/hyp/hyper152.cn/assets/img/head.png`
+- `media/pages/projects/web/hyper152.cn/hyp/hyper152.cn/assets/img/logo.png`
+- `media/pages/projects/web/hyper152.cn/hyp/hyper152.cn/assets/img/PICT1090.jpg`
+- `media/pages/projects/web/hyper152.cn/hyp/hyper152.cn/assets/img/WeChat.jpg`
+- `media/pages/projects/web/hyper152.cn/hyp/hyper152.cn/assets/img/yyb11.png`
+- `media/pages/projects/web/hyper152.cn/hyp/hyper152.cn/assets/img/yyb12.png`
+
+## `media/pages/projects/web/hyper152.cn/hyp/hyper152.cn/discuss/view/font/`（6 个）
+
+- `media/pages/projects/web/hyper152.cn/hyp/hyper152.cn/discuss/view/font/fontawesome-webfont.eot`
+- `media/pages/projects/web/hyper152.cn/hyp/hyper152.cn/discuss/view/font/fontawesome-webfont.svg`
+- `media/pages/projects/web/hyper152.cn/hyp/hyper152.cn/discuss/view/font/fontawesome-webfont.ttf`
+- `media/pages/projects/web/hyper152.cn/hyp/hyper152.cn/discuss/view/font/fontawesome-webfont.woff`
+- `media/pages/projects/web/hyper152.cn/hyp/hyper152.cn/discuss/view/font/fontawesome-webfont.woff2`
+- `media/pages/projects/web/hyper152.cn/hyp/hyper152.cn/discuss/view/font/FontAwesome.otf`
+
+## `media/pages/projects/web/hyper152.cn/hyp/hyper152.cn/discuss/view/img/`（9 个）
+
+- `media/pages/projects/web/hyper152.cn/hyp/hyper152.cn/discuss/view/img/avatar.png`
+- `media/pages/projects/web/hyper152.cn/hyp/hyper152.cn/discuss/view/img/browser.gif`
+- `media/pages/projects/web/hyper152.cn/hyp/hyper152.cn/discuss/view/img/favicon.ico`
+- `media/pages/projects/web/hyper152.cn/hyp/hyper152.cn/discuss/view/img/filetype.png`
+- `media/pages/projects/web/hyper152.cn/hyp/hyper152.cn/discuss/view/img/forum.png`
+- `media/pages/projects/web/hyper152.cn/hyp/hyper152.cn/discuss/view/img/logo.png`
+- `media/pages/projects/web/hyper152.cn/hyp/hyper152.cn/discuss/view/img/quote.png`
+- `media/pages/projects/web/hyper152.cn/hyp/hyper152.cn/discuss/view/img/water-small-xiuno.png`
+- `media/pages/projects/web/hyper152.cn/hyp/hyper152.cn/discuss/view/img/water-small.png`
+
+## `media/pages/projects/web/hyper152.love/2班战狼班班务日志/`（1 个）
+
+- `media/pages/projects/web/hyper152.love/2班战狼班班务日志/战狼班班务日志-最后一本.pdf`
+
+## `media/pages/projects/web/hyper152.love/hyp/hyper152.cn/assets/img/`（14 个）
+
+- `media/pages/projects/web/hyper152.love/hyp/hyper152.cn/assets/img/1.jpg`
+- `media/pages/projects/web/hyper152.love/hyp/hyper152.cn/assets/img/2.jpg`
+- `media/pages/projects/web/hyper152.love/hyp/hyper152.cn/assets/img/3.jpg`
+- `media/pages/projects/web/hyper152.love/hyp/hyper152.cn/assets/img/4.jpg`
+- `media/pages/projects/web/hyper152.love/hyp/hyper152.cn/assets/img/AliPay.png`
+- `media/pages/projects/web/hyper152.love/hyp/hyper152.cn/assets/img/bg.jpg`
+- `media/pages/projects/web/hyper152.love/hyp/hyper152.cn/assets/img/bg1.jpg`
+- `media/pages/projects/web/hyper152.love/hyp/hyper152.cn/assets/img/cxp.JPG`
+- `media/pages/projects/web/hyper152.love/hyp/hyper152.cn/assets/img/head.png`
+- `media/pages/projects/web/hyper152.love/hyp/hyper152.cn/assets/img/logo.png`
+- `media/pages/projects/web/hyper152.love/hyp/hyper152.cn/assets/img/PICT1090.jpg`
+- `media/pages/projects/web/hyper152.love/hyp/hyper152.cn/assets/img/WeChat.jpg`
+- `media/pages/projects/web/hyper152.love/hyp/hyper152.cn/assets/img/yyb11.png`
+- `media/pages/projects/web/hyper152.love/hyp/hyper152.cn/assets/img/yyb12.png`
+
+## `media/pages/projects/web/hyper152.love/hyp/hyper152.cn/discuss/view/font/`（6 个）
+
+- `media/pages/projects/web/hyper152.love/hyp/hyper152.cn/discuss/view/font/fontawesome-webfont.eot`
+- `media/pages/projects/web/hyper152.love/hyp/hyper152.cn/discuss/view/font/fontawesome-webfont.svg`
+- `media/pages/projects/web/hyper152.love/hyp/hyper152.cn/discuss/view/font/fontawesome-webfont.ttf`
+- `media/pages/projects/web/hyper152.love/hyp/hyper152.cn/discuss/view/font/fontawesome-webfont.woff`
+- `media/pages/projects/web/hyper152.love/hyp/hyper152.cn/discuss/view/font/fontawesome-webfont.woff2`
+- `media/pages/projects/web/hyper152.love/hyp/hyper152.cn/discuss/view/font/FontAwesome.otf`
+
+## `media/pages/projects/web/hyper152.love/hyp/hyper152.cn/discuss/view/img/`（9 个）
+
+- `media/pages/projects/web/hyper152.love/hyp/hyper152.cn/discuss/view/img/avatar.png`
+- `media/pages/projects/web/hyper152.love/hyp/hyper152.cn/discuss/view/img/browser.gif`
+- `media/pages/projects/web/hyper152.love/hyp/hyper152.cn/discuss/view/img/favicon.ico`
+- `media/pages/projects/web/hyper152.love/hyp/hyper152.cn/discuss/view/img/filetype.png`
+- `media/pages/projects/web/hyper152.love/hyp/hyper152.cn/discuss/view/img/forum.png`
+- `media/pages/projects/web/hyper152.love/hyp/hyper152.cn/discuss/view/img/logo.png`
+- `media/pages/projects/web/hyper152.love/hyp/hyper152.cn/discuss/view/img/quote.png`
+- `media/pages/projects/web/hyper152.love/hyp/hyper152.cn/discuss/view/img/water-small-xiuno.png`
+- `media/pages/projects/web/hyper152.love/hyp/hyper152.cn/discuss/view/img/water-small.png`
+
+## `media/pages/projects/web/hyper152.love/templates/`（2 个）
+
+- `media/pages/projects/web/hyper152.love/templates/2024.11.16.jpg`
+- `media/pages/projects/web/hyper152.love/templates/favicon.ico`
+
+## `media/pages/projects/web/hyper152.love/人物志/cxp/`（1 个）
+
+- `media/pages/projects/web/hyper152.love/人物志/cxp/cxp.JPG`
+
+## `media/pages/projects/web/hyper152.love/人物志/drk/`（3 个）
+
+- `media/pages/projects/web/hyper152.love/人物志/drk/P1050762.JPG`
+- `media/pages/projects/web/hyper152.love/人物志/drk/P1060383.JPG`
+- `media/pages/projects/web/hyper152.love/人物志/drk/P1060894.JPG`
+
+## `media/pages/projects/web/hyper152.love/人物志/fxk/`（1 个）
+
+- `media/pages/projects/web/hyper152.love/人物志/fxk/P1050119.JPG`
+
+## `media/pages/projects/web/hyper152.love/人物志/hou老师/`（1 个）
+
+- `media/pages/projects/web/hyper152.love/人物志/hou老师/P1050645.JPG`
+
+## `media/pages/projects/web/hyper152.love/人物志/hyl/`（2 个）
+
+- `media/pages/projects/web/hyper152.love/人物志/hyl/02df55fda72a7c361c47dceb000757db.jpg`
+- `media/pages/projects/web/hyper152.love/人物志/hyl/P1060601.JPG`
+
+## `media/pages/projects/web/hyper152.love/人物志/jcy/`（3 个）
+
+- `media/pages/projects/web/hyper152.love/人物志/jcy/P1060103.JPG`
+- `media/pages/projects/web/hyper152.love/人物志/jcy/P1060141.JPG`
+- `media/pages/projects/web/hyper152.love/人物志/jcy/P1060965.JPG`
+
+## `media/pages/projects/web/hyper152.love/人物志/ksp/`（1 个）
+
+- `media/pages/projects/web/hyper152.love/人物志/ksp/ksp.png`
+
+## `media/pages/projects/web/hyper152.love/人物志/lhn/`（2 个）
+
+- `media/pages/projects/web/hyper152.love/人物志/lhn/P1060061.JPG`
+- `media/pages/projects/web/hyper152.love/人物志/lhn/P1060120.JPG`
+
+## `media/pages/projects/web/hyper152.love/人物志/lq/`（1 个）
+
+- `media/pages/projects/web/hyper152.love/人物志/lq/P1060725.JPG`
+
+## `media/pages/projects/web/hyper152.love/人物志/lwx/`（1 个）
+
+- `media/pages/projects/web/hyper152.love/人物志/lwx/P1060372.JPG`
+
+## `media/pages/projects/web/hyper152.love/人物志/ninja/`（3 个）
+
+- `media/pages/projects/web/hyper152.love/人物志/ninja/P1050097.JPG`
+- `media/pages/projects/web/hyper152.love/人物志/ninja/P1060914.JPG`
+- `media/pages/projects/web/hyper152.love/人物志/ninja/P1060948.JPG`
+
+## `media/pages/projects/web/hyper152.love/人物志/pwz/`（1 个）
+
+- `media/pages/projects/web/hyper152.love/人物志/pwz/P1060798.JPG`
+
+## `media/pages/projects/web/hyper152.love/人物志/qj/`（2 个）
+
+- `media/pages/projects/web/hyper152.love/人物志/qj/P1050795.JPG`
+- `media/pages/projects/web/hyper152.love/人物志/qj/P1460681.JPG`
+
+## `media/pages/projects/web/hyper152.love/人物志/szy/`（1 个）
+
+- `media/pages/projects/web/hyper152.love/人物志/szy/P1050118.JPG`
+
+## `media/pages/projects/web/hyper152.love/人物志/wcl/`（1 个）
+
+- `media/pages/projects/web/hyper152.love/人物志/wcl/P1060821.JPG`
+
+## `media/pages/projects/web/hyper152.love/人物志/wyx/`（1 个）
+
+- `media/pages/projects/web/hyper152.love/人物志/wyx/P1050139.JPG`
+
+## `media/pages/projects/web/hyper152.love/人物志/wyz/`（1 个）
+
+- `media/pages/projects/web/hyper152.love/人物志/wyz/P1060356.JPG`
+
+## `media/pages/projects/web/hyper152.love/人物志/wzh/`（1 个）
+
+- `media/pages/projects/web/hyper152.love/人物志/wzh/P1060802.JPG`
+
+## `media/pages/projects/web/hyper152.love/人物志/xsz/`（1 个）
+
+- `media/pages/projects/web/hyper152.love/人物志/xsz/P1080028.JPG`
+
+## `media/pages/projects/web/hyper152.love/人物志/zbh/`（2 个）
+
+- `media/pages/projects/web/hyper152.love/人物志/zbh/P1050894.JPG`
+- `media/pages/projects/web/hyper152.love/人物志/zbh/P1060262.JPG`
+
+## `media/pages/projects/web/hyper152.love/人物志/zhao8/`（2 个）
+
+- `media/pages/projects/web/hyper152.love/人物志/zhao8/P1060607.JPG`
+- `media/pages/projects/web/hyper152.love/人物志/zhao8/P1060893.JPG`
+
+## `media/pages/projects/web/hyper152.love/人物志/zzk/`（1 个）
+
+- `media/pages/projects/web/hyper152.love/人物志/zzk/P1060659.JPG`
+
+## `media/pages/projects/web/hyper152.love/人物志/吴xy/`（1 个）
+
+- `media/pages/projects/web/hyper152.love/人物志/吴xy/P1060547.JPG`
+
+## `media/pages/projects/web/hyper152.love/装机大师/`（7 个）
+
+- `media/pages/projects/web/hyper152.love/装机大师/装机 (1).jpg`
+- `media/pages/projects/web/hyper152.love/装机大师/装机 (1).png`
+- `media/pages/projects/web/hyper152.love/装机大师/装机 (2).jpg`
+- `media/pages/projects/web/hyper152.love/装机大师/装机 (3).jpg`
+- `media/pages/projects/web/hyper152.love/装机大师/装机 (4).jpg`
+- `media/pages/projects/web/hyper152.love/装机大师/装机 (5).jpg`
+- `media/pages/projects/web/hyper152.love/装机大师/装机 (6).jpg`
+
+## `media/pages/projects/web/hyper152.love/觉醒年代/`（1 个）
+
+- `media/pages/projects/web/hyper152.love/觉醒年代/觉醒年代2.0.mp4`
+
+## `media/pages/projects/web/hyper152.love/计算机大师/`（4 个）
+
+- `media/pages/projects/web/hyper152.love/计算机大师/计算机 (1).jpg`
+- `media/pages/projects/web/hyper152.love/计算机大师/计算机 (1).png`
+- `media/pages/projects/web/hyper152.love/计算机大师/计算机 (2).jpg`
+- `media/pages/projects/web/hyper152.love/计算机大师/计算机 (3).jpg`
 
 ## `media/pages/projects/声控开关灯/`（2 个）
 
@@ -497,51 +953,3 @@
 - `media/pages/travel/2026.8-黄山/IMG_20260814_122049.webp`
 - `media/pages/travel/2026.8-黄山/IMG_20260814_142543.jpg`
 - `media/pages/travel/2026.8-黄山/IMG_20260814_142543.webp`
-
-## `media/pages/YY往事/EDG夺冠/`（3 个）
-
-- `media/pages/YY往事/EDG夺冠/kskbl.webp`
-- `media/pages/YY往事/EDG夺冠/赢下决赛图二.mov`
-- `media/pages/YY往事/EDG夺冠/赢下半决.mov`
-
-## `media/pages/YY往事/机房往事/`（15 个）
-
-- `media/pages/YY往事/机房往事/2024.10.1-LOL双排.webp`
-- `media/pages/YY往事/机房往事/2024.10.1国庆留校机房五排瓦.webp`
-- `media/pages/YY往事/机房往事/2024.11.1-BLG加油.webp`
-- `media/pages/YY往事/机房往事/2024.11.13-csmajor.webp`
-- `media/pages/YY往事/机房往事/2024.11.3-BLG决赛惜败T1.webp`
-- `media/pages/YY往事/机房往事/2024.12.4-hyper在机房的留言网站.webp`
-- `media/pages/YY往事/机房往事/2024.6.23-ALGS.webp`
-- `media/pages/YY往事/机房往事/2024.7.5-机房CS1.6.webp`
-- `media/pages/YY往事/机房往事/2024.8.26-EDG牛逼.webp`
-- `media/pages/YY往事/机房往事/2024.9.2-购买黑神话悟空.webp`
-- `media/pages/YY往事/机房往事/74404.webp`
-- `media/pages/YY往事/机房往事/mc-2024.6.24.webp`
-- `media/pages/YY往事/机房往事/最后一个假期-距离高考还有6天.jpg`
-- `media/pages/YY往事/机房往事/机房双排.webp`
-- `media/pages/YY往事/机房往事/英雄联盟定级铂金.webp`
-
-## `media/pages/YY往事/觉醒年代/`（2 个）
-
-- `media/pages/YY往事/觉醒年代/cover.webp`
-- `media/pages/YY往事/觉醒年代/lhn版觉醒年代.mp4`
-
-## `media/pages/YY往事/返校宣讲/`（16 个）
-
-- `media/pages/YY往事/返校宣讲/danking贴纸的传承.webp`
-- `media/pages/YY往事/返校宣讲/ktv.mp4`
-- `media/pages/YY往事/返校宣讲/ktv.webp`
-- `media/pages/YY往事/返校宣讲/凌晨的电影.webp`
-- `media/pages/YY往事/返校宣讲/出发.jpg`
-- `media/pages/YY往事/返校宣讲/合影.webp`
-- `media/pages/YY往事/返校宣讲/夜晚的YY.webp`
-- `media/pages/YY往事/返校宣讲/宣讲.webp`
-- `media/pages/YY往事/返校宣讲/录取榜.webp`
-- `media/pages/YY往事/返校宣讲/怀旧外卖.webp`
-- `media/pages/YY往事/返校宣讲/海报.webp`
-- `media/pages/YY往事/返校宣讲/给语文老师的礼物.webp`
-- `media/pages/YY往事/返校宣讲/警察拿外卖.mp4`
-- `media/pages/YY往事/返校宣讲/足球.webp`
-- `media/pages/YY往事/返校宣讲/跟zbh的离别.webp`
-- `media/pages/YY往事/返校宣讲/高中去的网吧.webp`

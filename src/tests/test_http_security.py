@@ -1,11 +1,15 @@
 import functools
 import http.client
+import json
+import socket
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 import tempfile
 import threading
+from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
+from flask import Flask, request
 import main
 
 
@@ -102,7 +106,9 @@ class StaticSecurityTests(unittest.TestCase):
             ([('Content-Length', '-1')], 400),
             ([('Content-Length', 'invalid')], 400),
             ([('Content-Length', '1'), ('Content-Length', '1')], 400),
-            ([('Transfer-Encoding', 'chunked')], 400),
+            ([('Transfer-Encoding', 'gzip')], 400),
+            ([('Transfer-Encoding', 'chunked, chunked')], 400),
+            ([('Transfer-Encoding', 'chunked'), ('Transfer-Encoding', 'chunked')], 400),
             ([('Transfer-Encoding', 'chunked'), ('Content-Length', '1')], 400),
             ([('Content-Length', str(main.Config.MAX_POST_SIZE + 1))], 413),
             ([('Content-Length', '9' * 5000)], 413),
@@ -120,6 +126,131 @@ class StaticSecurityTests(unittest.TestCase):
                     response.read()
                 finally:
                     conn.close()
+
+    def chunked_request(self, path, method, body, extra_headers=()):
+        conn = http.client.HTTPConnection(*self.server.server_address, timeout=3)
+        try:
+            conn.putrequest(method, path)
+            conn.putheader('Transfer-Encoding', 'chunked')
+            for name, value in extra_headers:
+                conn.putheader(name, value)
+            conn.endheaders(body)
+            # Allow incomplete bodies to reach EOF rather than waiting for a timeout.
+            conn.sock.shutdown(socket.SHUT_WR)
+            response = conn.getresponse()
+            return response.status, response.read()
+        finally:
+            conn.close()
+
+    def test_empty_chunked_visit_count_and_page_reads(self):
+        with patch.object(main, 'get_total_visits', return_value=12345):
+            status, body = self.chunked_request('/visit-count', 'GET', b'0\r\n\r\n')
+        self.assertEqual(status, 200)
+        self.assertEqual(json.loads(body)['data']['total_visits'], 12345)
+        for method in ('GET', 'HEAD'):
+            status, body = self.chunked_request('/pages/home/', method, b'0\r\n\r\n')
+            self.assertEqual(status, 200)
+            self.assertEqual(body, b'fixture' if method == 'GET' else b'')
+            status, _ = self.chunked_request('/pages/home/', method, b'1\r\nx\r\n0\r\n\r\n')
+            self.assertEqual(status, 400)
+
+    def test_chunked_api_body_is_decoded_before_flask(self):
+        app = Flask(__name__)
+
+        @app.route('/api/check-login', methods=['POST', 'DELETE'])
+        def echo_body():
+            return {
+                'body': request.get_data().decode('utf-8'),
+                'length': request.content_length,
+                'encoding': request.headers.get('Transfer-Encoding'),
+                'trailer': request.headers.get('Trailer'),
+                'auth': request.headers.get('Authorization'),
+            }
+
+        payload = '{"text":"你好"}'.encode('utf-8')
+        chunks = [payload[:11], payload[11:]]
+        encoded = b''.join(format(len(chunk), 'x').encode() + b';name="value"\r\n' + chunk + b'\r\n'
+                           for chunk in chunks)
+        encoded += b'0\r\nAuthorization: attacker\r\nContent-Length: 999\r\n\r\n'
+        headers = [('Content-Type', 'application/json'), ('Authorization', 'Session legitimate'),
+                   ('Trailer', 'Authorization, Content-Length')]
+        with patch.object(main, 'FLASK_AVAILABLE', True), \
+                patch.object(main, 'message_board', SimpleNamespace(app=app)):
+            for method in ('POST', 'DELETE'):
+                status, body = self.chunked_request('/api/check-login', method, encoded, headers)
+                self.assertEqual(status, 200)
+                result = json.loads(body)
+                self.assertEqual(result['body'], payload.decode())
+                self.assertEqual(result['length'], len(payload))
+                self.assertIsNone(result['encoding'])
+                self.assertIsNone(result['trailer'])
+                self.assertEqual(result['auth'], 'Session legitimate')
+            status, body = self.chunked_request('/api/check-login', 'POST', b'0\r\n\r\n')
+            self.assertEqual(status, 200)
+            self.assertEqual(json.loads(body)['length'], 0)
+            self.assertEqual(json.loads(body)['body'], '')
+
+    def test_chunked_size_limit_and_malformed_bodies(self):
+        cases = [
+            (b'9\r\n', 413),
+            (b'5\r\n12345\r\n4\r\n', 413),
+            (b'f' * 1000 + b'\r\n', 413),
+            (b'xyz\r\n', 400),
+            (b'+1\r\nx\r\n0\r\n\r\n', 400),
+            (b'1\nx\n0\n\n', 400),
+            (b'2\r\nx', 400),
+            (b'1\r\nx!!', 400),
+            (b'1\r\nx\r\n', 400),
+            (b'0\r\n folded: trailer\r\n\r\n', 400),
+        ]
+        with patch.object(main.Config, 'MAX_POST_SIZE', 8), \
+                patch.object(main.BeautifulDirectoryHandler, '_forward_to_flask') as forward:
+            for body, expected in cases:
+                with self.subTest(body=body):
+                    status, _ = self.chunked_request('/api/check-login', 'POST', body)
+                    self.assertEqual(status, expected)
+            forward.assert_not_called()
+
+    def test_fixed_length_body_at_size_limit_reaches_flask(self):
+        app = Flask(__name__)
+        app.add_url_rule('/api/check-login', view_func=lambda: request.get_data(), methods=['POST'])
+        with patch.object(main.Config, 'MAX_POST_SIZE', 8), \
+                patch.object(main, 'FLASK_AVAILABLE', True), \
+                patch.object(main, 'message_board', SimpleNamespace(app=app)):
+            conn = http.client.HTTPConnection(*self.server.server_address, timeout=3)
+            try:
+                conn.request('POST', '/api/check-login', b'12345678')
+                response = conn.getresponse()
+                self.assertEqual(response.status, 200)
+                self.assertEqual(response.read(), b'12345678')
+            finally:
+                conn.close()
+            status, body = self.chunked_request('/api/check-login', 'POST', b'8\r\n12345678\r\n0\r\n\r\n')
+            self.assertEqual(status, 200)
+            self.assertEqual(body, b'12345678')
+
+    def test_chunked_read_timeout_does_not_dispatch(self):
+        with patch.object(main, 'read_chunked_body', side_effect=socket.timeout), \
+                patch.object(main.BeautifulDirectoryHandler, '_forward_to_flask') as forward:
+            status, _ = self.chunked_request('/api/check-login', 'POST', b'0\r\n\r\n')
+            self.assertEqual(status, 408)
+            forward.assert_not_called()
+
+    def test_incomplete_fixed_length_body_does_not_dispatch_to_flask(self):
+        conn = http.client.HTTPConnection(*self.server.server_address, timeout=3)
+        with patch.object(main, 'FLASK_AVAILABLE', True), \
+                patch.object(main, 'message_board') as board:
+            try:
+                conn.putrequest('POST', '/api/check-login')
+                conn.putheader('Content-Length', '10')
+                conn.endheaders(b'short')
+                conn.sock.shutdown(socket.SHUT_WR)
+                response = conn.getresponse()
+                self.assertEqual(response.status, 400)
+                response.read()
+                board.app.test_client.assert_not_called()
+            finally:
+                conn.close()
 
     def test_static_requests_do_not_enter_logs_visits_or_frequency_counts(self):
         # Run the real accounting wrapper with all storage/network effects mocked.

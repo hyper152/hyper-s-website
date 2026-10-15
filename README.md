@@ -157,6 +157,22 @@ python -m src.backfill_message_ips --apply   # 先备份数据库，再补录
 
 备份保存在 `data/backups/message-ip-before-*.db`。完成部署后重启 `main.py`，后台接口和新留言 IP 记录才会生效。
 
+## 网站旧版归档
+
+开发记录与旧版入口统一放在 `/pages/projects/web/`，原 `personal-blog` 页面及媒体地址会跳转到 `web`。`pages/devlog/` 已合并进 `pages/projects/`，旧 URL 继续跳转，SRTP 正文保留在 `pages/projects/SRTP/`。
+
+四份旧站分别保存在 `pages/projects/web/py.hyper152.love/`、`py.0o0hyper0o0.cyou/`、`hyper152.love/`、`hyper152.cn/`。每个版本都有首页和 `catalog.html` 内容目录；图片、视频、PDF 和字体保存在相同层级的 `media/pages/projects/web/<域名>/`。媒体完整清单见 `media/README.md`。
+
+归档保留当年的页面和交互，旧留言板使用 SQLite 备份生成只读 HTML；保留 381 条历史记录，其中 170 条有留言内容，其余包含直接访问产生的空记录。Python、PHP 服务端源码、数据库、安装模板和配置不放入公开网页目录，原始备份继续保存在 `E:/projects/web/backup/`。
+
+重新生成指定四份旧站快照：
+
+```powershell
+python -m src.import_legacy_sites --source E:/projects/web/backup
+```
+
+导入摘要和缺失引用检查结果写入 `pages/projects/web/import-manifest.json`。重建媒体文件后同步更新 `media/README.md`；旧地址跳转的服务端改动需重启网站生效。
+
 ## 项目结构
 
 ```text
@@ -220,6 +236,11 @@ MIT © 2026 CQU.hyper
 
 验证：`python -m unittest discover -s src/tests -v`。
 修改 `main.py` 后需要重启网站进程；如果另有静态文件代理，必须确保代理也不公开项目根目录。
+
+HTTP 请求支持标准 `Transfer-Encoding: chunked`，包括代理转发的空请求体。
+服务端先解析分块、丢弃尾部字段，再按实际 `Content-Length` 转发给 Flask；请求体上限仍为 1 MiB。
+GET/HEAD 只接受空请求体；重复或不支持的传输编码、同时携带传输编码和长度、损坏的分块仍会拒绝。
+分块行和附加信息分别限制为 8 KiB、64 KiB，读取设有超时。
 
 ### 已暴露凭据的处置
 

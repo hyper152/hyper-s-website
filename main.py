@@ -32,6 +32,7 @@ import posixpath
 from src.ip_location import query_ip_city
 from src.storage import get_store
 from src.admin_db import is_admin, overview as admin_overview, browse as admin_browse
+from src.http_body import RequestBodyError, read_chunked_body
 
 # 访问分析页面（/pages/visit/）数据接口：访客 IP 属于隐私数据，默认仅登录账号可见。
 VISIT_STATS_REQUIRE_LOGIN = True
@@ -410,10 +411,34 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
                 self.close_connection = True
                 return False
 
-        # 此服务不支持 chunked 请求体；拒绝歧义长度，避免转发解析不一致。
-        if self.headers.get_all('Transfer-Encoding'):
-            return self._reject_request(400, '不支持 Transfer-Encoding 请求体')
+        self._decoded_request_body = None
+        encodings = self.headers.get_all('Transfer-Encoding', [])
         lengths = self.headers.get_all('Content-Length', [])
+        if encodings and lengths:
+            return self._reject_request(400, 'Transfer-Encoding 与 Content-Length 不能同时存在')
+        if encodings:
+            if len(encodings) != 1 or encodings[0].strip().lower() != 'chunked':
+                return self._reject_request(400, '不支持或重复的 Transfer-Encoding: ' + repr(encodings)[:160])
+            original_timeout = self.connection.gettimeout()
+            self.connection.settimeout(min(original_timeout, 10) if original_timeout is not None else 10)
+            try:
+                read_only = self.command in ('GET', 'HEAD')
+                self._decoded_request_body = read_chunked_body(
+                    self.rfile, 0 if read_only else Config.MAX_POST_SIZE)
+            except RequestBodyError as error:
+                if read_only and error.status == 413 and str(error) == '请求体超过大小限制':
+                    return self._reject_request(400, '页面读取不接受请求体')
+                return self._reject_request(error.status, str(error))
+            except socket.timeout:
+                return self._reject_request(408, '读取分块请求体超时')
+            except OSError:
+                return self._reject_request(400, '分块请求体读取失败')
+            finally:
+                self.connection.settimeout(original_timeout)
+            # Decode before dispatch and forward only an unambiguous, fixed length body.
+            del self.headers['Transfer-Encoding']
+            del self.headers['Trailer']
+            self.headers['Content-Length'] = str(len(self._decoded_request_body))
         if len(lengths) > 1 or (lengths and
                                (not lengths[0].isascii() or not lengths[0].isdigit())):
             return self._reject_request(400, '无效或重复的 Content-Length')
@@ -542,6 +567,10 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
             self.end_headers()
             return None
         for old_prefix, new_prefix in (
+            ('/pages/devlog/personal-blog/', '/pages/projects/web/'),
+            ('/pages/projects/personal-blog/', '/pages/projects/web/'),
+            ('/media/pages/devlog/personal-blog/', '/media/pages/projects/web/'),
+            ('/media/pages/projects/personal-blog/', '/media/pages/projects/web/'),
             ('/media/pages/devlog/', '/media/pages/projects/'),
             ('/media/resume/', '/media/pages/resume/'),
             ('/media/home/', '/media/pages/home/'),
@@ -1175,11 +1204,16 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
             self.send_error(500, "Internal Server Error")
             return
         try:
-            data = b""
-            if self.command in ["POST", "PUT", "DELETE"]:
+            data = self._decoded_request_body
+            if data is None:
+                data = b""
+            if self._decoded_request_body is None and self.command in ["POST", "PUT", "DELETE"]:
                 cl = int(self.headers.get("Content-Length", 0))
-                if 0 < cl < Config.MAX_POST_SIZE:
+                if 0 < cl <= Config.MAX_POST_SIZE:
                     data = self.rfile.read(cl)
+                    if len(data) != cl:
+                        self._reject_request(400, '请求体不完整')
+                        return
 
             if self.command == "POST" and urlparse(self.path).path == '/api/ollama/chat':
                 try:
@@ -1204,7 +1238,7 @@ class BeautifulDirectoryHandler(CGIHTTPRequestHandler):
                 if self.command == "GET":
                     resp = client.get(self.path, headers=headers, environ_overrides=environ)
                 elif self.command == "DELETE":
-                    resp = client.delete(self.path, headers=headers, environ_overrides=environ)
+                    resp = client.delete(self.path, data=data, headers=headers, environ_overrides=environ)
                 else:
                     content_type = self.headers.get('Content-Type', 'application/x-www-form-urlencoded')
                     resp = client.post(self.path, data=data, headers=headers, content_type=content_type, environ_overrides=environ)
