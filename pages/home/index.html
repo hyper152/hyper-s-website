@@ -1,67 +1,47 @@
-<!DOCTYPE html>
-
+<!doctype html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1" name="viewport"/>
-<meta content="Hyper 的个人空间。探索开发、旅行、学习、装机、游戏与校园往事。" name="description"/>
-<meta content="#f6f7f2" name="theme-color"/>
-<title>Hyper · 认真折腾，好好生活</title>
-<link href="/pages/home/home.css?v=20260917-login-cta" rel="stylesheet"/>
-<script defer="" src="/pages/login/auth.js"></script>
-<script defer="" src="/pages/home/home.js?v=20261012-admin"></script>
-<link rel="stylesheet" href="/pages/_shared/site-theme.css?v=20260911-centered-navigation">
-<meta name="theme-color" content="#f6f7f2">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Hyper 的个人记录：旅行相册、机器人项目、ACM 算法题库与学习笔记。">
+<meta name="theme-color" content="#f5f4ef">
+<title>Hyper — 生活有迹，好奇无界</title>
+<link rel="stylesheet" href="/pages/_shared/site-theme.css?v=20261023">
+<link rel="stylesheet" href="/pages/home/home.css?v=20261023-2">
+<script src="/pages/login/auth.js" defer></script>
+<script src="/pages/home/home.js?v=20261023" defer></script>
 </head>
 <body id="home" data-site-theme="garden" data-page-kind="page">
-<nav class="page-controls" aria-label="页面快捷导航"><a href="/pages/home/" data-page-back><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m10 5-7 7 7 7M3 12h18"/></svg><span>返回上一页</span></a><a href="/pages/home/"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9"/></svg><span>首页</span></a></nav>
 <a class="skip-link" href="#categories">跳到内容分类</a>
 <header class="header">
-<a aria-label="Hyper 首页" class="brand" href="/pages/home/"><img alt="Hyper 的头像" class="brand-avatar" height="40" src="/pages/home/hyper.png" width="40"/> hyper<span class="brand-dot">.</span></a>
-<nav aria-label="主导航"><a class="active" href="#categories">探索分类</a><a href="#about">关于我</a><a href="/pages/resume/index.html">个人简介 <span>↗</span></a><a href="#contact">联系我</a><a href="/pages/talk/comment.html">留言板</a></nav>
-<details class="account"><summary id="usernameDisplay">登录 / 注册 <span>⌄</span></summary><div class="account-menu"><a href="/pages/login/index.html" id="loginItem">登录</a><a href="/pages/login/register.html" id="registerItem">注册</a><a hidden="" href="/pages/admin/" id="adminItem">管理后台</a><button hidden="" id="logoutItem">退出登录</button></div></details>
+<a class="brand" href="/pages/home/" aria-label="Hyper 首页"><img src="/pages/home/hyper.png" width="36" height="36" alt="Hyper 的头像"><span>hyper<span class="brand-dot">.</span></span><small>PERSONAL JOURNAL</small></a>
+<nav aria-label="主导航"><a href="/pages/travel/">旅行</a><a href="/pages/projects/">项目</a><a href="/pages/study/ACM/">算法</a><a href="#about">关于</a></nav>
+<details class="account"><summary id="usernameDisplay">登录 / 注册 <span>⌄</span></summary><div class="account-menu"><a href="/pages/login/" id="loginItem">登录</a><a href="/pages/login/register.html" id="registerItem">注册</a><a href="/pages/admin/" id="adminItem" hidden>管理后台</a><button id="logoutItem" hidden>退出登录</button></div></details>
 </header>
 <main>
-<section aria-labelledby="intro-title" class="intro">
-<div><p class="eyebrow"><span class="status-dot"></span> HYPER'S PERSONAL SPACE</p><h1 id="intro-title">认真折腾，<br class="mobile-break"/>也<span class="handwritten">好好生活。</span></h1><p class="intro-text">写代码，去远方，把好奇心留在日常里。<br/>欢迎来到我的小天地，选一个感兴趣的地方逛逛。</p><p aria-live="polite" class="visit-badge"><a class="visit-badge-link" href="/pages/visit/" title="查看访问分析"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"></path><circle cx="12" cy="12" r="3"></circle></svg><span>总访问次数</span><strong id="heroVisitNumber">加载中…</strong><span hidden="" id="heroVisitUnit">次</span><span aria-hidden="true" class="visit-badge-arrow">→</span></a><button hidden="" id="retryVisitCount" type="button">重试</button></p></div>
-<div aria-hidden="true" class="intro-note"><span class="orbit">✳</span><span>保持好奇<br/>一直在路上</span><svg viewbox="0 0 100 50"><path d="M5 8 Q30 48 83 20 M70 15 L85 20 L77 34"></path></svg></div>
+<section class="home-intro" aria-labelledby="intro-title">
+<div class="intro-content"><p class="micro-label"><span class="status-dot"></span> NOTES FROM AN EVER-CURIOUS MIND</p><h1 id="intro-title">把好奇，<br>写进<span>日常。</span></h1><p class="intro-copy">在代码里找答案，在山川间找方向。<br>这里收着我的项目、学习，还有路上的片刻。</p><div class="intro-actions"><a class="primary-link" href="#categories">随处逛逛 <span>↗</span></a><a class="text-link" href="/pages/study/ACM/">打开 ACM 复习台 <span>→</span></a></div><div class="intro-footnote"><span>BASED IN CQU</span><span>BUILD · LEARN · WANDER</span></div></div>
+<figure class="home-cover"><img src="/media/pages/travel/2026.10-四川/IMG_20261002_120226.webp" alt="四川黄龙山间的层层彩池" fetchpriority="high" width="1200" height="900"><figcaption><span><small>THE LATEST JOURNEY</small><strong>向山而行，入秋川西。</strong></span><a href="/pages/travel/2026.10-四川/" aria-label="查看四川旅行记录">↗</a></figcaption><span class="cover-tab">SICHUAN / OCT. 2026</span></figure>
 </section>
-<section aria-labelledby="category-title" id="categories">
-<div class="section-heading"><h2 id="category-title">从这里开始<span>EXPLORE</span></h2><p>六个角落，都是生活的一部分</p></div>
+<div class="edition-strip"><span><span class="edition-dot"></span> 记录持续生长中</span><span class="edition-index">FIELD NOTES / VOL. 2026</span><p class="visit-badge" aria-live="polite"><a class="visit-badge-link" href="/pages/visit/"><span>总访问</span> <strong id="heroVisitNumber">加载中…</strong><span id="heroVisitUnit" hidden>次</span></a><button id="retryVisitCount" type="button" hidden>重试</button></p></div>
+<section class="latest-section" aria-labelledby="latest-title"><div class="section-heading"><div><p class="micro-label">RECENTLY ADDED</p><h2 id="latest-title">最近，留在这里的事。</h2></div><span class="section-aside">一点进展，一段路，一次想明白。</span></div>
+<div class="latest-grid">
+<a class="latest-card" href="/pages/travel/2026.10-四川/"><div class="latest-photo"><img src="/media/pages/travel/2026.10-四川/IMG_20261002_120226.webp" alt="四川黄龙彩池" loading="lazy"><span class="latest-kind">TRAVEL / 01</span><span class="round-arrow">↗</span></div><div class="latest-copy"><div class="latest-meta"><span>旅行 · 四川</span><time datetime="2026-10-04">2026.10</time></div><h3>从成都出发，走进山水的秋天。</h3><p>成都、松潘、黄龙与九寨沟，把这一路收进相册。</p></div></a>
+<a class="latest-card" href="/pages/study/ACM/"><div class="algorithm-art" aria-hidden="true"><span class="latest-kind">LEARN / 02</span><div class="algo-equation">think<span>→</span>solve<span>→</span>repeat</div><div class="algo-code"><span>01</span> while (curious) {<br><span>02</span> &nbsp;learn();<br><span>03</span> &nbsp;solve(problem);<br><span>04</span> }</div><span class="round-arrow">↗</span></div><div class="latest-copy"><div class="latest-meta"><span>学习 · 算法</span><span>持续复习</span></div><h3>解出一道题，也留下一种思路。</h3><p>88 道题、12 个算法方向，对照原稿与参考版本，循着薄弱点复习。</p></div></a>
+<a class="latest-card" href="/pages/projects/SRTP/"><div class="latest-photo"><img src="/media/pages/projects/SRTP/controller-test-20260703.webp" alt="四足机器人与手柄控制板调试现场" loading="lazy"><span class="latest-kind">BUILD / 03</span><span class="round-arrow">↗</span></div><div class="latest-copy"><div class="latest-meta"><span>项目 · 机器人</span><span>SRTP</span></div><h3>让运动学，走出纸上的公式。</h3><p>正逆解、3D 打印与 STM32，把一个想法搭成样机。</p></div></a>
+</div></section>
+<section id="categories" aria-labelledby="category-title"><div class="section-heading"><div><p class="micro-label">THE COLLECTION</p><h2 id="category-title">换一个角度，继续探索。</h2></div><span class="section-aside">六个角落，组成我的数字花园。</span></div>
 <div class="category-grid">
-<a class="category feature travel" href="/pages/travel/">
-<img alt="云雾中的黄山山脊" fetchpriority="high" src="/media/pages/travel/2026.8-黄山/IMG_20260813_100632.webp"/>
-<div class="image-shade"></div><div class="feature-top"><span class="pill">去看更大的世界</span><span class="category-number">01 / TRAVEL</span></div>
-<div class="feature-bottom"><div><span class="overline">山川湖海，城市街巷</span><h3>旅游记录</h3><p>把走过的路，收进生活的相册。</p></div><span class="arrow">↗</span></div>
-<span class="category-count">15 篇</span></a>
-<a class="category feature devlog" href="/pages/projects/">
-<div aria-hidden="true" class="dev-grid"></div><div class="feature-top"><span class="pill">让想法发生</span><span class="category-number">02 / BUILD</span></div>
-<div aria-hidden="true" class="code-art"><div class="code-title"><i></i><i></i><i></i><span>hello_world.py</span></div><div class="code-body"><span class="code-muted"># 好奇，是一切的开始</span><br/><span class="code-purple">while</span> curiosity:<br/>  idea = <span class="code-yellow">explore</span>()<br/>  <span class="code-yellow">build</span>(idea)<span class="cursor">▍</span></div><span class="code-sticker">&lt;/&gt;</span></div>
-<div class="feature-bottom"><div><span class="overline">从第一行代码，到每一次实现</span><h3>开发日志</h3><p>项目、竞赛，以及折腾过程中的灵光一现。</p></div><span class="arrow">↗</span></div>
-<span class="category-count">9 篇</span></a>
-<a class="category small study" href="/pages/study/"><div class="small-top"><span aria-hidden="true" class="icon">⌘</span><span class="category-number">03 / LEARN</span><span class="small-arrow">↗</span></div><h3>学习笔记</h3><p>把知识串起来，把问题想明白。</p><div class="tags"><span>课程</span><span>思考</span><span>积累</span></div><span class="category-count">4 篇</span></a>
-<a class="category small diy" href="/pages/diy/"><div class="small-top"><span aria-hidden="true" class="icon">▤</span><span class="category-number">04 / HARDWARE</span><span class="small-arrow">↗</span></div><h3>装机记录</h3><p>硬件的乐趣，藏在每一次拆装里。</p><div class="tags"><span>硬件</span><span>组装</span><span>折腾</span></div><span class="category-count">7 篇</span></a>
-<a class="category small games" href="/pages/games/"><div class="small-top"><span aria-hidden="true" class="icon">✜</span><span class="category-number">05 / PLAY</span><span class="small-arrow">↗</span></div><h3>游戏空间</h3><p>偶尔下线，在另一个世界上线。</p><div class="tags"><span>Minecraft</span><span>探索</span></div><span class="category-count">2 篇</span></a>
-<a class="category small memories" href="/pages/YY往事/"><div class="small-top"><span aria-hidden="true" class="icon">◷</span><span class="category-number">06 / MEMORY</span><span class="small-arrow">↗</span></div><h3>YY 往事</h3><p>有些日子，回头看依然闪闪发光。</p><div class="tags"><span>校园</span><span>青春</span><span>回忆</span></div><span class="category-count">4 篇</span></a>
-</div>
-</section>
-<aside aria-label="交流入口" class="connect"><div class="connect-title"><span aria-hidden="true">☻</span><div><h2>来都来了，聊两句？</h2><p>在留言板分享想法，或与 hyper 的 Ollama 模型聊天。</p></div></div><div class="connect-links"><a href="/pages/talk/comment.html">去留言板 <span>↗</span></a><a href="/pages/talk/ai-chat.html">AI 助手 <span>↗</span></a></div></aside>
-<section aria-label="关于与联系" class="home-info">
-<div class="about-panel" id="about">
-<img alt="Hyper 的头像" class="about-avatar" height="76" loading="lazy" src="/pages/home/hyper.png" width="76"/><p class="eyebrow">ABOUT HYPER</p>
-<h2>关于我</h2>
-<p>热爱生活，喜欢旅行和记录，用 Vlog 的形式分享生活中的美好瞬间和成长感悟。</p>
-<a class="profile-link" href="/pages/resume/index.html">查看个人简介 ↗</a>
-<div class="social-links"><a href="https://github.com/hyper152/personal-blog" rel="noopener noreferrer" target="_blank">GitHub ↗</a><a href="https://space.bilibili.com/1689598128" rel="noopener noreferrer" target="_blank">Bilibili ↗</a><a href="mailto:2361542526@qq.com">邮箱 ↗</a></div>
-</div>
-<nav aria-label="快速链接" class="info-column"><h2>快速链接</h2><a href="#home">首页</a><a href="#categories">内容分类</a><a href="/pages/talk/comment.html">留言板</a><a href="/pages/talk/ai-chat.html">AI 助手</a><a href="/pages/resume/index.html">个人简介</a><a href="/pages/visit/">访问分析</a><a href="https://github.com/hyper152/personal-blog" rel="noopener noreferrer" target="_blank">开源代码 ↗</a></nav>
-<nav aria-label="页尾内容分类" class="info-column"><h2>内容分类</h2><a href="/pages/travel/">旅游记录</a><a href="/pages/projects/">开发项目</a><a href="/pages/study/">学习</a><a href="/pages/diy/">装机记录</a><a href="/pages/games/">游戏栏</a><a href="/pages/YY往事/">YY 往事</a></nav>
-<div class="info-column" id="contact"><h2>联系我</h2><a href="tencent://message/?uin=2361542526">QQ：2361542526 ↗</a><span>微信：hyper20070129</span><a href="mailto:2361542526@qq.com">2361542526@qq.com ↗</a><p class="contact-note">欢迎交流，一起分享生活里的新发现。</p></div>
-</section>
+<a class="chapter travel" href="/pages/travel/"><span class="chapter-top"><span>01 / WANDER</span><span>↗</span></span><h3>旅行记录</h3><p>山川湖海，和城市的一小段日常。</p><div class="chapter-bottom"><span>21 段旅程</span><span>TRAVEL NOTES</span></div></a>
+<a class="chapter projects" href="/pages/projects/"><span class="chapter-top"><span>02 / BUILD</span><span>↗</span></span><h3>开发项目</h3><p>从一个问题，走到可以运行的答案。</p><div class="chapter-bottom"><span data-project-count>10 项开发与竞赛</span><span>WORK IN PROGRESS</span></div></a>
+<a class="chapter study" href="/pages/study/"><span class="chapter-top"><span>03 / LEARN</span><span>↗</span></span><h3>学习笔记</h3><p>算法、课程，以及值得再想一遍的事。</p><div class="chapter-bottom"><span>ACM 复习台已上线</span><span>KEEP LEARNING</span></div></a>
+<a class="chapter diy" href="/pages/diy/"><span class="chapter-top"><span>04 / TINKER</span><span>↗</span></span><h3>装机记录</h3><p>拆开、组合，再给旧硬件一点可能。</p><div class="chapter-bottom"><span>7 篇记录</span><span>HARDWARE DIARY</span></div></a>
+<a class="chapter games" href="/pages/games/"><span class="chapter-top"><span>05 / PLAY</span><span>↗</span></span><h3>游戏空间</h3><p>留一点时间，去探索另一个世界。</p><div class="chapter-bottom"><span>Minecraft & more</span><span>OFF THE CLOCK</span></div></a>
+<a class="chapter memories" href="/pages/YY往事/"><span class="chapter-top"><span>06 / REMEMBER</span><span>↗</span></span><h3>YY 往事</h3><p>回头看，那些日子依然闪闪发光。</p><div class="chapter-bottom"><span>4 篇校园回忆</span><span>THE GOOD OLD DAYS</span></div></a>
+</div></section>
+<section class="connect"><div><p class="micro-label">LEAVE A LITTLE TRACE</p><h2>既然路过，就留句话吧。</h2><p>分享一个想法、一段近况，或者只是打声招呼。</p></div><a class="primary-link" href="/pages/talk/comment.html">去留言板 <span>↗</span></a><a class="text-link" href="/pages/talk/ai-chat.html">和 AI 聊聊 →</a></section>
+<section class="home-info" id="about"><div class="about-panel"><p class="micro-label">THE PERSON BEHIND THE NOTES</p><div class="about-heading"><img src="/pages/home/hyper.png" alt="Hyper 的头像" loading="lazy" width="60" height="60"><h2>你好，我是 Hyper。</h2></div><p>在重庆大学学习，也在生活里持续折腾。喜欢机器人、写代码、旅行和记录。这个网站，是把这些兴趣慢慢连接起来的地方。</p><a class="text-link" href="/pages/resume/">更多关于我 →</a></div><nav class="info-column" aria-label="快速链接"><h3>随处看看</h3><a href="/pages/projects/">开发项目 ↗</a><a href="/pages/study/ACM/">ACM 复习台 ↗</a><a href="/pages/travel/">旅行相册 ↗</a><a href="/pages/visit/">访问分析 ↗</a></nav><nav class="info-column" id="contact" aria-label="联系我"><h3>保持联系</h3><a href="https://github.com/hyper152/hyper-s-website" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="https://space.bilibili.com/1689598128" target="_blank" rel="noopener noreferrer">Bilibili ↗</a><a href="mailto:2361542526@qq.com">发封邮件 ↗</a></nav></section>
 </main>
-<footer><div><a class="footer-brand" href="/pages/home/">hyper.</a><span>生活有迹，好奇无界。</span></div><div class="footer-links"><a href="https://github.com/hyper152/hyper-s-website" rel="noopener noreferrer" target="_blank">GitHub ↗</a><a href="https://space.bilibili.com/1689598128" rel="noopener noreferrer" target="_blank">Bilibili ↗</a><a href="mailto:2361542526@qq.com">联系我 ↗</a></div><p>© <span id="year">2026</span> Hyper · 保留所有权利 <span hidden="" id="visitCount"></span></p></footer>
-<button aria-label="返回页面顶部" class="back-to-top" hidden="" id="backToTopBtn">↑</button>
-
-<script src="/pages/_shared/page-navigation.js?v=20260911-1" defer></script>
-</body>
-</html>
+<footer><a class="footer-brand" href="/pages/home/">hyper.</a><span>生活有迹，好奇无界。</span><p>© <span id="year">2026</span> Hyper <span id="visitCount" hidden></span></p><a href="#home">回到顶部 ↑</a></footer>
+<button class="back-to-top" id="backToTopBtn" aria-label="返回页面顶部" hidden>↑</button>
+</body></html>

@@ -1,54 +1,6 @@
 # 媒体文件路径清单
 
-共 649 个文件，按目录分组。路径相对于项目根目录；网站访问路径在前面加 `/`。
-
-## `media/pages/YY往事/EDG夺冠/`（3 个）
-
-- `media/pages/YY往事/EDG夺冠/kskbl.webp`
-- `media/pages/YY往事/EDG夺冠/赢下决赛图二.mov`
-- `media/pages/YY往事/EDG夺冠/赢下半决.mov`
-
-## `media/pages/YY往事/机房往事/`（15 个）
-
-- `media/pages/YY往事/机房往事/2024.10.1-LOL双排.webp`
-- `media/pages/YY往事/机房往事/2024.10.1国庆留校机房五排瓦.webp`
-- `media/pages/YY往事/机房往事/2024.11.1-BLG加油.webp`
-- `media/pages/YY往事/机房往事/2024.11.13-csmajor.webp`
-- `media/pages/YY往事/机房往事/2024.11.3-BLG决赛惜败T1.webp`
-- `media/pages/YY往事/机房往事/2024.12.4-hyper在机房的留言网站.webp`
-- `media/pages/YY往事/机房往事/2024.6.23-ALGS.webp`
-- `media/pages/YY往事/机房往事/2024.7.5-机房CS1.6.webp`
-- `media/pages/YY往事/机房往事/2024.8.26-EDG牛逼.webp`
-- `media/pages/YY往事/机房往事/2024.9.2-购买黑神话悟空.webp`
-- `media/pages/YY往事/机房往事/74404.webp`
-- `media/pages/YY往事/机房往事/mc-2024.6.24.webp`
-- `media/pages/YY往事/机房往事/最后一个假期-距离高考还有6天.jpg`
-- `media/pages/YY往事/机房往事/机房双排.webp`
-- `media/pages/YY往事/机房往事/英雄联盟定级铂金.webp`
-
-## `media/pages/YY往事/觉醒年代/`（2 个）
-
-- `media/pages/YY往事/觉醒年代/cover.webp`
-- `media/pages/YY往事/觉醒年代/lhn版觉醒年代.mp4`
-
-## `media/pages/YY往事/返校宣讲/`（16 个）
-
-- `media/pages/YY往事/返校宣讲/danking贴纸的传承.webp`
-- `media/pages/YY往事/返校宣讲/ktv.mp4`
-- `media/pages/YY往事/返校宣讲/ktv.webp`
-- `media/pages/YY往事/返校宣讲/凌晨的电影.webp`
-- `media/pages/YY往事/返校宣讲/出发.jpg`
-- `media/pages/YY往事/返校宣讲/合影.webp`
-- `media/pages/YY往事/返校宣讲/夜晚的YY.webp`
-- `media/pages/YY往事/返校宣讲/宣讲.webp`
-- `media/pages/YY往事/返校宣讲/录取榜.webp`
-- `media/pages/YY往事/返校宣讲/怀旧外卖.webp`
-- `media/pages/YY往事/返校宣讲/海报.webp`
-- `media/pages/YY往事/返校宣讲/给语文老师的礼物.webp`
-- `media/pages/YY往事/返校宣讲/警察拿外卖.mp4`
-- `media/pages/YY往事/返校宣讲/足球.webp`
-- `media/pages/YY往事/返校宣讲/跟zbh的离别.webp`
-- `media/pages/YY往事/返校宣讲/高中去的网吧.webp`
+共 800 个文件，按目录分组。路径相对于项目根目录；网站访问路径在前面加 `/`。
 
 ## `media/pages/diy/`（20 个）
 
@@ -72,6 +24,14 @@
 - `media/pages/diy/RX460接口面.webp`
 - `media/pages/diy/RX460的GPUZ参数.webp`
 - `media/pages/diy/RX460风扇面.webp`
+
+## `media/pages/games/CS/`（5 个）
+
+- `media/pages/games/CS/match-night-01.webp`
+- `media/pages/games/CS/match-night-02.webp`
+- `media/pages/games/CS/match-night-03.webp`
+- `media/pages/games/CS/match-night-04.webp`
+- `media/pages/games/CS/match-night-05.webp`
 
 ## `media/pages/games/mc/`（5 个）
 
@@ -125,6 +85,10 @@
 - `media/pages/projects/2026电赛TI杯省赛/video_20260729_213108.mp4`
 - `media/pages/projects/2026电赛TI杯省赛/video_20260801_063550.mp4`
 
+## `media/pages/projects/CQU-coursehelper/`（1 个）
+
+- `media/pages/projects/CQU-coursehelper/CQU-coursehelper.webp`
+
 ## `media/pages/projects/CQU-CRTC机器人比赛/`（7 个）
 
 - `media/pages/projects/CQU-CRTC机器人比赛/2025-10-08-第一次遥控电机转动.mp4`
@@ -134,10 +98,6 @@
 - `media/pages/projects/CQU-CRTC机器人比赛/2025-10-25-车4.0-可以捡球.mp4`
 - `media/pages/projects/CQU-CRTC机器人比赛/2025-10-27-车5.0-完成双车配合捡球.mp4`
 - `media/pages/projects/CQU-CRTC机器人比赛/2025-11-09-比赛实录.mp4`
-
-## `media/pages/projects/CQU-coursehelper/`（1 个）
-
-- `media/pages/projects/CQU-coursehelper/CQU-coursehelper.webp`
 
 ## `media/pages/projects/Gsing/`（15 个）
 
@@ -203,6 +163,18 @@
 - `media/pages/projects/Gsing/精选/比赛照片.jpg`
 - `media/pages/projects/Gsing/精选/比赛照片.webp`
 
+## `media/pages/projects/happy_run/`（2 个）
+
+- `media/pages/projects/happy_run/happy_run.mp4`
+- `media/pages/projects/happy_run/happy_run.webp`
+
+## `media/pages/projects/shared-parking/`（4 个）
+
+- `media/pages/projects/shared-parking/model-comparison.png`
+- `media/pages/projects/shared-parking/spatial-distribution.png`
+- `media/pages/projects/shared-parking/supply-demand.png`
+- `media/pages/projects/shared-parking/walking-distance.png`
+
 ## `media/pages/projects/SRTP/`（12 个）
 
 - `media/pages/projects/SRTP/control-pcb-20260915.webp`
@@ -217,11 +189,6 @@
 - `media/pages/projects/SRTP/prototype-control-20260628.webp`
 - `media/pages/projects/SRTP/prototype-test-20260603.mp4`
 - `media/pages/projects/SRTP/workbench-20260630.webp`
-
-## `media/pages/projects/happy_run/`（2 个）
-
-- `media/pages/projects/happy_run/happy_run.mp4`
-- `media/pages/projects/happy_run/happy_run.webp`
 
 ## `media/pages/projects/web/`（8 个）
 
@@ -669,6 +636,56 @@
 - `media/pages/resume/获奖情况/ROBOCON个人三等奖.pdf`
 - `media/pages/resume/获奖情况/ROBOCON个人二等奖.pdf`
 
+## `media/pages/study/ACM/`（47 个）
+
+- `media/pages/study/ACM/daily-26-10-1.png`
+- `media/pages/study/ACM/daily-26-10-16.png`
+- `media/pages/study/ACM/daily-26-10-17.png`
+- `media/pages/study/ACM/daily-26-10-18.png`
+- `media/pages/study/ACM/daily-26-10-19.png`
+- `media/pages/study/ACM/daily-26-10-2.png`
+- `media/pages/study/ACM/daily-26-10-20.png`
+- `media/pages/study/ACM/daily-26-10-21.png`
+- `media/pages/study/ACM/daily-26-10-22.png`
+- `media/pages/study/ACM/daily-26-10-23.png`
+- `media/pages/study/ACM/daily-26-10-3.png`
+- `media/pages/study/ACM/daily-26-10-4.png`
+- `media/pages/study/ACM/daily-26-10-5.png`
+- `media/pages/study/ACM/daily-26-10-6.png`
+- `media/pages/study/ACM/daily-26-7-23.jpg`
+- `media/pages/study/ACM/daily-26-7-24.jpg`
+- `media/pages/study/ACM/daily-26-7-25.jpg`
+- `media/pages/study/ACM/daily-26-7-26.jpg`
+- `media/pages/study/ACM/daily-26-8-10.jpg`
+- `media/pages/study/ACM/daily-26-8-11.jpg`
+- `media/pages/study/ACM/daily-26-8-7.jpg`
+- `media/pages/study/ACM/daily-26-8-8.jpg`
+- `media/pages/study/ACM/daily-26-8-9.jpg`
+- `media/pages/study/ACM/daily-26-9-10.png`
+- `media/pages/study/ACM/daily-26-9-11.jpg`
+- `media/pages/study/ACM/daily-26-9-12.png`
+- `media/pages/study/ACM/daily-26-9-14.png`
+- `media/pages/study/ACM/daily-26-9-15.png`
+- `media/pages/study/ACM/daily-26-9-16.png`
+- `media/pages/study/ACM/daily-26-9-17.png`
+- `media/pages/study/ACM/daily-26-9-18.png`
+- `media/pages/study/ACM/daily-26-9-19.png`
+- `media/pages/study/ACM/daily-26-9-20.png`
+- `media/pages/study/ACM/daily-26-9-21.png`
+- `media/pages/study/ACM/daily-26-9-22.png`
+- `media/pages/study/ACM/daily-26-9-23.png`
+- `media/pages/study/ACM/daily-26-9-24.png`
+- `media/pages/study/ACM/daily-26-9-25.png`
+- `media/pages/study/ACM/daily-26-9-26.png`
+- `media/pages/study/ACM/daily-26-9-27.png`
+- `media/pages/study/ACM/daily-26-9-28.png`
+- `media/pages/study/ACM/daily-26-9-29.png`
+- `media/pages/study/ACM/daily-26-9-30.png`
+- `media/pages/study/ACM/daily-26-9-6.jpg`
+- `media/pages/study/ACM/daily-26-9-7.jpg`
+- `media/pages/study/ACM/daily-26-9-8.jpg`
+- `media/pages/study/ACM/daily-26-9-9.jpg`
+
 ## `media/pages/travel/2024.7-上海/`（9 个）
 
 - `media/pages/travel/2024.7-上海/LPL1.jpg`
@@ -715,6 +732,63 @@
 - `media/pages/travel/2025.6-杭州/赛前游行.mp4`
 - `media/pages/travel/2025.6-杭州/赛后鼓掌.jpg`
 
+## `media/pages/travel/2025.7-宁波/`（16 个）
+
+- `media/pages/travel/2025.7-宁波/IMG_20250712_112154.webp`
+- `media/pages/travel/2025.7-宁波/IMG_20250712_130829.webp`
+- `media/pages/travel/2025.7-宁波/IMG_20250712_165920.webp`
+- `media/pages/travel/2025.7-宁波/IMG_20250712_171642.webp`
+- `media/pages/travel/2025.7-宁波/IMG_20250712_175758.webp`
+- `media/pages/travel/2025.7-宁波/IMG_20250712_200626.webp`
+- `media/pages/travel/2025.7-宁波/IMG_20250712_213932.webp`
+- `media/pages/travel/2025.7-宁波/IMG_20250712_231153.webp`
+- `media/pages/travel/2025.7-宁波/IMG_20250713_134835.webp`
+- `media/pages/travel/2025.7-宁波/IMG_20250713_141928.webp`
+- `media/pages/travel/2025.7-宁波/IMG_20250713_142745.webp`
+- `media/pages/travel/2025.7-宁波/IMG_20250713_152908.webp`
+- `media/pages/travel/2025.7-宁波/IMG_20250713_160954.webp`
+- `media/pages/travel/2025.7-宁波/IMG_20250713_162212.webp`
+- `media/pages/travel/2025.7-宁波/IMG_20250713_165456.webp`
+- `media/pages/travel/2025.7-宁波/IMG_20250713_192219.webp`
+
+## `media/pages/travel/2025.7-杭州/`（16 个）
+
+- `media/pages/travel/2025.7-杭州/IMG_20250718_184544.webp`
+- `media/pages/travel/2025.7-杭州/IMG_20250718_223731.webp`
+- `media/pages/travel/2025.7-杭州/IMG_20250719_120106.webp`
+- `media/pages/travel/2025.7-杭州/IMG_20250719_140011.webp`
+- `media/pages/travel/2025.7-杭州/IMG_20250719_141509.webp`
+- `media/pages/travel/2025.7-杭州/IMG_20250719_141953.webp`
+- `media/pages/travel/2025.7-杭州/IMG_20250719_143054.webp`
+- `media/pages/travel/2025.7-杭州/IMG_20250719_143143.webp`
+- `media/pages/travel/2025.7-杭州/IMG_20250719_143505.webp`
+- `media/pages/travel/2025.7-杭州/IMG_20250719_194058.webp`
+- `media/pages/travel/2025.7-杭州/IMG_20250719_200535.webp`
+- `media/pages/travel/2025.7-杭州/IMG_20250719_200807.webp`
+- `media/pages/travel/2025.7-杭州/IMG_20250719_202526.webp`
+- `media/pages/travel/2025.7-杭州/IMG_20250720_110127.webp`
+- `media/pages/travel/2025.7-杭州/IMG_20250720_155427.webp`
+- `media/pages/travel/2025.7-杭州/IMG_20250720_161219.webp`
+
+## `media/pages/travel/2025.7-温州/`（16 个）
+
+- `media/pages/travel/2025.7-温州/IMG_20250726_112457.webp`
+- `media/pages/travel/2025.7-温州/IMG_20250726_112507.webp`
+- `media/pages/travel/2025.7-温州/IMG_20250726_210724.webp`
+- `media/pages/travel/2025.7-温州/IMG_20250727_120451.webp`
+- `media/pages/travel/2025.7-温州/IMG_20250801_204614.webp`
+- `media/pages/travel/2025.7-温州/IMG_20250803_223659.webp`
+- `media/pages/travel/2025.7-温州/IMG_20250804_124738.webp`
+- `media/pages/travel/2025.7-温州/IMG_20250812_110313.webp`
+- `media/pages/travel/2025.7-温州/IMG_20250813_145337.webp`
+- `media/pages/travel/2025.7-温州/IMG_20250820_180454.webp`
+- `media/pages/travel/2025.7-温州/IMG_20250821_122231.webp`
+- `media/pages/travel/2025.7-温州/IMG_20250825_140211.webp`
+- `media/pages/travel/2025.7-温州/IMG_20250825_141555.webp`
+- `media/pages/travel/2025.7-温州/IMG_20250825_142012.webp`
+- `media/pages/travel/2025.7-温州/IMG_20250825_180610.webp`
+- `media/pages/travel/2025.7-温州/IMG_20250825_184652.webp`
+
 ## `media/pages/travel/2025.7-百丈漈/`（9 个）
 
 - `media/pages/travel/2025.7-百丈漈/在百丈一漈的合影.webp`
@@ -737,6 +811,62 @@
 - `media/pages/travel/2025.8-雁荡山/山景5.jpg`
 - `media/pages/travel/2025.8-雁荡山/山洞里的地瓜.webp`
 - `media/pages/travel/2025.8-雁荡山/雁荡山地图.webp`
+
+## `media/pages/travel/2026.10-四川/`（20 个）
+
+- `media/pages/travel/2026.10-四川/IMG_20260930_190848.webp`
+- `media/pages/travel/2026.10-四川/IMG_20260930_214531.webp`
+- `media/pages/travel/2026.10-四川/IMG_20261001_122413.webp`
+- `media/pages/travel/2026.10-四川/IMG_20261001_144949.webp`
+- `media/pages/travel/2026.10-四川/IMG_20261001_151533.webp`
+- `media/pages/travel/2026.10-四川/IMG_20261001_210620.webp`
+- `media/pages/travel/2026.10-四川/IMG_20261002_092939.webp`
+- `media/pages/travel/2026.10-四川/IMG_20261002_095013.webp`
+- `media/pages/travel/2026.10-四川/IMG_20261002_114749.webp`
+- `media/pages/travel/2026.10-四川/IMG_20261002_120226.webp`
+- `media/pages/travel/2026.10-四川/IMG_20261002_123728.webp`
+- `media/pages/travel/2026.10-四川/IMG_20261002_172000.webp`
+- `media/pages/travel/2026.10-四川/IMG_20261003_113617.webp`
+- `media/pages/travel/2026.10-四川/IMG_20261003_120151.webp`
+- `media/pages/travel/2026.10-四川/IMG_20261003_131227.webp`
+- `media/pages/travel/2026.10-四川/IMG_20261003_132128.webp`
+- `media/pages/travel/2026.10-四川/IMG_20261003_143817.webp`
+- `media/pages/travel/2026.10-四川/IMG_20261003_150601.webp`
+- `media/pages/travel/2026.10-四川/IMG_20261004_120257.webp`
+- `media/pages/travel/2026.10-四川/IMG_20261004_132251.webp`
+
+## `media/pages/travel/2026.2-温州/`（16 个）
+
+- `media/pages/travel/2026.2-温州/IMG_20260226_113315.webp`
+- `media/pages/travel/2026.2-温州/IMG_20260226_120334.webp`
+- `media/pages/travel/2026.2-温州/IMG_20260226_171756.webp`
+- `media/pages/travel/2026.2-温州/IMG_20260226_183023.webp`
+- `media/pages/travel/2026.2-温州/IMG_20260227_152602.webp`
+- `media/pages/travel/2026.2-温州/IMG_20260227_153108.webp`
+- `media/pages/travel/2026.2-温州/IMG_20260227_160232.webp`
+- `media/pages/travel/2026.2-温州/IMG_20260227_170218.webp`
+- `media/pages/travel/2026.2-温州/IMG_20260227_170233.webp`
+- `media/pages/travel/2026.2-温州/IMG_20260227_190820.webp`
+- `media/pages/travel/2026.2-温州/IMG_20260227_201634.webp`
+- `media/pages/travel/2026.2-温州/IMG_20260227_202940.webp`
+- `media/pages/travel/2026.2-温州/IMG_20260228_005347.webp`
+- `media/pages/travel/2026.2-温州/IMG_20260228_122116.webp`
+- `media/pages/travel/2026.2-温州/IMG_20260228_131548.webp`
+- `media/pages/travel/2026.2-温州/IMG_20260228_132058.webp`
+
+## `media/pages/travel/2026.2-百丈漈/`（11 个）
+
+- `media/pages/travel/2026.2-百丈漈/IMG_20260221_132552.webp`
+- `media/pages/travel/2026.2-百丈漈/IMG_20260221_140349.webp`
+- `media/pages/travel/2026.2-百丈漈/IMG_20260221_140931.webp`
+- `media/pages/travel/2026.2-百丈漈/IMG_20260221_141209.webp`
+- `media/pages/travel/2026.2-百丈漈/IMG_20260221_143505.webp`
+- `media/pages/travel/2026.2-百丈漈/IMG_20260221_144727.webp`
+- `media/pages/travel/2026.2-百丈漈/IMG_20260221_150453.webp`
+- `media/pages/travel/2026.2-百丈漈/IMG_20260221_151017.webp`
+- `media/pages/travel/2026.2-百丈漈/IMG_20260221_151428.webp`
+- `media/pages/travel/2026.2-百丈漈/IMG_20260221_160206.webp`
+- `media/pages/travel/2026.2-百丈漈/IMG_20260221_193308.webp`
 
 ## `media/pages/travel/2026.2-贵阳/`（7 个）
 
@@ -953,3 +1083,51 @@
 - `media/pages/travel/2026.8-黄山/IMG_20260814_122049.webp`
 - `media/pages/travel/2026.8-黄山/IMG_20260814_142543.jpg`
 - `media/pages/travel/2026.8-黄山/IMG_20260814_142543.webp`
+
+## `media/pages/YY往事/EDG夺冠/`（3 个）
+
+- `media/pages/YY往事/EDG夺冠/kskbl.webp`
+- `media/pages/YY往事/EDG夺冠/赢下决赛图二.mov`
+- `media/pages/YY往事/EDG夺冠/赢下半决.mov`
+
+## `media/pages/YY往事/机房往事/`（15 个）
+
+- `media/pages/YY往事/机房往事/2024.10.1-LOL双排.webp`
+- `media/pages/YY往事/机房往事/2024.10.1国庆留校机房五排瓦.webp`
+- `media/pages/YY往事/机房往事/2024.11.1-BLG加油.webp`
+- `media/pages/YY往事/机房往事/2024.11.13-csmajor.webp`
+- `media/pages/YY往事/机房往事/2024.11.3-BLG决赛惜败T1.webp`
+- `media/pages/YY往事/机房往事/2024.12.4-hyper在机房的留言网站.webp`
+- `media/pages/YY往事/机房往事/2024.6.23-ALGS.webp`
+- `media/pages/YY往事/机房往事/2024.7.5-机房CS1.6.webp`
+- `media/pages/YY往事/机房往事/2024.8.26-EDG牛逼.webp`
+- `media/pages/YY往事/机房往事/2024.9.2-购买黑神话悟空.webp`
+- `media/pages/YY往事/机房往事/74404.webp`
+- `media/pages/YY往事/机房往事/mc-2024.6.24.webp`
+- `media/pages/YY往事/机房往事/最后一个假期-距离高考还有6天.jpg`
+- `media/pages/YY往事/机房往事/机房双排.webp`
+- `media/pages/YY往事/机房往事/英雄联盟定级铂金.webp`
+
+## `media/pages/YY往事/觉醒年代/`（2 个）
+
+- `media/pages/YY往事/觉醒年代/cover.webp`
+- `media/pages/YY往事/觉醒年代/lhn版觉醒年代.mp4`
+
+## `media/pages/YY往事/返校宣讲/`（16 个）
+
+- `media/pages/YY往事/返校宣讲/danking贴纸的传承.webp`
+- `media/pages/YY往事/返校宣讲/ktv.mp4`
+- `media/pages/YY往事/返校宣讲/ktv.webp`
+- `media/pages/YY往事/返校宣讲/凌晨的电影.webp`
+- `media/pages/YY往事/返校宣讲/出发.jpg`
+- `media/pages/YY往事/返校宣讲/合影.webp`
+- `media/pages/YY往事/返校宣讲/夜晚的YY.webp`
+- `media/pages/YY往事/返校宣讲/宣讲.webp`
+- `media/pages/YY往事/返校宣讲/录取榜.webp`
+- `media/pages/YY往事/返校宣讲/怀旧外卖.webp`
+- `media/pages/YY往事/返校宣讲/海报.webp`
+- `media/pages/YY往事/返校宣讲/给语文老师的礼物.webp`
+- `media/pages/YY往事/返校宣讲/警察拿外卖.mp4`
+- `media/pages/YY往事/返校宣讲/足球.webp`
+- `media/pages/YY往事/返校宣讲/跟zbh的离别.webp`
+- `media/pages/YY往事/返校宣讲/高中去的网吧.webp`

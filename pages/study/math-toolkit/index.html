@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f4ef">
+  <meta name="description" content="根据本地学习笔记整理的数学复习工具箱：离散数学八章、线性方程组、迭代收敛、二分法与牛顿法。支持搜索、学科筛选与本机复习标记。">
+  <title>数学复习工具箱 · hyper</title>
+  <link rel="stylesheet" href="/pages/_shared/site-theme.css?v=20261023">
+  <link rel="stylesheet" href="toolkit.css?v=20261023-final">
+  <script src="toolkit.js?v=20261023-final" defer></script>
+</head>
+<body class="math-page" data-site-theme="garden" data-page-kind="study">
+  <a class="math-skip" href="#math-library">跳至知识卡片</a>
+  <div class="math-shell">
+    <header class="math-topbar"><a class="math-brand" href="/pages/home/">HYPER<span> / </span>STUDY NOTES</a><nav aria-label="页面导航"><a href="/pages/study/">学习目录</a><a href="/pages/study/ACM/">ACM 题库 <span aria-hidden="true">↗</span></a></nav></header>
+    <main>
+      <section class="math-intro" aria-labelledby="math-title">
+        <div><p class="math-eyebrow">A SMALL DESK FOR BIG IDEAS / 01</p><h1 id="math-title">数学复习<br><em>工具箱。</em></h1><p class="math-lead">从逻辑推演到迭代求解，给零散的公式一个位置。先回忆，再展开；带着条件使用每一个结论。</p><div class="math-intro-links"><a class="math-primary" href="#math-library">开始复习 <span aria-hidden="true">↓</span></a><a href="#math-sources">笔记来源 <span aria-hidden="true">↗</span></a></div></div>
+        <aside class="math-desk" aria-label="复习建议"><span class="math-desk-label">TODAY’S STUDY ROUTINE</span><div class="math-desk-symbol" aria-hidden="true">∀x <i>∃y</i></div><ol><li><span>01</span><p>读条件<small>定义域、连通性、收敛前提</small></p></li><li><span>02</span><p>想方法<small>识别结构，选公式或算法</small></p></li><li><span>03</span><p>做检验<small>用反例、残差与边界校验</small></p></li></ol><div class="math-desk-bottom"><span>8 章离散数学</span><span>8 张数值方法卡</span></div></aside>
+      </section>
+      <section id="math-library" class="math-library" aria-labelledby="math-library-title">
+        <div class="math-section-heading"><div><p class="math-eyebrow">THE KNOWLEDGE INDEX</p><h2 id="math-library-title">让知识，随手可查。</h2></div><p>以自己的笔记为索引，<br>以适用条件为起点。</p></div>
+        <div class="math-tools">
+          <label class="math-search"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><span class="math-visually-hidden">搜索知识点、公式或关键词</span><input id="math-search" type="search" placeholder="搜索知识点、公式或关键词…" autocomplete="off"><kbd aria-hidden="true">/</kbd></label>
+          <div class="math-filters" role="group" aria-label="选择学科"><button type="button" data-subject="all" aria-pressed="true">全部 <span>16</span></button><button type="button" data-subject="discrete" aria-pressed="false">离散数学 <span>8</span></button><button type="button" data-subject="numerical" aria-pressed="false">数值计算 <span>8</span></button></div>
+        </div>
+        <div class="math-library-meta"><p id="math-result-count" role="status" aria-live="polite">正在整理知识卡片…</p><div><label class="math-review-filter"><input id="math-review-only" type="checkbox">只看待复习</label><button id="math-expand" type="button" aria-expanded="false">展开本页解答</button></div></div>
+        <p id="math-storage-notice" class="math-card-intro" role="status" aria-live="polite" hidden></p><div id="math-cards" class="math-cards"></div>
+        <p id="math-empty" class="math-empty" hidden>没有找到对应知识点。试试「群」「收敛」「牛顿」或清空筛选。</p>
+        <noscript><p class="math-empty">启用 JavaScript 后可阅读与筛选 16 张知识卡。页面依据离散数学八章汇总、非线性方程求根作业解析及线性方程组实验整理。</p></noscript>
+      </section>
+      <section id="math-sources" class="math-sources" aria-labelledby="math-sources-title"><div><p class="math-eyebrow">FROM MY LOCAL NOTEBOOK</p><h2 id="math-sources-title">一份个人复习索引。</h2><p>内容摘编自本地学习笔记与实验，补充了使用条件和易错提醒。这里用于回顾方法与自查，不是正式教材；课程定义和考试要求请以授课材料为准。</p></div><ul><li><span>01 / 离散数学</span><strong>《离散数学知识点与公式汇总》</strong><small>本地 TeX 笔记 · 按八章整理；循环群例题参考个人方法笔记。</small></li><li><span>02 / 数值计算</span><strong>非线性方程求根 · 作业 2 解析</strong><small>本地 TeX 解析 · 迭代收敛、松弛加速、二分法与牛顿法。</small></li><li><span>03 / 方法实验</span><strong>线性方程组求解 · 实验 1</strong><small>本地 Notebook · LU、Jacobi、SOR、残差与病态数据。</small></li></ul></section>
+    </main>
+    <footer class="math-footer"><a href="/pages/study/">← 返回学习目录</a><span>HYPER / 数学复习工具箱 · 2026.10</span><span id="math-storage-summary">复习标记仅保存在本机浏览器</span></footer>
+  </div>
+</body>
+</html>
