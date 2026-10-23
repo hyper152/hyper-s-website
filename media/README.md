@@ -1,6 +1,6 @@
 # 媒体文件路径清单
 
-共 800 个文件，按目录分组。路径相对于项目根目录；网站访问路径在前面加 `/`。
+共 836 个文件，按目录分组。路径相对于项目根目录；网站访问路径在前面加 `/`。
 
 ## `media/pages/diy/`（20 个）
 
@@ -24,6 +24,18 @@
 - `media/pages/diy/RX460接口面.webp`
 - `media/pages/diy/RX460的GPUZ参数.webp`
 - `media/pages/diy/RX460风扇面.webp`
+
+## `media/pages/diy/2026.9-desktop/`（9 个）
+
+- `media/pages/diy/2026.9-desktop/desk-20260913.webp`
+- `media/pages/diy/2026.9-desktop/final-config.png`
+- `media/pages/diy/2026.9-desktop/initial-config.jpg`
+- `media/pages/diy/2026.9-desktop/rtx3050-gpuz.jpg`
+- `media/pages/diy/2026.9-desktop/rtx3050-installed.webp`
+- `media/pages/diy/2026.9-desktop/rtx5050-box.webp`
+- `media/pages/diy/2026.9-desktop/rtx5050-card.webp`
+- `media/pages/diy/2026.9-desktop/rtx5050-gpuz.jpg`
+- `media/pages/diy/2026.9-desktop/rtx5050-installed.webp`
 
 ## `media/pages/games/CS/`（5 个）
 
@@ -1083,6 +1095,36 @@
 - `media/pages/travel/2026.8-黄山/IMG_20260814_122049.webp`
 - `media/pages/travel/2026.8-黄山/IMG_20260814_142543.jpg`
 - `media/pages/travel/2026.8-黄山/IMG_20260814_142543.webp`
+
+## `media/pages/YY往事/2024-BLGvsT1/`（27 个）
+
+- `media/pages/YY往事/2024-BLGvsT1/championship-poster.webp`
+- `media/pages/YY往事/2024-BLGvsT1/championship.mp4`
+- `media/pages/YY往事/2024-BLGvsT1/clip-01-poster.webp`
+- `media/pages/YY往事/2024-BLGvsT1/clip-01.mp4`
+- `media/pages/YY往事/2024-BLGvsT1/clip-02-poster.webp`
+- `media/pages/YY往事/2024-BLGvsT1/clip-02.mp4`
+- `media/pages/YY往事/2024-BLGvsT1/clip-03-poster.webp`
+- `media/pages/YY往事/2024-BLGvsT1/clip-03.mp4`
+- `media/pages/YY往事/2024-BLGvsT1/clip-04-poster.webp`
+- `media/pages/YY往事/2024-BLGvsT1/clip-04.mp4`
+- `media/pages/YY往事/2024-BLGvsT1/clip-05-poster.webp`
+- `media/pages/YY往事/2024-BLGvsT1/clip-05.mp4`
+- `media/pages/YY往事/2024-BLGvsT1/clip-06-poster.webp`
+- `media/pages/YY往事/2024-BLGvsT1/clip-06.mp4`
+- `media/pages/YY往事/2024-BLGvsT1/watch-01.webp`
+- `media/pages/YY往事/2024-BLGvsT1/watch-02.webp`
+- `media/pages/YY往事/2024-BLGvsT1/watch-03.webp`
+- `media/pages/YY往事/2024-BLGvsT1/watch-04.webp`
+- `media/pages/YY往事/2024-BLGvsT1/watch-05.webp`
+- `media/pages/YY往事/2024-BLGvsT1/watch-06.webp`
+- `media/pages/YY往事/2024-BLGvsT1/watch-07.webp`
+- `media/pages/YY往事/2024-BLGvsT1/watch-08.webp`
+- `media/pages/YY往事/2024-BLGvsT1/watch-09.webp`
+- `media/pages/YY往事/2024-BLGvsT1/watch-10.webp`
+- `media/pages/YY往事/2024-BLGvsT1/watch-11.webp`
+- `media/pages/YY往事/2024-BLGvsT1/watch-12.webp`
+- `media/pages/YY往事/2024-BLGvsT1/watch-13.webp`
 
 ## `media/pages/YY往事/EDG夺冠/`（3 个）
 

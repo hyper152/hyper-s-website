@@ -1,0 +1,205 @@
+html {
+    display: block;
+    min-height: 100%;
+    background: #f8f1ec;
+}
+body[data-legacy-snapshot] {
+    margin: 0;
+    color: #302723;
+    background: #f8f1ec;
+    font-family: Georgia, "Times New Roman", serif;
+}
+.love-shell {
+    min-height: calc(100svh - 115px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 28px 20px 32px;
+    box-sizing: border-box;
+}
+.love-heading {
+    text-align: center;
+}
+.love-heading > p {
+    font:
+        10px/1.5 "Segoe UI",
+        sans-serif;
+    letter-spacing: 2px;
+    color: #9d8177;
+    margin: 0 0 8px;
+}
+.love-heading h1 {
+    font-size: 24px;
+    font-weight: 400;
+    margin: 0;
+}
+.love-stage {
+    container-type: inline-size;
+    width: min(440px, 86vw);
+    aspect-ratio: 1;
+    position: relative;
+    flex-shrink: 0;
+    margin: 12px 0 4px;
+}
+.love-toggle {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+.love-piece {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 68px;
+    font-size: 17cqw;
+    line-height: 1;
+    cursor: pointer;
+    user-select: none;
+    transition:
+        width 0.8s ease,
+        height 0.8s ease,
+        top 0.8s ease,
+        left 0.8s ease,
+        right 0.8s ease,
+        bottom 0.8s ease,
+        transform 0.8s ease,
+        border-radius 0.8s ease,
+        background-color 0.8s ease,
+        color 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+.love-piece:hover {
+    color: #c32a2a;
+}
+.love-piece-i {
+    left: 9%;
+    top: 15%;
+    width: 26%;
+    height: 26%;
+    border-radius: 50%;
+}
+.love-piece-love {
+    right: 7%;
+    top: 15%;
+    width: 45%;
+    height: 26%;
+    border-radius: 50%;
+}
+.love-piece-you {
+    left: 30%;
+    top: 60%;
+    width: 40%;
+    height: 26%;
+}
+.love-toggle:focus-visible + .love-piece {
+    outline: 3px solid #7b8a50;
+    outline-offset: 7px;
+}
+.love-toggle:checked + .love-piece {
+    background: #c32a2a;
+    color: transparent;
+    font-size: 0;
+}
+#ck1:checked + .love-piece {
+    left: 10%;
+    top: 15%;
+    width: 48%;
+    height: 48%;
+    border-radius: 50%;
+}
+#ck2:checked + .love-piece {
+    right: 10%;
+    top: 15%;
+    width: 48%;
+    height: 48%;
+    border-radius: 50%;
+}
+#ck3:checked + .love-piece {
+    left: 26%;
+    top: 31%;
+    width: 48%;
+    height: 48%;
+    transform: rotate(45deg);
+}
+.love-instructions {
+    text-align: center;
+    min-height: 60px;
+    font:
+        13px/1.7 "Segoe UI",
+        "Microsoft YaHei",
+        sans-serif;
+    color: #917d73;
+}
+.love-instructions > p {
+    margin: 0 0 9px;
+}
+.love-instructions button {
+    border: 0;
+    border-bottom: 1px solid #cbb3a8;
+    padding: 2px 0;
+    background: transparent;
+    color: #9d5144;
+    font: inherit;
+    font-size: 11px;
+    cursor: pointer;
+}
+.love-instructions button:focus-visible {
+    outline: 2px solid #7b8a50;
+    outline-offset: 4px;
+}
+.love-signature {
+    color: #ad8b7c;
+    font-style: italic;
+    font-size: 19px;
+    margin: 18px 0 0;
+}
+[data-embedded] #legacy-toolbar,
+[data-embedded] .love-heading,
+[data-embedded] .love-signature {
+    display: none !important;
+}
+[data-embedded] body[data-legacy-snapshot] {
+    min-height: 100svh;
+}
+[data-embedded] .love-shell {
+    min-height: 100svh;
+    height: 100svh;
+    padding: 0 12px;
+}
+[data-embedded] .love-stage {
+    width: min(330px, 80vw, calc(100svh - 58px));
+    margin: 0;
+}
+[data-embedded] .love-instructions {
+    min-height: 44px;
+    font-size: 11px;
+}
+[data-embedded] .love-instructions > p {
+    margin-bottom: 3px;
+}
+[data-embedded] .love-instructions button {
+    font-size: 10px;
+}
+@media (max-width: 500px) {
+    .love-shell {
+        padding-inline: 12px;
+    }
+    .love-heading h1 {
+        font-size: 20px;
+    }
+    .love-stage {
+        width: min(390px, 90vw);
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .love-piece {
+        transition: none;
+    }
+}
