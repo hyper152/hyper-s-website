@@ -52,10 +52,16 @@ def snapshot_document(content, version):
     head = '\n'.join([*heads, *extra_head])
     if not re.search(r'<title\b', head, re.I):
         head += f'<title>{html.escape(version)} · 旧版页面</title>'
+    # Original profile homepages center a card with body flex. The archive toolbar
+    # needs its own row, so center their main content separately from navigation.
+    profile_layout = bool(re.search(r'<main\b', content, re.I)) and all(
+        re.search(r'\bclass\s*=\s*["\']' + name + r'["\']', content, re.I)
+        for name in ('content', 'left', 'right'))
+    layout_attribute = ' data-legacy-layout="profile"' if profile_layout else ''
     return f'''<!doctype html><html lang="zh-CN"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-{head}<link rel="stylesheet" href="{BASE}archive.css?v=20261014-1">
-</head><body data-legacy-snapshot="true">{navigation(version)}
+{head}<link rel="stylesheet" href="{BASE}archive.css?v=20261023-1">
+</head><body data-legacy-snapshot="true"{layout_attribute}>{navigation(version)}
 {content}<script src="/pages/_shared/page-navigation.js?v=20260911-1" defer></script>
 </body></html>'''
 

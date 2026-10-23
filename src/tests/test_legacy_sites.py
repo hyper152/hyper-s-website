@@ -96,3 +96,18 @@ class LegacySiteTests(unittest.TestCase):
         source.write_text('<img src="missing.jpg">', encoding='utf-8')
         result = import_sites(self.sources, self.project)
         self.assertIn((VERSIONS[0], 'templates/comment.html', 'missing.jpg'), result['missing_references'])
+
+    def test_profile_homepage_and_alias_preserve_centered_layout(self):
+        home = self.sources / 'hyper152.cn/hyp/index.html'
+        home.write_text('<head><style>body {display:flex;align-items:center;justify-content:center}</style></head>'
+                        '<body><main><div class="content"><div class="left">侧栏</div>'
+                        '<div class="right">原版内容</div></div></main></body>', encoding='utf-8')
+        import_sites(self.sources, self.project)
+        for relative in ('hyper152.cn/index.html', 'hyper152.cn/hyp/index.html'):
+            content = (self.web / relative).read_text(encoding='utf-8')
+            self.assertIn('data-legacy-layout="profile"', content)
+            self.assertIn('body {display:flex;align-items:center;justify-content:center}', content)
+            self.assertIn('原版内容', content)
+            self.assertLess(content.index('id="legacy-toolbar"'), content.index('<main>'))
+        normal_page = (self.web / VERSIONS[0] / 'index.html').read_text(encoding='utf-8')
+        self.assertNotIn('data-legacy-layout="profile"', normal_page)

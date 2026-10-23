@@ -16,6 +16,10 @@
 body[data-legacy-snapshot] { display: block !important; height: auto !important; min-height: 100vh; margin: 0; }
 body[data-legacy-snapshot] img, body[data-legacy-snapshot] video { max-width: 100%; height: auto; }
 body[data-legacy-snapshot] .login-container { margin: 60px auto; box-sizing: content-box; max-width: calc(100vw - 100px); }
+/* Keep the original profile card centered below the non-sticky archive toolbar. */
+body[data-legacy-snapshot][data-legacy-layout="profile"] { display: flex !important; flex-direction: column; align-items: stretch; justify-content: flex-start; padding: 0; }
+body[data-legacy-layout="profile"] > main { display: flex; flex: 1 0 auto; align-items: center; justify-content: center; width: 100%; max-width: none; box-sizing: border-box; }
+@media(max-width:768px) { body[data-legacy-layout="profile"] > main { width: calc(100% - 2em); max-width: 22em; margin: 0 auto; } }
 #legacy-toolbar { position: relative !important; inset: auto !important; display: flex !important; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px; width: auto !important; height: auto !important; margin: 0 !important; padding: 18px 16px !important; box-sizing: border-box; z-index: 110; background: #f6f7f2; color: #263b32; border-bottom: 1px solid #e0e5da; font: 13px/1.5 "Segoe UI","Microsoft YaHei",sans-serif; }
 #legacy-toolbar a { position: static !important; display: inline-flex !important; padding: 8px 13px !important; border: 1px solid #d7dfcf; border-radius: 9px; color: #43684b !important; background: #fafbf7; text-decoration: none !important; font: 600 12px/1.5 "Segoe UI","Microsoft YaHei",sans-serif; text-shadow: none !important; transform: none !important; }
 #legacy-toolbar a:hover { background: #edf1e7; }
