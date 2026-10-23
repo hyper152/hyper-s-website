@@ -41,6 +41,16 @@
         return node;
     }
 
+    function sourceBadge(item) {
+        const badge = element("span", "acm-source-badge");
+        badge.dataset.sourceGroup = item.group;
+        badge.append(
+            element("span", "acm-source-badge-label", "题源"),
+            element("strong", "acm-source-badge-name", item.source),
+        );
+        return badge;
+    }
+
     function dateKey(item) {
         return /^\d{4}(?:-\d{2}){0,2}$/.test(item.date || "") ? item.date : "";
     }
@@ -140,10 +150,9 @@
         const button = element("button", "acm-problem-main");
         button.type = "button";
         button.setAttribute("aria-haspopup", "dialog");
-        button.append(element("span", "acm-problem-title", item.title));
+        button.append(sourceBadge(item), element("span", "acm-problem-title", item.title));
         const meta = element("span", "acm-problem-meta");
         meta.append(
-            element("span", "", item.source),
             element("span", "", `${item.versions.length} 份源码${item.statement ? " · 题面" : ""}`),
         );
         (item.tags || [])
@@ -219,8 +228,8 @@
         const heading = element("div", "acm-reader-heading");
         const source = element("div", "acm-reader-source");
         source.append(
-            element("span", "", item.date || "日期未注明"),
-            element("span", "", item.source),
+            sourceBadge(item),
+            element("span", "acm-reader-date", item.date || "日期未注明"),
         );
         const title = element("h2", "", item.title);
         title.id = "reader-title";

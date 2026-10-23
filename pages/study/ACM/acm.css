@@ -1670,3 +1670,91 @@ body[data-site-theme="garden"] {
         font-size: 10px;
     }
 }
+
+/* Sources are a separate, prominent label in the journal and detail header. */
+.acm-source-badge {
+    --source-ink: #244c36;
+    --source-paper: #e4efdf;
+    --source-line: #b8cdb0;
+    display: inline-grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 10px;
+    max-width: 100%;
+    margin-bottom: 10px;
+    padding: 5px 11px;
+    border: 1px solid var(--source-line);
+    border-left-width: 3px;
+    border-radius: 5px;
+    background: var(--source-paper);
+    color: var(--source-ink);
+    font-size: 16px;
+    line-height: 1.65;
+    text-align: left;
+}
+.acm-source-badge-label {
+    padding-right: 9px;
+    border-right: 1px solid var(--source-line);
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+.acm-source-badge-name {
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+.acm-source-badge[data-source-group="nowcoder"] {
+    --source-ink: #234f7a;
+    --source-paper: #e5effa;
+    --source-line: #adc8e1;
+}
+.acm-source-badge[data-source-group="icpc"] {
+    --source-ink: #603d86;
+    --source-paper: #eee6f7;
+    --source-line: #c9b3df;
+}
+.acm-source-badge[data-source-group="c2025"],
+.acm-source-badge[data-source-group="c2026"] {
+    --source-ink: #765018;
+    --source-paper: #f6ecd8;
+    --source-line: #dcc28f;
+}
+.acm-source-badge[data-source-group="luogu"] {
+    --source-ink: #8a4520;
+    --source-paper: #f9eade;
+    --source-line: #dfb99e;
+}
+.acm-reader-source .acm-source-badge {
+    margin-bottom: 0;
+    font-size: 17px;
+}
+.acm-reader-date {
+    font-size: 16px;
+    color: #56644f;
+}
+.acm-source-filter-label {
+    font-size: 16px;
+    font-weight: 650;
+    color: #203b32;
+    white-space: nowrap;
+}
+.acm-toolbar .acm-select-label {
+    align-items: center;
+    gap: 12px;
+}
+.acm-toolbar .acm-select-label select {
+    flex: 1;
+    min-width: 0;
+}
+@media (max-width: 720px) {
+    .acm-source-badge {
+        padding: 5px 9px;
+        gap: 8px;
+    }
+    .acm-source-badge-label {
+        padding-right: 7px;
+    }
+    .acm-reader-source .acm-source-badge {
+        font-size: 16px;
+    }
+}
