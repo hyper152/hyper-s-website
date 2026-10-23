@@ -1,24 +1,25 @@
 <!doctype html>
+
 <html lang="zh-CN">
     <head>
         <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta content="width=device-width,initial-scale=1" name="viewport" />
         <meta
+            content="个人 ACM 练习日志，记录日常训练、比赛与补题。按日期和算法分类浏览题目、解题思路与源码存档。"
             name="description"
-            content="hyper 的 ACM 复习工作台：88 道题目、131 份源码，按算法分类，支持搜索、题解对照、模板速查与本地复习记录。"
         />
-        <meta name="theme-color" content="#f5f4ef" />
-        <title>ACM 复习工作台 · hyper</title>
-        <link rel="stylesheet" href="/pages/_shared/site-theme.css?v=20261023" />
-        <link rel="stylesheet" href="./acm.css?v=20261023-readable" />
-        <script src="./library-data.js?v=20261023-final" defer></script>
-        <script src="./acm.js?v=20261023-final" defer></script>
+        <meta content="#f5f4ef" name="theme-color" />
+        <title>ACM 练习记录 · hyper</title>
+        <link href="/pages/_shared/site-theme.css?v=20261023" rel="stylesheet" />
+        <link href="./acm.css?v=20261023-log" rel="stylesheet" />
+        <script defer="" src="./library-data.js?v=20261023-final"></script>
+        <script defer="" src="./acm.js?v=20261023-log"></script>
     </head>
-    <body data-site-theme="garden" data-page-kind="study">
-        <a class="acm-skip" href="#problem-library">跳转到题目索引</a>
+    <body data-page-kind="study" data-site-theme="garden">
+        <a class="acm-skip" href="#problem-library">跳转到练习记录</a>
         <header class="acm-topbar acm-shell">
-            <a class="acm-brand" href="/pages/home/" aria-label="hyper 首页"
-                ><span class="acm-brand-mark" aria-hidden="true">h.</span>hyper<span
+            <a aria-label="hyper 首页" class="acm-brand" href="/pages/home/"
+                ><span aria-hidden="true" class="acm-brand-mark">h.</span>hyper<span
                     class="acm-brand-divider"
                     >/</span
                 ><span class="acm-brand-section">learning</span></a
@@ -32,47 +33,54 @@
             </nav>
         </header>
         <main class="acm-shell">
-            <section class="acm-hero" aria-labelledby="acm-title">
+            <section aria-labelledby="acm-title" class="acm-hero">
                 <div class="acm-hero-copy">
                     <p class="acm-kicker">
-                        <span></span>THE ALGORITHM NOTEBOOK
+                        <span></span>PRACTICE JOURNAL
                         <span class="acm-kicker-no">VOL. 01 — 2026</span>
                     </p>
-                    <h1 id="acm-title">让每一道题，<br />成为下一次的<span>思路。</span></h1>
+                    <h1 id="acm-title">ACM<br /><span>练习记录。</span></h1>
                     <p class="acm-lead">
-                        从日常一题到赛后补题，把写过的代码重新读懂。<br
-                            class="acm-desktop-break"
-                        />分类、对照、回顾，建立自己的算法直觉。
+                        记录日常训练、比赛与补题，<br />存下当时的代码和解题思路。
                     </p>
                     <div class="acm-hero-actions">
                         <a class="acm-button acm-button-dark" href="#problem-library"
-                            >开始复习 <span aria-hidden="true">↓</span></a
-                        ><a class="acm-text-link" href="#templates"
-                            >翻一翻算法模板 <span aria-hidden="true">↗</span></a
+                            >浏览练习记录 <span aria-hidden="true">↓</span></a
                         >
                     </div>
                 </div>
-                <aside class="acm-hero-note" aria-label="复习笔记">
+                <aside aria-label="练习日志" class="acm-hero-note">
                     <div class="acm-note-top">
-                        <span class="acm-note-dots" aria-hidden="true">● ● ●</span
-                        ><span>review.cpp</span><span>C++ / PYTHON</span>
+                        <span aria-hidden="true" class="acm-note-dots">● ● ●</span
+                        ><span>practice.cpp</span><span>C++ / PYTHON</span>
                     </div>
-                    <div class="acm-note-code" aria-hidden="true">
-                        <span class="acm-code-comment">// revisit. understand. repeat.</span
-                        ><br /><br /><span class="acm-code-keyword">while</span> (curiosity) {<br />
-                        read(problem);<br />
-                        find(<span class="acm-code-string">"the invariant"</span>);<br />
-                        <span class="acm-code-keyword">if</span> (stuck) rethink();<br />
-                        learn += <span class="acm-code-number">1</span>;<br />}
+                    <div aria-hidden="true" class="acm-note-code">
+                        <span class="acm-note-line acm-code-comment">
+                            // practice. record. repeat.
+                        </span>
+                        <span class="acm-note-line">
+                            <span class="acm-code-keyword">while</span> (practicing) {
+                        </span>
+                        <span class="acm-note-line acm-note-line-indent">read(problem);</span>
+                        <span class="acm-note-line acm-note-line-indent">
+                            find(<span class="acm-code-string">"the invariant"</span>);
+                        </span>
+                        <span class="acm-note-line acm-note-line-indent">
+                            <span class="acm-code-keyword">if</span> (stuck) rethink();
+                        </span>
+                        <span class="acm-note-line acm-note-line-indent">
+                            learn += <span class="acm-code-number">1</span>;
+                        </span>
+                        <span class="acm-note-line">}</span>
                     </div>
                     <div class="acm-note-bottom">
-                        <span class="acm-note-orbit" aria-hidden="true">↗</span>
-                        <p>先讲清楚为什么，<br />再把答案写下来。</p>
+                        <span aria-hidden="true" class="acm-note-orbit">↗</span>
+                        <p>写过的代码，<br />留下一段记录。</p>
                         <span class="acm-note-index">01 / ∞</span>
                     </div>
                 </aside>
             </section>
-            <div class="acm-overview" aria-label="题库统计">
+            <div aria-label="练习记录统计" class="acm-overview">
                 <div>
                     <span class="acm-overview-value" id="total-problems">88</span
                     ><span>道题目</span>
@@ -85,47 +93,35 @@
                     <span class="acm-overview-value" id="total-categories">12</span
                     ><span>个算法方向</span>
                 </div>
-                <div class="acm-personal-progress">
-                    <span class="acm-overview-value" id="mastered-count">0</span
-                    ><span>道已掌握 <small id="storage-label">记录保存在本机</small></span
-                    ><svg class="acm-progress-ring" viewBox="0 0 48 48" aria-hidden="true">
-                        <circle cx="24" cy="24" r="19" />
-                        <circle id="progress-ring" cx="24" cy="24" r="19" />
-                    </svg>
+                <div>
+                    <span class="acm-overview-value" id="total-posters">47</span
+                    ><span>张题目海报</span>
                 </div>
             </div>
-            <nav class="acm-section-nav" aria-label="内容导航">
-                <a href="#problem-library">01 <span>题目索引</span></a
-                ><a href="#templates">02 <span>模板速查</span></a
-                ><a href="#review-method">03 <span>复习方法</span></a
-                ><span>UPDATED OCT. 2026</span>
+            <nav aria-label="内容导航" class="acm-section-nav">
+                <a href="#problem-library"><span>练习日志</span></a
+                ><span>按日期降序 · 算法分类</span>
             </nav>
-            <section id="problem-library" class="acm-library" aria-labelledby="library-title">
+            <section aria-labelledby="library-title" class="acm-library" id="problem-library">
                 <div class="acm-section-heading">
                     <div>
-                        <p class="acm-kicker">01 / PROBLEM LIBRARY</p>
-                        <h2 id="library-title">重新遇见，写过的题。</h2>
+                        <p class="acm-kicker">01 / PRACTICE LOG</p>
+                        <h2 id="library-title">练习日志</h2>
                     </div>
-                    <p>题档中保留原稿与参考版本。<br />先独立回想，再展开代码。</p>
+                    <p>按时间归档，按算法方向分类。<br />打开记录，查看思路与源码。</p>
                 </div>
-                <p
-                    id="storage-notice"
-                    role="status"
-                    aria-live="polite"
-                    style="font-size: 16px; line-height: 1.8; margin: 0 0 18px; color: #6b542b"
-                    hidden
-                ></p>
+
                 <div class="acm-toolbar">
                     <label class="acm-search"
-                        ><svg viewBox="0 0 24 24" aria-hidden="true">
-                            <circle cx="10.8" cy="10.8" r="6.8" />
-                            <path d="m16 16 4.5 4.5" /></svg
+                        ><svg aria-hidden="true" viewbox="0 0 24 24">
+                            <circle cx="10.8" cy="10.8" r="6.8"></circle>
+                            <path d="m16 16 4.5 4.5"></path></svg
                         ><span class="acm-visually-hidden">搜索题目、算法或比赛</span
                         ><input
-                            id="search"
-                            type="search"
-                            placeholder="搜索题目、算法、比赛…"
                             autocomplete="off"
+                            id="search"
+                            placeholder="搜索题目、算法、比赛…"
+                            type="search"
                         /><kbd aria-hidden="true">/</kbd></label
                     >
                     <label class="acm-select-label"
@@ -140,124 +136,46 @@
                             <option value="luogu">洛谷</option>
                         </select></label
                     >
-                    <label class="acm-select-label"
-                        ><span class="acm-visually-hidden">复习状态</span
-                        ><select id="status-filter">
-                            <option value="">全部状态</option>
-                            <option value="todo">未复习</option>
-                            <option value="review">再练一次</option>
-                            <option value="mastered">已掌握</option>
-                            <option value="issues">含待复盘原稿</option>
-                        </select></label
-                    >
-                    <button
-                        class="acm-bookmark-filter"
-                        id="favorites-filter"
-                        type="button"
-                        aria-pressed="false"
-                    >
-                        <span aria-hidden="true">☆</span> 收藏
-                    </button>
                 </div>
                 <div class="acm-library-layout">
                     <aside class="acm-sidebar">
                         <p class="acm-sidebar-label">按算法方向</p>
-                        <nav id="category-list" aria-label="算法分类"></nav>
+                        <nav aria-label="算法分类" id="category-list"></nav>
                         <div class="acm-sidebar-foot">
                             <span aria-hidden="true">↳</span>
-                            <p>基础 / 进阶 / 挑战<br />为复习层级，非官方难度。</p>
+                            <p>按算法方向分类，<br />未注明日期的记录置后。</p>
                         </div>
                     </aside>
                     <div class="acm-results">
                         <div class="acm-results-bar">
-                            <p id="results-summary" aria-live="polite">正在整理题目…</p>
-                            <label
-                                ><span class="acm-visually-hidden">题目排序</span
-                                ><select id="sort-order">
-                                    <option value="recent">最近题档优先</option>
-                                    <option value="level">基础到挑战</option>
-                                    <option value="title">按题名排序</option>
-                                </select></label
-                            >
+                            <p aria-live="polite" id="results-summary">正在整理题目…</p>
+                            <span class="acm-log-order">按日期降序</span>
                         </div>
                         <div id="problem-list"></div>
-                        <div class="acm-empty" id="empty-state" hidden>
+                        <div class="acm-empty" hidden="" id="empty-state">
                             <span aria-hidden="true">∅</span>
-                            <h3>这一组暂时没有题目</h3>
+                            <h3>没有找到这组练习记录</h3>
                             <p>试试减少筛选条件，或搜索另一个关键词。</p>
                             <button
+                                class="acm-button acm-button-dark"
                                 id="clear-filters"
                                 type="button"
-                                class="acm-button acm-button-dark"
                             >
                                 清除筛选
                             </button>
                         </div>
                         <noscript
                             ><p class="acm-notice">
-                                请启用 JavaScript，使用分类题库、源码阅读与复习记录。
+                                请启用 JavaScript，浏览分类练习记录与源码。
                             </p></noscript
                         >
                     </div>
                 </div>
             </section>
-            <section id="templates" class="acm-templates" aria-labelledby="templates-title">
-                <div class="acm-section-heading">
-                    <div>
-                        <p class="acm-kicker">02 / KEEP WITHIN REACH</p>
-                        <h2 id="templates-title">把常用的，放在手边。</h2>
-                    </div>
-                    <p>读懂适用条件与边界，<br />模板才会成为工具。</p>
-                </div>
-                <div class="acm-template-grid" id="template-list"></div>
-            </section>
-            <section id="review-method" class="acm-method" aria-labelledby="method-title">
-                <div>
-                    <p class="acm-kicker">03 / A LITTLE, OFTEN</p>
-                    <h2 id="method-title">比记住答案，<br />多走一步。</h2>
-                    <p>
-                        复习状态与个人笔记仅保存在当前浏览器。<br />换设备前，可以导出一份自己的复习记录。
-                    </p>
-                    <button
-                        id="export-progress"
-                        class="acm-button acm-button-outline"
-                        type="button"
-                    >
-                        导出复习记录 <span aria-hidden="true">↗</span></button
-                    ><label class="acm-import-label"
-                        >导入记录<input
-                            id="import-progress"
-                            type="file"
-                            accept="application/json,.json"
-                    /></label>
-                </div>
-                <ol>
-                    <li>
-                        <span>01</span>
-                        <div>
-                            <h3>不看代码，先说思路</h3>
-                            <p>用一句话定义状态、贪心依据或维护的不变量。</p>
-                        </div>
-                    </li>
-                    <li>
-                        <span>02</span>
-                        <div>
-                            <h3>对照原稿，找到差别</h3>
-                            <p>带着边界、复杂度与反例，阅读自己的实现和参考注释。</p>
-                        </div>
-                    </li>
-                    <li>
-                        <span>03</span>
-                        <div>
-                            <h3>留一条下次有用的笔记</h3>
-                            <p>写下真正卡住的原因，标记“再练一次”，下次独立重写。</p>
-                        </div>
-                    </li>
-                </ol>
-            </section>
+
             <p class="acm-library-note">
-                整理自个人 ACM 学习题档，更新至 2026 年 10 月 23 日。原稿、AI 参考与 AC / ERROR
-                目录按来源标注；目录名与复习层级均不代表本页重新判题结果。仅收录学习源码与题目海报，题目版权归原作者及平台所有。
+                整理自个人 ACM 练习题档，更新至 2026 年 10 月 23 日。原稿、AI 参考与 AC / ERROR
+                目录按来源标注，题目版权归原作者及平台所有。
             </p>
         </main>
         <footer class="acm-footer acm-shell">
@@ -266,20 +184,20 @@
                 ><span class="acm-brand-section">always learning.</span></a
             ><span>© 2026 · KEEP YOUR CURIOSITY.</span><a href="/pages/study/">返回学习目录 ↑</a>
         </footer>
-        <dialog id="reader" class="acm-reader" aria-labelledby="reader-title">
+        <dialog aria-labelledby="reader-title" class="acm-reader" id="reader">
             <div class="acm-reader-top">
-                <span id="reader-breadcrumb">ACM NOTEBOOK</span
+                <span id="reader-breadcrumb">PRACTICE LOG</span
                 ><button
+                    aria-label="关闭题目阅读器"
                     class="acm-close"
                     id="reader-close"
                     type="button"
-                    aria-label="关闭题目阅读器"
                 >
                     关闭 <span aria-hidden="true">×</span>
                 </button>
             </div>
             <div id="reader-content"></div>
         </dialog>
-        <div class="acm-toast" id="toast" role="status" aria-live="polite"></div>
+        <div aria-live="polite" class="acm-toast" id="toast" role="status"></div>
     </body>
 </html>
