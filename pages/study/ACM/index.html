@@ -11,9 +11,9 @@
         <meta content="#f5f4ef" name="theme-color" />
         <title>ACM 练习记录 · hyper</title>
         <link href="/pages/_shared/site-theme.css?v=20261023" rel="stylesheet" />
-        <link href="./acm.css?v=20261023-log-source" rel="stylesheet" />
+        <link href="./acm.css?v=20261023-source-row" rel="stylesheet" />
         <script defer="" src="./library-data.js?v=20261023-final"></script>
-        <script defer="" src="./acm.js?v=20261023-log-source"></script>
+        <script defer="" src="./acm.js?v=20261023-source-row"></script>
     </head>
     <body data-page-kind="study" data-site-theme="garden">
         <a class="acm-skip" href="#problem-library">跳转到练习记录</a>
@@ -111,31 +111,31 @@
                     <p>按时间归档，按算法方向分类。<br />打开记录，查看思路与源码。</p>
                 </div>
 
-                <div class="acm-toolbar">
-                    <label class="acm-search"
-                        ><svg aria-hidden="true" viewbox="0 0 24 24">
-                            <circle cx="10.8" cy="10.8" r="6.8"></circle>
-                            <path d="m16 16 4.5 4.5"></path></svg
-                        ><span class="acm-visually-hidden">搜索题目、算法或比赛</span
-                        ><input
-                            autocomplete="off"
-                            id="search"
-                            placeholder="搜索题目、算法、比赛…"
-                            type="search"
-                        /><kbd aria-hidden="true">/</kbd></label
-                    >
-                    <label class="acm-select-label"
-                        ><span class="acm-visually-hidden">题目来源</span
-                        ><select id="source-filter">
-                            <option value="">全部题源</option>
-                            <option value="daily">日常训练</option>
-                            <option value="c2026">2026 重庆大学新生赛</option>
-                            <option value="c2025">2025 重庆大学新生赛</option>
-                            <option value="nowcoder">牛客多校</option>
-                            <option value="icpc">ICPC 网络赛</option>
-                            <option value="luogu">洛谷</option>
-                        </select></label
-                    >
+                <div class="acm-source-picker">
+                    <span class="acm-source-picker-label" id="source-label">题源</span>
+                    <div class="acm-source-options" role="group" aria-labelledby="source-label">
+                        <button type="button" data-source-filter="" aria-pressed="true">
+                            全部
+                        </button>
+                        <button type="button" data-source-filter="daily" aria-pressed="false">
+                            日常训练
+                        </button>
+                        <button type="button" data-source-filter="c2026" aria-pressed="false">
+                            2026 重庆大学新生赛
+                        </button>
+                        <button type="button" data-source-filter="c2025" aria-pressed="false">
+                            2025 重庆大学新生赛
+                        </button>
+                        <button type="button" data-source-filter="nowcoder" aria-pressed="false">
+                            牛客多校
+                        </button>
+                        <button type="button" data-source-filter="icpc" aria-pressed="false">
+                            ICPC 网络赛
+                        </button>
+                        <button type="button" data-source-filter="luogu" aria-pressed="false">
+                            洛谷
+                        </button>
+                    </div>
                 </div>
                 <div class="acm-library-layout">
                     <aside class="acm-sidebar">
@@ -155,7 +155,7 @@
                         <div class="acm-empty" hidden="" id="empty-state">
                             <span aria-hidden="true">∅</span>
                             <h3>没有找到这组练习记录</h3>
-                            <p>试试减少筛选条件，或搜索另一个关键词。</p>
+                            <p>这组题源或分类暂时没有记录，可以清除筛选查看全部。</p>
                             <button
                                 class="acm-button acm-button-dark"
                                 id="clear-filters"

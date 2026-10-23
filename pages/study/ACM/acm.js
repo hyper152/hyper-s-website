@@ -10,6 +10,7 @@
 
     const items = library.items;
     const byId = new Map(items.map((item) => [item.id, item]));
+    const sourceButtons = [...document.querySelectorAll("[data-source-filter]")];
     const categoryOrder = [
         "动态规划",
         "图与树",
@@ -26,12 +27,10 @@
     ];
     const params = new URLSearchParams(location.search);
     const filters = {
-        query: params.get("q") || "",
         category: params.get("category") || "",
         source: params.get("source") || "",
     };
     let opener;
-    let searchTimer;
     let toastTimer;
 
     function element(tag, className, text) {
@@ -39,16 +38,6 @@
         if (className) node.className = className;
         if (text !== undefined) node.textContent = text;
         return node;
-    }
-
-    function sourceBadge(item) {
-        const badge = element("span", "acm-source-badge");
-        badge.dataset.sourceGroup = item.group;
-        badge.append(
-            element("span", "acm-source-badge-label", "题源"),
-            element("strong", "acm-source-badge-name", item.source),
-        );
-        return badge;
     }
 
     function dateKey(item) {
@@ -63,8 +52,8 @@
 
     function syncUrl() {
         const url = new URL(location.href);
-        for (const key of ["status", "saved", "sort"]) url.searchParams.delete(key);
-        const values = { q: filters.query, category: filters.category, source: filters.source };
+        for (const key of ["q", "status", "saved", "sort"]) url.searchParams.delete(key);
+        const values = { category: filters.category, source: filters.source };
         Object.entries(values).forEach(([key, value]) => {
             if (value) url.searchParams.set(key, value);
             else url.searchParams.delete(key);
@@ -100,38 +89,21 @@
         $("category-list").replaceChildren(fragment);
     }
 
+    function renderSources() {
+        sourceButtons.forEach((button) => {
+            button.setAttribute(
+                "aria-pressed",
+                String(button.dataset.sourceFilter === filters.source),
+            );
+        });
+    }
+
     function filteredProblems() {
-        const aliases = {
-            dp: "动态规划",
-            dfs: "图与树",
-            bfs: "图与树",
-            math: "数学与数论",
-            graph: "图与树",
-            greedy: "贪心",
-            string: "字符串",
-        };
-        const terms = filters.query.trim().toLowerCase().split(/\s+/).filter(Boolean);
         return items
             .filter((item) => {
                 if (filters.category && item.category !== filters.category) return false;
                 if (filters.source && item.group !== filters.source) return false;
-                const haystack = [
-                    item.title,
-                    item.id,
-                    item.category,
-                    item.source,
-                    item.platform,
-                    item.date,
-                    item.summary,
-                    ...(item.tags || []),
-                ]
-                    .join(" ")
-                    .toLowerCase();
-                return terms.every(
-                    (term) =>
-                        haystack.includes(term) ||
-                        (aliases[term] && haystack.includes(aliases[term])),
-                );
+                return true;
             })
             .sort((first, second) => dateKey(second).localeCompare(dateKey(first)));
     }
@@ -150,9 +122,10 @@
         const button = element("button", "acm-problem-main");
         button.type = "button";
         button.setAttribute("aria-haspopup", "dialog");
-        button.append(sourceBadge(item), element("span", "acm-problem-title", item.title));
+        button.append(element("span", "acm-problem-title", item.title));
         const meta = element("span", "acm-problem-meta");
         meta.append(
+            element("span", "", item.source),
             element("span", "", `${item.versions.length} 份源码${item.statement ? " · 题面" : ""}`),
         );
         (item.tags || [])
@@ -228,8 +201,8 @@
         const heading = element("div", "acm-reader-heading");
         const source = element("div", "acm-reader-source");
         source.append(
-            sourceBadge(item),
-            element("span", "acm-reader-date", item.date || "日期未注明"),
+            element("span", "", item.date || "日期未注明"),
+            element("span", "", item.source),
         );
         const title = element("h2", "", item.title);
         title.id = "reader-title";
@@ -355,28 +328,20 @@
     }
 
     if (!categoryOrder.includes(filters.category)) filters.category = "";
-    if (![...$("source-filter").options].some((option) => option.value === filters.source))
+    if (!sourceButtons.some((button) => button.dataset.sourceFilter === filters.source))
         filters.source = "";
-    $("search").value = filters.query;
-    $("source-filter").value = filters.source;
-    $("search").addEventListener("input", () => {
-        clearTimeout(searchTimer);
-        searchTimer = setTimeout(() => {
-            filters.query = $("search").value;
+    sourceButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+            filters.source = button.dataset.sourceFilter;
+            renderSources();
             renderProblems();
             syncUrl();
-        }, 120);
-    });
-    $("source-filter").addEventListener("change", () => {
-        filters.source = $("source-filter").value;
-        renderProblems();
-        syncUrl();
+        });
     });
     $("clear-filters").addEventListener("click", () => {
-        Object.assign(filters, { query: "", category: "", source: "" });
-        $("search").value = "";
-        $("source-filter").value = "";
+        Object.assign(filters, { category: "", source: "" });
         renderCategories();
+        renderSources();
         renderProblems();
         syncUrl();
     });
@@ -395,20 +360,6 @@
         )
             $("reader").close();
     });
-    document.addEventListener("keydown", (event) => {
-        if (
-            event.key === "/" &&
-            !event.ctrlKey &&
-            !event.metaKey &&
-            !$("reader").open &&
-            !["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement.tagName)
-        ) {
-            event.preventDefault();
-            $("search").focus();
-            $("search").scrollIntoView({ block: "center" });
-        }
-    });
-
     $("total-problems").textContent = items.length;
     $("total-versions").textContent = items.reduce(
         (count, item) => count + item.versions.length,
@@ -417,6 +368,7 @@
     $("total-categories").textContent = new Set(items.map((item) => item.category)).size;
     $("total-posters").textContent = items.filter((item) => item.statement).length;
     renderCategories();
+    renderSources();
     renderProblems();
     syncUrl();
 })();
